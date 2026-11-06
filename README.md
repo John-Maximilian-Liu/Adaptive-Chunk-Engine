@@ -17,14 +17,14 @@
 
 ---
 
-> Evaluation kit + research article live in **[`benchmarks/adaptive_chunking_eval/`](benchmarks/adaptive_chunking_eval/)**.  
+Production-oriented platform for **adaptive document chunking**, retrieval evaluation, optimization governance, and audit evidence for RAG systems.
+
+> Evaluation kit + research article: **[`benchmarks/adaptive_chunking_eval/`](benchmarks/adaptive_chunking_eval/)**.  
 > Method inspired by *Adaptive Chunking* ([arXiv:2603.25333](https://arxiv.org/abs/2603.25333), LREC 2026) and [ekimetrics/adaptive-chunking](https://github.com/ekimetrics/adaptive-chunking).
 
 ## 中文简介
 
 **ACE** 将 LREC 2026 Adaptive Chunking 的「按文档用 RC/ICC/DCC/BI/SC 选择最优切块」做成企业控制面，并提供独立测评包与论文：`benchmarks/adaptive_chunking_eval/`（含与原项目 CLAIR 结果的对比表）。
-
----
 
 ## What is Adaptive Chunk Engine?
 
@@ -33,11 +33,89 @@ No single chunking method wins on every document. Adaptive Chunking selects the 
 | Research idea (LREC 2026) | ACE productization |
 |---------------------------|--------------------|
 | Per-document selection | `adaptive_ace` + Strategy Registry |
-| Five intrinsic metrics | `benchmarks/.../src/intrinsic_metrics.py` |
+| Five intrinsic metrics | `benchmarks/adaptive_chunking_eval/src/intrinsic_metrics.py` (+ product `evaluation_engine`) |
 | RAG evaluation | Product eval engine + offline RAG-lite kit |
 | Research reproducibility | Audit + ReproductionManifest + Docker/Azure |
 
----
+## Architecture overview
+
+- **API** (FastAPI) owns durable state, OpenAPI `/api/v1`, and orchestration.
+- **Workers** (Celery + Redis) run parse, chunk, QA, embedding, indexing, evaluation, and optimization queues.
+- **Packages** provide canonical schemas, parsers, chunk adapters, LLM gateway, vector sinks, evaluation, audit, and visual/SVG processing.
+- **Frontend** (Next.js) drives the full human-in-the-loop workflow. Browser calls same-origin `/api/v1/*`; the App Router proxy at `apps/web/src/app/api/v1/[...path]/route.ts` forwards to `API_INTERNAL_URL`.
+- **Local stack**: PostgreSQL 17, Redis, object storage (adobe/s3mock fallback when MinIO is unavailable), Qdrant via Docker Compose.
+- **Production target**: Azure Container Apps + Flexible Server + Blob + Key Vault + AI Search (+ Service Bus migration path).
+
+See [ARCHITECTURE.md](ARCHITECTURE.md) and [docs/adr](docs/adr).
+
+## Prerequisites
+
+- Docker + Docker Compose v2
+- (Optional for local non-Docker) Python 3.12, uv, Node.js 22, pnpm
+
+## One-command startup
+
+```bash
+cp -n .env.example .env
+docker compose up -d --build
+```
+
+Or:
+
+```bash
+make start
+# / scripts/bootstrap.sh
+```
+
+## Environment setup
+
+```bash
+cp .env.example .env
+```
+
+All chunk/QA/eval/visual constraint defaults are documented in `.env.example` and validated via Pydantic Settings.
+
+Frontend routing env vars:
+
+| Variable | Role |
+|----------|------|
+| `API_INTERNAL_URL` | Server-only upstream for the Next.js `/api/v1` proxy and SSR (Compose sets `http://api:8000/api/v1`) |
+| `NEXT_PUBLIC_API_BASE_URL` | Fallback upstream / legacy direct API URL; browser traffic uses same-origin `/api/v1` |
+
+## First-run workflow
+
+1. Open http://localhost:3000
+2. Open API docs http://localhost:8000/docs
+3. `POST /api/v1/admin/seed` creates a local tenant, mock LLM/embedding profiles, Qdrant sink, evaluation profile, and demo document (no external API keys).
+4. Upload a document → parse → auto plan → review → chunk run → automatic indexing outbox → QA → evaluate → review failures → accept optimization proposal → **manually** create next experiment.
+
+## Local URLs
+
+| Service | URL |
+|---------|-----|
+| Frontend | http://localhost:3000 |
+| API docs | http://localhost:8000/docs |
+| API health | http://localhost:8000/api/v1/health/live |
+| Object storage (S3 API) | http://localhost:9000 |
+| Object storage admin | http://localhost:9001 |
+| Qdrant | http://localhost:6333 |
+
+## Sample API calls
+
+```bash
+curl -s -X POST http://localhost:8000/api/v1/admin/seed | jq .
+curl -s http://localhost:8000/api/v1/strategies | jq '.[].strategy_id'
+curl -s -X POST http://localhost:8000/api/v1/documents \
+  -H 'X-Tenant-Id: tenant_dev' \
+  -F file=@tests/fixtures/sample.md
+```
+
+Same-origin proxy smoke (frontend → backend forwarding):
+
+```bash
+curl -s -o /dev/null -w '%{http_code}\n' http://localhost:3000/api/v1/health/live
+curl -s -X POST http://localhost:3000/api/v1/admin/seed -H 'X-Tenant-Id: tenant_dev' | jq .
+```
 
 ## Key Results (with published Adaptive Chunking baselines)
 
@@ -92,11 +170,7 @@ make eval
 
 **Takeaway (both studies):** metric-guided adaptivity recovers strong recursive splitters and avoids brittle sentence-level fragmentation.
 
----
-
 ## Evaluation kit & paper
-
-Everything for this study is under one folder:
 
 ```text
 benchmarks/adaptive_chunking_eval/
@@ -108,25 +182,55 @@ benchmarks/adaptive_chunking_eval/
   paper/paper.html
 ```
 
-- Kit README: [`benchmarks/adaptive_chunking_eval/README.md`](benchmarks/adaptive_chunking_eval/README.md)  
+- Kit README: [`benchmarks/adaptive_chunking_eval/README.md`](benchmarks/adaptive_chunking_eval/README.md)
 - Research article: [`benchmarks/adaptive_chunking_eval/paper/paper.md`](benchmarks/adaptive_chunking_eval/paper/paper.md)
 
----
-
-## 60-second start
+## Running tests
 
 ```bash
-cp -n .env.example .env
-docker compose up -d --build
+# Offline Adaptive Chunking–style eval
 make eval
+
+# Backend
+cd apps/api && source .venv/bin/activate
+export PYTHONPATH=../../packages/python:.:../../workers
+pytest -q
+
+# Frontend unit
+cd apps/web && pnpm install && pnpm test
+
+# E2E (stack must be up)
+cd apps/web && pnpm e2e
 ```
 
-| Service | URL |
-|---------|-----|
-| Workbench | http://localhost:3000 |
-| OpenAPI | http://localhost:8000/docs |
+## Enabling providers
 
----
+### OpenAI
+Create an LLM profile via UI **Connections** or `POST /api/v1/llm-profiles` with `provider=openai`, `api_key`, optional `base_url`. Secrets are write-only.
+
+### Azure OpenAI
+`provider=azure_openai`, `base_url` (endpoint), `deployment_name`, `auth_mode=api_key|entra_id|managed_identity`.
+
+### Azure AI Search
+`POST /api/v1/vector-sink-profiles` with `sink_type=azure_ai_search`, endpoint + API key (dev) or managed identity (prod).
+
+### Dify Knowledge Base
+`sink_type=dify`, `connection.base_url`, `dataset_id`, API key. Canonical chunks are pushed as segments (no re-chunking). Embeddings are sink-managed by default.
+
+## Adapter status matrix
+
+| Adapter | Status |
+|---------|--------|
+| Builtin strategies (fixed_token, recursive, heading, parent_child, tables, markdown, cross-unit, excel*) | Operational |
+| Docling preferred parse | Preferred when installed; local fallbacks always available |
+| Chonkie / Chunkana / markdown-chunker | Optional — unavailable until dependency installed |
+| Chunkr | Optional external — requires `CHUNKR_BASE_URL` |
+| MarkdownStructureChunker | Optional .NET sidecar — requires URL |
+| ZeroEntropy zchunk | Optional, **disabled by default** |
+| Qdrant | Operational (local) |
+| Azure AI Search | Implemented + contract-tested (mock HTTP) |
+| Dify KB | Implemented + contract-tested (mock HTTP) |
+| Mock LLM / embeddings | Operational for offline/demo |
 
 ## Enterprise guarantees
 
@@ -138,7 +242,25 @@ make eval
 | Canonical API | CanonicalChunk v1.0.0 only |
 | Reproducibility | ReproductionManifest required for production candidacy |
 
----
+## Known limitations
+
+- Live OpenAI / Azure / Dify / AI Search connectivity is not claimed without credentials.
+- Optional chunk providers are honestly marked unavailable when dependencies/sidecars are missing.
+- Local object storage uses **adobe/s3mock** when the official MinIO image cannot be pulled.
+- Celery workers are wired for all queues; the API also processes the indexing outbox inline after successful chunk runs so Compose demos remain reliable without shared in-memory Engine state across processes.
+- Development auth (`AUTH_MODE=development`) is **not** production-safe.
+- The same-origin `/api/v1` proxy forwards request headers to the API; treat public tunnel exposure as a development/demo surface, not a hardened production edge.
+
+## Troubleshooting
+
+- Migrations race: only the `migration` service runs Alembic once (`python -m alembic upgrade head` from `db_migrations/`).
+- Inter-container timeouts on nested VMs: run `./scripts/fix-docker-bridge-forwarding.sh` then restart Compose.
+- Qdrant unhealthy: wait for healthcheck; indexing target may be `FAILED` until Qdrant is ready — use reindex.
+- Frontend cannot reach API through the UI: confirm the web container has `API_INTERNAL_URL=http://api:8000/api/v1` and that `http://localhost:3000/api/v1/health/live` returns 200. Direct API checks still use `http://localhost:8000/api/v1/...`.
+
+## Security
+
+See [SECURITY.md](SECURITY.md).
 
 ## Citation
 
@@ -159,8 +281,6 @@ make eval
   note={benchmarks/adaptive_chunking_eval/}
 }
 ```
-
----
 
 ## Documentation
 
