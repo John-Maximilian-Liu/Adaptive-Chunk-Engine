@@ -1,0 +1,22 @@
+name: CD Preview
+
+# Builds immutable SHA-tagged images for continuous delivery.
+# Add repository secrets AZURE_CREDENTIALS + ACR_* to enable live Azure Container Apps deploy.
+on:
+  push:
+    branches: [main, "cursor/**"]
+  workflow_dispatch:
+
+jobs:
+  build-images:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build production images
+        run: |
+          TAG="${GITHUB_SHA}"
+          docker build -f apps/api/Dockerfile -t "ace-api:${TAG}" .
+          docker build -f apps/api/Dockerfile.worker -t "ace-worker:${TAG}" .
+          docker build -f apps/web/Dockerfile -t "ace-web:${TAG}" .
+          echo "Built ace-api/ace-worker/ace-web:${TAG}"
+          echo "Next: push to ACR and deploy infrastructure/bicep/main.bicep with imageTag=${TAG}"

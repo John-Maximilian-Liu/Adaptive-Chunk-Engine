@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Adaptive Chunk Engine  Enterprise Architecture</title>
+  <desc id="desc">Layered architecture from enterprise workbench through control plane, domain engine, async workers, data plane, and Azure production targets.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0B1F33"/>
+      <stop offset="55%" stop-color="#123A4F"/>
+      <stop offset="100%" stop-color="#0E6B6A"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F7FAFC" stop-opacity="0.98"/>
+      <stop offset="100%" stop-color="#E8EEF3" stop-opacity="0.96"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1F8A7A"/>
+      <stop offset="100%" stop-color="#2F6FED"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000" flood-opacity="0.28"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#9EC5D8"/>
+    </marker>
+    <style>
+      .t { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+      .title { fill: #F4FBFF; font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
+      .sub { fill: #B7D4E3; font-size: 14px; }
+      .h { fill: #0B1F33; font-size: 15px; font-weight: 700; }
+      .p { fill: #334155; font-size: 12px; }
+      .chip { fill: #0B1F33; font-size: 11px; font-weight: 600; }
+      .label { fill: #9EC5D8; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="760" rx="24" fill="url(#bg)"/>
+  <circle cx="1080" cy="90" r="120" fill="#2F6FED" opacity="0.12"/>
+  <circle cx="140" cy="660" r="150" fill="#1F8A7A" opacity="0.14"/>
+
+  <text class="t title" x="48" y="52">Adaptive Chunk Engine</text>
+  <text class="t sub" x="48" y="78">Enterprise RAG control plane · adaptive chunking · evaluation governance · audit evidence</text>
+
+  <!-- Experience -->
+  <g filter="url(#shadow)">
+    <rect x="40" y="110" width="1120" height="100" rx="16" fill="url(#card)"/>
+  </g>
+  <text class="t label" x="60" y="136">EXPERIENCE LAYER</text>
+  <text class="t h" x="60" y="160">Next.js Enterprise Workbench</text>
+  <text class="t p" x="60" y="180">Documents · Strategy Workbench · QA · Evaluation · Failures · Optimization · Connections · Audit · Visual Review</text>
+  <rect x="860" y="138" width="140" height="28" rx="14" fill="#0B1F33"/>
+  <text class="t chip" x="882" y="156" fill="#E8F7F4">Human-in-the-loop</text>
+  <rect x="1014" y="138" width="120" height="28" rx="14" fill="#1F8A7A"/>
+  <text class="t chip" x="1034" y="156" fill="#fff">OpenAPI UI</text>
+
+  <!-- Control -->
+  <g filter="url(#shadow)">
+    <rect x="40" y="240" width="540" height="170" rx="16" fill="url(#card)"/>
+  </g>
+  <text class="t label" x="60" y="266">CONTROL PLANE</text>
+  <text class="t h" x="60" y="290">FastAPI /api/v1</text>
+  <text class="t p" x="60" y="312">Orchestration · Pydantic validation · correlation IDs</text>
+  <text class="t p" x="60" y="332">Tenant isolation · secret write-only refs · structured errors</text>
+  <text class="t p" x="60" y="352">Config precedence · plan validation · outbox emission</text>
+  <text class="t p" x="60" y="372">OpenTelemetry hooks · JSON logging · health probes</text>
+  <rect x="60" y="388" width="110" height="24" rx="12" fill="#123A4F"/>
+  <text class="t chip" x="78" y="404" fill="#E8F7F4">Python 3.12</text>
+  <rect x="180" y="388" width="70" height="24" rx="12" fill="#123A4F"/>
+  <text class="t chip" x="196" y="404" fill="#E8F7F4">uv</text>
+  <rect x="260" y="388" width="100" height="24" rx="12" fill="#123A4F"/>
+  <text class="t chip" x="276" y="404" fill="#E8F7F4">SQLAlchemy</text>
+
+  <!-- Domain -->
+  <g filter="url(#shadow)">
+    <rect x="620" y="240" width="540" height="170" rx="16" fill="url(#card)"/>
+  </g>
+  <text class="t label" x="640" y="266">DOMAIN ENGINE</text>
+  <text class="t h" x="640" y="290">Canonical + Adaptive Core</text>
+  <text class="t p" x="640" y="312">Parsers · Strategy Registry · LLM Gateway</text>
+  <text class="t p" x="640" y="332">Chunk planning · QA factory · Evaluation engine</text>
+  <text class="t p" x="640" y="352">Failure taxonomy · Optimization patches · Visual/SVG</text>
+  <text class="t p" x="640" y="372">CanonicalChunk 1.0.0 · Evidence &amp; Reproduction Manifests</text>
+  <rect x="640" y="388" width="120" height="24" rx="12" fill="#1F8A7A"/>
+  <text class="t chip" x="654" y="404" fill="#fff">Provider-neutral</text>
+  <rect x="770" y="388" width="140" height="24" rx="12" fill="#2F6FED"/>
+  <text class="t chip" x="788" y="404" fill="#fff">Excel-native RAG</text>
+
+  <!-- Async -->
+  <g filter="url(#shadow)">
+    <rect x="40" y="440" width="1120" height="110" rx="16" fill="url(#card)"/>
+  </g>
+  <text class="t label" x="60" y="466">ASYNC EXECUTION</text>
+  <text class="t h" x="60" y="490">Celery Workers + Transactional Outbox</text>
+  <g>
+    <rect x="60" y="508" width="130" height="28" rx="8" fill="#0B1F33"/><text class="t chip" x="98" y="526" fill="#fff">parse</text>
+    <rect x="205" y="508" width="130" height="28" rx="8" fill="#0B1F33"/><text class="t chip" x="240" y="526" fill="#fff">chunk</text>
+    <rect x="350" y="508" width="130" height="28" rx="8" fill="#0B1F33"/><text class="t chip" x="395" y="526" fill="#fff">qa</text>
+    <rect x="495" y="508" width="140" height="28" rx="8" fill="#0B1F33"/><text class="t chip" x="520" y="526" fill="#fff">embedding</text>
+    <rect x="650" y="508" width="140" height="28" rx="8" fill="#1F8A7A"/><text class="t chip" x="680" y="526" fill="#fff">indexing</text>
+    <rect x="805" y="508" width="150" height="28" rx="8" fill="#0B1F33"/><text class="t chip" x="825" y="526" fill="#fff">evaluation</text>
+    <rect x="970" y="508" width="160" height="28" rx="8" fill="#2F6FED"/><text class="t chip" x="985" y="526" fill="#fff">optimization</text>
+  </g>
+
+  <!-- Data plane -->
+  <g filter="url(#shadow)">
+    <rect x="40" y="580" width="700" height="140" rx="16" fill="url(#card)"/>
+  </g>
+  <text class="t label" x="60" y="606">DATA PLANE (LOCAL / DEV)</text>
+  <text class="t h" x="60" y="630">Durable state &amp; retrieval fabric</text>
+  <text class="t p" x="60" y="652">PostgreSQL 17 · Redis · Object Storage (S3/MinIO) · Qdrant</text>
+  <text class="t p" x="60" y="672">Alembic migrations · idempotent upserts · content-hash embedding reuse</text>
+  <text class="t p" x="60" y="692">Audit events · outbox · provider &amp; reproduction manifests</text>
+
+  <!-- Azure -->
+  <g filter="url(#shadow)">
+    <rect x="770" y="580" width="390" height="140" rx="16" fill="url(#card)"/>
+  </g>
+  <text class="t label" x="790" y="606">AZURE PRODUCTION</text>
+  <text class="t h" x="790" y="630">Same images · Bicep IaC</text>
+  <text class="t p" x="790" y="652">Container Apps · Flexible Server · Blob</text>
+  <text class="t p" x="790" y="672">Key Vault · AI Search · OpenAI · Redis</text>
+  <text class="t p" x="790" y="692">Service Bus path · App Insights · MI</text>
+
+  <!-- Flow arrows -->
+  <path d="M600 210 V236" stroke="#9EC5D8" stroke-width="2.5" marker-end="url(#arrow)" fill="none"/>
+  <path d="M310 410 V436" stroke="#9EC5D8" stroke-width="2.5" marker-end="url(#arrow)" fill="none"/>
+  <path d="M890 410 V436" stroke="#9EC5D8" stroke-width="2.5" marker-end="url(#arrow)" fill="none"/>
+  <path d="M390 550 V576" stroke="#9EC5D8" stroke-width="2.5" marker-end="url(#arrow)" fill="none"/>
+  <path d="M960 550 V576" stroke="#9EC5D8" stroke-width="2.5" marker-end="url(#arrow)" fill="none"/>
+  <path d="M740 650 H766" stroke="url(#accent)" stroke-width="3" marker-end="url(#arrow)" fill="none"/>
+</svg>

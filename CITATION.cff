@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use Adaptive Chunk Engine, please cite this software and the Adaptive Chunking paper it builds on."
+title: "Adaptive Chunk Engine"
+type: software
+authors:
+  - name: "Adaptive Chunk Engine Contributors"
+repository-code: "https://github.com/John-Maximilian-Liu/Adaptive-Chunk-Engine"
+abstract: "Enterprise control plane for metric-guided adaptive chunking, retrieval evaluation, and human-governed optimization for RAG."
+keywords:
+  - rag
+  - chunking
+  - information-retrieval
+  - evaluation
+references:
+  - type: article
+    title: "Adaptive Chunking: Optimizing Chunking-Method Selection for RAG"
+    authors:
+      - family-names: de Moura Junior
+        given-names: Paulo Roberto
+      - family-names: Lelong
+        given-names: Jean
+      - family-names: Blangero
+        given-names: Annabelle
+    year: 2026
+    doi: "10.48550/arXiv.2603.25333"
+    url: "https://arxiv.org/abs/2603.25333"
+    notes: "LREC 2026. Official code: https://github.com/ekimetrics/adaptive-chunking"
