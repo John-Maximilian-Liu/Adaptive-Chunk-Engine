@@ -1,4 +1,4 @@
-.PHONY: dev start stop reset logs migrate test lint e2e seed
+.PHONY: dev start stop reset logs migrate test lint e2e seed eval
 
 dev:
 	docker compose -f compose.yaml -f compose.dev.yaml up -d --build
@@ -32,3 +32,6 @@ e2e:
 
 seed:
 	curl -s -X POST http://localhost:8000/api/v1/admin/seed | python3 -m json.tool
+
+eval:
+	PYTHONPATH=apps/api:packages/python python scripts/run_adaptive_chunking_eval.py

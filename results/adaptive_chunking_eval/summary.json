@@ -1,0 +1,189 @@
+{
+  "paper_reference": {
+    "title": "Adaptive Chunking: Optimizing Chunking-Method Selection for RAG",
+    "arxiv": "https://arxiv.org/abs/2603.25333",
+    "code": "https://github.com/ekimetrics/adaptive-chunking",
+    "venue": "LREC 2026"
+  },
+  "corpus": {
+    "n_documents": 6,
+    "domains": [
+      "legal",
+      "sustainability",
+      "technical"
+    ],
+    "approx_tokens": 8766
+  },
+  "notes": [
+    "ICC/DCC use deterministic hashed n-gram embeddings (offline). Swap embed_fn for Jina/ST for semantic parity with the paper.",
+    "RC uses a filtered pronoun\u2013antecedent heuristic (no maverick-coref dependency).",
+    "RAG metrics are lexical retrieval completeness / answer-token coverage without an LLM judge.",
+    "adaptive_ace selects the per-document strategy with the best intrinsic mean among ACE builtins."
+  ],
+  "intrinsic_table": [
+    {
+      "method": "recursive_text_1100",
+      "RC": 100.0,
+      "ICC": 63.52,
+      "DCC": 99.93,
+      "BI": 100.0,
+      "SC": 100.0,
+      "Mean": 92.69
+    },
+    {
+      "method": "adaptive_ace",
+      "RC": 100.0,
+      "ICC": 63.55,
+      "DCC": 99.9,
+      "BI": 100.0,
+      "SC": 100.0,
+      "Mean": 92.69
+    },
+    {
+      "method": "recursive_text",
+      "RC": 100.0,
+      "ICC": 63.57,
+      "DCC": 99.89,
+      "BI": 98.7,
+      "SC": 100.0,
+      "Mean": 92.43
+    },
+    {
+      "method": "fixed_token_512",
+      "RC": 100.0,
+      "ICC": 62.94,
+      "DCC": 99.91,
+      "BI": 97.66,
+      "SC": 100.0,
+      "Mean": 92.1
+    },
+    {
+      "method": "fixed_token_256",
+      "RC": 99.25,
+      "ICC": 62.07,
+      "DCC": 99.54,
+      "BI": 96.69,
+      "SC": 99.02,
+      "Mean": 91.31
+    },
+    {
+      "method": "heading_section",
+      "RC": 100.0,
+      "ICC": 62.5,
+      "DCC": 93.73,
+      "BI": 97.66,
+      "SC": 83.33,
+      "Mean": 87.44
+    },
+    {
+      "method": "no_split",
+      "RC": 100.0,
+      "ICC": 63.48,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "SC": 16.67,
+      "Mean": 76.03
+    },
+    {
+      "method": "sentence_window",
+      "RC": 58.33,
+      "ICC": 63.93,
+      "DCC": 95.05,
+      "BI": 21.35,
+      "SC": 60.69,
+      "Mean": 59.87
+    }
+  ],
+  "rag_table": [
+    {
+      "method": "adaptive_ace",
+      "retrieval_completeness": 100.0,
+      "answer_correctness": 100.0,
+      "answered_queries": "43/43"
+    },
+    {
+      "method": "recursive_text_1100",
+      "retrieval_completeness": 100.0,
+      "answer_correctness": 100.0,
+      "answered_queries": "43/43"
+    },
+    {
+      "method": "recursive_text",
+      "retrieval_completeness": 100.0,
+      "answer_correctness": 100.0,
+      "answered_queries": "43/43"
+    },
+    {
+      "method": "fixed_token_512",
+      "retrieval_completeness": 100.0,
+      "answer_correctness": 100.0,
+      "answered_queries": "43/43"
+    },
+    {
+      "method": "heading_section",
+      "retrieval_completeness": 100.0,
+      "answer_correctness": 100.0,
+      "answered_queries": "43/43"
+    },
+    {
+      "method": "no_split",
+      "retrieval_completeness": 100.0,
+      "answer_correctness": 100.0,
+      "answered_queries": "43/43"
+    },
+    {
+      "method": "fixed_token_256",
+      "retrieval_completeness": 99.89,
+      "answer_correctness": 99.87,
+      "answered_queries": "43/43"
+    },
+    {
+      "method": "sentence_window",
+      "retrieval_completeness": 91.48,
+      "answer_correctness": 89.84,
+      "answered_queries": "43/43"
+    }
+  ],
+  "domain_breakdown": {
+    "fixed_token_512": {
+      "technical": 92.35,
+      "legal": 91.89,
+      "sustainability": 91.78
+    },
+    "fixed_token_256": {
+      "technical": 92.06,
+      "legal": 91.06,
+      "sustainability": 89.6
+    },
+    "recursive_text": {
+      "technical": 92.74,
+      "legal": 92.26,
+      "sustainability": 91.86
+    },
+    "recursive_text_1100": {
+      "technical": 92.89,
+      "legal": 92.53,
+      "sustainability": 92.4
+    },
+    "sentence_window": {
+      "technical": 64.16,
+      "legal": 55.08,
+      "sustainability": 56.58
+    },
+    "heading_section": {
+      "technical": 83.04,
+      "legal": 91.89,
+      "sustainability": 91.78
+    },
+    "no_split": {
+      "technical": 79.57,
+      "legal": 72.54,
+      "sustainability": 72.41
+    },
+    "adaptive_ace": {
+      "technical": 92.9,
+      "legal": 92.53,
+      "sustainability": 92.4
+    }
+  }
+}
