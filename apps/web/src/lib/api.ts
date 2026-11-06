@@ -1,7 +1,9 @@
+// Browser uses same-origin `/api/v1` (Next.js rewrites → API) so public tunnels / CD hosts work without CORS.
+// Server components may still call the internal API URL directly.
 const API_BASE =
   typeof window === "undefined"
-    ? process.env.API_INTERNAL_URL || process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000/api/v1"
-    : process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000/api/v1";
+    ? process.env.API_INTERNAL_URL || process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000/api/v1"
+    : "/api/v1";
 
 export class ApiError extends Error {
   constructor(public payload: any, public status: number) {

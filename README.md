@@ -59,18 +59,56 @@ Adaptive Chunk Engine is built for organizations that need:
 4. **Provider independence** — canonical chunk schema; library-specific payloads never leak as the primary API contract.
 5. **Cloud production path** — same container images locally and on Azure; secrets via Key Vault; managed-identity-ready design.
 
+### Enterprise architecture diagram
+
+<p align="center">
+  <img src="docs/architecture/ace-architecture.svg" alt="Adaptive Chunk Engine enterprise architecture — experience, control plane, domain engine, async workers, data plane, Azure production" width="100%" />
+</p>
+
 ```mermaid
-flowchart LR
-  U[Enterprise User] --> W[Workbench UI]
-  W --> API[FastAPI Control Plane]
-  API --> E[Canonical Engine]
-  E --> P[Parsers]
-  E --> S[Strategy Registry]
-  E --> L[LLM Gateway]
-  E --> V[Vector Sinks]
-  E --> Q[Eval + Failure Analysis]
-  E --> A[Audit + Reproduction]
-  E --> O[Outbox Indexing]
+flowchart TB
+  subgraph Experience["Experience Layer"]
+    WEB[Next.js Enterprise Workbench]
+  end
+  subgraph Control["Control Plane"]
+    API[FastAPI /api/v1]
+  end
+  subgraph Domain["Domain Engine"]
+    ENG[Canonical Engine]
+    PARSE[Parsers]
+    STRAT[Strategy Registry]
+    LLM[LLM Gateway]
+    EVAL[Eval + Failures + Optimization]
+    AUDIT[Audit + Reproduction]
+    VIS[Visual / SVG Pipeline]
+  end
+  subgraph Async["Async Execution"]
+    CEL[Celery Queues]
+    OB[Transactional Outbox]
+  end
+  subgraph Data["Data Plane"]
+    PG[(PostgreSQL 17)]
+    RD[(Redis)]
+    OBJ[(Object Storage)]
+    QD[(Qdrant)]
+  end
+  subgraph Azure["Azure Production"]
+    ACA[Container Apps]
+    AIS[AI Search]
+    AOAI[Azure OpenAI]
+    KV[Key Vault]
+    DIFY[Dify KB]
+  end
+
+  WEB --> API --> ENG
+  ENG --> PARSE & STRAT & LLM & EVAL & AUDIT & VIS
+  API --> CEL
+  ENG --> OB --> CEL
+  CEL --> PG & RD & OBJ & QD
+  CEL --> AIS & AOAI & DIFY
+  ACA -.->|same images| WEB
+  ACA -.-> API
+  KV -.-> ACA
 ```
 
 ---
