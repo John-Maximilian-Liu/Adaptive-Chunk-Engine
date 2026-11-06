@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "required": [
+    "chunk_run_id",
+    "chunk_count"
+  ],
+  "properties": {
+    "chunk_run_id": {
+      "type": "string"
+    },
+    "experiment_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "document_version_id": {
+      "type": "string"
+    },
+    "chunk_count": {
+      "type": "integer",
+      "minimum": 0
+    }
+  }
+}

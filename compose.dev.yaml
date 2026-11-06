@@ -1,0 +1,8 @@
+services:
+  api:
+    environment:
+      ENVIRONMENT: development
+      LOG_JSON: "false"
+  frontend:
+    environment:
+      NODE_ENV: development

@@ -1,0 +1,46 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #102a43;
+  --mist: #f0f4f8;
+  --lagoon: #0c6b58;
+  --sand: #d9e2ec;
+  --slate: #243b53;
+}
+
+body {
+  @apply bg-mist text-ink font-sans antialiased;
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(12, 107, 88, 0.12), transparent 42%),
+    radial-gradient(circle at 88% 0%, rgba(36, 59, 83, 0.1), transparent 36%),
+    linear-gradient(180deg, #f7fafc 0%, #eef2f6 100%);
+  min-height: 100vh;
+}
+
+a {
+  @apply text-lagoon underline-offset-2 hover:underline;
+}
+
+.panel {
+  @apply rounded-xl border border-sand/80 bg-white/80 backdrop-blur-sm shadow-sm;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center rounded-lg bg-lagoon px-4 py-2 text-sm font-semibold text-white transition hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-lagoon/40 disabled:opacity-50;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center rounded-lg border border-sand bg-white px-4 py-2 text-sm font-semibold text-slate transition hover:bg-mist focus:outline-none focus:ring-2 focus:ring-lagoon/30;
+}
+
+.input {
+  @apply w-full rounded-lg border border-sand bg-white px-3 py-2 text-sm text-ink shadow-sm focus:border-lagoon focus:outline-none focus:ring-2 focus:ring-lagoon/20;
+}
+
+.label {
+  @apply mb-1 block text-xs font-semibold uppercase tracking-wide text-slate/70;
+}

@@ -1,0 +1,55 @@
+# Azure DevOps-compatible example pipeline
+trigger:
+  - main
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+  - stage: BuildTest
+    jobs:
+      - job: python
+        steps:
+          - task: UsePythonVersion@0
+            inputs: { versionSpec: "3.12" }
+          - script: |
+              pip install uv
+              cd apps/api
+              uv venv .venv && . .venv/bin/activate
+              uv pip install -r requirements.txt pytest pytest-asyncio pytest-cov respx aiosqlite
+              export PYTHONPATH=../../packages/python:.:../../workers
+              pytest -q
+            displayName: Python tests
+      - job: frontend
+        steps:
+          - task: NodeTool@0
+            inputs: { versionSpec: "22.x" }
+          - script: |
+              corepack enable
+              cd apps/web
+              pnpm install
+              pnpm test
+            displayName: Frontend tests
+      - job: images
+        steps:
+          - script: |
+              docker build -f apps/api/Dockerfile -t $(acr)/ace-api:$(Build.SourceVersion) .
+              docker build -f apps/web/Dockerfile -t $(acr)/ace-web:$(Build.SourceVersion) .
+            displayName: Build immutable SHA-tagged images
+  - stage: Deploy
+    dependsOn: BuildTest
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    jobs:
+      - job: bicep
+        steps:
+          - task: AzureCLI@2
+            inputs:
+              azureSubscription: "$(serviceConnection)"
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                az deployment group create \
+                  -g $(resourceGroup) \
+                  -f infrastructure/bicep/main.bicep \
+                  -p infrastructure/environments/prod.parameters.json \
+                  -p imageTag=$(Build.SourceVersion) postgresAdminPassword=$(postgresAdminPassword)

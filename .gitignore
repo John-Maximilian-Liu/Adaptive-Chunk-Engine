@@ -1,0 +1,17 @@
+.env
+.venv/
+**/__pycache__/
+**/*.pyc
+.pytest_cache/
+.coverage
+coverage/
+htmlcov/
+node_modules/
+.next/
+dist/
+build/
+*.egg-info/
+.DS_Store
+playwright-report/
+test-results/
+apps/api/.venv/

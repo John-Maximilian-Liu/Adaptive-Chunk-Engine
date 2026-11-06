@@ -1,0 +1,14 @@
+**/.git
+**/.venv
+**/node_modules
+**/.next
+**/__pycache__
+**/*.pyc
+**/.coverage
+**/coverage
+**/.pytest_cache
+**/dist
+**/build
+**/.turbo
+**/playwright-report
+**/test-results
