@@ -1,0 +1,213 @@
+name: adaptive-chunk-engine
+
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: ace
+      POSTGRES_PASSWORD: ace
+      POSTGRES_DB: ace
+    volumes:
+      - ace_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ace -d ace"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    ports:
+      - "6379:6379"
+
+  # Local S3-compatible object storage.
+  # Note: docker.io/minio/minio was unavailable in this environment; adobe/s3mock is the functioning fallback.
+  minio:
+    image: adobe/s3mock:latest
+    environment:
+      COM_ADOBE_TESTING_S3MOCK_STORE_INITIAL_BUCKETS: ace-documents
+      root: /data
+    volumes:
+      - ace_minio:/data
+    healthcheck:
+      test: ["CMD-SHELL", "timeout 2 bash -c 'cat < /dev/null > /dev/tcp/127.0.0.1/9090' || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+    ports:
+      - "9000:9090"
+      - "9001:9191"
+
+  qdrant:
+    image: qdrant/qdrant:v1.12.1
+    volumes:
+      - ace_qdrant:/qdrant/storage
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c 'exec 3<>/dev/tcp/127.0.0.1/6333'"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+    ports:
+      - "6333:6333"
+
+  migration:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    working_dir: /app
+    command: ["python", "-m", "alembic", "upgrade", "head"]
+    environment:
+      DATABASE_URL: postgresql+asyncpg://ace:ace@postgres:5432/ace
+      DATABASE_URL_SYNC: postgresql+psycopg://ace:ace@postgres:5432/ace
+      PYTHONPATH: /app:/packages/python
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "on-failure"
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    environment:
+      DATABASE_URL: postgresql+asyncpg://ace:ace@postgres:5432/ace
+      DATABASE_URL_SYNC: postgresql+psycopg://ace:ace@postgres:5432/ace
+      REDIS_URL: redis://redis:6379/0
+      QDRANT_URL: http://qdrant:6333
+      OBJECT_STORAGE_ENDPOINT: http://minio:9090
+      ACE_STORAGE_ROOT: /data
+      AUTH_MODE: development
+      CORS_ORIGINS: http://localhost:3000,http://127.0.0.1:3000,http://frontend:3000
+    volumes:
+      - ace_data:/data
+    depends_on:
+      migration:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+      qdrant:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health/live')"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    ports:
+      - "8000:8000"
+
+  worker-parser:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile.worker
+    command: ["celery", "-A", "workers.common.celery_app.celery_app", "worker", "-Q", "parse", "-l", "INFO", "-n", "parser@%h"]
+    environment: &worker_env
+      DATABASE_URL: postgresql+asyncpg://ace:ace@postgres:5432/ace
+      DATABASE_URL_SYNC: postgresql+psycopg://ace:ace@postgres:5432/ace
+      REDIS_URL: redis://redis:6379/0
+      QDRANT_URL: http://qdrant:6333
+      ACE_STORAGE_ROOT: /data
+      AUTH_MODE: development
+      PYTHONPATH: /app:/packages/python
+    volumes:
+      - ace_data:/data
+    depends_on:
+      api:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  worker-chunk:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile.worker
+    command: ["celery", "-A", "workers.common.celery_app.celery_app", "worker", "-Q", "chunk", "-l", "INFO", "-n", "chunk@%h"]
+    environment: *worker_env
+    volumes:
+      - ace_data:/data
+    depends_on:
+      api:
+        condition: service_healthy
+
+  worker-qa:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile.worker
+    command: ["celery", "-A", "workers.common.celery_app.celery_app", "worker", "-Q", "qa", "-l", "INFO", "-n", "qa@%h"]
+    environment: *worker_env
+    volumes:
+      - ace_data:/data
+    depends_on:
+      api:
+        condition: service_healthy
+
+  worker-embedding:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile.worker
+    command: ["celery", "-A", "workers.common.celery_app.celery_app", "worker", "-Q", "embedding", "-l", "INFO", "-n", "embedding@%h"]
+    environment: *worker_env
+    volumes:
+      - ace_data:/data
+    depends_on:
+      api:
+        condition: service_healthy
+
+  worker-indexing:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile.worker
+    command: ["celery", "-A", "workers.common.celery_app.celery_app", "worker", "-Q", "indexing", "-l", "INFO", "-n", "indexing@%h"]
+    environment: *worker_env
+    volumes:
+      - ace_data:/data
+    depends_on:
+      api:
+        condition: service_healthy
+      qdrant:
+        condition: service_healthy
+
+  worker-evaluation:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile.worker
+    command: ["celery", "-A", "workers.common.celery_app.celery_app", "worker", "-Q", "evaluation,optimization", "-l", "INFO", "-n", "evaluation@%h"]
+    environment: *worker_env
+    volumes:
+      - ace_data:/data
+    depends_on:
+      api:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:8000/api/v1
+      API_INTERNAL_URL: http://api:8000/api/v1
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"fetch('http://127.0.0.1:3000/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))\""]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+
+volumes:
+  ace_pg:
+  ace_minio:
+  ace_qdrant:
+  ace_data:

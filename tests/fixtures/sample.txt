@@ -1,0 +1,3 @@
+Heading One
+
+Paragraph about retrieval quality and chunk boundaries.

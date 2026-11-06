@@ -1,0 +1,9 @@
+services:
+  api:
+    environment:
+      ENVIRONMENT: production
+      AUTH_MODE: entra_id
+      LOG_JSON: "true"
+  frontend:
+    environment:
+      NODE_ENV: production

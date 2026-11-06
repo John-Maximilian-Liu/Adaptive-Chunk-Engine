@@ -1,0 +1,85 @@
+[project]
+name = "ace-api"
+version = "0.1.0"
+description = "Adaptive Chunk Engine API"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.115.0",
+  "uvicorn[standard]>=0.30.0",
+  "sqlalchemy[asyncio]>=2.0.30",
+  "asyncpg>=0.29.0",
+  "alembic>=1.13.0",
+  "pydantic>=2.7,<3",
+  "pydantic-settings>=2.3.0",
+  "python-multipart>=0.0.9",
+  "celery[redis]>=5.4.0",
+  "redis>=5.0.0",
+  "httpx>=0.27.0",
+  "orjson>=3.10.0",
+  "structlog>=24.1.0",
+  "opentelemetry-api>=1.25.0",
+  "opentelemetry-sdk>=1.25.0",
+  "python-magic>=0.4.27",
+  "aiofiles>=24.1.0",
+  "greenlet>=3.0.0",
+  "ace-shared",
+  "ace-canonical-schemas",
+  "ace-chunk-adapters",
+  "ace-document-parsers",
+  "ace-llm-gateway",
+  "ace-vector-adapters",
+  "ace-evaluation-engine",
+  "ace-audit-sdk",
+  "ace-visual-processing",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.2.0",
+  "pytest-asyncio>=0.23.0",
+  "pytest-cov>=5.0.0",
+  "httpx>=0.27.0",
+  "ruff>=0.5.0",
+  "mypy>=1.10.0",
+  "aiosqlite>=0.20.0",
+  "respx>=0.21.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+
+[tool.uv.sources]
+ace-shared = { path = "../../packages/python/shared", editable = true }
+ace-canonical-schemas = { path = "../../packages/python/canonical_schemas", editable = true }
+ace-chunk-adapters = { path = "../../packages/python/chunk_adapters", editable = true }
+ace-document-parsers = { path = "../../packages/python/document_parsers", editable = true }
+ace-llm-gateway = { path = "../../packages/python/llm_gateway", editable = true }
+ace-vector-adapters = { path = "../../packages/python/vector_adapters", editable = true }
+ace-evaluation-engine = { path = "../../packages/python/evaluation_engine", editable = true }
+ace-audit-sdk = { path = "../../packages/python/audit_sdk", editable = true }
+ace-visual-processing = { path = "../../packages/python/visual_processing", editable = true }
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.coverage.run]
+source = ["app", "../../packages/python"]
+omit = ["*/tests/*", "*/db_migrations/*"]
+
+[tool.coverage.report]
+fail_under = 0
+show_missing = true
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
