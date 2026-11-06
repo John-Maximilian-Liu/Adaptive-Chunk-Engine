@@ -15,3 +15,4 @@ build/
 playwright-report/
 test-results/
 apps/api/.venv/
+infrastructure/bicep/main.json

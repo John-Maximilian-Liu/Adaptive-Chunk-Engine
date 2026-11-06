@@ -34,4 +34,4 @@ seed:
 	curl -s -X POST http://localhost:8000/api/v1/admin/seed | python3 -m json.tool
 
 eval:
-	PYTHONPATH=apps/api:packages/python python scripts/run_adaptive_chunking_eval.py
+	PYTHONPATH=apps/api:packages/python python benchmarks/adaptive_chunking_eval/run_eval.py
