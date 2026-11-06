@@ -66,14 +66,16 @@ jobs:
           docker build -f apps/api/Dockerfile -t ace-api:${GITHUB_SHA} .
           docker build -f apps/api/Dockerfile.worker -t ace-worker:${GITHUB_SHA} .
           docker build -f apps/web/Dockerfile -t ace-web:${GITHUB_SHA} .
+      # Pin a published v-prefixed tag; 0.28.0 is not a resolvable release.
       - name: Trivy scan
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: ace-api:${{ github.sha }}
           format: table
           exit-code: "0"
       - name: Dependency audit
         run: |
+          python -m pip install --upgrade pip
           pip install pip-audit || true
           pip-audit -r apps/api/requirements.txt || true
 
@@ -81,5 +83,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: azure/setup-bicep@v2
-      - run: bicep build infrastructure/bicep/main.bicep
+      # azure/setup-bicep does not exist as a public action; install the official CLI binary.
+      - name: Install Bicep CLI
+        run: |
+          curl -fsSL -o bicep "https://github.com/Azure/bicep/releases/download/v0.38.33/bicep-linux-x64"
+          chmod +x ./bicep
+          sudo mv ./bicep /usr/local/bin/bicep
+          bicep --version
+      - name: Validate Bicep
+        run: bicep build infrastructure/bicep/main.bicep
