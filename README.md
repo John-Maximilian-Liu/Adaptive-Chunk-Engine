@@ -24,17 +24,18 @@ Production-oriented platform for **adaptive document chunking**, retrieval evalu
 
 ## 中文简介
 
-**ACE** 将 LREC 2026 Adaptive Chunking 的「按文档用 RC/ICC/DCC/BI/SC 选择最优切块」做成企业控制面，并提供独立测评包与论文：`benchmarks/adaptive_chunking_eval/`（含与原项目 CLAIR 结果的对比表）。
+**ACE** 将 LREC 2026 Adaptive Chunking 的「按文档用 RC/ICC/DCC/BI/SC 选择最优切块」做成企业控制面。测评覆盖 ACE 自有语料，以及 **CLAIR / FinanceBench / Open RAG Bench**；协议含 offline（hashed）与 OpenRouter live（`gpt-4o` + `text-embedding-3-small`）。详细结果与论文见 `benchmarks/adaptive_chunking_eval/`。
 
 ## What is Adaptive Chunk Engine?
 
-No single chunking method wins on every document. Adaptive Chunking selects the best splitter **per document** using five intrinsic metrics [1], [2]. **ACE** industrializes that idea with canonical schemas, audit trails, human-triggered optimization, Excel-native strategies, and Azure-ready packaging.
+No single chunking method wins on every document. Adaptive Chunking selects the best splitter **per document** using five intrinsic metrics [1], [2]. **ACE** industrializes that idea with canonical schemas, audit trails, human-triggered optimization, Excel-native strategies, Azure-ready packaging, and a public-benchmark suite.
 
 | Research idea (LREC 2026) | ACE productization |
 |---------------------------|--------------------|
 | Per-document selection | `adaptive_ace` + Strategy Registry |
-| Five intrinsic metrics | `benchmarks/adaptive_chunking_eval/src/intrinsic_metrics.py` (+ product `evaluation_engine`) |
-| RAG evaluation | Product eval engine + offline RAG-lite kit |
+| Five intrinsic metrics | eval kit + product `evaluation_engine` |
+| RAG evaluation | Offline lexical + live dense/`gpt-4o` judge |
+| Public corpora | CLAIR · FinanceBench · Open RAG Bench |
 | Research reproducibility | Audit + ReproductionManifest + Docker/Azure |
 
 ## Architecture overview
@@ -117,106 +118,81 @@ curl -s -o /dev/null -w '%{http_code}\n' http://localhost:3000/api/v1/health/liv
 curl -s -X POST http://localhost:3000/api/v1/admin/seed -H 'X-Tenant-Id: tenant_dev' | jq .
 ```
 
-## Key Results (with published Adaptive Chunking baselines)
+## Key Results
+
+Full tables: [`results/tables.md`](benchmarks/adaptive_chunking_eval/results/tables.md) · [`results/openrouter/`](benchmarks/adaptive_chunking_eval/results/openrouter/) · [`results/public_benchmarks/`](benchmarks/adaptive_chunking_eval/results/public_benchmarks/) · paper: [`paper/paper.md`](benchmarks/adaptive_chunking_eval/paper/paper.md)
 
 Reproduce:
 
 ```bash
-make eval                 # offline hashed / lexical
-make eval-openrouter      # requires OPENROUTER_API_KEY; gpt-4o + text-embedding-3-small
+make eval && make eval-openrouter
 make download-public-benchmarks
-make eval-public-smoke            # CLAIR + FinanceBench + Open RAG Bench (offline)
-make eval-public-openrouter-smoke # same three datasets, live OpenRouter
-# → benchmarks/adaptive_chunking_eval/results[/openrouter|/public_benchmarks]/
+make eval-public-smoke && make eval-public-openrouter-smoke
 ```
 
-### ACE offline intrinsic metrics (%)
+### Headline: `adaptive_ace` across studies
 
-| Method | RC | ICC | DCC | BI | SC | **Mean** |
-|--------|---:|----:|----:|---:|---:|--------:|
-| **adaptive_ace** | 100.0 | 60.58 | 99.94 | 100.0 | 100.0 | **92.10** |
-| recursive_text_1100 | 100.0 | 60.58 | 99.94 | 100.0 | 100.0 | **92.10** |
-| recursive_text | 100.0 | 60.49 | 99.88 | 98.70 | 100.0 | 91.81 |
-| fixed_token_512 | 100.0 | 59.81 | 99.89 | 97.66 | 100.0 | 91.47 |
-| fixed_token_256 | 99.25 | 58.91 | 99.48 | 96.69 | 99.02 | 90.67 |
-| heading_section | 100.0 | 59.45 | 94.07 | 97.66 | 83.33 | 86.90 |
-| no_split | 100.0 | 60.62 | 100.0 | 100.0 | 16.67 | 75.46 |
-| sentence_window | 58.33 | 61.50 | 95.09 | 21.35 | 60.69 | 59.39 |
+| Study / corpus | Protocol | Adaptive intrinsic Mean | Adaptive RAG RC |
+|----------------|----------|------------------------:|----------------:|
+| Adaptive Chunking CLAIR (paper) [2] | Neural + LLM judge | **91.07** | **67.7** |
+| ACE kit (6 docs) | Offline hashed / lexical | **92.10** | **100.0** |
+| ACE kit (6 docs) | OpenRouter `text-embedding-3-small` + `gpt-4o` | **88.48** | 64.17 |
+| Public CLAIR smoke (6 docs) | Offline | **90.53** | 99.68 |
+| Public CLAIR smoke | OpenRouter live | **84.89** | **91.67** |
+| FinanceBench smoke | Offline | **96.45** | 99.71 |
+| FinanceBench smoke | OpenRouter live | **94.76** | 92.5 |
+| Open RAG Bench smoke | Offline | **90.95** | 92.48 |
+| Open RAG Bench smoke | OpenRouter live | **86.00** | **88.0** |
 
-### ACE OpenRouter intrinsic metrics (%) — `text-embedding-3-small`
+> Compare **ranks** within a protocol. Absolute RAG numbers are not transferable across corpora or judges.
 
-| Method | RC | ICC | DCC | BI | SC | **Mean** |
-|--------|---:|----:|----:|---:|---:|--------:|
-| **adaptive_ace** | 100.0 | 48.04 | 94.38 | 100.0 | 100.0 | **88.48** |
-| recursive_text_1100 | 100.0 | 47.78 | 94.42 | 100.0 | 100.0 | 88.44 |
-| recursive_text | 100.0 | 48.09 | 94.94 | 98.70 | 100.0 | 88.35 |
-| fixed_token_512 | 100.0 | 49.23 | 92.73 | 97.66 | 100.0 | 87.92 |
-| sentence_window | 58.33 | 56.26 | 81.58 | 21.35 | 60.69 | 55.64 |
+### ACE kit — offline intrinsic (excerpt)
 
-### Published Adaptive Chunking intrinsic metrics (CLAIR / Table 3) [2]
+| Method | Mean | Method | Mean |
+|--------|-----:|--------|-----:|
+| **adaptive_ace** / recursive_text_1100 | **92.10** | fixed_token_512 | 91.47 |
+| recursive_text | 91.81 | sentence_window | 59.39 |
 
-| Method | RC | ICC | DCC | BI | SC | **Mean** |
-|--------|---:|----:|----:|---:|---:|--------:|
-| **Adaptive Chunking** | 99.0 | 68.2 | 88.8 | 99.4 | 99.9 | **91.07** |
-| LLM regex (GPT) | 98.0 | 70.9 | 82.4 | 98.1 | 99.6 | 89.80 |
-| LangChain recursive | 96.1 | 65.6 | 88.8 | 95.0 | 97.7 | 88.62 |
-| Semantic | 97.5 | 69.3 | 76.3 | 91.3 | 48.1 | 76.49 |
-| Sentence | 86.3 | 78.4 | 72.5 | 61.9 | 67.2 | 73.26 |
+### ACE kit — OpenRouter live (excerpt)
 
-### ACE offline RAG-lite
+| Method | Intrinsic Mean | RAG RC | RAG AC |
+|--------|---------------:|-------:|-------:|
+| **adaptive_ace** | **88.48** | 64.17 | 64.58 |
+| recursive_text_1100 | 88.44 | 82.92 | 83.33 |
+| fixed_token_512 | 87.92 | 93.75 | 93.75 |
+| no_split | 72.37 | **100.0** | **100.0** |
+| sentence_window | 55.64 | 90.83 | 92.71 |
 
-| Method | Retrieval Completeness | Answer Correctness | Answered |
-|--------|-----------------------:|-------------------:|---------:|
-| **adaptive_ace** | **100.0** | **100.0** | 43/43 |
-| recursive_text_1100 | 100.0 | 100.0 | 43/43 |
-| fixed_token_256 | 99.89 | 99.87 | 43/43 |
-| sentence_window | 91.48 | 89.84 | 43/43 |
+### Published CLAIR baselines [2]
 
-### ACE OpenRouter RAG — dense retrieval + `gpt-4o` judge
+| Method | Intrinsic Mean | RAG RC | RAG AC |
+|--------|---------------:|-------:|-------:|
+| **Adaptive Chunking** | **91.07** | **67.7** | **78.0** |
+| LangChain recursive | 88.62 | 58.1 | 70.1 |
+| Sentence | 73.26 | — | — |
 
-| Method | Retrieval Completeness | Answer Correctness | Answered |
-|--------|-----------------------:|-------------------:|---------:|
-| no_split | **100.0** | **100.0** | 43/43 |
-| fixed_token_512 | 93.75 | 93.75 | 40/43 |
-| recursive_text_1100 | 82.92 | 83.33 | 35/43 |
-| **adaptive_ace** | 64.17 | 64.58 | 26/43 |
-| recursive_text | 54.17 | 54.17 | 21/43 |
+### Public OpenRouter smoke — adaptive vs brittle
 
-### Published Adaptive Chunking RAG (CLAIR / Table 5) [2]
+| Dataset | adaptive Mean | sentence_window Mean | adaptive RAG RC/AC |
+|---------|--------------:|---------------------:|-------------------:|
+| CLAIR | **84.89** | 82.2 | **91.67 / 91.67** |
+| FinanceBench | **94.76** | 90.49 | 92.5 / 86.25 |
+| Open RAG Bench | **86.00** | 73.86 | **88.0 / 84.0** |
 
-| Method | Retrieval Completeness | Answer Correctness | Answered |
-|--------|-----------------------:|-------------------:|---------:|
-| **Adaptive Chunking** | **67.7** | **78.0** | 65/99 |
-| LangChain recursive | 58.1 | 70.1 | 49/99 |
-| Page splitting | 59.1 | 73.3 | 49/99 |
+**Takeaways**
 
-> **Compare ranks, not absolute RAG magnitudes.** Paper = CLAIR + neural embeddings + LLM judge; ACE offline = hashed + lexical; ACE OpenRouter = `text-embedding-3-small` + `gpt-4o` on the same 6-doc kit.
-
-**Takeaway:** offline and OpenRouter intrinsic runs both recover strong recursive splitters and avoid brittle sentence windows. Live LLM-judge RAG on this small corpus favors larger-context fixed splitters over pure intrinsic argmax — which is exactly why ACE keeps human-triggered optimization when RAG feedback disagrees with metric selection.
-
-### Public benchmarks smoke (CLAIR + FinanceBench + Open RAG Bench)
-
-| Dataset | Offline adaptive Mean | OpenRouter adaptive Mean | OpenRouter adaptive RAG RC |
-|---------|----------------------:|-------------------------:|---------------------------:|
-| CLAIR (6-doc smoke) | **90.53** | **84.89** | **91.67** |
-| FinanceBench | **96.45** | **94.76** | 92.5 |
-| Open RAG Bench | **90.95** | **86.00** | **88.0** |
-
-See [`benchmarks/adaptive_chunking_eval/datasets/EXPERIMENT_DESIGN.md`](benchmarks/adaptive_chunking_eval/datasets/EXPERIMENT_DESIGN.md) and `results/public_benchmarks/`.
+1. **Intrinsic:** `adaptive_ace` ranks first (or ties the best recursive) on the ACE kit and all three public smokes, offline and live; `sentence_window` stays weak.
+2. **Public live RAG:** adaptive leads on CLAIR and Open RAG Bench; FinanceBench slightly prefers `recursive_text_1100` on RC.
+3. **ACE-kit live RAG:** short documents can reward `no_split` / large fixed chunks over intrinsic argmax — ACE keeps **human-triggered optimization** for that gap.
+4. Design notes: [`datasets/EXPERIMENT_DESIGN.md`](benchmarks/adaptive_chunking_eval/datasets/EXPERIMENT_DESIGN.md).
 
 ## Evaluation kit & paper
 
 ```text
 benchmarks/adaptive_chunking_eval/
-  run_eval.py
-  run_eval_openrouter.py
-  src/intrinsic_metrics.py
-  src/openrouter_client.py
-  corpus/
-  results/tables.md
-  results/openrouter/tables.md
-  paper/paper.md
-  paper/paper.html
+  run_eval.py / run_eval_openrouter.py / run_public_benchmarks.py
+  datasets/          # CLAIR · FinanceBench · Open RAG Bench
+  corpus/ results/ paper/
 ```
 
 - Kit README: [`benchmarks/adaptive_chunking_eval/README.md`](benchmarks/adaptive_chunking_eval/README.md)
@@ -334,3 +310,5 @@ See [SECURITY.md](SECURITY.md).
 
 [1] https://arxiv.org/abs/2603.25333  
 [2] https://github.com/ekimetrics/adaptive-chunking  
+[3] https://github.com/patronus-ai/financebench  
+[4] https://huggingface.co/datasets/vectara/open_ragbench  
