@@ -4,79 +4,55 @@ Self-contained benchmark + paper for **Adaptive Chunk Engine**, aligned with:
 
 - Paper: [*Adaptive Chunking: Optimizing Chunking-Method Selection for RAG*](https://arxiv.org/abs/2603.25333) (LREC 2026)
 - Code: [ekimetrics/adaptive-chunking](https://github.com/ekimetrics/adaptive-chunking)
+- Public corpora: CLAIR · [FinanceBench](https://github.com/patronus-ai/financebench) · [Open RAG Bench](https://huggingface.co/datasets/vectara/open_ragbench)
 
 ## Layout
 
 ```text
 benchmarks/adaptive_chunking_eval/
-  run_eval.py               # offline evaluation entrypoint
-  run_eval_openrouter.py    # live OpenRouter eval (gpt-4o + text-embedding-3-small)
-  src/intrinsic_metrics.py
-  src/openrouter_client.py
-  corpus/                   # multi-domain documents
-  results/                  # offline tables.md, summary.json, metrics.json
-  results/openrouter/       # live OpenRouter tables + usage
-  paper/
-    paper.md                # arXiv-style research article
-    paper.html              # web-friendly rendering
-  README.md                 # this file
+  run_eval.py / run_eval_openrouter.py / run_public_benchmarks.py
+  datasets/EXPERIMENT_DESIGN.md
+  datasets/download.py + loaders/
+  data/                     # CLAIR / FinanceBench / Open RAG Bench
+  corpus/                   # ACE kit documents
+  results/                  # offline ACE kit
+  results/openrouter/       # live ACE kit
+  results/public_benchmarks/
+  paper/paper.md + paper.html
 ```
 
 ## Run
 
-### Offline (hashed embeddings + lexical RAG-lite)
-
 ```bash
-cd benchmarks/adaptive_chunking_eval
-PYTHONPATH=../../apps/api:../../packages/python python run_eval.py
-# or from repo root:
-make eval
+make eval                          # ACE kit offline
+make eval-openrouter               # ACE kit live (OPENROUTER_API_KEY)
+make download-public-benchmarks
+make eval-public-smoke             # public offline smoke
+make eval-public-openrouter-smoke  # public live smoke
 ```
 
-### Live OpenRouter (neural embeddings + gpt-4o LLM judge)
+Defaults for live: `ACE_CHAT_MODEL=openai/gpt-4o`, `ACE_EMBED_MODEL=openai/text-embedding-3-small`.
 
-Requires `OPENROUTER_API_KEY`. Defaults: chat `openai/gpt-4o`, embed `openai/text-embedding-3-small`.
+## Latest results (adaptive_ace)
 
-```bash
-export OPENROUTER_API_KEY=...   # or inject as Cloud Agent runtime secret
-export ACE_CHAT_MODEL=openai/gpt-4o
-export ACE_EMBED_MODEL=openai/text-embedding-3-small
-make eval-openrouter
-# → benchmarks/adaptive_chunking_eval/results/openrouter/
-```
+| Study | Intrinsic Mean | RAG RC | Protocol |
+|-------|---------------:|-------:|----------|
+| Adaptive Chunking CLAIR (paper) | **91.07** | **67.7** | published |
+| ACE kit offline | **92.10** | **100.0** | hashed / lexical |
+| ACE kit OpenRouter | **88.48** | 64.17 | neural + gpt-4o |
+| Public CLAIR smoke offline | **90.53** | 99.68 | hashed / lexical |
+| Public CLAIR smoke live | **84.89** | **91.67** | neural + gpt-4o |
+| FinanceBench smoke offline | **96.45** | 99.71 | hashed / lexical |
+| FinanceBench smoke live | **94.76** | 92.5 | neural + gpt-4o |
+| Open RAG Bench smoke offline | **90.95** | 92.48 | hashed / lexical |
+| Open RAG Bench smoke live | **86.00** | **88.0** | neural + gpt-4o |
 
-### Public benchmarks (CLAIR + FinanceBench + Open RAG Bench)
+Full tables: [`results/tables.md`](results/tables.md), [`results/openrouter/tables.md`](results/openrouter/tables.md), [`results/public_benchmarks/`](results/public_benchmarks/).
 
-Design: [`datasets/EXPERIMENT_DESIGN.md`](datasets/EXPERIMENT_DESIGN.md)
-
-```bash
-make download-public-benchmarks   # idempotent
-make eval-public-smoke            # offline hashed / lexical
-make eval-public-openrouter-smoke # live OpenRouter smoke subsets
-# → results/public_benchmarks/{offline,openrouter}_smoke/
-```
-
-## Key comparison (latest run)
-
-See [`results/tables.md`](results/tables.md) (offline) and [`results/openrouter/tables.md`](results/openrouter/tables.md) (live).
-
-| Study | Adaptive mean (intrinsic) | Notes |
-|-------|---------------------------:|-------|
-| Adaptive Chunking (CLAIR) | **91.07** | Neural embeddings, 33 docs |
-| **ACE `adaptive_ace` (offline)** | **92.10** | Hashed embeddings, 6 docs |
-| **ACE `adaptive_ace` (OpenRouter)** | **88.48** | `text-embedding-3-small` ICC/DCC, 6 docs |
-
-| Study | Adaptive RAG completeness | Notes |
-|-------|--------------------------:|-------|
-| Adaptive Chunking (CLAIR) | **67.7** | LLM judge, 99 queries |
-| **ACE `adaptive_ace` (offline)** | **100.0** | Lexical proxy — not absolute-comparable |
-| **ACE `adaptive_ace` (OpenRouter)** | **64.17** | Dense retrieval + `gpt-4o` judge, 43 queries |
-
-Compare **ranks** across studies; do not equate absolute RAG scores across protocols.
-
-**OpenRouter takeaway:** with neural ICC/DCC, `adaptive_ace` still tops intrinsic mean and still avoids brittle `sentence_window` (55.64). Under dense+LLM-judge RAG on this small corpus, larger-context fixed splitters (`no_split`, `fixed_token_512`) outrank intrinsic argmax — motivating ACE’s human-triggered optimization loop when RAG feedback disagrees with intrinsic selection.
+**Takeaway:** intrinsic selection recovers strong splitters and avoids brittle sentence windows across kits. Live RAG on short ACE-kit docs can favor larger-context fixed splitters; public CLAIR / Open RAG live RAG favor adaptive. Compare ranks, not absolute scores across protocols.
 
 ## Paper
 
 - Markdown: [`paper/paper.md`](paper/paper.md)
 - HTML: [`paper/paper.html`](paper/paper.html)
+- Experiment design: [`datasets/EXPERIMENT_DESIGN.md`](datasets/EXPERIMENT_DESIGN.md)
