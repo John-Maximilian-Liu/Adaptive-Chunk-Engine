@@ -45,6 +45,17 @@ make eval-openrouter
 # → benchmarks/adaptive_chunking_eval/results/openrouter/
 ```
 
+### Public benchmarks (CLAIR + FinanceBench + Open RAG Bench)
+
+Design: [`datasets/EXPERIMENT_DESIGN.md`](datasets/EXPERIMENT_DESIGN.md)
+
+```bash
+make download-public-benchmarks   # idempotent
+make eval-public-smoke            # offline hashed / lexical
+make eval-public-openrouter-smoke # live OpenRouter smoke subsets
+# → results/public_benchmarks/{offline,openrouter}_smoke/
+```
+
 ## Key comparison (latest run)
 
 See [`results/tables.md`](results/tables.md) (offline) and [`results/openrouter/tables.md`](results/openrouter/tables.md) (live).

@@ -1,0 +1,1122 @@
+{
+  "dataset": "clair",
+  "n_documents": 6,
+  "n_queries": 24,
+  "domains": [
+    "legal",
+    "social",
+    "technical"
+  ],
+  "approx_chars": 403618,
+  "intrinsic_table": [
+    {
+      "method": "adaptive_ace",
+      "RC": 100.0,
+      "ICC": 56.18,
+      "DCC": 96.8,
+      "BI": 99.66,
+      "SC": 100.0,
+      "Mean": 90.53
+    },
+    {
+      "method": "recursive_text",
+      "RC": 100.0,
+      "ICC": 53.61,
+      "DCC": 95.8,
+      "BI": 99.69,
+      "SC": 99.59,
+      "Mean": 89.74
+    },
+    {
+      "method": "fixed_token_512",
+      "RC": 100.0,
+      "ICC": 51.32,
+      "DCC": 97.02,
+      "BI": 99.69,
+      "SC": 100.0,
+      "Mean": 89.61
+    },
+    {
+      "method": "fixed_token_256",
+      "RC": 99.61,
+      "ICC": 52.49,
+      "DCC": 95.16,
+      "BI": 99.43,
+      "SC": 99.81,
+      "Mean": 89.3
+    },
+    {
+      "method": "recursive_text_1100",
+      "RC": 99.87,
+      "ICC": 48.99,
+      "DCC": 97.3,
+      "BI": 99.73,
+      "SC": 100.0,
+      "Mean": 89.18
+    },
+    {
+      "method": "sentence_window",
+      "RC": 98.42,
+      "ICC": 55.33,
+      "DCC": 96.99,
+      "BI": 92.04,
+      "SC": 87.53,
+      "Mean": 86.06
+    },
+    {
+      "method": "heading_section",
+      "RC": 99.85,
+      "ICC": 56.59,
+      "DCC": 87.31,
+      "BI": 98.83,
+      "SC": 86.82,
+      "Mean": 85.88
+    },
+    {
+      "method": "no_split",
+      "RC": 100.0,
+      "ICC": 58.75,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "SC": 0.0,
+      "Mean": 71.75
+    }
+  ],
+  "rag_table": [
+    {
+      "method": "no_split",
+      "retrieval_completeness": 100.0,
+      "answer_correctness": 95.83,
+      "answered_queries": "24/24"
+    },
+    {
+      "method": "adaptive_ace",
+      "retrieval_completeness": 99.68,
+      "answer_correctness": 95.83,
+      "answered_queries": "24/24"
+    },
+    {
+      "method": "recursive_text_1100",
+      "retrieval_completeness": 99.68,
+      "answer_correctness": 95.83,
+      "answered_queries": "24/24"
+    },
+    {
+      "method": "fixed_token_512",
+      "retrieval_completeness": 97.69,
+      "answer_correctness": 93.52,
+      "answered_queries": "23/24"
+    },
+    {
+      "method": "sentence_window",
+      "retrieval_completeness": 96.36,
+      "answer_correctness": 93.61,
+      "answered_queries": "23/24"
+    },
+    {
+      "method": "recursive_text",
+      "retrieval_completeness": 92.57,
+      "answer_correctness": 88.63,
+      "answered_queries": "22/24"
+    }
+  ],
+  "per_document": [
+    {
+      "doc_id": "Ada (technique)_Recommandations de s\u00e9curit\u00e9 pour un syst\u00e8me d'IA g\u00e9n\u00e9rative",
+      "domain": "technical",
+      "method": "fixed_token_512",
+      "n_chunks": 43,
+      "SC": 100.0,
+      "ICC": 16.77,
+      "DCC": 96.99,
+      "BI": 99.6,
+      "RC": 100.0,
+      "Mean": 82.67
+    },
+    {
+      "doc_id": "Ada (technique)_Recommandations de s\u00e9curit\u00e9 pour un syst\u00e8me d'IA g\u00e9n\u00e9rative",
+      "domain": "technical",
+      "method": "fixed_token_256",
+      "n_chunks": 86,
+      "SC": 100.0,
+      "ICC": 42.94,
+      "DCC": 94.81,
+      "BI": 99.39,
+      "RC": 100.0,
+      "Mean": 87.43
+    },
+    {
+      "doc_id": "Ada (technique)_Recommandations de s\u00e9curit\u00e9 pour un syst\u00e8me d'IA g\u00e9n\u00e9rative",
+      "domain": "technical",
+      "method": "recursive_text",
+      "n_chunks": 41,
+      "SC": 97.56,
+      "ICC": 33.2,
+      "DCC": 95.56,
+      "BI": 99.6,
+      "RC": 100.0,
+      "Mean": 85.18
+    },
+    {
+      "doc_id": "Ada (technique)_Recommandations de s\u00e9curit\u00e9 pour un syst\u00e8me d'IA g\u00e9n\u00e9rative",
+      "domain": "technical",
+      "method": "recursive_text_1100",
+      "n_chunks": 18,
+      "SC": 100.0,
+      "ICC": 17.35,
+      "DCC": 97.36,
+      "BI": 99.8,
+      "RC": 100.0,
+      "Mean": 82.9
+    },
+    {
+      "doc_id": "Ada (technique)_Recommandations de s\u00e9curit\u00e9 pour un syst\u00e8me d'IA g\u00e9n\u00e9rative",
+      "domain": "technical",
+      "method": "sentence_window",
+      "n_chunks": 437,
+      "SC": 75.74,
+      "ICC": 51.13,
+      "DCC": 96.43,
+      "BI": 96.36,
+      "RC": 99.1,
+      "Mean": 83.75
+    },
+    {
+      "doc_id": "Ada (technique)_Recommandations de s\u00e9curit\u00e9 pour un syst\u00e8me d'IA g\u00e9n\u00e9rative",
+      "domain": "technical",
+      "method": "heading_section",
+      "n_chunks": 75,
+      "SC": 88.0,
+      "ICC": 59.46,
+      "DCC": 87.62,
+      "BI": 99.39,
+      "RC": 99.55,
+      "Mean": 86.8
+    },
+    {
+      "doc_id": "Ada (technique)_Recommandations de s\u00e9curit\u00e9 pour un syst\u00e8me d'IA g\u00e9n\u00e9rative",
+      "domain": "technical",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 51.62,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 70.32
+    },
+    {
+      "doc_id": "Ada (technique)_Recommandations de s\u00e9curit\u00e9 pour un syst\u00e8me d'IA g\u00e9n\u00e9rative",
+      "domain": "technical",
+      "method": "adaptive_ace",
+      "n_chunks": 86,
+      "SC": 100.0,
+      "ICC": 42.94,
+      "DCC": 94.81,
+      "BI": 99.39,
+      "RC": 100.0,
+      "Mean": 87.43,
+      "selected": "fixed_token_256",
+      "candidates": {
+        "fixed_token_512": {
+          "SC": 100.0,
+          "ICC": 16.77,
+          "DCC": 96.99,
+          "BI": 99.6,
+          "RC": 100.0,
+          "Mean": 82.67
+        },
+        "fixed_token_256": {
+          "SC": 100.0,
+          "ICC": 42.94,
+          "DCC": 94.81,
+          "BI": 99.39,
+          "RC": 100.0,
+          "Mean": 87.43
+        },
+        "recursive_text": {
+          "SC": 97.56,
+          "ICC": 33.2,
+          "DCC": 95.56,
+          "BI": 99.6,
+          "RC": 100.0,
+          "Mean": 85.18
+        },
+        "recursive_text_1100": {
+          "SC": 100.0,
+          "ICC": 17.35,
+          "DCC": 97.36,
+          "BI": 99.8,
+          "RC": 100.0,
+          "Mean": 82.9
+        },
+        "sentence_window": {
+          "SC": 75.74,
+          "ICC": 51.13,
+          "DCC": 96.43,
+          "BI": 96.36,
+          "RC": 99.1,
+          "Mean": 83.75
+        },
+        "heading_section": {
+          "SC": 88.0,
+          "ICC": 59.46,
+          "DCC": 87.62,
+          "BI": 99.39,
+          "RC": 99.55,
+          "Mean": 86.8
+        },
+        "no_split": {
+          "SC": 0.0,
+          "ICC": 51.62,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 70.32
+        }
+      }
+    },
+    {
+      "doc_id": "Ada (technique)_Standards - Interpretability",
+      "domain": "technical",
+      "method": "fixed_token_512",
+      "n_chunks": 23,
+      "SC": 100.0,
+      "ICC": 60.24,
+      "DCC": 96.55,
+      "BI": 99.71,
+      "RC": 100.0,
+      "Mean": 91.3
+    },
+    {
+      "doc_id": "Ada (technique)_Standards - Interpretability",
+      "domain": "technical",
+      "method": "fixed_token_256",
+      "n_chunks": 47,
+      "SC": 100.0,
+      "ICC": 53.6,
+      "DCC": 94.75,
+      "BI": 99.42,
+      "RC": 100.0,
+      "Mean": 89.55
+    },
+    {
+      "doc_id": "Ada (technique)_Standards - Interpretability",
+      "domain": "technical",
+      "method": "recursive_text",
+      "n_chunks": 22,
+      "SC": 100.0,
+      "ICC": 59.37,
+      "DCC": 94.84,
+      "BI": 99.71,
+      "RC": 100.0,
+      "Mean": 90.78
+    },
+    {
+      "doc_id": "Ada (technique)_Standards - Interpretability",
+      "domain": "technical",
+      "method": "recursive_text_1100",
+      "n_chunks": 10,
+      "SC": 100.0,
+      "ICC": 52.79,
+      "DCC": 97.26,
+      "BI": 99.71,
+      "RC": 100.0,
+      "Mean": 89.95
+    },
+    {
+      "doc_id": "Ada (technique)_Standards - Interpretability",
+      "domain": "technical",
+      "method": "sentence_window",
+      "n_chunks": 363,
+      "SC": 82.37,
+      "ICC": 49.96,
+      "DCC": 96.34,
+      "BI": 93.02,
+      "RC": 97.95,
+      "Mean": 83.93
+    },
+    {
+      "doc_id": "Ada (technique)_Standards - Interpretability",
+      "domain": "technical",
+      "method": "heading_section",
+      "n_chunks": 42,
+      "SC": 88.1,
+      "ICC": 45.67,
+      "DCC": 87.03,
+      "BI": 99.42,
+      "RC": 100.0,
+      "Mean": 84.04
+    },
+    {
+      "doc_id": "Ada (technique)_Standards - Interpretability",
+      "domain": "technical",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 54.8,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 70.96
+    },
+    {
+      "doc_id": "Ada (technique)_Standards - Interpretability",
+      "domain": "technical",
+      "method": "adaptive_ace",
+      "n_chunks": 23,
+      "SC": 100.0,
+      "ICC": 60.24,
+      "DCC": 96.55,
+      "BI": 99.71,
+      "RC": 100.0,
+      "Mean": 91.3,
+      "selected": "fixed_token_512",
+      "candidates": {
+        "fixed_token_512": {
+          "SC": 100.0,
+          "ICC": 60.24,
+          "DCC": 96.55,
+          "BI": 99.71,
+          "RC": 100.0,
+          "Mean": 91.3
+        },
+        "fixed_token_256": {
+          "SC": 100.0,
+          "ICC": 53.6,
+          "DCC": 94.75,
+          "BI": 99.42,
+          "RC": 100.0,
+          "Mean": 89.55
+        },
+        "recursive_text": {
+          "SC": 100.0,
+          "ICC": 59.37,
+          "DCC": 94.84,
+          "BI": 99.71,
+          "RC": 100.0,
+          "Mean": 90.78
+        },
+        "recursive_text_1100": {
+          "SC": 100.0,
+          "ICC": 52.79,
+          "DCC": 97.26,
+          "BI": 99.71,
+          "RC": 100.0,
+          "Mean": 89.95
+        },
+        "sentence_window": {
+          "SC": 82.37,
+          "ICC": 49.96,
+          "DCC": 96.34,
+          "BI": 93.02,
+          "RC": 97.95,
+          "Mean": 83.93
+        },
+        "heading_section": {
+          "SC": 88.1,
+          "ICC": 45.67,
+          "DCC": 87.03,
+          "BI": 99.42,
+          "RC": 100.0,
+          "Mean": 84.04
+        },
+        "no_split": {
+          "SC": 0.0,
+          "ICC": 54.8,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 70.96
+        }
+      }
+    },
+    {
+      "doc_id": "Norma (l\u00e9gal)_European Convention On Human Rights",
+      "domain": "legal",
+      "method": "fixed_token_512",
+      "n_chunks": 43,
+      "SC": 100.0,
+      "ICC": 36.97,
+      "DCC": 97.28,
+      "BI": 99.82,
+      "RC": 100.0,
+      "Mean": 86.81
+    },
+    {
+      "doc_id": "Norma (l\u00e9gal)_European Convention On Human Rights",
+      "domain": "legal",
+      "method": "fixed_token_256",
+      "n_chunks": 86,
+      "SC": 98.84,
+      "ICC": 36.85,
+      "DCC": 95.96,
+      "BI": 99.45,
+      "RC": 100.0,
+      "Mean": 86.22
+    },
+    {
+      "doc_id": "Norma (l\u00e9gal)_European Convention On Human Rights",
+      "domain": "legal",
+      "method": "recursive_text",
+      "n_chunks": 40,
+      "SC": 100.0,
+      "ICC": 37.55,
+      "DCC": 96.59,
+      "BI": 99.82,
+      "RC": 100.0,
+      "Mean": 86.79
+    },
+    {
+      "doc_id": "Norma (l\u00e9gal)_European Convention On Human Rights",
+      "domain": "legal",
+      "method": "recursive_text_1100",
+      "n_chunks": 18,
+      "SC": 100.0,
+      "ICC": 39.97,
+      "DCC": 98.17,
+      "BI": 99.82,
+      "RC": 100.0,
+      "Mean": 87.59
+    },
+    {
+      "doc_id": "Norma (l\u00e9gal)_European Convention On Human Rights",
+      "domain": "legal",
+      "method": "sentence_window",
+      "n_chunks": 509,
+      "SC": 84.87,
+      "ICC": 51.73,
+      "DCC": 96.93,
+      "BI": 95.82,
+      "RC": 99.55,
+      "Mean": 85.78
+    },
+    {
+      "doc_id": "Norma (l\u00e9gal)_European Convention On Human Rights",
+      "domain": "legal",
+      "method": "heading_section",
+      "n_chunks": 150,
+      "SC": 72.0,
+      "ICC": 49.31,
+      "DCC": 80.12,
+      "BI": 98.55,
+      "RC": 99.55,
+      "Mean": 79.91
+    },
+    {
+      "doc_id": "Norma (l\u00e9gal)_European Convention On Human Rights",
+      "domain": "legal",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 53.84,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 70.77
+    },
+    {
+      "doc_id": "Norma (l\u00e9gal)_European Convention On Human Rights",
+      "domain": "legal",
+      "method": "adaptive_ace",
+      "n_chunks": 18,
+      "SC": 100.0,
+      "ICC": 39.97,
+      "DCC": 98.17,
+      "BI": 99.82,
+      "RC": 100.0,
+      "Mean": 87.59,
+      "selected": "recursive_text_1100",
+      "candidates": {
+        "fixed_token_512": {
+          "SC": 100.0,
+          "ICC": 36.97,
+          "DCC": 97.28,
+          "BI": 99.82,
+          "RC": 100.0,
+          "Mean": 86.81
+        },
+        "fixed_token_256": {
+          "SC": 98.84,
+          "ICC": 36.85,
+          "DCC": 95.96,
+          "BI": 99.45,
+          "RC": 100.0,
+          "Mean": 86.22
+        },
+        "recursive_text": {
+          "SC": 100.0,
+          "ICC": 37.55,
+          "DCC": 96.59,
+          "BI": 99.82,
+          "RC": 100.0,
+          "Mean": 86.79
+        },
+        "recursive_text_1100": {
+          "SC": 100.0,
+          "ICC": 39.97,
+          "DCC": 98.17,
+          "BI": 99.82,
+          "RC": 100.0,
+          "Mean": 87.59
+        },
+        "sentence_window": {
+          "SC": 84.87,
+          "ICC": 51.73,
+          "DCC": 96.93,
+          "BI": 95.82,
+          "RC": 99.55,
+          "Mean": 85.78
+        },
+        "heading_section": {
+          "SC": 72.0,
+          "ICC": 49.31,
+          "DCC": 80.12,
+          "BI": 98.55,
+          "RC": 99.55,
+          "Mean": 79.91
+        },
+        "no_split": {
+          "SC": 0.0,
+          "ICC": 53.84,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 70.77
+        }
+      }
+    },
+    {
+      "doc_id": "Norma (l\u00e9gal)_Artificial Intelligence for Europe",
+      "domain": "legal",
+      "method": "fixed_token_512",
+      "n_chunks": 36,
+      "SC": 100.0,
+      "ICC": 61.65,
+      "DCC": 97.36,
+      "BI": 99.64,
+      "RC": 100.0,
+      "Mean": 91.73
+    },
+    {
+      "doc_id": "Norma (l\u00e9gal)_Artificial Intelligence for Europe",
+      "domain": "legal",
+      "method": "fixed_token_256",
+      "n_chunks": 71,
+      "SC": 100.0,
+      "ICC": 58.35,
+      "DCC": 95.37,
+      "BI": 99.27,
+      "RC": 98.48,
+      "Mean": 90.29
+    },
+    {
+      "doc_id": "Norma (l\u00e9gal)_Artificial Intelligence for Europe",
+      "domain": "legal",
+      "method": "recursive_text",
+      "n_chunks": 35,
+      "SC": 100.0,
+      "ICC": 59.78,
+      "DCC": 96.36,
+      "BI": 99.64,
+      "RC": 100.0,
+      "Mean": 91.16
+    },
+    {
+      "doc_id": "Norma (l\u00e9gal)_Artificial Intelligence for Europe",
+      "domain": "legal",
+      "method": "recursive_text_1100",
+      "n_chunks": 16,
+      "SC": 100.0,
+      "ICC": 58.65,
+      "DCC": 97.88,
+      "BI": 99.64,
+      "RC": 99.24,
+      "Mean": 91.08
+    },
+    {
+      "doc_id": "Norma (l\u00e9gal)_Artificial Intelligence for Europe",
+      "domain": "legal",
+      "method": "sentence_window",
+      "n_chunks": 336,
+      "SC": 97.62,
+      "ICC": 61.29,
+      "DCC": 97.69,
+      "BI": 89.42,
+      "RC": 93.94,
+      "Mean": 87.99
+    },
+    {
+      "doc_id": "Norma (l\u00e9gal)_Artificial Intelligence for Europe",
+      "domain": "legal",
+      "method": "heading_section",
+      "n_chunks": 46,
+      "SC": 93.48,
+      "ICC": 61.9,
+      "DCC": 91.71,
+      "BI": 98.18,
+      "RC": 100.0,
+      "Mean": 89.05
+    },
+    {
+      "doc_id": "Norma (l\u00e9gal)_Artificial Intelligence for Europe",
+      "domain": "legal",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 66.92,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 73.38
+    },
+    {
+      "doc_id": "Norma (l\u00e9gal)_Artificial Intelligence for Europe",
+      "domain": "legal",
+      "method": "adaptive_ace",
+      "n_chunks": 36,
+      "SC": 100.0,
+      "ICC": 61.65,
+      "DCC": 97.36,
+      "BI": 99.64,
+      "RC": 100.0,
+      "Mean": 91.73,
+      "selected": "fixed_token_512",
+      "candidates": {
+        "fixed_token_512": {
+          "SC": 100.0,
+          "ICC": 61.65,
+          "DCC": 97.36,
+          "BI": 99.64,
+          "RC": 100.0,
+          "Mean": 91.73
+        },
+        "fixed_token_256": {
+          "SC": 100.0,
+          "ICC": 58.35,
+          "DCC": 95.37,
+          "BI": 99.27,
+          "RC": 98.48,
+          "Mean": 90.29
+        },
+        "recursive_text": {
+          "SC": 100.0,
+          "ICC": 59.78,
+          "DCC": 96.36,
+          "BI": 99.64,
+          "RC": 100.0,
+          "Mean": 91.16
+        },
+        "recursive_text_1100": {
+          "SC": 100.0,
+          "ICC": 58.65,
+          "DCC": 97.88,
+          "BI": 99.64,
+          "RC": 99.24,
+          "Mean": 91.08
+        },
+        "sentence_window": {
+          "SC": 97.62,
+          "ICC": 61.29,
+          "DCC": 97.69,
+          "BI": 89.42,
+          "RC": 93.94,
+          "Mean": 87.99
+        },
+        "heading_section": {
+          "SC": 93.48,
+          "ICC": 61.9,
+          "DCC": 91.71,
+          "BI": 98.18,
+          "RC": 100.0,
+          "Mean": 89.05
+        },
+        "no_split": {
+          "SC": 0.0,
+          "ICC": 66.92,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 73.38
+        }
+      }
+    },
+    {
+      "doc_id": "Sophia (sciences sociales)_Consultation paper on AI regulation - emerging approaches across the world",
+      "domain": "social",
+      "method": "fixed_token_512",
+      "n_chunks": 47,
+      "SC": 100.0,
+      "ICC": 63.27,
+      "DCC": 96.92,
+      "BI": 99.76,
+      "RC": 100.0,
+      "Mean": 91.99
+    },
+    {
+      "doc_id": "Sophia (sciences sociales)_Consultation paper on AI regulation - emerging approaches across the world",
+      "domain": "social",
+      "method": "fixed_token_256",
+      "n_chunks": 94,
+      "SC": 100.0,
+      "ICC": 62.25,
+      "DCC": 94.83,
+      "BI": 99.76,
+      "RC": 99.15,
+      "Mean": 91.2
+    },
+    {
+      "doc_id": "Sophia (sciences sociales)_Consultation paper on AI regulation - emerging approaches across the world",
+      "domain": "social",
+      "method": "recursive_text",
+      "n_chunks": 46,
+      "SC": 100.0,
+      "ICC": 62.34,
+      "DCC": 95.56,
+      "BI": 99.76,
+      "RC": 100.0,
+      "Mean": 91.53
+    },
+    {
+      "doc_id": "Sophia (sciences sociales)_Consultation paper on AI regulation - emerging approaches across the world",
+      "domain": "social",
+      "method": "recursive_text_1100",
+      "n_chunks": 21,
+      "SC": 100.0,
+      "ICC": 57.74,
+      "DCC": 97.26,
+      "BI": 99.76,
+      "RC": 100.0,
+      "Mean": 90.95
+    },
+    {
+      "doc_id": "Sophia (sciences sociales)_Consultation paper on AI regulation - emerging approaches across the world",
+      "domain": "social",
+      "method": "sentence_window",
+      "n_chunks": 411,
+      "SC": 87.35,
+      "ICC": 56.52,
+      "DCC": 97.14,
+      "BI": 94.2,
+      "RC": 100.0,
+      "Mean": 87.04
+    },
+    {
+      "doc_id": "Sophia (sciences sociales)_Consultation paper on AI regulation - emerging approaches across the world",
+      "domain": "social",
+      "method": "heading_section",
+      "n_chunks": 59,
+      "SC": 94.92,
+      "ICC": 63.63,
+      "DCC": 92.82,
+      "BI": 99.28,
+      "RC": 100.0,
+      "Mean": 90.13
+    },
+    {
+      "doc_id": "Sophia (sciences sociales)_Consultation paper on AI regulation - emerging approaches across the world",
+      "domain": "social",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 61.28,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 72.26
+    },
+    {
+      "doc_id": "Sophia (sciences sociales)_Consultation paper on AI regulation - emerging approaches across the world",
+      "domain": "social",
+      "method": "adaptive_ace",
+      "n_chunks": 47,
+      "SC": 100.0,
+      "ICC": 63.27,
+      "DCC": 96.92,
+      "BI": 99.76,
+      "RC": 100.0,
+      "Mean": 91.99,
+      "selected": "fixed_token_512",
+      "candidates": {
+        "fixed_token_512": {
+          "SC": 100.0,
+          "ICC": 63.27,
+          "DCC": 96.92,
+          "BI": 99.76,
+          "RC": 100.0,
+          "Mean": 91.99
+        },
+        "fixed_token_256": {
+          "SC": 100.0,
+          "ICC": 62.25,
+          "DCC": 94.83,
+          "BI": 99.76,
+          "RC": 99.15,
+          "Mean": 91.2
+        },
+        "recursive_text": {
+          "SC": 100.0,
+          "ICC": 62.34,
+          "DCC": 95.56,
+          "BI": 99.76,
+          "RC": 100.0,
+          "Mean": 91.53
+        },
+        "recursive_text_1100": {
+          "SC": 100.0,
+          "ICC": 57.74,
+          "DCC": 97.26,
+          "BI": 99.76,
+          "RC": 100.0,
+          "Mean": 90.95
+        },
+        "sentence_window": {
+          "SC": 87.35,
+          "ICC": 56.52,
+          "DCC": 97.14,
+          "BI": 94.2,
+          "RC": 100.0,
+          "Mean": 87.04
+        },
+        "heading_section": {
+          "SC": 94.92,
+          "ICC": 63.63,
+          "DCC": 92.82,
+          "BI": 99.28,
+          "RC": 100.0,
+          "Mean": 90.13
+        },
+        "no_split": {
+          "SC": 0.0,
+          "ICC": 61.28,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 72.26
+        }
+      }
+    },
+    {
+      "doc_id": "Sophia (sciences sociales)_Livre blanc - Impact AI",
+      "domain": "social",
+      "method": "fixed_token_512",
+      "n_chunks": 33,
+      "SC": 100.0,
+      "ICC": 69.01,
+      "DCC": 97.0,
+      "BI": 99.64,
+      "RC": 100.0,
+      "Mean": 93.13
+    },
+    {
+      "doc_id": "Sophia (sciences sociales)_Livre blanc - Impact AI",
+      "domain": "social",
+      "method": "fixed_token_256",
+      "n_chunks": 66,
+      "SC": 100.0,
+      "ICC": 60.93,
+      "DCC": 95.24,
+      "BI": 99.28,
+      "RC": 100.0,
+      "Mean": 91.09
+    },
+    {
+      "doc_id": "Sophia (sciences sociales)_Livre blanc - Impact AI",
+      "domain": "social",
+      "method": "recursive_text",
+      "n_chunks": 33,
+      "SC": 100.0,
+      "ICC": 69.43,
+      "DCC": 95.9,
+      "BI": 99.64,
+      "RC": 100.0,
+      "Mean": 92.99
+    },
+    {
+      "doc_id": "Sophia (sciences sociales)_Livre blanc - Impact AI",
+      "domain": "social",
+      "method": "recursive_text_1100",
+      "n_chunks": 15,
+      "SC": 100.0,
+      "ICC": 67.42,
+      "DCC": 95.87,
+      "BI": 99.64,
+      "RC": 100.0,
+      "Mean": 92.59
+    },
+    {
+      "doc_id": "Sophia (sciences sociales)_Livre blanc - Impact AI",
+      "domain": "social",
+      "method": "sentence_window",
+      "n_chunks": 363,
+      "SC": 97.25,
+      "ICC": 61.33,
+      "DCC": 97.39,
+      "BI": 83.39,
+      "RC": 100.0,
+      "Mean": 87.87
+    },
+    {
+      "doc_id": "Sophia (sciences sociales)_Livre blanc - Impact AI",
+      "domain": "social",
+      "method": "heading_section",
+      "n_chunks": 77,
+      "SC": 84.42,
+      "ICC": 59.57,
+      "DCC": 84.58,
+      "BI": 98.19,
+      "RC": 100.0,
+      "Mean": 85.35
+    },
+    {
+      "doc_id": "Sophia (sciences sociales)_Livre blanc - Impact AI",
+      "domain": "social",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 64.02,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 72.8
+    },
+    {
+      "doc_id": "Sophia (sciences sociales)_Livre blanc - Impact AI",
+      "domain": "social",
+      "method": "adaptive_ace",
+      "n_chunks": 33,
+      "SC": 100.0,
+      "ICC": 69.01,
+      "DCC": 97.0,
+      "BI": 99.64,
+      "RC": 100.0,
+      "Mean": 93.13,
+      "selected": "fixed_token_512",
+      "candidates": {
+        "fixed_token_512": {
+          "SC": 100.0,
+          "ICC": 69.01,
+          "DCC": 97.0,
+          "BI": 99.64,
+          "RC": 100.0,
+          "Mean": 93.13
+        },
+        "fixed_token_256": {
+          "SC": 100.0,
+          "ICC": 60.93,
+          "DCC": 95.24,
+          "BI": 99.28,
+          "RC": 100.0,
+          "Mean": 91.09
+        },
+        "recursive_text": {
+          "SC": 100.0,
+          "ICC": 69.43,
+          "DCC": 95.9,
+          "BI": 99.64,
+          "RC": 100.0,
+          "Mean": 92.99
+        },
+        "recursive_text_1100": {
+          "SC": 100.0,
+          "ICC": 67.42,
+          "DCC": 95.87,
+          "BI": 99.64,
+          "RC": 100.0,
+          "Mean": 92.59
+        },
+        "sentence_window": {
+          "SC": 97.25,
+          "ICC": 61.33,
+          "DCC": 97.39,
+          "BI": 83.39,
+          "RC": 100.0,
+          "Mean": 87.87
+        },
+        "heading_section": {
+          "SC": 84.42,
+          "ICC": 59.57,
+          "DCC": 84.58,
+          "BI": 98.19,
+          "RC": 100.0,
+          "Mean": 85.35
+        },
+        "no_split": {
+          "SC": 0.0,
+          "ICC": 64.02,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 72.8
+        }
+      }
+    }
+  ],
+  "paper_intrinsic_table": [
+    {
+      "method": "Adaptive Chunking (paper)",
+      "RC": 99.0,
+      "ICC": 68.2,
+      "DCC": 88.8,
+      "BI": 99.4,
+      "SC": 99.9,
+      "Mean": 91.07
+    },
+    {
+      "method": "LLM regex (GPT) (paper)",
+      "RC": 98.0,
+      "ICC": 70.9,
+      "DCC": 82.4,
+      "BI": 98.1,
+      "SC": 99.6,
+      "Mean": 89.8
+    },
+    {
+      "method": "LangChain recursive (paper)",
+      "RC": 96.1,
+      "ICC": 65.6,
+      "DCC": 88.8,
+      "BI": 95.0,
+      "SC": 97.7,
+      "Mean": 88.62
+    },
+    {
+      "method": "Semantic (paper)",
+      "RC": 97.5,
+      "ICC": 69.3,
+      "DCC": 76.3,
+      "BI": 91.3,
+      "SC": 48.1,
+      "Mean": 76.49
+    },
+    {
+      "method": "Sentence (paper)",
+      "RC": 86.3,
+      "ICC": 78.4,
+      "DCC": 72.5,
+      "BI": 61.9,
+      "SC": 67.2,
+      "Mean": 73.26
+    }
+  ],
+  "paper_rag_table": [
+    {
+      "method": "Adaptive Chunking (paper)",
+      "retrieval_completeness": 67.7,
+      "answer_correctness": 78.0,
+      "answered_queries": "65/99"
+    },
+    {
+      "method": "LangChain recursive (paper)",
+      "retrieval_completeness": 58.1,
+      "answer_correctness": 70.1,
+      "answered_queries": "49/99"
+    },
+    {
+      "method": "Page splitting (paper)",
+      "retrieval_completeness": 59.1,
+      "answer_correctness": 73.3,
+      "answered_queries": "49/99"
+    }
+  ]
+}

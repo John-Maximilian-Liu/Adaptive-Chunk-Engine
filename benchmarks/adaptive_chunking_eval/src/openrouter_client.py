@@ -25,7 +25,7 @@ class OpenRouterClient:
         embed_model: str = DEFAULT_EMBED_MODEL,
         cache_dir: Optional[Path] = None,
         timeout: float = 120.0,
-        batch_size: int = 64,
+        batch_size: int = 16,
     ) -> None:
         self.api_key = api_key or os.environ.get("OPENROUTER_API_KEY") or os.environ.get("OPENAI_API_KEY")
         if not self.api_key:
@@ -86,14 +86,53 @@ class OpenRouterClient:
         if cost is not None:
             self.stats["estimated_cost_usd"] += float(cost)
 
+    @staticmethod
+    def _sanitize_embed_text(text: str, max_chars: int = 6000) -> str:
+        cleaned = (text or "").replace("\x00", " ").strip()
+        if not cleaned:
+            cleaned = " "
+        if len(cleaned) > max_chars:
+            head = max_chars * 2 // 3
+            tail = max_chars - head
+            cleaned = cleaned[:head] + "\n...\n" + cleaned[-tail:]
+        return cleaned
+
+    def _embed_batch(self, batch: list[str]) -> list[list[float]]:
+        payload = {"model": self.embed_model, "input": batch}
+        self.stats["embed_calls"] += 1
+        self.stats["embed_texts"] += len(batch)
+        with httpx.Client(timeout=self.timeout) as client:
+            resp = client.post(f"{self.base_url}/embeddings", headers=self._headers(), json=payload)
+            if resp.status_code >= 400:
+                # Fall back to one-by-one with stronger truncation.
+                if len(batch) > 1:
+                    vecs: list[list[float]] = []
+                    for item in batch:
+                        vecs.extend(self._embed_batch([item]))
+                    return vecs
+                shorter = self._sanitize_embed_text(batch[0], max_chars=2000)
+                payload = {"model": self.embed_model, "input": [shorter]}
+                resp = client.post(f"{self.base_url}/embeddings", headers=self._headers(), json=payload)
+                if resp.status_code >= 400:
+                    raise httpx.HTTPStatusError(
+                        f"{resp.status_code} embeddings error: {resp.text[:500]}",
+                        request=resp.request,
+                        response=resp,
+                    )
+            data = resp.json()
+        self._record_usage(data.get("usage") or {})
+        rows = sorted(data["data"], key=lambda r: r["index"])
+        return [row["embedding"] for row in rows]
+
     def embed(self, texts: Sequence[str]) -> list[list[float]]:
         """Embed texts with disk cache + batched OpenRouter calls."""
         if not texts:
             return []
-        out: list[Optional[list[float]]] = [None] * len(texts)
+        sanitized = [self._sanitize_embed_text(t) for t in texts]
+        out: list[Optional[list[float]]] = [None] * len(sanitized)
         missing_idx: list[int] = []
         missing_texts: list[str] = []
-        for i, text in enumerate(texts):
+        for i, text in enumerate(sanitized):
             cached = self._load_cached(text)
             if cached is not None:
                 out[i] = cached
@@ -104,17 +143,8 @@ class OpenRouterClient:
         for start in range(0, len(missing_texts), self.batch_size):
             batch = missing_texts[start : start + self.batch_size]
             batch_idx = missing_idx[start : start + self.batch_size]
-            payload = {"model": self.embed_model, "input": batch}
-            self.stats["embed_calls"] += 1
-            self.stats["embed_texts"] += len(batch)
-            with httpx.Client(timeout=self.timeout) as client:
-                resp = client.post(f"{self.base_url}/embeddings", headers=self._headers(), json=payload)
-                resp.raise_for_status()
-                data = resp.json()
-            self._record_usage(data.get("usage") or {})
-            rows = sorted(data["data"], key=lambda r: r["index"])
-            for local_i, row in enumerate(rows):
-                vec = row["embedding"]
+            vectors = self._embed_batch(batch)
+            for local_i, vec in enumerate(vectors):
                 global_i = batch_idx[local_i]
                 out[global_i] = vec
                 self._store_cached(batch[local_i], vec)

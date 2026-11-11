@@ -124,7 +124,10 @@ Reproduce:
 ```bash
 make eval                 # offline hashed / lexical
 make eval-openrouter      # requires OPENROUTER_API_KEY; gpt-4o + text-embedding-3-small
-# → benchmarks/adaptive_chunking_eval/results[/openrouter]/tables.md
+make download-public-benchmarks
+make eval-public-smoke            # CLAIR + FinanceBench + Open RAG Bench (offline)
+make eval-public-openrouter-smoke # same three datasets, live OpenRouter
+# → benchmarks/adaptive_chunking_eval/results[/openrouter|/public_benchmarks]/
 ```
 
 ### ACE offline intrinsic metrics (%)
@@ -190,6 +193,16 @@ make eval-openrouter      # requires OPENROUTER_API_KEY; gpt-4o + text-embedding
 > **Compare ranks, not absolute RAG magnitudes.** Paper = CLAIR + neural embeddings + LLM judge; ACE offline = hashed + lexical; ACE OpenRouter = `text-embedding-3-small` + `gpt-4o` on the same 6-doc kit.
 
 **Takeaway:** offline and OpenRouter intrinsic runs both recover strong recursive splitters and avoid brittle sentence windows. Live LLM-judge RAG on this small corpus favors larger-context fixed splitters over pure intrinsic argmax — which is exactly why ACE keeps human-triggered optimization when RAG feedback disagrees with metric selection.
+
+### Public benchmarks smoke (CLAIR + FinanceBench + Open RAG Bench)
+
+| Dataset | Offline adaptive Mean | OpenRouter adaptive Mean | OpenRouter adaptive RAG RC |
+|---------|----------------------:|-------------------------:|---------------------------:|
+| CLAIR (6-doc smoke) | **90.53** | **84.89** | **91.67** |
+| FinanceBench | **96.45** | **94.76** | 92.5 |
+| Open RAG Bench | **90.95** | **86.00** | **88.0** |
+
+See [`benchmarks/adaptive_chunking_eval/datasets/EXPERIMENT_DESIGN.md`](benchmarks/adaptive_chunking_eval/datasets/EXPERIMENT_DESIGN.md) and `results/public_benchmarks/`.
 
 ## Evaluation kit & paper
 
