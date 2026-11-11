@@ -1,7 +1,7 @@
 ---
 title: "Adaptive Chunk Engine: Governed Per-Document Chunking Selection for Enterprise RAG"
 authors: "Adaptive Chunk Engine Contributors"
-date: 2026-11-06
+date: 2026-11-11
 arxiv:
 layout: arxiv
 tags: [rag, chunking, information-retrieval, evaluation, enterprise-ai]
@@ -16,14 +16,14 @@ benchmark: "benchmarks/adaptive_chunking_eval"
 
 **Adaptive Chunk Engine Contributors**
 
-*Technical report · 2026-11-06*  
+*Technical report · 2026-11-11*  
 *Builds on Adaptive Chunking (LREC 2026; [arXiv:2603.25333](https://arxiv.org/abs/2603.25333); code: [ekimetrics/adaptive-chunking](https://github.com/ekimetrics/adaptive-chunking))*
 
 </div>
 
 ---
 
-**Abstract**—The effectiveness of Retrieval-Augmented Generation (RAG) depends critically on how documents are segmented for indexing. De Moura et al. (LREC 2026) introduce *Adaptive Chunking*, which selects the best splitter per document using five intrinsic metrics—References Completeness (RC), Intrachunk Cohesion (ICC), Document Contextual Coherence (DCC), Block Integrity (BI), and Size Compliance (SC)—and report strong gains on the CLAIR corpus. We present **Adaptive Chunk Engine (ACE)**, an enterprise control plane that operationalizes the same selection principle behind canonical schemas, audit/reproduction manifests, human-triggered optimization, Excel-native strategies, and multi-sink indexing. On a multi-domain offline ACE corpus (6 documents, ≈8.8k words), metric-guided `adaptive_ace` matches the strongest fixed recursive baseline (**intrinsic mean 92.10%**) and leads RAG-lite completeness, while brittle strategies such as aggressive sentence windows collapse (mean **59.39%**; RAG completeness **91.48%**). We juxtapose these results with the published Adaptive Chunking CLAIR tables (intrinsic mean **91.07%**; RAG completeness **67.7**) and discuss why absolute scores are not comparable across protocols while **rank-order conclusions transfer**.
+**Abstract**—The effectiveness of Retrieval-Augmented Generation (RAG) depends critically on how documents are segmented for indexing. De Moura et al. (LREC 2026) introduce *Adaptive Chunking*, which selects the best splitter per document using five intrinsic metrics—References Completeness (RC), Intrachunk Cohesion (ICC), Document Contextual Coherence (DCC), Block Integrity (BI), and Size Compliance (SC)—and report strong gains on the CLAIR corpus. We present **Adaptive Chunk Engine (ACE)**, an enterprise control plane that operationalizes the same selection principle behind canonical schemas, audit/reproduction manifests, human-triggered optimization, Excel-native strategies, and multi-sink indexing. On a multi-domain ACE corpus (6 documents, ≈8.8k words), offline hashed-embedding `adaptive_ace` matches the strongest fixed recursive baseline (**intrinsic mean 92.10%**). A live OpenRouter replicate with **`openai/text-embedding-3-small`** ICC/DCC and **`openai/gpt-4o`** LLM-judge RAG yields adaptive intrinsic mean **88.48%** (still above brittle `sentence_window` at **55.64%**) while showing that larger-context fixed splitters can outrank intrinsic argmax under dense retrieval on short documents—motivating ACE’s human-triggered optimization when RAG feedback disagrees with metric selection. We juxtapose both protocols with published CLAIR tables (intrinsic mean **91.07%**; RAG completeness **67.7**).
 
 **Index Terms**—RAG, adaptive chunking, intrinsic evaluation, enterprise AI systems, information retrieval
 
@@ -39,8 +39,8 @@ Enterprise RAG adds constraints that research libraries alone do not solve: audi
 
 1. **Productized adaptive selection.** A Strategy Registry + per-document intrinsic argmax (`adaptive_ace`) aligned with [1].
 2. **Offline reproducible benchmark kit.** Self-contained harness under `benchmarks/adaptive_chunking_eval/` with corpus, metrics, tables, and this paper.
-3. **Head-to-head comparison framing.** ACE offline results vs. published Adaptive Chunking CLAIR results [2], with explicit protocol caveats.
-4. **Governance layer.** CanonicalChunk contracts, audit/reproduction manifests, and human-triggered optimization gates.
+3. **Head-to-head comparison framing.** ACE offline + OpenRouter live results vs. published Adaptive Chunking CLAIR results [2], with explicit protocol caveats.
+4. **Governance layer.** CanonicalChunk contracts, audit/reproduction manifests, and human-triggered optimization gates (especially when RAG feedback diverges from intrinsic argmax).
 
 Section II reviews related work; Section III presents methodology; Section IV describes experiments; Section V reports results and comparison; Section VI discusses implications; Section VII concludes.
 
@@ -86,21 +86,23 @@ This mirrors Adaptive Chunking’s per-document selection [1].
 | BI | Fraction of paragraph/section blocks not cut by predicted splits |
 | RC | Filtered pronoun–antecedent pairs kept inside the same chunk |
 
-For CI-safe runs, ICC/DCC use **deterministic hashed character n-gram embeddings**. Neural encoders (Jina / SentenceTransformers) can be plugged in via `embed_fn` for closer parity with [1].
+For CI-safe runs, ICC/DCC use **deterministic hashed character n-gram embeddings**. Neural encoders can be plugged in via `embed_fn`; the live kit uses OpenRouter `openai/text-embedding-3-small`.
 
 ### C. ACE Control-Plane Extensions
 
 Beyond selection, ACE records effective configuration sources (Auto vs Manual locks), emits `CHUNK_RUN_COMPLETED` outbox events for indexing, and never auto-executes optimization rounds—humans must accept patches and create the next experiment.
 
-### D. RAG-lite Protocol
+### D. RAG Protocols
 
-Queries reference section indices and topic keywords without copying full evidence sentences. Retrieval is lexical top-$k$ with key-term bonuses. Retrieval Completeness is evidence-term coverage; Answer Correctness is answer-token coverage (no LLM judge in the offline kit).
+**Offline RAG-lite.** Queries reference section indices and topic keywords without copying full evidence sentences. Retrieval is lexical top-$k$ with key-term bonuses. Completeness/correctness are term-coverage proxies (no LLM judge).
+
+**OpenRouter live RAG.** The same queries use dense cosine retrieval over `text-embedding-3-small` chunk vectors. `openai/gpt-4o` returns a JSON judgment with `retrieval_completeness`, `answer_correctness`, and `answered` flags given question, gold answer, evidence quote, and retrieved context.
 
 ## IV. EXPERIMENTS
 
 ### A. Datasets
 
-**ACE offline corpus.** 6 documents in technical / legal / sustainability domains (≈8.8k words), stored in `benchmarks/adaptive_chunking_eval/corpus/`.
+**ACE corpus.** 6 documents in technical / legal / sustainability domains (≈8.8k words), stored in `benchmarks/adaptive_chunking_eval/corpus/`.
 
 **CLAIR (paper).** 33 documents, ~1.18M tokens, used by [1], [2] (not redistributed here).
 
@@ -115,8 +117,10 @@ Adaptive Chunking, LLM-regex (GPT), LangChain recursive, Semantic, Sentence (int
 ### D. Reproducibility
 
 ```bash
-cd benchmarks/adaptive_chunking_eval
-PYTHONPATH=../../apps/api:../../packages/python python run_eval.py
+# Offline
+make eval
+# Live OpenRouter (OPENROUTER_API_KEY; defaults gpt-4o + text-embedding-3-small)
+make eval-openrouter
 ```
 
 ## V. RESULTS
@@ -165,40 +169,69 @@ PYTHONPATH=../../apps/api:../../packages/python python run_eval.py
 | LangChain recursive | 58.1 | 70.1 | 49/99 |
 | Page splitting | 59.1 | 73.3 | 49/99 |
 
-### E. Cross-Protocol Comparison (Interpretation)
+### E. ACE OpenRouter Intrinsic Metrics (%) — `text-embedding-3-small`
 
-| Aspect | Adaptive Chunking (paper) | ACE (this report) |
-|--------|---------------------------|-------------------|
-| Corpus | CLAIR 33 docs / ~1.18M tokens | 6 docs / ≈8.8k words |
-| Embeddings | Neural (Jina / ST) | Hashed n-grams (offline) |
-| RAG judge | Hybrid retrieval + LLM correctness | Lexical coverage proxy |
-| Adaptive mean | **91.07** | **92.10** |
-| Best fixed recursive | 88.62 (LangChain) | 92.10 (`recursive_text_1100`) |
-| Weak splitter | Sentence 73.26 | sentence_window 59.39 |
-| RAG adaptive lead | +9.6 RC vs LangChain | Ties top recursive; −8.5 vs sentence_window |
+| Method | RC | ICC | DCC | BI | SC | **Mean** |
+|--------|---:|----:|----:|---:|---:|--------:|
+| **adaptive_ace** | 100.0 | 48.04 | 94.38 | 100.0 | 100.0 | **88.48** |
+| recursive_text_1100 | 100.0 | 47.78 | 94.42 | 100.0 | 100.0 | 88.44 |
+| recursive_text | 100.0 | 48.09 | 94.94 | 98.70 | 100.0 | 88.35 |
+| fixed_token_512 | 100.0 | 49.23 | 92.73 | 97.66 | 100.0 | 87.92 |
+| fixed_token_256 | 99.25 | 48.75 | 91.52 | 96.69 | 99.02 | 87.05 |
+| heading_section | 100.0 | 49.41 | 87.66 | 97.66 | 83.33 | 83.61 |
+| no_split | 100.0 | 45.19 | 100.0 | 100.0 | 16.67 | 72.37 |
+| sentence_window | 58.33 | 56.26 | 81.58 | 21.35 | 60.69 | 55.64 |
 
-**Finding.** Despite protocol differences, both studies support the same claim: **metric-guided adaptivity recovers strong splitters and avoids brittle ones**. Absolute RAG scores must not be compared head-to-head across protocols.
+Per-document selections: `recursive_text_1100` on technical/legal/sustainability long docs; `recursive_text` on ops/finance/sample.
+
+### F. ACE OpenRouter RAG — dense retrieval + `gpt-4o` judge
+
+| Method | Retrieval Completeness | Answer Correctness | Answered |
+|--------|-----------------------:|-------------------:|---------:|
+| no_split | **100.0** | **100.0** | 43/43 |
+| fixed_token_512 | 93.75 | 93.75 | 40/43 |
+| heading_section | 93.75 | 93.75 | 40/43 |
+| sentence_window | 90.83 | 92.71 | 38/43 |
+| recursive_text_1100 | 82.92 | 83.33 | 35/43 |
+| fixed_token_256 | 71.46 | 71.88 | 28/43 |
+| **adaptive_ace** | 64.17 | 64.58 | 26/43 |
+| recursive_text | 54.17 | 54.17 | 21/43 |
+
+Approx. API usage for the published live run: ~1.7k embedding calls, 344 chat calls, ≈0.79M tokens, ≈\$1.31 (OpenRouter reported cost).
+
+### G. Cross-Protocol Comparison (Interpretation)
+
+| Aspect | Adaptive Chunking (paper) | ACE offline | ACE OpenRouter |
+|--------|---------------------------|-------------|----------------|
+| Corpus | CLAIR 33 docs / ~1.18M tokens | 6 docs / ≈8.8k words | same ACE corpus |
+| Embeddings | Neural (Jina / ST) | Hashed n-grams | `text-embedding-3-small` |
+| RAG judge | Hybrid retrieval + LLM | Lexical coverage proxy | Dense + `gpt-4o` JSON judge |
+| Adaptive mean | **91.07** | **92.10** | **88.48** |
+| Weak splitter | Sentence 73.26 | sentence_window 59.39 | sentence_window 55.64 |
+| Adaptive RAG RC | **67.7** | 100.0 (proxy) | 64.17 |
+
+**Finding.** Intrinsic rank-order is stable: adaptivity recovers strong recursive splitters and avoids brittle sentence windows under both hashed and OpenAI embeddings. Live LLM-judge RAG on short documents, however, favors larger-context fixed strategies (`no_split`, `fixed_token_512`) over pure intrinsic argmax—especially when selection falls back to `recursive_text` on half the corpus. Absolute RAG scores must not be compared head-to-head across protocols.
 
 ## VI. DISCUSSION
 
 ### A. Why governance matters
 
-Selection without evidence trails cannot ship in regulated environments. ACE stores effective parameters, locks, and audit events so $s^\star(d)$ is reconstructible.
+Selection without evidence trails cannot ship in regulated environments. ACE stores effective parameters, locks, and audit events so $s^\star(d)$ is reconstructible. The OpenRouter RAG/intrinsic disagreement is precisely the case for **human-triggered optimization**: accept an intrinsic proposal only when downstream eval gates improve.
 
 ### B. Limitations
 
-- Offline embeddings ≠ paper neural ICC/DCC.  
+- ACE corpus ≪ CLAIR; short documents inflate `no_split` RAG.  
 - RC heuristic ≠ full coreference resolution.  
-- ACE corpus ≪ CLAIR.  
-- RAG-lite lacks an LLM answer judge.
+- LLM-judge variance and prompt sensitivity remain.  
+- Live cost/latency preclude default CI execution.
 
 ### C. Future work
 
-Scale ACE eval to CLAIR-sized corpora with neural embedders; attach ACE’s full evaluation engine (hard gates, failure taxonomy) to the same adaptive selector.
+Scale ACE eval to CLAIR-sized corpora; jointly optimize intrinsic + RAG objectives; attach ACE’s full evaluation engine (hard gates, failure taxonomy) to the same adaptive selector.
 
 ## VII. CONCLUSION
 
-Adaptive Chunking [1] establishes that per-document metric-guided selection improves RAG. ACE shows how to **industrialize** that insight: the same selection idea, plus enterprise contracts, human gates, and multi-sink indexing. Our offline benchmark—packaged under `benchmarks/adaptive_chunking_eval/`—reproduces the qualitative ranking effects of the LREC study while documenting protocol differences against the published CLAIR tables [2].
+Adaptive Chunking [1] establishes that per-document metric-guided selection improves RAG. ACE shows how to **industrialize** that insight: the same selection idea, plus enterprise contracts, human gates, and multi-sink indexing. Offline and OpenRouter live kits under `benchmarks/adaptive_chunking_eval/` reproduce the qualitative intrinsic ranking effects of the LREC study, quantify protocol gaps against published CLAIR tables [2], and surface when RAG feedback should override intrinsic argmax.
 
 ## ACKNOWLEDGMENT
 

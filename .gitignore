@@ -16,3 +16,5 @@ playwright-report/
 test-results/
 apps/api/.venv/
 infrastructure/bicep/main.json
+benchmarks/adaptive_chunking_eval/results/openrouter/cache/
+benchmarks/adaptive_chunking_eval/results/openrouter/*_partial.json

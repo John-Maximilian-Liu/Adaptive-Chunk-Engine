@@ -1,0 +1,145 @@
+"""Minimal OpenRouter OpenAI-compatible client with on-disk embedding cache."""
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import time
+from pathlib import Path
+from typing import Any, Optional, Sequence
+
+import httpx
+
+DEFAULT_BASE_URL = "https://openrouter.ai/api/v1"
+DEFAULT_CHAT_MODEL = "openai/gpt-4o"
+DEFAULT_EMBED_MODEL = "openai/text-embedding-3-small"
+
+
+class OpenRouterClient:
+    def __init__(
+        self,
+        *,
+        api_key: Optional[str] = None,
+        base_url: str = DEFAULT_BASE_URL,
+        chat_model: str = DEFAULT_CHAT_MODEL,
+        embed_model: str = DEFAULT_EMBED_MODEL,
+        cache_dir: Optional[Path] = None,
+        timeout: float = 120.0,
+        batch_size: int = 64,
+    ) -> None:
+        self.api_key = api_key or os.environ.get("OPENROUTER_API_KEY") or os.environ.get("OPENAI_API_KEY")
+        if not self.api_key:
+            raise RuntimeError("OPENROUTER_API_KEY (or OPENAI_API_KEY) is required for live eval")
+        self.base_url = base_url.rstrip("/")
+        self.chat_model = chat_model
+        self.embed_model = embed_model
+        self.timeout = timeout
+        self.batch_size = max(1, batch_size)
+        self.cache_dir = Path(cache_dir) if cache_dir else Path(__file__).resolve().parents[1] / "results" / "openrouter" / "cache"
+        self.cache_dir.mkdir(parents=True, exist_ok=True)
+        self.stats: dict[str, Any] = {
+            "embed_calls": 0,
+            "embed_texts": 0,
+            "embed_cache_hits": 0,
+            "chat_calls": 0,
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "total_tokens": 0,
+            "estimated_cost_usd": 0.0,
+        }
+
+    def _headers(self) -> dict[str, str]:
+        return {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json",
+            "HTTP-Referer": "https://github.com/John-Maximilian-Liu/Adaptive-Chunk-Engine",
+            "X-Title": "ACE-adaptive-chunking-eval",
+        }
+
+    def _cache_path(self, text: str) -> Path:
+        digest = hashlib.sha256(f"{self.embed_model}\n{text}".encode("utf-8")).hexdigest()
+        return self.cache_dir / f"emb_{digest}.json"
+
+    def _load_cached(self, text: str) -> Optional[list[float]]:
+        path = self._cache_path(text)
+        if not path.exists():
+            return None
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+            vec = data.get("embedding")
+            if isinstance(vec, list) and vec:
+                self.stats["embed_cache_hits"] += 1
+                return vec
+        except Exception:
+            return None
+        return None
+
+    def _store_cached(self, text: str, embedding: list[float]) -> None:
+        path = self._cache_path(text)
+        path.write_text(json.dumps({"model": self.embed_model, "embedding": embedding}), encoding="utf-8")
+
+    def _record_usage(self, usage: dict[str, Any]) -> None:
+        self.stats["prompt_tokens"] += int(usage.get("prompt_tokens") or 0)
+        self.stats["completion_tokens"] += int(usage.get("completion_tokens") or 0)
+        self.stats["total_tokens"] += int(usage.get("total_tokens") or 0)
+        cost = usage.get("cost")
+        if cost is not None:
+            self.stats["estimated_cost_usd"] += float(cost)
+
+    def embed(self, texts: Sequence[str]) -> list[list[float]]:
+        """Embed texts with disk cache + batched OpenRouter calls."""
+        if not texts:
+            return []
+        out: list[Optional[list[float]]] = [None] * len(texts)
+        missing_idx: list[int] = []
+        missing_texts: list[str] = []
+        for i, text in enumerate(texts):
+            cached = self._load_cached(text)
+            if cached is not None:
+                out[i] = cached
+            else:
+                missing_idx.append(i)
+                missing_texts.append(text)
+
+        for start in range(0, len(missing_texts), self.batch_size):
+            batch = missing_texts[start : start + self.batch_size]
+            batch_idx = missing_idx[start : start + self.batch_size]
+            payload = {"model": self.embed_model, "input": batch}
+            self.stats["embed_calls"] += 1
+            self.stats["embed_texts"] += len(batch)
+            with httpx.Client(timeout=self.timeout) as client:
+                resp = client.post(f"{self.base_url}/embeddings", headers=self._headers(), json=payload)
+                resp.raise_for_status()
+                data = resp.json()
+            self._record_usage(data.get("usage") or {})
+            rows = sorted(data["data"], key=lambda r: r["index"])
+            for local_i, row in enumerate(rows):
+                vec = row["embedding"]
+                global_i = batch_idx[local_i]
+                out[global_i] = vec
+                self._store_cached(batch[local_i], vec)
+            time.sleep(0.05)
+
+        return [v if v is not None else [] for v in out]
+
+    def chat_json(self, *, system: str, user: str, temperature: float = 0.0) -> dict[str, Any]:
+        payload = {
+            "model": self.chat_model,
+            "temperature": temperature,
+            "response_format": {"type": "json_object"},
+            "messages": [
+                {"role": "system", "content": system},
+                {"role": "user", "content": user},
+            ],
+        }
+        self.stats["chat_calls"] += 1
+        with httpx.Client(timeout=self.timeout) as client:
+            resp = client.post(f"{self.base_url}/chat/completions", headers=self._headers(), json=payload)
+            resp.raise_for_status()
+            data = resp.json()
+        self._record_usage(data.get("usage") or {})
+        content = data["choices"][0]["message"]["content"]
+        try:
+            return json.loads(content)
+        except json.JSONDecodeError:
+            return {"raw": content, "parse_error": True}
