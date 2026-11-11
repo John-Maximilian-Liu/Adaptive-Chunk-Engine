@@ -18,3 +18,5 @@ apps/api/.venv/
 infrastructure/bicep/main.json
 benchmarks/adaptive_chunking_eval/results/openrouter/cache/
 benchmarks/adaptive_chunking_eval/results/openrouter/*_partial.json
+benchmarks/adaptive_chunking_eval/results/public_benchmarks/**/cache/
+benchmarks/adaptive_chunking_eval/data/**/_hf/

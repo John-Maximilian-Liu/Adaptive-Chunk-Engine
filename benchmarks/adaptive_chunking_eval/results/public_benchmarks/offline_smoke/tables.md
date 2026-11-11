@@ -1,0 +1,107 @@
+# ACE Public Benchmark Results
+
+Mode: `offline` · profile: `smoke` · chat `None` · embed `hashed_ngram`
+
+> ACE public-benchmark suite on CLAIR + FinanceBench + Open RAG Bench. CLAIR paper rows are published Adaptive Chunking results. Compare ranks within each dataset/protocol; absolute RAG scores are not cross-dataset comparable.
+
+## clair
+
+Docs: **6** · queries: **24** · domains `['legal', 'social', 'technical']`
+
+### Intrinsic (%)
+
+| Method | RC | ICC | DCC | BI | SC | **Mean** |
+|---|---:|---:|---:|---:|---:|---:|
+| **adaptive_ace** | 100.0 | 56.18 | 96.8 | 99.66 | 100.0 | **90.53** |
+| recursive_text | 100.0 | 53.61 | 95.8 | 99.69 | 99.59 | **89.74** |
+| fixed_token_512 | 100.0 | 51.32 | 97.02 | 99.69 | 100.0 | **89.61** |
+| fixed_token_256 | 99.61 | 52.49 | 95.16 | 99.43 | 99.81 | **89.3** |
+| recursive_text_1100 | 99.87 | 48.99 | 97.3 | 99.73 | 100.0 | **89.18** |
+| sentence_window | 98.42 | 55.33 | 96.99 | 92.04 | 87.53 | **86.06** |
+| heading_section | 99.85 | 56.59 | 87.31 | 98.83 | 86.82 | **85.88** |
+| no_split | 100.0 | 58.75 | 100.0 | 100.0 | 0.0 | **71.75** |
+
+### Published CLAIR intrinsic (paper Table 3)
+
+| Method | RC | ICC | DCC | BI | SC | **Mean** |
+|---|---:|---:|---:|---:|---:|---:|
+| **Adaptive Chunking (paper)** | 99.0 | 68.2 | 88.8 | 99.4 | 99.9 | **91.07** |
+| LLM regex (GPT) (paper) | 98.0 | 70.9 | 82.4 | 98.1 | 99.6 | **89.8** |
+| LangChain recursive (paper) | 96.1 | 65.6 | 88.8 | 95.0 | 97.7 | **88.62** |
+| Semantic (paper) | 97.5 | 69.3 | 76.3 | 91.3 | 48.1 | **76.49** |
+| Sentence (paper) | 86.3 | 78.4 | 72.5 | 61.9 | 67.2 | **73.26** |
+
+### RAG
+
+| Method | Retrieval Completeness | Answer Correctness | Answered |
+|---|---:|---:|---:|
+| no_split | 100.0 | 95.83 | 24/24 |
+| **adaptive_ace** | 99.68 | 95.83 | 24/24 |
+| recursive_text_1100 | 99.68 | 95.83 | 24/24 |
+| fixed_token_512 | 97.69 | 93.52 | 23/24 |
+| sentence_window | 96.36 | 93.61 | 23/24 |
+| recursive_text | 92.57 | 88.63 | 22/24 |
+
+### Published CLAIR RAG (paper Table 5)
+
+| Method | Retrieval Completeness | Answer Correctness | Answered |
+|---|---:|---:|---:|
+| **Adaptive Chunking (paper)** | 67.7 | 78.0 | 65/99 |
+| LangChain recursive (paper) | 58.1 | 70.1 | 49/99 |
+| Page splitting (paper) | 59.1 | 73.3 | 49/99 |
+
+## financebench
+
+Docs: **8** · queries: **12** · domains `['finance']`
+
+### Intrinsic (%)
+
+| Method | RC | ICC | DCC | BI | SC | **Mean** |
+|---|---:|---:|---:|---:|---:|---:|
+| **adaptive_ace** | 100.0 | 71.3 | 97.02 | 100.0 | 100.0 | **96.45** |
+| fixed_token_512 | 100.0 | 67.03 | 96.29 | 99.46 | 100.0 | **95.76** |
+| heading_section | 100.0 | 67.03 | 96.29 | 99.46 | 100.0 | **95.76** |
+| recursive_text_1100 | 100.0 | 73.78 | 97.39 | 100.0 | 100.0 | **95.55** |
+| fixed_token_256 | 100.0 | 63.6 | 93.58 | 99.34 | 98.21 | **94.39** |
+| recursive_text | 100.0 | 65.91 | 91.75 | 97.5 | 93.75 | **92.22** |
+| sentence_window | 100.0 | 67.65 | 98.08 | 98.51 | 84.15 | **91.3** |
+| no_split | 100.0 | 74.78 | 100.0 | 100.0 | 50.0 | **86.22** |
+
+### RAG
+
+| Method | Retrieval Completeness | Answer Correctness | Answered |
+|---|---:|---:|---:|
+| **adaptive_ace** | 99.71 | 48.94 | 12/12 |
+| recursive_text_1100 | 99.71 | 48.94 | 12/12 |
+| recursive_text | 99.71 | 48.94 | 12/12 |
+| fixed_token_512 | 99.71 | 42.69 | 12/12 |
+| no_split | 99.71 | 48.94 | 12/12 |
+| sentence_window | 97.63 | 42.69 | 12/12 |
+
+## open_rag_bench
+
+Docs: **10** · queries: **40** · domains `['arxiv']`
+
+### Intrinsic (%)
+
+| Method | RC | ICC | DCC | BI | SC | **Mean** |
+|---|---:|---:|---:|---:|---:|---:|
+| **adaptive_ace** | 99.94 | 59.83 | 95.54 | 99.45 | 100.0 | **90.95** |
+| recursive_text_1100 | 99.99 | 58.94 | 95.58 | 99.19 | 100.0 | **90.74** |
+| fixed_token_512 | 99.94 | 58.2 | 95.49 | 99.43 | 100.0 | **90.61** |
+| recursive_text | 99.83 | 55.78 | 94.42 | 98.07 | 100.0 | **89.62** |
+| fixed_token_256 | 99.69 | 53.92 | 94.41 | 98.28 | 99.9 | **89.24** |
+| heading_section | 100.0 | 54.54 | 93.13 | 98.98 | 99.05 | **89.14** |
+| sentence_window | 95.02 | 60.14 | 95.11 | 69.54 | 64.89 | **76.94** |
+| no_split | 100.0 | 50.56 | 100.0 | 100.0 | 0.0 | **70.11** |
+
+### RAG
+
+| Method | Retrieval Completeness | Answer Correctness | Answered |
+|---|---:|---:|---:|
+| no_split | 99.48 | 91.81 | 40/40 |
+| recursive_text_1100 | 94.34 | 82.79 | 40/40 |
+| **adaptive_ace** | 92.48 | 80.01 | 40/40 |
+| recursive_text | 89.71 | 76.35 | 38/40 |
+| fixed_token_512 | 89.27 | 76.87 | 40/40 |
+| sentence_window | 65.35 | 62.99 | 22/40 |

@@ -1,0 +1,1673 @@
+{
+  "dataset": "open_rag_bench",
+  "n_documents": 10,
+  "n_queries": 40,
+  "domains": [
+    "arxiv"
+  ],
+  "approx_chars": 966710,
+  "intrinsic_table": [
+    {
+      "method": "adaptive_ace",
+      "RC": 99.94,
+      "ICC": 59.83,
+      "DCC": 95.54,
+      "BI": 99.45,
+      "SC": 100.0,
+      "Mean": 90.95
+    },
+    {
+      "method": "recursive_text_1100",
+      "RC": 99.99,
+      "ICC": 58.94,
+      "DCC": 95.58,
+      "BI": 99.19,
+      "SC": 100.0,
+      "Mean": 90.74
+    },
+    {
+      "method": "fixed_token_512",
+      "RC": 99.94,
+      "ICC": 58.2,
+      "DCC": 95.49,
+      "BI": 99.43,
+      "SC": 100.0,
+      "Mean": 90.61
+    },
+    {
+      "method": "recursive_text",
+      "RC": 99.83,
+      "ICC": 55.78,
+      "DCC": 94.42,
+      "BI": 98.07,
+      "SC": 100.0,
+      "Mean": 89.62
+    },
+    {
+      "method": "fixed_token_256",
+      "RC": 99.69,
+      "ICC": 53.92,
+      "DCC": 94.41,
+      "BI": 98.28,
+      "SC": 99.9,
+      "Mean": 89.24
+    },
+    {
+      "method": "heading_section",
+      "RC": 100.0,
+      "ICC": 54.54,
+      "DCC": 93.13,
+      "BI": 98.98,
+      "SC": 99.05,
+      "Mean": 89.14
+    },
+    {
+      "method": "sentence_window",
+      "RC": 95.02,
+      "ICC": 60.14,
+      "DCC": 95.11,
+      "BI": 69.54,
+      "SC": 64.89,
+      "Mean": 76.94
+    },
+    {
+      "method": "no_split",
+      "RC": 100.0,
+      "ICC": 50.56,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "SC": 0.0,
+      "Mean": 70.11
+    }
+  ],
+  "rag_table": [
+    {
+      "method": "no_split",
+      "retrieval_completeness": 99.48,
+      "answer_correctness": 91.81,
+      "answered_queries": "40/40"
+    },
+    {
+      "method": "recursive_text_1100",
+      "retrieval_completeness": 94.34,
+      "answer_correctness": 82.79,
+      "answered_queries": "40/40"
+    },
+    {
+      "method": "adaptive_ace",
+      "retrieval_completeness": 92.48,
+      "answer_correctness": 80.01,
+      "answered_queries": "40/40"
+    },
+    {
+      "method": "recursive_text",
+      "retrieval_completeness": 89.71,
+      "answer_correctness": 76.35,
+      "answered_queries": "38/40"
+    },
+    {
+      "method": "fixed_token_512",
+      "retrieval_completeness": 89.27,
+      "answer_correctness": 76.87,
+      "answered_queries": "40/40"
+    },
+    {
+      "method": "sentence_window",
+      "retrieval_completeness": 65.35,
+      "answer_correctness": 62.99,
+      "answered_queries": "22/40"
+    }
+  ],
+  "per_document": [
+    {
+      "doc_id": "2410.14077v2",
+      "domain": "arxiv",
+      "method": "fixed_token_512",
+      "n_chunks": 28,
+      "SC": 100.0,
+      "ICC": 63.41,
+      "DCC": 95.44,
+      "BI": 99.23,
+      "RC": 100.0,
+      "Mean": 91.62
+    },
+    {
+      "doc_id": "2410.14077v2",
+      "domain": "arxiv",
+      "method": "fixed_token_256",
+      "n_chunks": 55,
+      "SC": 100.0,
+      "ICC": 51.11,
+      "DCC": 94.33,
+      "BI": 99.23,
+      "RC": 99.38,
+      "Mean": 88.81
+    },
+    {
+      "doc_id": "2410.14077v2",
+      "domain": "arxiv",
+      "method": "recursive_text",
+      "n_chunks": 28,
+      "SC": 100.0,
+      "ICC": 61.39,
+      "DCC": 95.51,
+      "BI": 98.46,
+      "RC": 100.0,
+      "Mean": 91.07
+    },
+    {
+      "doc_id": "2410.14077v2",
+      "domain": "arxiv",
+      "method": "recursive_text_1100",
+      "n_chunks": 12,
+      "SC": 100.0,
+      "ICC": 64.58,
+      "DCC": 96.44,
+      "BI": 99.23,
+      "RC": 100.0,
+      "Mean": 92.05
+    },
+    {
+      "doc_id": "2410.14077v2",
+      "domain": "arxiv",
+      "method": "sentence_window",
+      "n_chunks": 352,
+      "SC": 76.42,
+      "ICC": 62.36,
+      "DCC": 94.98,
+      "BI": 77.69,
+      "RC": 94.41,
+      "Mean": 81.17
+    },
+    {
+      "doc_id": "2410.14077v2",
+      "domain": "arxiv",
+      "method": "heading_section",
+      "n_chunks": 32,
+      "SC": 100.0,
+      "ICC": 63.0,
+      "DCC": 94.28,
+      "BI": 99.23,
+      "RC": 100.0,
+      "Mean": 91.3
+    },
+    {
+      "doc_id": "2410.14077v2",
+      "domain": "arxiv",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 54.02,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 70.8
+    },
+    {
+      "doc_id": "2410.14077v2",
+      "domain": "arxiv",
+      "method": "adaptive_ace",
+      "n_chunks": 12,
+      "SC": 100.0,
+      "ICC": 64.58,
+      "DCC": 96.44,
+      "BI": 99.23,
+      "RC": 100.0,
+      "Mean": 92.05,
+      "selected": "recursive_text_1100",
+      "candidates": {
+        "fixed_token_512": {
+          "SC": 100.0,
+          "ICC": 63.41,
+          "DCC": 95.44,
+          "BI": 99.23,
+          "RC": 100.0,
+          "Mean": 91.62
+        },
+        "fixed_token_256": {
+          "SC": 100.0,
+          "ICC": 51.11,
+          "DCC": 94.33,
+          "BI": 99.23,
+          "RC": 99.38,
+          "Mean": 88.81
+        },
+        "recursive_text": {
+          "SC": 100.0,
+          "ICC": 61.39,
+          "DCC": 95.51,
+          "BI": 98.46,
+          "RC": 100.0,
+          "Mean": 91.07
+        },
+        "recursive_text_1100": {
+          "SC": 100.0,
+          "ICC": 64.58,
+          "DCC": 96.44,
+          "BI": 99.23,
+          "RC": 100.0,
+          "Mean": 92.05
+        },
+        "sentence_window": {
+          "SC": 76.42,
+          "ICC": 62.36,
+          "DCC": 94.98,
+          "BI": 77.69,
+          "RC": 94.41,
+          "Mean": 81.17
+        },
+        "heading_section": {
+          "SC": 100.0,
+          "ICC": 63.0,
+          "DCC": 94.28,
+          "BI": 99.23,
+          "RC": 100.0,
+          "Mean": 91.3
+        },
+        "no_split": {
+          "SC": 0.0,
+          "ICC": 54.02,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 70.8
+        }
+      }
+    },
+    {
+      "doc_id": "2401.07294v4",
+      "domain": "arxiv",
+      "method": "fixed_token_512",
+      "n_chunks": 45,
+      "SC": 100.0,
+      "ICC": 60.66,
+      "DCC": 96.72,
+      "BI": 99.51,
+      "RC": 100.0,
+      "Mean": 91.38
+    },
+    {
+      "doc_id": "2401.07294v4",
+      "domain": "arxiv",
+      "method": "fixed_token_256",
+      "n_chunks": 90,
+      "SC": 100.0,
+      "ICC": 62.16,
+      "DCC": 95.09,
+      "BI": 98.06,
+      "RC": 100.0,
+      "Mean": 91.06
+    },
+    {
+      "doc_id": "2401.07294v4",
+      "domain": "arxiv",
+      "method": "recursive_text",
+      "n_chunks": 47,
+      "SC": 100.0,
+      "ICC": 59.89,
+      "DCC": 95.25,
+      "BI": 98.54,
+      "RC": 99.59,
+      "Mean": 90.66
+    },
+    {
+      "doc_id": "2401.07294v4",
+      "domain": "arxiv",
+      "method": "recursive_text_1100",
+      "n_chunks": 20,
+      "SC": 100.0,
+      "ICC": 65.17,
+      "DCC": 96.7,
+      "BI": 99.51,
+      "RC": 100.0,
+      "Mean": 92.28
+    },
+    {
+      "doc_id": "2401.07294v4",
+      "domain": "arxiv",
+      "method": "sentence_window",
+      "n_chunks": 687,
+      "SC": 55.9,
+      "ICC": 60.22,
+      "DCC": 94.66,
+      "BI": 54.85,
+      "RC": 95.04,
+      "Mean": 72.13
+    },
+    {
+      "doc_id": "2401.07294v4",
+      "domain": "arxiv",
+      "method": "heading_section",
+      "n_chunks": 55,
+      "SC": 100.0,
+      "ICC": 56.05,
+      "DCC": 94.13,
+      "BI": 98.54,
+      "RC": 100.0,
+      "Mean": 89.75
+    },
+    {
+      "doc_id": "2401.07294v4",
+      "domain": "arxiv",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 49.14,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 69.83
+    },
+    {
+      "doc_id": "2401.07294v4",
+      "domain": "arxiv",
+      "method": "adaptive_ace",
+      "n_chunks": 20,
+      "SC": 100.0,
+      "ICC": 65.17,
+      "DCC": 96.7,
+      "BI": 99.51,
+      "RC": 100.0,
+      "Mean": 92.28,
+      "selected": "recursive_text_1100",
+      "candidates": {
+        "fixed_token_512": {
+          "SC": 100.0,
+          "ICC": 60.66,
+          "DCC": 96.72,
+          "BI": 99.51,
+          "RC": 100.0,
+          "Mean": 91.38
+        },
+        "fixed_token_256": {
+          "SC": 100.0,
+          "ICC": 62.16,
+          "DCC": 95.09,
+          "BI": 98.06,
+          "RC": 100.0,
+          "Mean": 91.06
+        },
+        "recursive_text": {
+          "SC": 100.0,
+          "ICC": 59.89,
+          "DCC": 95.25,
+          "BI": 98.54,
+          "RC": 99.59,
+          "Mean": 90.66
+        },
+        "recursive_text_1100": {
+          "SC": 100.0,
+          "ICC": 65.17,
+          "DCC": 96.7,
+          "BI": 99.51,
+          "RC": 100.0,
+          "Mean": 92.28
+        },
+        "sentence_window": {
+          "SC": 55.9,
+          "ICC": 60.22,
+          "DCC": 94.66,
+          "BI": 54.85,
+          "RC": 95.04,
+          "Mean": 72.13
+        },
+        "heading_section": {
+          "SC": 100.0,
+          "ICC": 56.05,
+          "DCC": 94.13,
+          "BI": 98.54,
+          "RC": 100.0,
+          "Mean": 89.75
+        },
+        "no_split": {
+          "SC": 0.0,
+          "ICC": 49.14,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 69.83
+        }
+      }
+    },
+    {
+      "doc_id": "2410.11774v2",
+      "domain": "arxiv",
+      "method": "fixed_token_512",
+      "n_chunks": 43,
+      "SC": 100.0,
+      "ICC": 56.95,
+      "DCC": 96.36,
+      "BI": 99.39,
+      "RC": 100.0,
+      "Mean": 90.54
+    },
+    {
+      "doc_id": "2410.11774v2",
+      "domain": "arxiv",
+      "method": "fixed_token_256",
+      "n_chunks": 85,
+      "SC": 100.0,
+      "ICC": 50.81,
+      "DCC": 94.56,
+      "BI": 96.95,
+      "RC": 98.92,
+      "Mean": 88.25
+    },
+    {
+      "doc_id": "2410.11774v2",
+      "domain": "arxiv",
+      "method": "recursive_text",
+      "n_chunks": 41,
+      "SC": 100.0,
+      "ICC": 48.19,
+      "DCC": 95.75,
+      "BI": 96.95,
+      "RC": 100.0,
+      "Mean": 88.18
+    },
+    {
+      "doc_id": "2410.11774v2",
+      "domain": "arxiv",
+      "method": "recursive_text_1100",
+      "n_chunks": 18,
+      "SC": 100.0,
+      "ICC": 52.79,
+      "DCC": 96.4,
+      "BI": 98.78,
+      "RC": 100.0,
+      "Mean": 89.59
+    },
+    {
+      "doc_id": "2410.11774v2",
+      "domain": "arxiv",
+      "method": "sentence_window",
+      "n_chunks": 789,
+      "SC": 54.88,
+      "ICC": 61.01,
+      "DCC": 96.0,
+      "BI": 75.0,
+      "RC": 97.13,
+      "Mean": 76.81
+    },
+    {
+      "doc_id": "2410.11774v2",
+      "domain": "arxiv",
+      "method": "heading_section",
+      "n_chunks": 51,
+      "SC": 98.04,
+      "ICC": 52.05,
+      "DCC": 94.02,
+      "BI": 98.78,
+      "RC": 100.0,
+      "Mean": 88.58
+    },
+    {
+      "doc_id": "2410.11774v2",
+      "domain": "arxiv",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 48.87,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 69.77
+    },
+    {
+      "doc_id": "2410.11774v2",
+      "domain": "arxiv",
+      "method": "adaptive_ace",
+      "n_chunks": 43,
+      "SC": 100.0,
+      "ICC": 56.95,
+      "DCC": 96.36,
+      "BI": 99.39,
+      "RC": 100.0,
+      "Mean": 90.54,
+      "selected": "fixed_token_512",
+      "candidates": {
+        "fixed_token_512": {
+          "SC": 100.0,
+          "ICC": 56.95,
+          "DCC": 96.36,
+          "BI": 99.39,
+          "RC": 100.0,
+          "Mean": 90.54
+        },
+        "fixed_token_256": {
+          "SC": 100.0,
+          "ICC": 50.81,
+          "DCC": 94.56,
+          "BI": 96.95,
+          "RC": 98.92,
+          "Mean": 88.25
+        },
+        "recursive_text": {
+          "SC": 100.0,
+          "ICC": 48.19,
+          "DCC": 95.75,
+          "BI": 96.95,
+          "RC": 100.0,
+          "Mean": 88.18
+        },
+        "recursive_text_1100": {
+          "SC": 100.0,
+          "ICC": 52.79,
+          "DCC": 96.4,
+          "BI": 98.78,
+          "RC": 100.0,
+          "Mean": 89.59
+        },
+        "sentence_window": {
+          "SC": 54.88,
+          "ICC": 61.01,
+          "DCC": 96.0,
+          "BI": 75.0,
+          "RC": 97.13,
+          "Mean": 76.81
+        },
+        "heading_section": {
+          "SC": 98.04,
+          "ICC": 52.05,
+          "DCC": 94.02,
+          "BI": 98.78,
+          "RC": 100.0,
+          "Mean": 88.58
+        },
+        "no_split": {
+          "SC": 0.0,
+          "ICC": 48.87,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 69.77
+        }
+      }
+    },
+    {
+      "doc_id": "2406.17972v3",
+      "domain": "arxiv",
+      "method": "fixed_token_512",
+      "n_chunks": 153,
+      "SC": 100.0,
+      "ICC": 47.5,
+      "DCC": 95.48,
+      "BI": 99.65,
+      "RC": 99.85,
+      "Mean": 88.5
+    },
+    {
+      "doc_id": "2406.17972v3",
+      "domain": "arxiv",
+      "method": "fixed_token_256",
+      "n_chunks": 306,
+      "SC": 100.0,
+      "ICC": 45.38,
+      "DCC": 94.6,
+      "BI": 98.96,
+      "RC": 99.69,
+      "Mean": 87.73
+    },
+    {
+      "doc_id": "2406.17972v3",
+      "domain": "arxiv",
+      "method": "recursive_text",
+      "n_chunks": 151,
+      "SC": 100.0,
+      "ICC": 52.68,
+      "DCC": 93.6,
+      "BI": 98.27,
+      "RC": 99.92,
+      "Mean": 88.89
+    },
+    {
+      "doc_id": "2406.17972v3",
+      "domain": "arxiv",
+      "method": "recursive_text_1100",
+      "n_chunks": 67,
+      "SC": 100.0,
+      "ICC": 51.23,
+      "DCC": 95.35,
+      "BI": 99.83,
+      "RC": 99.92,
+      "Mean": 89.27
+    },
+    {
+      "doc_id": "2406.17972v3",
+      "domain": "arxiv",
+      "method": "sentence_window",
+      "n_chunks": 1288,
+      "SC": 92.16,
+      "ICC": 61.31,
+      "DCC": 96.54,
+      "BI": 78.93,
+      "RC": 93.53,
+      "Mean": 84.49
+    },
+    {
+      "doc_id": "2406.17972v3",
+      "domain": "arxiv",
+      "method": "heading_section",
+      "n_chunks": 180,
+      "SC": 99.44,
+      "ICC": 46.53,
+      "DCC": 92.18,
+      "BI": 99.31,
+      "RC": 100.0,
+      "Mean": 87.49
+    },
+    {
+      "doc_id": "2406.17972v3",
+      "domain": "arxiv",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 57.95,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 71.59
+    },
+    {
+      "doc_id": "2406.17972v3",
+      "domain": "arxiv",
+      "method": "adaptive_ace",
+      "n_chunks": 67,
+      "SC": 100.0,
+      "ICC": 51.23,
+      "DCC": 95.35,
+      "BI": 99.83,
+      "RC": 99.92,
+      "Mean": 89.27,
+      "selected": "recursive_text_1100",
+      "candidates": {
+        "fixed_token_512": {
+          "SC": 100.0,
+          "ICC": 47.5,
+          "DCC": 95.48,
+          "BI": 99.65,
+          "RC": 99.85,
+          "Mean": 88.5
+        },
+        "fixed_token_256": {
+          "SC": 100.0,
+          "ICC": 45.38,
+          "DCC": 94.6,
+          "BI": 98.96,
+          "RC": 99.69,
+          "Mean": 87.73
+        },
+        "recursive_text": {
+          "SC": 100.0,
+          "ICC": 52.68,
+          "DCC": 93.6,
+          "BI": 98.27,
+          "RC": 99.92,
+          "Mean": 88.89
+        },
+        "recursive_text_1100": {
+          "SC": 100.0,
+          "ICC": 51.23,
+          "DCC": 95.35,
+          "BI": 99.83,
+          "RC": 99.92,
+          "Mean": 89.27
+        },
+        "sentence_window": {
+          "SC": 92.16,
+          "ICC": 61.31,
+          "DCC": 96.54,
+          "BI": 78.93,
+          "RC": 93.53,
+          "Mean": 84.49
+        },
+        "heading_section": {
+          "SC": 99.44,
+          "ICC": 46.53,
+          "DCC": 92.18,
+          "BI": 99.31,
+          "RC": 100.0,
+          "Mean": 87.49
+        },
+        "no_split": {
+          "SC": 0.0,
+          "ICC": 57.95,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 71.59
+        }
+      }
+    },
+    {
+      "doc_id": "2412.10128v2",
+      "domain": "arxiv",
+      "method": "fixed_token_512",
+      "n_chunks": 33,
+      "SC": 100.0,
+      "ICC": 51.02,
+      "DCC": 95.45,
+      "BI": 99.29,
+      "RC": 100.0,
+      "Mean": 89.15
+    },
+    {
+      "doc_id": "2412.10128v2",
+      "domain": "arxiv",
+      "method": "fixed_token_256",
+      "n_chunks": 66,
+      "SC": 100.0,
+      "ICC": 54.84,
+      "DCC": 94.23,
+      "BI": 98.58,
+      "RC": 99.59,
+      "Mean": 89.45
+    },
+    {
+      "doc_id": "2412.10128v2",
+      "domain": "arxiv",
+      "method": "recursive_text",
+      "n_chunks": 33,
+      "SC": 100.0,
+      "ICC": 49.51,
+      "DCC": 94.47,
+      "BI": 98.58,
+      "RC": 100.0,
+      "Mean": 88.51
+    },
+    {
+      "doc_id": "2412.10128v2",
+      "domain": "arxiv",
+      "method": "recursive_text_1100",
+      "n_chunks": 14,
+      "SC": 100.0,
+      "ICC": 54.29,
+      "DCC": 95.86,
+      "BI": 99.29,
+      "RC": 100.0,
+      "Mean": 89.89
+    },
+    {
+      "doc_id": "2412.10128v2",
+      "domain": "arxiv",
+      "method": "sentence_window",
+      "n_chunks": 440,
+      "SC": 68.41,
+      "ICC": 60.37,
+      "DCC": 95.8,
+      "BI": 76.6,
+      "RC": 95.06,
+      "Mean": 79.25
+    },
+    {
+      "doc_id": "2412.10128v2",
+      "domain": "arxiv",
+      "method": "heading_section",
+      "n_chunks": 40,
+      "SC": 100.0,
+      "ICC": 52.04,
+      "DCC": 93.26,
+      "BI": 99.29,
+      "RC": 100.0,
+      "Mean": 88.92
+    },
+    {
+      "doc_id": "2412.10128v2",
+      "domain": "arxiv",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 51.1,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 70.22
+    },
+    {
+      "doc_id": "2412.10128v2",
+      "domain": "arxiv",
+      "method": "adaptive_ace",
+      "n_chunks": 14,
+      "SC": 100.0,
+      "ICC": 54.29,
+      "DCC": 95.86,
+      "BI": 99.29,
+      "RC": 100.0,
+      "Mean": 89.89,
+      "selected": "recursive_text_1100",
+      "candidates": {
+        "fixed_token_512": {
+          "SC": 100.0,
+          "ICC": 51.02,
+          "DCC": 95.45,
+          "BI": 99.29,
+          "RC": 100.0,
+          "Mean": 89.15
+        },
+        "fixed_token_256": {
+          "SC": 100.0,
+          "ICC": 54.84,
+          "DCC": 94.23,
+          "BI": 98.58,
+          "RC": 99.59,
+          "Mean": 89.45
+        },
+        "recursive_text": {
+          "SC": 100.0,
+          "ICC": 49.51,
+          "DCC": 94.47,
+          "BI": 98.58,
+          "RC": 100.0,
+          "Mean": 88.51
+        },
+        "recursive_text_1100": {
+          "SC": 100.0,
+          "ICC": 54.29,
+          "DCC": 95.86,
+          "BI": 99.29,
+          "RC": 100.0,
+          "Mean": 89.89
+        },
+        "sentence_window": {
+          "SC": 68.41,
+          "ICC": 60.37,
+          "DCC": 95.8,
+          "BI": 76.6,
+          "RC": 95.06,
+          "Mean": 79.25
+        },
+        "heading_section": {
+          "SC": 100.0,
+          "ICC": 52.04,
+          "DCC": 93.26,
+          "BI": 99.29,
+          "RC": 100.0,
+          "Mean": 88.92
+        },
+        "no_split": {
+          "SC": 0.0,
+          "ICC": 51.1,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 70.22
+        }
+      }
+    },
+    {
+      "doc_id": "2412.15239v2",
+      "domain": "arxiv",
+      "method": "fixed_token_512",
+      "n_chunks": 32,
+      "SC": 100.0,
+      "ICC": 65.36,
+      "DCC": 96.06,
+      "BI": 99.35,
+      "RC": 100.0,
+      "Mean": 92.15
+    },
+    {
+      "doc_id": "2412.15239v2",
+      "domain": "arxiv",
+      "method": "fixed_token_256",
+      "n_chunks": 64,
+      "SC": 100.0,
+      "ICC": 60.12,
+      "DCC": 94.81,
+      "BI": 98.7,
+      "RC": 99.63,
+      "Mean": 90.65
+    },
+    {
+      "doc_id": "2412.15239v2",
+      "domain": "arxiv",
+      "method": "recursive_text",
+      "n_chunks": 32,
+      "SC": 100.0,
+      "ICC": 65.56,
+      "DCC": 94.97,
+      "BI": 99.35,
+      "RC": 100.0,
+      "Mean": 91.98
+    },
+    {
+      "doc_id": "2412.15239v2",
+      "domain": "arxiv",
+      "method": "recursive_text_1100",
+      "n_chunks": 14,
+      "SC": 100.0,
+      "ICC": 67.05,
+      "DCC": 96.2,
+      "BI": 99.35,
+      "RC": 100.0,
+      "Mean": 92.52
+    },
+    {
+      "doc_id": "2412.15239v2",
+      "domain": "arxiv",
+      "method": "sentence_window",
+      "n_chunks": 531,
+      "SC": 59.51,
+      "ICC": 60.17,
+      "DCC": 94.56,
+      "BI": 46.75,
+      "RC": 91.76,
+      "Mean": 70.55
+    },
+    {
+      "doc_id": "2412.15239v2",
+      "domain": "arxiv",
+      "method": "heading_section",
+      "n_chunks": 40,
+      "SC": 97.5,
+      "ICC": 62.54,
+      "DCC": 93.39,
+      "BI": 99.35,
+      "RC": 100.0,
+      "Mean": 90.56
+    },
+    {
+      "doc_id": "2412.15239v2",
+      "domain": "arxiv",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 50.13,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 70.03
+    },
+    {
+      "doc_id": "2412.15239v2",
+      "domain": "arxiv",
+      "method": "adaptive_ace",
+      "n_chunks": 14,
+      "SC": 100.0,
+      "ICC": 67.05,
+      "DCC": 96.2,
+      "BI": 99.35,
+      "RC": 100.0,
+      "Mean": 92.52,
+      "selected": "recursive_text_1100",
+      "candidates": {
+        "fixed_token_512": {
+          "SC": 100.0,
+          "ICC": 65.36,
+          "DCC": 96.06,
+          "BI": 99.35,
+          "RC": 100.0,
+          "Mean": 92.15
+        },
+        "fixed_token_256": {
+          "SC": 100.0,
+          "ICC": 60.12,
+          "DCC": 94.81,
+          "BI": 98.7,
+          "RC": 99.63,
+          "Mean": 90.65
+        },
+        "recursive_text": {
+          "SC": 100.0,
+          "ICC": 65.56,
+          "DCC": 94.97,
+          "BI": 99.35,
+          "RC": 100.0,
+          "Mean": 91.98
+        },
+        "recursive_text_1100": {
+          "SC": 100.0,
+          "ICC": 67.05,
+          "DCC": 96.2,
+          "BI": 99.35,
+          "RC": 100.0,
+          "Mean": 92.52
+        },
+        "sentence_window": {
+          "SC": 59.51,
+          "ICC": 60.17,
+          "DCC": 94.56,
+          "BI": 46.75,
+          "RC": 91.76,
+          "Mean": 70.55
+        },
+        "heading_section": {
+          "SC": 97.5,
+          "ICC": 62.54,
+          "DCC": 93.39,
+          "BI": 99.35,
+          "RC": 100.0,
+          "Mean": 90.56
+        },
+        "no_split": {
+          "SC": 0.0,
+          "ICC": 50.13,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 70.03
+        }
+      }
+    },
+    {
+      "doc_id": "2412.10243v3",
+      "domain": "arxiv",
+      "method": "fixed_token_512",
+      "n_chunks": 29,
+      "SC": 100.0,
+      "ICC": 61.8,
+      "DCC": 92.96,
+      "BI": 99.14,
+      "RC": 100.0,
+      "Mean": 90.78
+    },
+    {
+      "doc_id": "2412.10243v3",
+      "domain": "arxiv",
+      "method": "fixed_token_256",
+      "n_chunks": 57,
+      "SC": 100.0,
+      "ICC": 55.72,
+      "DCC": 93.57,
+      "BI": 96.55,
+      "RC": 100.0,
+      "Mean": 89.17
+    },
+    {
+      "doc_id": "2412.10243v3",
+      "domain": "arxiv",
+      "method": "recursive_text",
+      "n_chunks": 32,
+      "SC": 100.0,
+      "ICC": 63.53,
+      "DCC": 91.72,
+      "BI": 96.55,
+      "RC": 100.0,
+      "Mean": 90.36
+    },
+    {
+      "doc_id": "2412.10243v3",
+      "domain": "arxiv",
+      "method": "recursive_text_1100",
+      "n_chunks": 14,
+      "SC": 100.0,
+      "ICC": 62.18,
+      "DCC": 92.38,
+      "BI": 98.28,
+      "RC": 100.0,
+      "Mean": 90.57
+    },
+    {
+      "doc_id": "2412.10243v3",
+      "domain": "arxiv",
+      "method": "sentence_window",
+      "n_chunks": 365,
+      "SC": 59.18,
+      "ICC": 60.4,
+      "DCC": 92.54,
+      "BI": 76.72,
+      "RC": 95.45,
+      "Mean": 76.86
+    },
+    {
+      "doc_id": "2412.10243v3",
+      "domain": "arxiv",
+      "method": "heading_section",
+      "n_chunks": 37,
+      "SC": 100.0,
+      "ICC": 54.95,
+      "DCC": 90.04,
+      "BI": 98.28,
+      "RC": 100.0,
+      "Mean": 88.65
+    },
+    {
+      "doc_id": "2412.10243v3",
+      "domain": "arxiv",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 48.46,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 69.69
+    },
+    {
+      "doc_id": "2412.10243v3",
+      "domain": "arxiv",
+      "method": "adaptive_ace",
+      "n_chunks": 29,
+      "SC": 100.0,
+      "ICC": 61.8,
+      "DCC": 92.96,
+      "BI": 99.14,
+      "RC": 100.0,
+      "Mean": 90.78,
+      "selected": "fixed_token_512",
+      "candidates": {
+        "fixed_token_512": {
+          "SC": 100.0,
+          "ICC": 61.8,
+          "DCC": 92.96,
+          "BI": 99.14,
+          "RC": 100.0,
+          "Mean": 90.78
+        },
+        "fixed_token_256": {
+          "SC": 100.0,
+          "ICC": 55.72,
+          "DCC": 93.57,
+          "BI": 96.55,
+          "RC": 100.0,
+          "Mean": 89.17
+        },
+        "recursive_text": {
+          "SC": 100.0,
+          "ICC": 63.53,
+          "DCC": 91.72,
+          "BI": 96.55,
+          "RC": 100.0,
+          "Mean": 90.36
+        },
+        "recursive_text_1100": {
+          "SC": 100.0,
+          "ICC": 62.18,
+          "DCC": 92.38,
+          "BI": 98.28,
+          "RC": 100.0,
+          "Mean": 90.57
+        },
+        "sentence_window": {
+          "SC": 59.18,
+          "ICC": 60.4,
+          "DCC": 92.54,
+          "BI": 76.72,
+          "RC": 95.45,
+          "Mean": 76.86
+        },
+        "heading_section": {
+          "SC": 100.0,
+          "ICC": 54.95,
+          "DCC": 90.04,
+          "BI": 98.28,
+          "RC": 100.0,
+          "Mean": 88.65
+        },
+        "no_split": {
+          "SC": 0.0,
+          "ICC": 48.46,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 69.69
+        }
+      }
+    },
+    {
+      "doc_id": "2411.13384v2",
+      "domain": "arxiv",
+      "method": "fixed_token_512",
+      "n_chunks": 54,
+      "SC": 100.0,
+      "ICC": 52.85,
+      "DCC": 95.36,
+      "BI": 99.65,
+      "RC": 100.0,
+      "Mean": 89.57
+    },
+    {
+      "doc_id": "2411.13384v2",
+      "domain": "arxiv",
+      "method": "fixed_token_256",
+      "n_chunks": 107,
+      "SC": 100.0,
+      "ICC": 49.28,
+      "DCC": 94.5,
+      "BI": 99.3,
+      "RC": 100.0,
+      "Mean": 88.62
+    },
+    {
+      "doc_id": "2411.13384v2",
+      "domain": "arxiv",
+      "method": "recursive_text",
+      "n_chunks": 51,
+      "SC": 100.0,
+      "ICC": 46.2,
+      "DCC": 94.34,
+      "BI": 98.94,
+      "RC": 100.0,
+      "Mean": 87.9
+    },
+    {
+      "doc_id": "2411.13384v2",
+      "domain": "arxiv",
+      "method": "recursive_text_1100",
+      "n_chunks": 24,
+      "SC": 100.0,
+      "ICC": 50.76,
+      "DCC": 95.32,
+      "BI": 99.65,
+      "RC": 100.0,
+      "Mean": 89.15
+    },
+    {
+      "doc_id": "2411.13384v2",
+      "domain": "arxiv",
+      "method": "sentence_window",
+      "n_chunks": 643,
+      "SC": 61.12,
+      "ICC": 55.26,
+      "DCC": 94.74,
+      "BI": 84.86,
+      "RC": 97.57,
+      "Mean": 78.71
+    },
+    {
+      "doc_id": "2411.13384v2",
+      "domain": "arxiv",
+      "method": "heading_section",
+      "n_chunks": 62,
+      "SC": 98.39,
+      "ICC": 52.3,
+      "DCC": 93.34,
+      "BI": 99.65,
+      "RC": 100.0,
+      "Mean": 88.73
+    },
+    {
+      "doc_id": "2411.13384v2",
+      "domain": "arxiv",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 47.95,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 69.59
+    },
+    {
+      "doc_id": "2411.13384v2",
+      "domain": "arxiv",
+      "method": "adaptive_ace",
+      "n_chunks": 54,
+      "SC": 100.0,
+      "ICC": 52.85,
+      "DCC": 95.36,
+      "BI": 99.65,
+      "RC": 100.0,
+      "Mean": 89.57,
+      "selected": "fixed_token_512",
+      "candidates": {
+        "fixed_token_512": {
+          "SC": 100.0,
+          "ICC": 52.85,
+          "DCC": 95.36,
+          "BI": 99.65,
+          "RC": 100.0,
+          "Mean": 89.57
+        },
+        "fixed_token_256": {
+          "SC": 100.0,
+          "ICC": 49.28,
+          "DCC": 94.5,
+          "BI": 99.3,
+          "RC": 100.0,
+          "Mean": 88.62
+        },
+        "recursive_text": {
+          "SC": 100.0,
+          "ICC": 46.2,
+          "DCC": 94.34,
+          "BI": 98.94,
+          "RC": 100.0,
+          "Mean": 87.9
+        },
+        "recursive_text_1100": {
+          "SC": 100.0,
+          "ICC": 50.76,
+          "DCC": 95.32,
+          "BI": 99.65,
+          "RC": 100.0,
+          "Mean": 89.15
+        },
+        "sentence_window": {
+          "SC": 61.12,
+          "ICC": 55.26,
+          "DCC": 94.74,
+          "BI": 84.86,
+          "RC": 97.57,
+          "Mean": 78.71
+        },
+        "heading_section": {
+          "SC": 98.39,
+          "ICC": 52.3,
+          "DCC": 93.34,
+          "BI": 99.65,
+          "RC": 100.0,
+          "Mean": 88.73
+        },
+        "no_split": {
+          "SC": 0.0,
+          "ICC": 47.95,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 69.59
+        }
+      }
+    },
+    {
+      "doc_id": "2408.04307v3",
+      "domain": "arxiv",
+      "method": "fixed_token_512",
+      "n_chunks": 52,
+      "SC": 100.0,
+      "ICC": 60.32,
+      "DCC": 96.05,
+      "BI": 99.43,
+      "RC": 99.52,
+      "Mean": 91.06
+    },
+    {
+      "doc_id": "2408.04307v3",
+      "domain": "arxiv",
+      "method": "fixed_token_256",
+      "n_chunks": 104,
+      "SC": 99.04,
+      "ICC": 58.03,
+      "DCC": 94.45,
+      "BI": 98.28,
+      "RC": 100.0,
+      "Mean": 89.96
+    },
+    {
+      "doc_id": "2408.04307v3",
+      "domain": "arxiv",
+      "method": "recursive_text",
+      "n_chunks": 51,
+      "SC": 100.0,
+      "ICC": 56.72,
+      "DCC": 95.39,
+      "BI": 97.13,
+      "RC": 99.52,
+      "Mean": 89.75
+    },
+    {
+      "doc_id": "2408.04307v3",
+      "domain": "arxiv",
+      "method": "recursive_text_1100",
+      "n_chunks": 23,
+      "SC": 100.0,
+      "ICC": 57.28,
+      "DCC": 97.07,
+      "BI": 98.28,
+      "RC": 100.0,
+      "Mean": 90.52
+    },
+    {
+      "doc_id": "2408.04307v3",
+      "domain": "arxiv",
+      "method": "sentence_window",
+      "n_chunks": 804,
+      "SC": 66.67,
+      "ICC": 60.26,
+      "DCC": 96.06,
+      "BI": 66.67,
+      "RC": 94.71,
+      "Mean": 76.87
+    },
+    {
+      "doc_id": "2408.04307v3",
+      "domain": "arxiv",
+      "method": "heading_section",
+      "n_chunks": 61,
+      "SC": 98.36,
+      "ICC": 58.01,
+      "DCC": 93.33,
+      "BI": 98.28,
+      "RC": 100.0,
+      "Mean": 89.59
+    },
+    {
+      "doc_id": "2408.04307v3",
+      "domain": "arxiv",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 50.85,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 70.17
+    },
+    {
+      "doc_id": "2408.04307v3",
+      "domain": "arxiv",
+      "method": "adaptive_ace",
+      "n_chunks": 52,
+      "SC": 100.0,
+      "ICC": 60.32,
+      "DCC": 96.05,
+      "BI": 99.43,
+      "RC": 99.52,
+      "Mean": 91.06,
+      "selected": "fixed_token_512",
+      "candidates": {
+        "fixed_token_512": {
+          "SC": 100.0,
+          "ICC": 60.32,
+          "DCC": 96.05,
+          "BI": 99.43,
+          "RC": 99.52,
+          "Mean": 91.06
+        },
+        "fixed_token_256": {
+          "SC": 99.04,
+          "ICC": 58.03,
+          "DCC": 94.45,
+          "BI": 98.28,
+          "RC": 100.0,
+          "Mean": 89.96
+        },
+        "recursive_text": {
+          "SC": 100.0,
+          "ICC": 56.72,
+          "DCC": 95.39,
+          "BI": 97.13,
+          "RC": 99.52,
+          "Mean": 89.75
+        },
+        "recursive_text_1100": {
+          "SC": 100.0,
+          "ICC": 57.28,
+          "DCC": 97.07,
+          "BI": 98.28,
+          "RC": 100.0,
+          "Mean": 90.52
+        },
+        "sentence_window": {
+          "SC": 66.67,
+          "ICC": 60.26,
+          "DCC": 96.06,
+          "BI": 66.67,
+          "RC": 94.71,
+          "Mean": 76.87
+        },
+        "heading_section": {
+          "SC": 98.36,
+          "ICC": 58.01,
+          "DCC": 93.33,
+          "BI": 98.28,
+          "RC": 100.0,
+          "Mean": 89.59
+        },
+        "no_split": {
+          "SC": 0.0,
+          "ICC": 50.85,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 70.17
+        }
+      }
+    },
+    {
+      "doc_id": "2405.17070v2",
+      "domain": "arxiv",
+      "method": "fixed_token_512",
+      "n_chunks": 73,
+      "SC": 100.0,
+      "ICC": 62.09,
+      "DCC": 95.04,
+      "BI": 99.7,
+      "RC": 100.0,
+      "Mean": 91.37
+    },
+    {
+      "doc_id": "2405.17070v2",
+      "domain": "arxiv",
+      "method": "fixed_token_256",
+      "n_chunks": 146,
+      "SC": 100.0,
+      "ICC": 51.8,
+      "DCC": 93.93,
+      "BI": 98.2,
+      "RC": 99.65,
+      "Mean": 88.72
+    },
+    {
+      "doc_id": "2405.17070v2",
+      "domain": "arxiv",
+      "method": "recursive_text",
+      "n_chunks": 76,
+      "SC": 100.0,
+      "ICC": 54.09,
+      "DCC": 93.19,
+      "BI": 97.9,
+      "RC": 99.31,
+      "Mean": 88.9
+    },
+    {
+      "doc_id": "2405.17070v2",
+      "domain": "arxiv",
+      "method": "recursive_text_1100",
+      "n_chunks": 32,
+      "SC": 100.0,
+      "ICC": 64.03,
+      "DCC": 94.12,
+      "BI": 99.7,
+      "RC": 100.0,
+      "Mean": 91.57
+    },
+    {
+      "doc_id": "2405.17070v2",
+      "domain": "arxiv",
+      "method": "sentence_window",
+      "n_chunks": 1200,
+      "SC": 54.67,
+      "ICC": 60.07,
+      "DCC": 95.22,
+      "BI": 57.36,
+      "RC": 95.49,
+      "Mean": 72.56
+    },
+    {
+      "doc_id": "2405.17070v2",
+      "domain": "arxiv",
+      "method": "heading_section",
+      "n_chunks": 83,
+      "SC": 98.8,
+      "ICC": 47.89,
+      "DCC": 93.34,
+      "BI": 99.1,
+      "RC": 100.0,
+      "Mean": 87.82
+    },
+    {
+      "doc_id": "2405.17070v2",
+      "domain": "arxiv",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 47.13,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 69.43
+    },
+    {
+      "doc_id": "2405.17070v2",
+      "domain": "arxiv",
+      "method": "adaptive_ace",
+      "n_chunks": 32,
+      "SC": 100.0,
+      "ICC": 64.03,
+      "DCC": 94.12,
+      "BI": 99.7,
+      "RC": 100.0,
+      "Mean": 91.57,
+      "selected": "recursive_text_1100",
+      "candidates": {
+        "fixed_token_512": {
+          "SC": 100.0,
+          "ICC": 62.09,
+          "DCC": 95.04,
+          "BI": 99.7,
+          "RC": 100.0,
+          "Mean": 91.37
+        },
+        "fixed_token_256": {
+          "SC": 100.0,
+          "ICC": 51.8,
+          "DCC": 93.93,
+          "BI": 98.2,
+          "RC": 99.65,
+          "Mean": 88.72
+        },
+        "recursive_text": {
+          "SC": 100.0,
+          "ICC": 54.09,
+          "DCC": 93.19,
+          "BI": 97.9,
+          "RC": 99.31,
+          "Mean": 88.9
+        },
+        "recursive_text_1100": {
+          "SC": 100.0,
+          "ICC": 64.03,
+          "DCC": 94.12,
+          "BI": 99.7,
+          "RC": 100.0,
+          "Mean": 91.57
+        },
+        "sentence_window": {
+          "SC": 54.67,
+          "ICC": 60.07,
+          "DCC": 95.22,
+          "BI": 57.36,
+          "RC": 95.49,
+          "Mean": 72.56
+        },
+        "heading_section": {
+          "SC": 98.8,
+          "ICC": 47.89,
+          "DCC": 93.34,
+          "BI": 99.1,
+          "RC": 100.0,
+          "Mean": 87.82
+        },
+        "no_split": {
+          "SC": 0.0,
+          "ICC": 47.13,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 69.43
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,1363 @@
+{
+  "dataset": "financebench",
+  "n_documents": 8,
+  "n_queries": 12,
+  "domains": [
+    "finance"
+  ],
+  "approx_chars": 40362,
+  "intrinsic_table": [
+    {
+      "method": "adaptive_ace",
+      "RC": 100.0,
+      "ICC": 71.3,
+      "DCC": 97.02,
+      "BI": 100.0,
+      "SC": 100.0,
+      "Mean": 96.45
+    },
+    {
+      "method": "fixed_token_512",
+      "RC": 100.0,
+      "ICC": 67.03,
+      "DCC": 96.29,
+      "BI": 99.46,
+      "SC": 100.0,
+      "Mean": 95.76
+    },
+    {
+      "method": "heading_section",
+      "RC": 100.0,
+      "ICC": 67.03,
+      "DCC": 96.29,
+      "BI": 99.46,
+      "SC": 100.0,
+      "Mean": 95.76
+    },
+    {
+      "method": "recursive_text_1100",
+      "RC": 100.0,
+      "ICC": 73.78,
+      "DCC": 97.39,
+      "BI": 100.0,
+      "SC": 100.0,
+      "Mean": 95.55
+    },
+    {
+      "method": "fixed_token_256",
+      "RC": 100.0,
+      "ICC": 63.6,
+      "DCC": 93.58,
+      "BI": 99.34,
+      "SC": 98.21,
+      "Mean": 94.39
+    },
+    {
+      "method": "recursive_text",
+      "RC": 100.0,
+      "ICC": 65.91,
+      "DCC": 91.75,
+      "BI": 97.5,
+      "SC": 93.75,
+      "Mean": 92.22
+    },
+    {
+      "method": "sentence_window",
+      "RC": 100.0,
+      "ICC": 67.65,
+      "DCC": 98.08,
+      "BI": 98.51,
+      "SC": 84.15,
+      "Mean": 91.3
+    },
+    {
+      "method": "no_split",
+      "RC": 100.0,
+      "ICC": 74.78,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "SC": 50.0,
+      "Mean": 86.22
+    }
+  ],
+  "rag_table": [
+    {
+      "method": "adaptive_ace",
+      "retrieval_completeness": 99.71,
+      "answer_correctness": 48.94,
+      "answered_queries": "12/12"
+    },
+    {
+      "method": "recursive_text_1100",
+      "retrieval_completeness": 99.71,
+      "answer_correctness": 48.94,
+      "answered_queries": "12/12"
+    },
+    {
+      "method": "recursive_text",
+      "retrieval_completeness": 99.71,
+      "answer_correctness": 48.94,
+      "answered_queries": "12/12"
+    },
+    {
+      "method": "fixed_token_512",
+      "retrieval_completeness": 99.71,
+      "answer_correctness": 42.69,
+      "answered_queries": "12/12"
+    },
+    {
+      "method": "no_split",
+      "retrieval_completeness": 99.71,
+      "answer_correctness": 48.94,
+      "answered_queries": "12/12"
+    },
+    {
+      "method": "sentence_window",
+      "retrieval_completeness": 97.63,
+      "answer_correctness": 42.69,
+      "answered_queries": "12/12"
+    }
+  ],
+  "per_document": [
+    {
+      "doc_id": "3M_2018_10K",
+      "domain": "finance",
+      "method": "fixed_token_512",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 93.85,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 98.46
+    },
+    {
+      "doc_id": "3M_2018_10K",
+      "domain": "finance",
+      "method": "fixed_token_256",
+      "n_chunks": 5,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 93.31,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 98.33
+    },
+    {
+      "doc_id": "3M_2018_10K",
+      "domain": "finance",
+      "method": "recursive_text",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 89.19,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 97.3
+    },
+    {
+      "doc_id": "3M_2018_10K",
+      "domain": "finance",
+      "method": "recursive_text_1100",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 62.83,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 92.57
+    },
+    {
+      "doc_id": "3M_2018_10K",
+      "domain": "finance",
+      "method": "sentence_window",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": 62.62,
+      "DCC": 99.4,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 92.41
+    },
+    {
+      "doc_id": "3M_2018_10K",
+      "domain": "finance",
+      "method": "heading_section",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 93.85,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 98.46
+    },
+    {
+      "doc_id": "3M_2018_10K",
+      "domain": "finance",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 62.83,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 92.57
+    },
+    {
+      "doc_id": "3M_2018_10K",
+      "domain": "finance",
+      "method": "adaptive_ace",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 93.85,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 98.46,
+      "selected": "fixed_token_512",
+      "candidates": {
+        "fixed_token_512": {
+          "SC": 100.0,
+          "ICC": null,
+          "DCC": 93.85,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 98.46
+        },
+        "fixed_token_256": {
+          "SC": 100.0,
+          "ICC": null,
+          "DCC": 93.31,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 98.33
+        },
+        "recursive_text": {
+          "SC": 100.0,
+          "ICC": null,
+          "DCC": 89.19,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 97.3
+        },
+        "recursive_text_1100": {
+          "SC": 100.0,
+          "ICC": 62.83,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 92.57
+        },
+        "sentence_window": {
+          "SC": 100.0,
+          "ICC": 62.62,
+          "DCC": 99.4,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 92.41
+        },
+        "heading_section": {
+          "SC": 100.0,
+          "ICC": null,
+          "DCC": 93.85,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 98.46
+        },
+        "no_split": {
+          "SC": 100.0,
+          "ICC": 62.83,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 92.57
+        }
+      }
+    },
+    {
+      "doc_id": "ACTIVISIONBLIZZARD_2019_10K",
+      "domain": "finance",
+      "method": "fixed_token_512",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 59.1,
+      "DCC": 95.41,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 90.9
+    },
+    {
+      "doc_id": "ACTIVISIONBLIZZARD_2019_10K",
+      "domain": "finance",
+      "method": "fixed_token_256",
+      "n_chunks": 7,
+      "SC": 85.71,
+      "ICC": 54.33,
+      "DCC": 91.74,
+      "BI": 99.07,
+      "RC": 100.0,
+      "Mean": 86.17
+    },
+    {
+      "doc_id": "ACTIVISIONBLIZZARD_2019_10K",
+      "domain": "finance",
+      "method": "recursive_text",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 60.75,
+      "DCC": 94.48,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 91.05
+    },
+    {
+      "doc_id": "ACTIVISIONBLIZZARD_2019_10K",
+      "domain": "finance",
+      "method": "recursive_text_1100",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": 61.22,
+      "DCC": 95.35,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 91.31
+    },
+    {
+      "doc_id": "ACTIVISIONBLIZZARD_2019_10K",
+      "domain": "finance",
+      "method": "sentence_window",
+      "n_chunks": 8,
+      "SC": 87.5,
+      "ICC": 55.73,
+      "DCC": 92.06,
+      "BI": 99.07,
+      "RC": 100.0,
+      "Mean": 86.87
+    },
+    {
+      "doc_id": "ACTIVISIONBLIZZARD_2019_10K",
+      "domain": "finance",
+      "method": "heading_section",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 59.1,
+      "DCC": 95.41,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 90.9
+    },
+    {
+      "doc_id": "ACTIVISIONBLIZZARD_2019_10K",
+      "domain": "finance",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 66.85,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 73.37
+    },
+    {
+      "doc_id": "ACTIVISIONBLIZZARD_2019_10K",
+      "domain": "finance",
+      "method": "adaptive_ace",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": 61.22,
+      "DCC": 95.35,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 91.31,
+      "selected": "recursive_text_1100",
+      "candidates": {
+        "fixed_token_512": {
+          "SC": 100.0,
+          "ICC": 59.1,
+          "DCC": 95.41,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 90.9
+        },
+        "fixed_token_256": {
+          "SC": 85.71,
+          "ICC": 54.33,
+          "DCC": 91.74,
+          "BI": 99.07,
+          "RC": 100.0,
+          "Mean": 86.17
+        },
+        "recursive_text": {
+          "SC": 100.0,
+          "ICC": 60.75,
+          "DCC": 94.48,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 91.05
+        },
+        "recursive_text_1100": {
+          "SC": 100.0,
+          "ICC": 61.22,
+          "DCC": 95.35,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 91.31
+        },
+        "sentence_window": {
+          "SC": 87.5,
+          "ICC": 55.73,
+          "DCC": 92.06,
+          "BI": 99.07,
+          "RC": 100.0,
+          "Mean": 86.87
+        },
+        "heading_section": {
+          "SC": 100.0,
+          "ICC": 59.1,
+          "DCC": 95.41,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 90.9
+        },
+        "no_split": {
+          "SC": 0.0,
+          "ICC": 66.85,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 73.37
+        }
+      }
+    },
+    {
+      "doc_id": "ADOBE_2015_10K",
+      "domain": "finance",
+      "method": "fixed_token_512",
+      "n_chunks": 7,
+      "SC": 100.0,
+      "ICC": 91.35,
+      "DCC": 99.95,
+      "BI": 95.65,
+      "RC": 100.0,
+      "Mean": 97.39
+    },
+    {
+      "doc_id": "ADOBE_2015_10K",
+      "domain": "finance",
+      "method": "fixed_token_256",
+      "n_chunks": 14,
+      "SC": 100.0,
+      "ICC": 88.52,
+      "DCC": 99.9,
+      "BI": 95.65,
+      "RC": 100.0,
+      "Mean": 96.81
+    },
+    {
+      "doc_id": "ADOBE_2015_10K",
+      "domain": "finance",
+      "method": "recursive_text",
+      "n_chunks": 6,
+      "SC": 100.0,
+      "ICC": 92.5,
+      "DCC": 99.95,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 98.49
+    },
+    {
+      "doc_id": "ADOBE_2015_10K",
+      "domain": "finance",
+      "method": "recursive_text_1100",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 96.09,
+      "DCC": 99.95,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 99.21
+    },
+    {
+      "doc_id": "ADOBE_2015_10K",
+      "domain": "finance",
+      "method": "sentence_window",
+      "n_chunks": 78,
+      "SC": 98.72,
+      "ICC": 78.71,
+      "DCC": 99.56,
+      "BI": 95.65,
+      "RC": 100.0,
+      "Mean": 94.53
+    },
+    {
+      "doc_id": "ADOBE_2015_10K",
+      "domain": "finance",
+      "method": "heading_section",
+      "n_chunks": 7,
+      "SC": 100.0,
+      "ICC": 91.35,
+      "DCC": 99.95,
+      "BI": 95.65,
+      "RC": 100.0,
+      "Mean": 97.39
+    },
+    {
+      "doc_id": "ADOBE_2015_10K",
+      "domain": "finance",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 95.37,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 79.07
+    },
+    {
+      "doc_id": "ADOBE_2015_10K",
+      "domain": "finance",
+      "method": "adaptive_ace",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 96.09,
+      "DCC": 99.95,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 99.21,
+      "selected": "recursive_text_1100",
+      "candidates": {
+        "fixed_token_512": {
+          "SC": 100.0,
+          "ICC": 91.35,
+          "DCC": 99.95,
+          "BI": 95.65,
+          "RC": 100.0,
+          "Mean": 97.39
+        },
+        "fixed_token_256": {
+          "SC": 100.0,
+          "ICC": 88.52,
+          "DCC": 99.9,
+          "BI": 95.65,
+          "RC": 100.0,
+          "Mean": 96.81
+        },
+        "recursive_text": {
+          "SC": 100.0,
+          "ICC": 92.5,
+          "DCC": 99.95,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 98.49
+        },
+        "recursive_text_1100": {
+          "SC": 100.0,
+          "ICC": 96.09,
+          "DCC": 99.95,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 99.21
+        },
+        "sentence_window": {
+          "SC": 98.72,
+          "ICC": 78.71,
+          "DCC": 99.56,
+          "BI": 95.65,
+          "RC": 100.0,
+          "Mean": 94.53
+        },
+        "heading_section": {
+          "SC": 100.0,
+          "ICC": 91.35,
+          "DCC": 99.95,
+          "BI": 95.65,
+          "RC": 100.0,
+          "Mean": 97.39
+        },
+        "no_split": {
+          "SC": 0.0,
+          "ICC": 95.37,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 79.07
+        }
+      }
+    },
+    {
+      "doc_id": "ADOBE_2016_10K",
+      "domain": "finance",
+      "method": "fixed_token_512",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 100.0
+    },
+    {
+      "doc_id": "ADOBE_2016_10K",
+      "domain": "finance",
+      "method": "fixed_token_256",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 93.58,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 98.39
+    },
+    {
+      "doc_id": "ADOBE_2016_10K",
+      "domain": "finance",
+      "method": "recursive_text",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 100.0
+    },
+    {
+      "doc_id": "ADOBE_2016_10K",
+      "domain": "finance",
+      "method": "recursive_text_1100",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 100.0
+    },
+    {
+      "doc_id": "ADOBE_2016_10K",
+      "domain": "finance",
+      "method": "sentence_window",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 100.0
+    },
+    {
+      "doc_id": "ADOBE_2016_10K",
+      "domain": "finance",
+      "method": "heading_section",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 100.0
+    },
+    {
+      "doc_id": "ADOBE_2016_10K",
+      "domain": "finance",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 100.0
+    },
+    {
+      "doc_id": "ADOBE_2016_10K",
+      "domain": "finance",
+      "method": "adaptive_ace",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 100.0,
+      "selected": "fixed_token_512",
+      "candidates": {
+        "fixed_token_512": {
+          "SC": 100.0,
+          "ICC": null,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 100.0
+        },
+        "fixed_token_256": {
+          "SC": 100.0,
+          "ICC": null,
+          "DCC": 93.58,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 98.39
+        },
+        "recursive_text": {
+          "SC": 100.0,
+          "ICC": null,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 100.0
+        },
+        "recursive_text_1100": {
+          "SC": 100.0,
+          "ICC": null,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 100.0
+        },
+        "sentence_window": {
+          "SC": 100.0,
+          "ICC": null,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 100.0
+        },
+        "heading_section": {
+          "SC": 100.0,
+          "ICC": null,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 100.0
+        },
+        "no_split": {
+          "SC": 100.0,
+          "ICC": null,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 100.0
+        }
+      }
+    },
+    {
+      "doc_id": "AES_2022_10K",
+      "domain": "finance",
+      "method": "fixed_token_512",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 91.86,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 97.96
+    },
+    {
+      "doc_id": "AES_2022_10K",
+      "domain": "finance",
+      "method": "fixed_token_256",
+      "n_chunks": 6,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 93.47,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 98.37
+    },
+    {
+      "doc_id": "AES_2022_10K",
+      "domain": "finance",
+      "method": "recursive_text",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 90.72,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 97.68
+    },
+    {
+      "doc_id": "AES_2022_10K",
+      "domain": "finance",
+      "method": "recursive_text_1100",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": 94.65,
+      "DCC": 90.28,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 96.99
+    },
+    {
+      "doc_id": "AES_2022_10K",
+      "domain": "finance",
+      "method": "sentence_window",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 94.66,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 78.93
+    },
+    {
+      "doc_id": "AES_2022_10K",
+      "domain": "finance",
+      "method": "heading_section",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 91.86,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 97.96
+    },
+    {
+      "doc_id": "AES_2022_10K",
+      "domain": "finance",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 94.66,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 78.93
+    },
+    {
+      "doc_id": "AES_2022_10K",
+      "domain": "finance",
+      "method": "adaptive_ace",
+      "n_chunks": 6,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 93.47,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 98.37,
+      "selected": "fixed_token_256",
+      "candidates": {
+        "fixed_token_512": {
+          "SC": 100.0,
+          "ICC": null,
+          "DCC": 91.86,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 97.96
+        },
+        "fixed_token_256": {
+          "SC": 100.0,
+          "ICC": null,
+          "DCC": 93.47,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 98.37
+        },
+        "recursive_text": {
+          "SC": 100.0,
+          "ICC": null,
+          "DCC": 90.72,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 97.68
+        },
+        "recursive_text_1100": {
+          "SC": 100.0,
+          "ICC": 94.65,
+          "DCC": 90.28,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 96.99
+        },
+        "sentence_window": {
+          "SC": 0.0,
+          "ICC": 94.66,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 78.93
+        },
+        "heading_section": {
+          "SC": 100.0,
+          "ICC": null,
+          "DCC": 91.86,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 97.96
+        },
+        "no_split": {
+          "SC": 0.0,
+          "ICC": 94.66,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 78.93
+        }
+      }
+    },
+    {
+      "doc_id": "AMAZON_2017_10K",
+      "domain": "finance",
+      "method": "fixed_token_512",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": 59.14,
+      "DCC": 95.71,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 90.97
+    },
+    {
+      "doc_id": "AMAZON_2017_10K",
+      "domain": "finance",
+      "method": "fixed_token_256",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 58.13,
+      "DCC": 92.55,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 90.14
+    },
+    {
+      "doc_id": "AMAZON_2017_10K",
+      "domain": "finance",
+      "method": "recursive_text",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": 58.78,
+      "DCC": 91.84,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 90.12
+    },
+    {
+      "doc_id": "AMAZON_2017_10K",
+      "domain": "finance",
+      "method": "recursive_text_1100",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 68.58,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 93.72
+    },
+    {
+      "doc_id": "AMAZON_2017_10K",
+      "domain": "finance",
+      "method": "sentence_window",
+      "n_chunks": 4,
+      "SC": 100.0,
+      "ICC": 56.83,
+      "DCC": 98.03,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 90.97
+    },
+    {
+      "doc_id": "AMAZON_2017_10K",
+      "domain": "finance",
+      "method": "heading_section",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": 59.14,
+      "DCC": 95.71,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 90.97
+    },
+    {
+      "doc_id": "AMAZON_2017_10K",
+      "domain": "finance",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 68.58,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 93.72
+    },
+    {
+      "doc_id": "AMAZON_2017_10K",
+      "domain": "finance",
+      "method": "adaptive_ace",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 68.58,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 93.72,
+      "selected": "recursive_text_1100",
+      "candidates": {
+        "fixed_token_512": {
+          "SC": 100.0,
+          "ICC": 59.14,
+          "DCC": 95.71,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 90.97
+        },
+        "fixed_token_256": {
+          "SC": 100.0,
+          "ICC": 58.13,
+          "DCC": 92.55,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 90.14
+        },
+        "recursive_text": {
+          "SC": 100.0,
+          "ICC": 58.78,
+          "DCC": 91.84,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 90.12
+        },
+        "recursive_text_1100": {
+          "SC": 100.0,
+          "ICC": 68.58,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 93.72
+        },
+        "sentence_window": {
+          "SC": 100.0,
+          "ICC": 56.83,
+          "DCC": 98.03,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 90.97
+        },
+        "heading_section": {
+          "SC": 100.0,
+          "ICC": 59.14,
+          "DCC": 95.71,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 90.97
+        },
+        "no_split": {
+          "SC": 100.0,
+          "ICC": 68.58,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 93.72
+        }
+      }
+    },
+    {
+      "doc_id": "AMCOR_2020_10K",
+      "domain": "finance",
+      "method": "fixed_token_512",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 100.0
+    },
+    {
+      "doc_id": "AMCOR_2020_10K",
+      "domain": "finance",
+      "method": "fixed_token_256",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 88.48,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 97.12
+    },
+    {
+      "doc_id": "AMCOR_2020_10K",
+      "domain": "finance",
+      "method": "recursive_text",
+      "n_chunks": 2,
+      "SC": 50.0,
+      "ICC": 59.07,
+      "DCC": 75.82,
+      "BI": 80.0,
+      "RC": 100.0,
+      "Mean": 72.98
+    },
+    {
+      "doc_id": "AMCOR_2020_10K",
+      "domain": "finance",
+      "method": "recursive_text_1100",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 100.0
+    },
+    {
+      "doc_id": "AMCOR_2020_10K",
+      "domain": "finance",
+      "method": "sentence_window",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 100.0
+    },
+    {
+      "doc_id": "AMCOR_2020_10K",
+      "domain": "finance",
+      "method": "heading_section",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 100.0
+    },
+    {
+      "doc_id": "AMCOR_2020_10K",
+      "domain": "finance",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 100.0
+    },
+    {
+      "doc_id": "AMCOR_2020_10K",
+      "domain": "finance",
+      "method": "adaptive_ace",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 100.0,
+      "selected": "fixed_token_512",
+      "candidates": {
+        "fixed_token_512": {
+          "SC": 100.0,
+          "ICC": null,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 100.0
+        },
+        "fixed_token_256": {
+          "SC": 100.0,
+          "ICC": null,
+          "DCC": 88.48,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 97.12
+        },
+        "recursive_text": {
+          "SC": 50.0,
+          "ICC": 59.07,
+          "DCC": 75.82,
+          "BI": 80.0,
+          "RC": 100.0,
+          "Mean": 72.98
+        },
+        "recursive_text_1100": {
+          "SC": 100.0,
+          "ICC": null,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 100.0
+        },
+        "sentence_window": {
+          "SC": 100.0,
+          "ICC": null,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 100.0
+        },
+        "heading_section": {
+          "SC": 100.0,
+          "ICC": null,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 100.0
+        },
+        "no_split": {
+          "SC": 100.0,
+          "ICC": null,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 100.0
+        }
+      }
+    },
+    {
+      "doc_id": "AMCOR_2022_8K_dated-2022-07-01",
+      "domain": "finance",
+      "method": "fixed_token_512",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 58.53,
+      "DCC": 93.51,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 90.41
+    },
+    {
+      "doc_id": "AMCOR_2022_8K_dated-2022-07-01",
+      "domain": "finance",
+      "method": "fixed_token_256",
+      "n_chunks": 6,
+      "SC": 100.0,
+      "ICC": 53.42,
+      "DCC": 95.64,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 89.81
+    },
+    {
+      "doc_id": "AMCOR_2022_8K_dated-2022-07-01",
+      "domain": "finance",
+      "method": "recursive_text",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 58.47,
+      "DCC": 92.01,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 90.1
+    },
+    {
+      "doc_id": "AMCOR_2022_8K_dated-2022-07-01",
+      "domain": "finance",
+      "method": "recursive_text_1100",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": 59.32,
+      "DCC": 93.51,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 90.57
+    },
+    {
+      "doc_id": "AMCOR_2022_8K_dated-2022-07-01",
+      "domain": "finance",
+      "method": "sentence_window",
+      "n_chunks": 23,
+      "SC": 86.96,
+      "ICC": 57.36,
+      "DCC": 95.58,
+      "BI": 93.33,
+      "RC": 100.0,
+      "Mean": 86.65
+    },
+    {
+      "doc_id": "AMCOR_2022_8K_dated-2022-07-01",
+      "domain": "finance",
+      "method": "heading_section",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 58.53,
+      "DCC": 93.51,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 90.41
+    },
+    {
+      "doc_id": "AMCOR_2022_8K_dated-2022-07-01",
+      "domain": "finance",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 60.41,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 72.08
+    },
+    {
+      "doc_id": "AMCOR_2022_8K_dated-2022-07-01",
+      "domain": "finance",
+      "method": "adaptive_ace",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": 59.32,
+      "DCC": 93.51,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 90.57,
+      "selected": "recursive_text_1100",
+      "candidates": {
+        "fixed_token_512": {
+          "SC": 100.0,
+          "ICC": 58.53,
+          "DCC": 93.51,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 90.41
+        },
+        "fixed_token_256": {
+          "SC": 100.0,
+          "ICC": 53.42,
+          "DCC": 95.64,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 89.81
+        },
+        "recursive_text": {
+          "SC": 100.0,
+          "ICC": 58.47,
+          "DCC": 92.01,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 90.1
+        },
+        "recursive_text_1100": {
+          "SC": 100.0,
+          "ICC": 59.32,
+          "DCC": 93.51,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 90.57
+        },
+        "sentence_window": {
+          "SC": 86.96,
+          "ICC": 57.36,
+          "DCC": 95.58,
+          "BI": 93.33,
+          "RC": 100.0,
+          "Mean": 86.65
+        },
+        "heading_section": {
+          "SC": 100.0,
+          "ICC": 58.53,
+          "DCC": 93.51,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 90.41
+        },
+        "no_split": {
+          "SC": 0.0,
+          "ICC": 60.41,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "RC": 100.0,
+          "Mean": 72.08
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,361 @@
+{
+  "mode": "openrouter",
+  "profile": "smoke",
+  "chat_model": "openai/gpt-4o",
+  "embed_model": "openai/text-embedding-3-small",
+  "comparison_note": "ACE public-benchmark suite on CLAIR + FinanceBench + Open RAG Bench. CLAIR paper rows are published Adaptive Chunking results. Compare ranks within each dataset/protocol; absolute RAG scores are not cross-dataset comparable.",
+  "datasets": [
+    {
+      "dataset": "clair",
+      "n_documents": 6,
+      "n_queries": 24,
+      "domains": [
+        "legal",
+        "social",
+        "technical"
+      ],
+      "approx_chars": 403618,
+      "intrinsic_table": [
+        {
+          "method": "adaptive_ace",
+          "RC": 100.0,
+          "ICC": 39.39,
+          "DCC": 85.79,
+          "BI": 99.69,
+          "SC": 99.59,
+          "Mean": 84.89
+        },
+        {
+          "method": "fixed_token_512",
+          "RC": 100.0,
+          "ICC": 36.39,
+          "DCC": 86.49,
+          "BI": 99.69,
+          "SC": 100.0,
+          "Mean": 84.52
+        },
+        {
+          "method": "recursive_text",
+          "RC": 100.0,
+          "ICC": 37.09,
+          "DCC": 85.38,
+          "BI": 99.69,
+          "SC": 99.59,
+          "Mean": 84.35
+        },
+        {
+          "method": "recursive_text_1100",
+          "RC": 99.87,
+          "ICC": 36.29,
+          "DCC": 84.08,
+          "BI": 99.72,
+          "SC": 100.0,
+          "Mean": 83.99
+        },
+        {
+          "method": "sentence_window",
+          "RC": 98.42,
+          "ICC": 47.03,
+          "DCC": 86.15,
+          "BI": 92.04,
+          "SC": 87.35,
+          "Mean": 82.2
+        },
+        {
+          "method": "no_split",
+          "RC": 100.0,
+          "ICC": 40.79,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "SC": 0.0,
+          "Mean": 68.16
+        }
+      ],
+      "rag_table": [
+        {
+          "method": "adaptive_ace",
+          "retrieval_completeness": 91.67,
+          "answer_correctness": 91.67,
+          "answered_queries": "11/12"
+        },
+        {
+          "method": "recursive_text_1100",
+          "retrieval_completeness": 91.67,
+          "answer_correctness": 91.67,
+          "answered_queries": "11/12"
+        },
+        {
+          "method": "fixed_token_512",
+          "retrieval_completeness": 75.0,
+          "answer_correctness": 75.0,
+          "answered_queries": "9/12"
+        },
+        {
+          "method": "sentence_window",
+          "retrieval_completeness": 71.67,
+          "answer_correctness": 71.67,
+          "answered_queries": "9/12"
+        }
+      ],
+      "paper_intrinsic_table": [
+        {
+          "method": "Adaptive Chunking (paper)",
+          "RC": 99.0,
+          "ICC": 68.2,
+          "DCC": 88.8,
+          "BI": 99.4,
+          "SC": 99.9,
+          "Mean": 91.07
+        },
+        {
+          "method": "LLM regex (GPT) (paper)",
+          "RC": 98.0,
+          "ICC": 70.9,
+          "DCC": 82.4,
+          "BI": 98.1,
+          "SC": 99.6,
+          "Mean": 89.8
+        },
+        {
+          "method": "LangChain recursive (paper)",
+          "RC": 96.1,
+          "ICC": 65.6,
+          "DCC": 88.8,
+          "BI": 95.0,
+          "SC": 97.7,
+          "Mean": 88.62
+        },
+        {
+          "method": "Semantic (paper)",
+          "RC": 97.5,
+          "ICC": 69.3,
+          "DCC": 76.3,
+          "BI": 91.3,
+          "SC": 48.1,
+          "Mean": 76.49
+        },
+        {
+          "method": "Sentence (paper)",
+          "RC": 86.3,
+          "ICC": 78.4,
+          "DCC": 72.5,
+          "BI": 61.9,
+          "SC": 67.2,
+          "Mean": 73.26
+        }
+      ],
+      "paper_rag_table": [
+        {
+          "method": "Adaptive Chunking (paper)",
+          "retrieval_completeness": 67.7,
+          "answer_correctness": 78.0,
+          "answered_queries": "65/99"
+        },
+        {
+          "method": "LangChain recursive (paper)",
+          "retrieval_completeness": 58.1,
+          "answer_correctness": 70.1,
+          "answered_queries": "49/99"
+        },
+        {
+          "method": "Page splitting (paper)",
+          "retrieval_completeness": 59.1,
+          "answer_correctness": 73.3,
+          "answered_queries": "49/99"
+        }
+      ]
+    },
+    {
+      "dataset": "financebench",
+      "n_documents": 8,
+      "n_queries": 12,
+      "domains": [
+        "finance"
+      ],
+      "approx_chars": 40362,
+      "intrinsic_table": [
+        {
+          "method": "adaptive_ace",
+          "RC": 100.0,
+          "ICC": 67.85,
+          "DCC": 94.32,
+          "BI": 100.0,
+          "SC": 100.0,
+          "Mean": 94.76
+        },
+        {
+          "method": "recursive_text_1100",
+          "RC": 100.0,
+          "ICC": 69.69,
+          "DCC": 95.2,
+          "BI": 100.0,
+          "SC": 100.0,
+          "Mean": 94.49
+        },
+        {
+          "method": "fixed_token_512",
+          "RC": 100.0,
+          "ICC": 58.13,
+          "DCC": 89.2,
+          "BI": 99.46,
+          "SC": 100.0,
+          "Mean": 93.35
+        },
+        {
+          "method": "sentence_window",
+          "RC": 100.0,
+          "ICC": 69.14,
+          "DCC": 92.92,
+          "BI": 98.51,
+          "SC": 84.15,
+          "Mean": 90.49
+        },
+        {
+          "method": "recursive_text",
+          "RC": 100.0,
+          "ICC": 58.36,
+          "DCC": 85.91,
+          "BI": 97.5,
+          "SC": 93.75,
+          "Mean": 90.01
+        },
+        {
+          "method": "no_split",
+          "RC": 100.0,
+          "ICC": 72.51,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "SC": 50.0,
+          "Mean": 85.88
+        }
+      ],
+      "rag_table": [
+        {
+          "method": "recursive_text_1100",
+          "retrieval_completeness": 100.0,
+          "answer_correctness": 87.5,
+          "answered_queries": "12/12"
+        },
+        {
+          "method": "fixed_token_512",
+          "retrieval_completeness": 93.75,
+          "answer_correctness": 87.5,
+          "answered_queries": "10/12"
+        },
+        {
+          "method": "adaptive_ace",
+          "retrieval_completeness": 92.5,
+          "answer_correctness": 86.25,
+          "answered_queries": "10/12"
+        },
+        {
+          "method": "sentence_window",
+          "retrieval_completeness": 75.0,
+          "answer_correctness": 62.5,
+          "answered_queries": "10/12"
+        }
+      ]
+    },
+    {
+      "dataset": "open_rag_bench",
+      "n_documents": 10,
+      "n_queries": 40,
+      "domains": [
+        "arxiv"
+      ],
+      "approx_chars": 966710,
+      "intrinsic_table": [
+        {
+          "method": "adaptive_ace",
+          "RC": 99.93,
+          "ICC": 46.24,
+          "DCC": 84.51,
+          "BI": 99.34,
+          "SC": 100.0,
+          "Mean": 86.0
+        },
+        {
+          "method": "fixed_token_512",
+          "RC": 99.93,
+          "ICC": 45.9,
+          "DCC": 84.8,
+          "BI": 99.34,
+          "SC": 100.0,
+          "Mean": 85.99
+        },
+        {
+          "method": "recursive_text",
+          "RC": 99.79,
+          "ICC": 44.48,
+          "DCC": 83.11,
+          "BI": 97.92,
+          "SC": 100.0,
+          "Mean": 85.06
+        },
+        {
+          "method": "recursive_text_1100",
+          "RC": 100.0,
+          "ICC": 45.52,
+          "DCC": 80.66,
+          "BI": 99.0,
+          "SC": 99.44,
+          "Mean": 84.92
+        },
+        {
+          "method": "sentence_window",
+          "RC": 94.88,
+          "ICC": 55.8,
+          "DCC": 84.25,
+          "BI": 68.47,
+          "SC": 65.9,
+          "Mean": 73.86
+        },
+        {
+          "method": "no_split",
+          "RC": 100.0,
+          "ICC": 35.7,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "SC": 0.0,
+          "Mean": 67.14
+        }
+      ],
+      "rag_table": [
+        {
+          "method": "adaptive_ace",
+          "retrieval_completeness": 88.0,
+          "answer_correctness": 84.0,
+          "answered_queries": "17/20"
+        },
+        {
+          "method": "fixed_token_512",
+          "retrieval_completeness": 86.5,
+          "answer_correctness": 82.5,
+          "answered_queries": "17/20"
+        },
+        {
+          "method": "sentence_window",
+          "retrieval_completeness": 80.0,
+          "answer_correctness": 81.0,
+          "answered_queries": "16/20"
+        },
+        {
+          "method": "recursive_text_1100",
+          "retrieval_completeness": 79.0,
+          "answer_correctness": 74.0,
+          "answered_queries": "15/20"
+        }
+      ]
+    }
+  ],
+  "usage": {
+    "embed_calls": 16783,
+    "embed_texts": 33144,
+    "embed_cache_hits": 261585,
+    "chat_calls": 176,
+    "prompt_tokens": 6557068,
+    "completion_tokens": 12823,
+    "total_tokens": 6569891,
+    "estimated_cost_usd": 1.0976576799999953
+  }
+}
