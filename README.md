@@ -122,8 +122,9 @@ curl -s -X POST http://localhost:3000/api/v1/admin/seed -H 'X-Tenant-Id: tenant_
 Reproduce:
 
 ```bash
-make eval
-# → benchmarks/adaptive_chunking_eval/results/tables.md
+make eval                 # offline hashed / lexical
+make eval-openrouter      # requires OPENROUTER_API_KEY; gpt-4o + text-embedding-3-small
+# → benchmarks/adaptive_chunking_eval/results[/openrouter]/tables.md
 ```
 
 ### ACE offline intrinsic metrics (%)
@@ -138,6 +139,16 @@ make eval
 | heading_section | 100.0 | 59.45 | 94.07 | 97.66 | 83.33 | 86.90 |
 | no_split | 100.0 | 60.62 | 100.0 | 100.0 | 16.67 | 75.46 |
 | sentence_window | 58.33 | 61.50 | 95.09 | 21.35 | 60.69 | 59.39 |
+
+### ACE OpenRouter intrinsic metrics (%) — `text-embedding-3-small`
+
+| Method | RC | ICC | DCC | BI | SC | **Mean** |
+|--------|---:|----:|----:|---:|---:|--------:|
+| **adaptive_ace** | 100.0 | 48.04 | 94.38 | 100.0 | 100.0 | **88.48** |
+| recursive_text_1100 | 100.0 | 47.78 | 94.42 | 100.0 | 100.0 | 88.44 |
+| recursive_text | 100.0 | 48.09 | 94.94 | 98.70 | 100.0 | 88.35 |
+| fixed_token_512 | 100.0 | 49.23 | 92.73 | 97.66 | 100.0 | 87.92 |
+| sentence_window | 58.33 | 56.26 | 81.58 | 21.35 | 60.69 | 55.64 |
 
 ### Published Adaptive Chunking intrinsic metrics (CLAIR / Table 3) [2]
 
@@ -158,6 +169,16 @@ make eval
 | fixed_token_256 | 99.89 | 99.87 | 43/43 |
 | sentence_window | 91.48 | 89.84 | 43/43 |
 
+### ACE OpenRouter RAG — dense retrieval + `gpt-4o` judge
+
+| Method | Retrieval Completeness | Answer Correctness | Answered |
+|--------|-----------------------:|-------------------:|---------:|
+| no_split | **100.0** | **100.0** | 43/43 |
+| fixed_token_512 | 93.75 | 93.75 | 40/43 |
+| recursive_text_1100 | 82.92 | 83.33 | 35/43 |
+| **adaptive_ace** | 64.17 | 64.58 | 26/43 |
+| recursive_text | 54.17 | 54.17 | 21/43 |
+
 ### Published Adaptive Chunking RAG (CLAIR / Table 5) [2]
 
 | Method | Retrieval Completeness | Answer Correctness | Answered |
@@ -166,18 +187,21 @@ make eval
 | LangChain recursive | 58.1 | 70.1 | 49/99 |
 | Page splitting | 59.1 | 73.3 | 49/99 |
 
-> **Compare ranks, not absolute RAG magnitudes.** Paper = CLAIR + neural embeddings + LLM judge; ACE offline = hashed embeddings + lexical proxy on a smaller corpus.
+> **Compare ranks, not absolute RAG magnitudes.** Paper = CLAIR + neural embeddings + LLM judge; ACE offline = hashed + lexical; ACE OpenRouter = `text-embedding-3-small` + `gpt-4o` on the same 6-doc kit.
 
-**Takeaway (both studies):** metric-guided adaptivity recovers strong recursive splitters and avoids brittle sentence-level fragmentation.
+**Takeaway:** offline and OpenRouter intrinsic runs both recover strong recursive splitters and avoid brittle sentence windows. Live LLM-judge RAG on this small corpus favors larger-context fixed splitters over pure intrinsic argmax — which is exactly why ACE keeps human-triggered optimization when RAG feedback disagrees with metric selection.
 
 ## Evaluation kit & paper
 
 ```text
 benchmarks/adaptive_chunking_eval/
   run_eval.py
+  run_eval_openrouter.py
   src/intrinsic_metrics.py
+  src/openrouter_client.py
   corpus/
   results/tables.md
+  results/openrouter/tables.md
   paper/paper.md
   paper/paper.html
 ```
@@ -190,6 +214,8 @@ benchmarks/adaptive_chunking_eval/
 ```bash
 # Offline Adaptive Chunking–style eval
 make eval
+# Live OpenRouter (OPENROUTER_API_KEY + optional ACE_CHAT_MODEL / ACE_EMBED_MODEL)
+make eval-openrouter
 
 # Backend
 cd apps/api && source .venv/bin/activate

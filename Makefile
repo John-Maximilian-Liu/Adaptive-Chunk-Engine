@@ -1,4 +1,4 @@
-.PHONY: dev start stop reset logs migrate test lint e2e seed eval
+.PHONY: dev start stop reset logs migrate test lint e2e seed eval eval-openrouter
 
 dev:
 	docker compose -f compose.yaml -f compose.dev.yaml up -d --build
@@ -35,3 +35,7 @@ seed:
 
 eval:
 	PYTHONPATH=apps/api:packages/python python benchmarks/adaptive_chunking_eval/run_eval.py
+
+# Live OpenRouter eval (requires OPENROUTER_API_KEY). Defaults: gpt-4o + text-embedding-3-small.
+eval-openrouter:
+	PYTHONPATH=apps/api:packages/python python benchmarks/adaptive_chunking_eval/run_eval_openrouter.py

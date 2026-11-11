@@ -1,0 +1,55 @@
+# ACE OpenRouter Live Evaluation Results
+
+Provider: **OpenRouter** · chat `openai/gpt-4o` · embed `openai/text-embedding-3-small`
+
+Corpus: **6 documents** · domains `['legal', 'sustainability', 'technical']` · ≈8766 words.
+
+Reference: [arXiv:2603.25333](https://arxiv.org/abs/2603.25333) · [ekimetrics/adaptive-chunking](https://github.com/ekimetrics/adaptive-chunking).
+
+> OpenRouter live ACE rows use openai/text-embedding-3-small for ICC/DCC + dense retrieval and openai/gpt-4o as LLM judge. Paper CLAIR rows remain published baselines (33 docs, different embedder/judge). Compare ranks, not absolute magnitudes.
+
+API usage (approx): embed_calls=1710, chat_calls=344, tokens=792357, cost_usd≈1.3118
+
+## A. ACE OpenRouter intrinsic metrics (%)
+
+| Method | RC | ICC | DCC | BI | SC | **Mean** |
+|---|---:|---:|---:|---:|---:|---:|
+| **adaptive_ace** | 100.0 | 48.04 | 94.38 | 100.0 | 100.0 | **88.48** |
+| recursive_text_1100 | 100.0 | 47.78 | 94.42 | 100.0 | 100.0 | **88.44** |
+| recursive_text | 100.0 | 48.09 | 94.94 | 98.7 | 100.0 | **88.35** |
+| fixed_token_512 | 100.0 | 49.23 | 92.73 | 97.66 | 100.0 | **87.92** |
+| fixed_token_256 | 99.25 | 48.75 | 91.52 | 96.69 | 99.02 | **87.05** |
+| heading_section | 100.0 | 49.41 | 87.66 | 97.66 | 83.33 | **83.61** |
+| no_split | 100.0 | 45.19 | 100.0 | 100.0 | 16.67 | **72.37** |
+| sentence_window | 58.33 | 56.26 | 81.58 | 21.35 | 60.69 | **55.64** |
+
+## B. Published Adaptive Chunking intrinsic metrics (CLAIR / paper Table 3)
+
+| Method | RC | ICC | DCC | BI | SC | **Mean** |
+|---|---:|---:|---:|---:|---:|---:|
+| **Adaptive Chunking (paper)** | 99.0 | 68.2 | 88.8 | 99.4 | 99.9 | **91.07** |
+| LLM regex (GPT) (paper) | 98.0 | 70.9 | 82.4 | 98.1 | 99.6 | **89.8** |
+| LangChain recursive (paper) | 96.1 | 65.6 | 88.8 | 95.0 | 97.7 | **88.62** |
+| Semantic (paper) | 97.5 | 69.3 | 76.3 | 91.3 | 48.1 | **76.49** |
+| Sentence (paper) | 86.3 | 78.4 | 72.5 | 61.9 | 67.2 | **73.26** |
+
+## C. ACE OpenRouter RAG (dense retrieval + gpt-4o judge)
+
+| Method | Retrieval Completeness | Answer Correctness | Answered |
+|---|---:|---:|---:|
+| no_split | 100.0 | 100.0 | 43/43 |
+| fixed_token_512 | 93.75 | 93.75 | 40/43 |
+| heading_section | 93.75 | 93.75 | 40/43 |
+| sentence_window | 90.83 | 92.71 | 38/43 |
+| recursive_text_1100 | 82.92 | 83.33 | 35/43 |
+| fixed_token_256 | 71.46 | 71.88 | 28/43 |
+| **adaptive_ace** | 64.17 | 64.58 | 26/43 |
+| recursive_text | 54.17 | 54.17 | 21/43 |
+
+## D. Published Adaptive Chunking RAG (CLAIR / paper Table 5)
+
+| Method | Retrieval Completeness | Answer Correctness | Answered |
+|---|---:|---:|---:|
+| **Adaptive Chunking (paper)** | 67.7 | 78.0 | 65/99 |
+| LangChain recursive (paper) | 58.1 | 70.1 | 49/99 |
+| Page splitting (paper) | 59.1 | 73.3 | 49/99 |
