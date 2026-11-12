@@ -53,6 +53,6 @@ Full tables: [`results/tables.md`](results/tables.md), [`results/openrouter/tabl
 
 ## Paper
 
-- Markdown: [`paper/paper.md`](paper/paper.md)
-- HTML: [`paper/paper.html`](paper/paper.html)
+- Technical report: [`paper/paper.md`](paper/paper.md) · [`paper/paper.html`](paper/paper.html)
+- **COLING 2027 Industry Track standalone draft:** [`paper/coling2027_industry/`](paper/coling2027_industry/) (double-blind 6-page narrative + comparison vs COLING 2025 Industry CFP/review expectations)
 - Experiment design: [`datasets/EXPERIMENT_DESIGN.md`](datasets/EXPERIMENT_DESIGN.md)

@@ -197,6 +197,7 @@ benchmarks/adaptive_chunking_eval/
 
 - Kit README: [`benchmarks/adaptive_chunking_eval/README.md`](benchmarks/adaptive_chunking_eval/README.md)
 - Research article: [`benchmarks/adaptive_chunking_eval/paper/paper.md`](benchmarks/adaptive_chunking_eval/paper/paper.md)
+- COLING 2027 Industry Track draft: [`benchmarks/adaptive_chunking_eval/paper/coling2027_industry/`](benchmarks/adaptive_chunking_eval/paper/coling2027_industry/)
 
 ## Running tests
 
