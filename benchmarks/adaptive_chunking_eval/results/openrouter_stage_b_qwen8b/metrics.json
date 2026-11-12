@@ -1,0 +1,4437 @@
+{
+  "per_document": [
+    {
+      "doc_id": "technical_long.md",
+      "domain": "technical",
+      "method": "fixed_token_512",
+      "n_chunks": 9,
+      "SC": 100.0,
+      "ICC": 54.49,
+      "DCC": 94.06,
+      "BI": 97.62,
+      "RC": 100.0,
+      "Mean": 89.23
+    },
+    {
+      "doc_id": "technical_long.md",
+      "domain": "technical",
+      "method": "fixed_token_256",
+      "n_chunks": 18,
+      "SC": 100.0,
+      "ICC": 55.74,
+      "DCC": 94.12,
+      "BI": 97.62,
+      "RC": 100.0,
+      "Mean": 89.5
+    },
+    {
+      "doc_id": "technical_long.md",
+      "domain": "technical",
+      "method": "recursive_text",
+      "n_chunks": 8,
+      "SC": 100.0,
+      "ICC": 54.32,
+      "DCC": 97.0,
+      "BI": 97.62,
+      "RC": 100.0,
+      "Mean": 89.79
+    },
+    {
+      "doc_id": "technical_long.md",
+      "domain": "technical",
+      "method": "recursive_text_1100",
+      "n_chunks": 4,
+      "SC": 100.0,
+      "ICC": 54.15,
+      "DCC": 96.02,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 90.03
+    },
+    {
+      "doc_id": "technical_long.md",
+      "domain": "technical",
+      "method": "sentence_window",
+      "n_chunks": 239,
+      "SC": 49.79,
+      "ICC": 64.76,
+      "DCC": 84.84,
+      "BI": 4.76,
+      "RC": 50.0,
+      "Mean": 50.83
+    },
+    {
+      "doc_id": "technical_long.md",
+      "domain": "technical",
+      "method": "heading_section",
+      "n_chunks": 9,
+      "SC": 100.0,
+      "ICC": 54.5,
+      "DCC": 94.06,
+      "BI": 97.62,
+      "RC": 100.0,
+      "Mean": 89.23
+    },
+    {
+      "doc_id": "technical_long.md",
+      "domain": "technical",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 54.2,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 70.84
+    },
+    {
+      "doc_id": "technical_long.md",
+      "domain": "technical",
+      "method": "adaptive_ace",
+      "n_chunks": 4,
+      "SC": 100.0,
+      "ICC": 54.15,
+      "DCC": 96.02,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 90.03,
+      "selected": "recursive_text_1100",
+      "selection": {
+        "mode": "intrinsic",
+        "candidates": {
+          "fixed_token_512": {
+            "SC": 100.0,
+            "ICC": 54.5,
+            "DCC": 94.06,
+            "BI": 97.62,
+            "RC": 100.0,
+            "Mean": 89.23
+          },
+          "fixed_token_256": {
+            "SC": 100.0,
+            "ICC": 55.74,
+            "DCC": 94.12,
+            "BI": 97.62,
+            "RC": 100.0,
+            "Mean": 89.5
+          },
+          "recursive_text": {
+            "SC": 100.0,
+            "ICC": 54.32,
+            "DCC": 97.0,
+            "BI": 97.62,
+            "RC": 100.0,
+            "Mean": 89.79
+          },
+          "recursive_text_1100": {
+            "SC": 100.0,
+            "ICC": 54.15,
+            "DCC": 96.02,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 90.03
+          },
+          "sentence_window": {
+            "SC": 49.79,
+            "ICC": 64.85,
+            "DCC": 84.84,
+            "BI": 4.76,
+            "RC": 50.0,
+            "Mean": 50.85
+          },
+          "heading_section": {
+            "SC": 100.0,
+            "ICC": 54.5,
+            "DCC": 94.06,
+            "BI": 97.62,
+            "RC": 100.0,
+            "Mean": 89.23
+          },
+          "no_split": {
+            "SC": 0.0,
+            "ICC": 54.2,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 70.84
+          }
+        },
+        "selected_by": "intrinsic",
+        "selected_intrinsic_mean": 0.900337433808793
+      }
+    },
+    {
+      "doc_id": "ops_long.md",
+      "domain": "technical",
+      "method": "fixed_token_512",
+      "n_chunks": 7,
+      "SC": 100.0,
+      "ICC": 52.7,
+      "DCC": 94.74,
+      "BI": 96.88,
+      "RC": 100.0,
+      "Mean": 88.86
+    },
+    {
+      "doc_id": "ops_long.md",
+      "domain": "technical",
+      "method": "fixed_token_256",
+      "n_chunks": 14,
+      "SC": 100.0,
+      "ICC": 55.37,
+      "DCC": 95.13,
+      "BI": 96.88,
+      "RC": 98.33,
+      "Mean": 89.14
+    },
+    {
+      "doc_id": "ops_long.md",
+      "domain": "technical",
+      "method": "recursive_text",
+      "n_chunks": 7,
+      "SC": 100.0,
+      "ICC": 53.49,
+      "DCC": 96.1,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 89.92
+    },
+    {
+      "doc_id": "ops_long.md",
+      "domain": "technical",
+      "method": "recursive_text_1100",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 52.77,
+      "DCC": 95.38,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 89.63
+    },
+    {
+      "doc_id": "ops_long.md",
+      "domain": "technical",
+      "method": "sentence_window",
+      "n_chunks": 179,
+      "SC": 65.92,
+      "ICC": 65.13,
+      "DCC": 86.38,
+      "BI": 6.25,
+      "RC": 50.0,
+      "Mean": 54.74
+    },
+    {
+      "doc_id": "ops_long.md",
+      "domain": "technical",
+      "method": "heading_section",
+      "n_chunks": 7,
+      "SC": 100.0,
+      "ICC": 52.7,
+      "DCC": 94.74,
+      "BI": 96.88,
+      "RC": 100.0,
+      "Mean": 88.86
+    },
+    {
+      "doc_id": "ops_long.md",
+      "domain": "technical",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 54.12,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 70.82
+    },
+    {
+      "doc_id": "ops_long.md",
+      "domain": "technical",
+      "method": "adaptive_ace",
+      "n_chunks": 7,
+      "SC": 100.0,
+      "ICC": 53.49,
+      "DCC": 96.1,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 89.92,
+      "selected": "recursive_text",
+      "selection": {
+        "mode": "intrinsic",
+        "candidates": {
+          "fixed_token_512": {
+            "SC": 100.0,
+            "ICC": 52.7,
+            "DCC": 94.74,
+            "BI": 96.88,
+            "RC": 100.0,
+            "Mean": 88.86
+          },
+          "fixed_token_256": {
+            "SC": 100.0,
+            "ICC": 55.37,
+            "DCC": 95.13,
+            "BI": 96.88,
+            "RC": 98.33,
+            "Mean": 89.14
+          },
+          "recursive_text": {
+            "SC": 100.0,
+            "ICC": 53.49,
+            "DCC": 96.1,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 89.92
+          },
+          "recursive_text_1100": {
+            "SC": 100.0,
+            "ICC": 52.77,
+            "DCC": 95.38,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 89.63
+          },
+          "sentence_window": {
+            "SC": 65.92,
+            "ICC": 65.13,
+            "DCC": 86.38,
+            "BI": 6.25,
+            "RC": 50.0,
+            "Mean": 54.74
+          },
+          "heading_section": {
+            "SC": 100.0,
+            "ICC": 52.7,
+            "DCC": 94.74,
+            "BI": 96.88,
+            "RC": 100.0,
+            "Mean": 88.86
+          },
+          "no_split": {
+            "SC": 0.0,
+            "ICC": 54.12,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 70.82
+          }
+        },
+        "selected_by": "intrinsic",
+        "selected_intrinsic_mean": 0.8991836359070617
+      }
+    },
+    {
+      "doc_id": "legal_long.md",
+      "domain": "legal",
+      "method": "fixed_token_512",
+      "n_chunks": 8,
+      "SC": 100.0,
+      "ICC": 52.83,
+      "DCC": 92.9,
+      "BI": 97.3,
+      "RC": 100.0,
+      "Mean": 88.61
+    },
+    {
+      "doc_id": "legal_long.md",
+      "domain": "legal",
+      "method": "fixed_token_256",
+      "n_chunks": 16,
+      "SC": 100.0,
+      "ICC": 53.69,
+      "DCC": 93.28,
+      "BI": 97.3,
+      "RC": 98.57,
+      "Mean": 88.57
+    },
+    {
+      "doc_id": "legal_long.md",
+      "domain": "legal",
+      "method": "recursive_text",
+      "n_chunks": 9,
+      "SC": 100.0,
+      "ICC": 50.94,
+      "DCC": 95.9,
+      "BI": 97.3,
+      "RC": 100.0,
+      "Mean": 88.83
+    },
+    {
+      "doc_id": "legal_long.md",
+      "domain": "legal",
+      "method": "recursive_text_1100",
+      "n_chunks": 4,
+      "SC": 100.0,
+      "ICC": 50.6,
+      "DCC": 95.41,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 89.2
+    },
+    {
+      "doc_id": "legal_long.md",
+      "domain": "legal",
+      "method": "sentence_window",
+      "n_chunks": 209,
+      "SC": 66.03,
+      "ICC": 63.99,
+      "DCC": 84.8,
+      "BI": 5.41,
+      "RC": 50.0,
+      "Mean": 54.04
+    },
+    {
+      "doc_id": "legal_long.md",
+      "domain": "legal",
+      "method": "heading_section",
+      "n_chunks": 8,
+      "SC": 100.0,
+      "ICC": 52.83,
+      "DCC": 92.9,
+      "BI": 97.3,
+      "RC": 100.0,
+      "Mean": 88.61
+    },
+    {
+      "doc_id": "legal_long.md",
+      "domain": "legal",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 49.25,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 69.85
+    },
+    {
+      "doc_id": "legal_long.md",
+      "domain": "legal",
+      "method": "adaptive_ace",
+      "n_chunks": 4,
+      "SC": 100.0,
+      "ICC": 50.6,
+      "DCC": 95.41,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 89.2,
+      "selected": "recursive_text_1100",
+      "selection": {
+        "mode": "intrinsic",
+        "candidates": {
+          "fixed_token_512": {
+            "SC": 100.0,
+            "ICC": 52.83,
+            "DCC": 92.9,
+            "BI": 97.3,
+            "RC": 100.0,
+            "Mean": 88.61
+          },
+          "fixed_token_256": {
+            "SC": 100.0,
+            "ICC": 53.69,
+            "DCC": 93.28,
+            "BI": 97.3,
+            "RC": 98.57,
+            "Mean": 88.57
+          },
+          "recursive_text": {
+            "SC": 100.0,
+            "ICC": 50.94,
+            "DCC": 95.9,
+            "BI": 97.3,
+            "RC": 100.0,
+            "Mean": 88.83
+          },
+          "recursive_text_1100": {
+            "SC": 100.0,
+            "ICC": 50.6,
+            "DCC": 95.41,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 89.2
+          },
+          "sentence_window": {
+            "SC": 66.03,
+            "ICC": 63.99,
+            "DCC": 84.8,
+            "BI": 5.41,
+            "RC": 50.0,
+            "Mean": 54.04
+          },
+          "heading_section": {
+            "SC": 100.0,
+            "ICC": 52.83,
+            "DCC": 92.9,
+            "BI": 97.3,
+            "RC": 100.0,
+            "Mean": 88.61
+          },
+          "no_split": {
+            "SC": 0.0,
+            "ICC": 49.25,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 69.85
+          }
+        },
+        "selected_by": "intrinsic",
+        "selected_intrinsic_mean": 0.8920173592597843
+      }
+    },
+    {
+      "doc_id": "finance_long.md",
+      "domain": "legal",
+      "method": "fixed_token_512",
+      "n_chunks": 7,
+      "SC": 100.0,
+      "ICC": 53.36,
+      "DCC": 94.13,
+      "BI": 96.88,
+      "RC": 100.0,
+      "Mean": 88.87
+    },
+    {
+      "doc_id": "finance_long.md",
+      "domain": "legal",
+      "method": "fixed_token_256",
+      "n_chunks": 14,
+      "SC": 100.0,
+      "ICC": 53.94,
+      "DCC": 94.02,
+      "BI": 93.75,
+      "RC": 100.0,
+      "Mean": 88.34
+    },
+    {
+      "doc_id": "finance_long.md",
+      "domain": "legal",
+      "method": "recursive_text",
+      "n_chunks": 6,
+      "SC": 100.0,
+      "ICC": 52.27,
+      "DCC": 96.15,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 89.69
+    },
+    {
+      "doc_id": "finance_long.md",
+      "domain": "legal",
+      "method": "recursive_text_1100",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 51.46,
+      "DCC": 93.45,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 88.98
+    },
+    {
+      "doc_id": "finance_long.md",
+      "domain": "legal",
+      "method": "sentence_window",
+      "n_chunks": 179,
+      "SC": 49.72,
+      "ICC": 64.66,
+      "DCC": 85.34,
+      "BI": 6.25,
+      "RC": 50.0,
+      "Mean": 51.19
+    },
+    {
+      "doc_id": "finance_long.md",
+      "domain": "legal",
+      "method": "heading_section",
+      "n_chunks": 7,
+      "SC": 100.0,
+      "ICC": 53.36,
+      "DCC": 94.13,
+      "BI": 96.88,
+      "RC": 100.0,
+      "Mean": 88.87
+    },
+    {
+      "doc_id": "finance_long.md",
+      "domain": "legal",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 50.76,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 70.15
+    },
+    {
+      "doc_id": "finance_long.md",
+      "domain": "legal",
+      "method": "adaptive_ace",
+      "n_chunks": 6,
+      "SC": 100.0,
+      "ICC": 52.27,
+      "DCC": 96.15,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 89.69,
+      "selected": "recursive_text",
+      "selection": {
+        "mode": "intrinsic",
+        "candidates": {
+          "fixed_token_512": {
+            "SC": 100.0,
+            "ICC": 53.36,
+            "DCC": 94.13,
+            "BI": 96.88,
+            "RC": 100.0,
+            "Mean": 88.87
+          },
+          "fixed_token_256": {
+            "SC": 100.0,
+            "ICC": 53.94,
+            "DCC": 94.02,
+            "BI": 93.75,
+            "RC": 100.0,
+            "Mean": 88.34
+          },
+          "recursive_text": {
+            "SC": 100.0,
+            "ICC": 52.27,
+            "DCC": 96.15,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 89.69
+          },
+          "recursive_text_1100": {
+            "SC": 100.0,
+            "ICC": 51.46,
+            "DCC": 93.45,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 88.98
+          },
+          "sentence_window": {
+            "SC": 49.72,
+            "ICC": 64.66,
+            "DCC": 85.34,
+            "BI": 6.25,
+            "RC": 50.0,
+            "Mean": 51.19
+          },
+          "heading_section": {
+            "SC": 100.0,
+            "ICC": 53.36,
+            "DCC": 94.13,
+            "BI": 96.88,
+            "RC": 100.0,
+            "Mean": 88.87
+          },
+          "no_split": {
+            "SC": 0.0,
+            "ICC": 50.76,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 70.15
+          }
+        },
+        "selected_by": "intrinsic",
+        "selected_intrinsic_mean": 0.8968522254199129
+      }
+    },
+    {
+      "doc_id": "sustainability_long.md",
+      "domain": "sustainability",
+      "method": "fixed_token_512",
+      "n_chunks": 8,
+      "SC": 100.0,
+      "ICC": 49.92,
+      "DCC": 94.45,
+      "BI": 97.3,
+      "RC": 100.0,
+      "Mean": 88.33
+    },
+    {
+      "doc_id": "sustainability_long.md",
+      "domain": "sustainability",
+      "method": "fixed_token_256",
+      "n_chunks": 17,
+      "SC": 94.12,
+      "ICC": 54.08,
+      "DCC": 93.43,
+      "BI": 94.59,
+      "RC": 98.57,
+      "Mean": 86.96
+    },
+    {
+      "doc_id": "sustainability_long.md",
+      "domain": "sustainability",
+      "method": "recursive_text",
+      "n_chunks": 9,
+      "SC": 100.0,
+      "ICC": 50.41,
+      "DCC": 96.47,
+      "BI": 97.3,
+      "RC": 100.0,
+      "Mean": 88.84
+    },
+    {
+      "doc_id": "sustainability_long.md",
+      "domain": "sustainability",
+      "method": "recursive_text_1100",
+      "n_chunks": 4,
+      "SC": 100.0,
+      "ICC": 49.71,
+      "DCC": 95.31,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 89.0
+    },
+    {
+      "doc_id": "sustainability_long.md",
+      "domain": "sustainability",
+      "method": "sentence_window",
+      "n_chunks": 209,
+      "SC": 66.03,
+      "ICC": 63.75,
+      "DCC": 85.91,
+      "BI": 5.41,
+      "RC": 50.0,
+      "Mean": 54.22
+    },
+    {
+      "doc_id": "sustainability_long.md",
+      "domain": "sustainability",
+      "method": "heading_section",
+      "n_chunks": 8,
+      "SC": 100.0,
+      "ICC": 49.92,
+      "DCC": 94.45,
+      "BI": 97.3,
+      "RC": 100.0,
+      "Mean": 88.33
+    },
+    {
+      "doc_id": "sustainability_long.md",
+      "domain": "sustainability",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 47.34,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 69.47
+    },
+    {
+      "doc_id": "sustainability_long.md",
+      "domain": "sustainability",
+      "method": "adaptive_ace",
+      "n_chunks": 4,
+      "SC": 100.0,
+      "ICC": 49.71,
+      "DCC": 95.31,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 89.0,
+      "selected": "recursive_text_1100",
+      "selection": {
+        "mode": "intrinsic",
+        "candidates": {
+          "fixed_token_512": {
+            "SC": 100.0,
+            "ICC": 49.92,
+            "DCC": 94.45,
+            "BI": 97.3,
+            "RC": 100.0,
+            "Mean": 88.33
+          },
+          "fixed_token_256": {
+            "SC": 94.12,
+            "ICC": 54.08,
+            "DCC": 93.43,
+            "BI": 94.59,
+            "RC": 98.57,
+            "Mean": 86.96
+          },
+          "recursive_text": {
+            "SC": 100.0,
+            "ICC": 50.41,
+            "DCC": 96.47,
+            "BI": 97.3,
+            "RC": 100.0,
+            "Mean": 88.84
+          },
+          "recursive_text_1100": {
+            "SC": 100.0,
+            "ICC": 49.71,
+            "DCC": 95.31,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 89.0
+          },
+          "sentence_window": {
+            "SC": 66.03,
+            "ICC": 63.75,
+            "DCC": 85.91,
+            "BI": 5.41,
+            "RC": 50.0,
+            "Mean": 54.22
+          },
+          "heading_section": {
+            "SC": 100.0,
+            "ICC": 49.92,
+            "DCC": 94.45,
+            "BI": 97.3,
+            "RC": 100.0,
+            "Mean": 88.33
+          },
+          "no_split": {
+            "SC": 0.0,
+            "ICC": 47.34,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 69.47
+          }
+        },
+        "selected_by": "intrinsic",
+        "selected_intrinsic_mean": 0.8900462650164055
+      }
+    },
+    {
+      "doc_id": "sample.md",
+      "domain": "technical",
+      "method": "fixed_token_512",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 59.13,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 91.83
+    },
+    {
+      "doc_id": "sample.md",
+      "domain": "technical",
+      "method": "fixed_token_256",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 59.13,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 91.83
+    },
+    {
+      "doc_id": "sample.md",
+      "domain": "technical",
+      "method": "recursive_text",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 59.8,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 91.96
+    },
+    {
+      "doc_id": "sample.md",
+      "domain": "technical",
+      "method": "recursive_text_1100",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 59.8,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 91.96
+    },
+    {
+      "doc_id": "sample.md",
+      "domain": "technical",
+      "method": "sentence_window",
+      "n_chunks": 3,
+      "SC": 66.67,
+      "ICC": 47.12,
+      "DCC": 76.72,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 78.1
+    },
+    {
+      "doc_id": "sample.md",
+      "domain": "technical",
+      "method": "heading_section",
+      "n_chunks": 5,
+      "SC": 0.0,
+      "ICC": 64.74,
+      "DCC": 69.78,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 66.9
+    },
+    {
+      "doc_id": "sample.md",
+      "domain": "technical",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 59.8,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 91.96
+    },
+    {
+      "doc_id": "sample.md",
+      "domain": "technical",
+      "method": "adaptive_ace",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 59.8,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 91.96,
+      "selected": "recursive_text",
+      "selection": {
+        "mode": "intrinsic",
+        "candidates": {
+          "fixed_token_512": {
+            "SC": 100.0,
+            "ICC": 59.13,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 91.83
+          },
+          "fixed_token_256": {
+            "SC": 100.0,
+            "ICC": 59.13,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 91.83
+          },
+          "recursive_text": {
+            "SC": 100.0,
+            "ICC": 59.8,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 91.96
+          },
+          "recursive_text_1100": {
+            "SC": 100.0,
+            "ICC": 59.8,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 91.96
+          },
+          "sentence_window": {
+            "SC": 66.67,
+            "ICC": 47.12,
+            "DCC": 76.72,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 78.1
+          },
+          "heading_section": {
+            "SC": 0.0,
+            "ICC": 64.74,
+            "DCC": 69.78,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 66.9
+          },
+          "no_split": {
+            "SC": 100.0,
+            "ICC": 59.8,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 91.96
+          }
+        },
+        "selected_by": "intrinsic",
+        "selected_intrinsic_mean": 0.9195928031968463
+      }
+    }
+  ],
+  "rag_details": {
+    "adaptive_ace": [
+      {
+        "doc_id": "technical_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "technical_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 1, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 1 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 2, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 2 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 3, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 3 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 4, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 4 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 5, which matches the gold answer requirements about validating assumptions and maintaining cross-references to appendix 5.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 6, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 6 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 7, which matches the gold answer requirements about validating assumptions and maintaining cross-references to appendix 7.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 8, which matches the gold answer requirements about validating assumptions and maintaining cross-references to appendix 8.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "ops_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "ops_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 1, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 1 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 2, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 3, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 3 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 4, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 4 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 5, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 5 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 6, matching the gold answer. It confirms that practitioners must validate assumptions before deployment and maintain cross-references to appendix 6 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the relevant information from Section 7, confirming the requirements about validating assumptions and maintaining cross-references to appendix 7.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 8, matching the gold answer.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "legal_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "legal_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context provides the exact requirements mentioned in section 1, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 2, which match the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 2 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 3, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 3 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 4, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 4 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 5, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 5.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 6, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 6.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 7, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 7 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 8, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 8 across chunk boundaries.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "finance_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "finance_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 1, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 1 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 2, which matches the gold answer by stating that practitioners must validate assumptions before deployment and that cross-references to appendix 2 must remain intact across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 3, matching the gold answer exactly.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from Section 4, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 4 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 5, which confirms the requirements: practitioners must validate assumptions before deployment and maintain cross-references to appendix 5 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 6, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 6.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 7, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 7 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 8, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 8 across chunk boundaries.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "sustainability_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "sustainability_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 1 regarding climate, which match the gold answer. It mentions the need for practitioners to validate assumptions before deployment and the importance of maintaining cross-references to appendix 1 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 2 regarding climate, matching the gold answer. It confirms that practitioners must validate assumptions before deployment and maintain cross-references to appendix 2 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 3, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 3 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 4, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 4 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 5, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 5 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 6, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 6 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 7, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 7 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 8, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 8 across chunk boundaries.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "sample.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "3/3",
+        "n_queries": 3,
+        "judgments": [
+          {
+            "qa_id": "sample.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context contains the exact statement about 'Adaptive chunking' as mentioned in the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sample.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the exact evidence quote that matches the gold answer, fully supporting the question.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sample.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the table with '| Item | Qty | Price |' and matches the gold answer.",
+            "parse_error": false
+          }
+        ]
+      }
+    ],
+    "recursive_text_1100": [
+      {
+        "doc_id": "technical_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "technical_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 1, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 1 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 2, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 2 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 3, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 3 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 4, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 4 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 5, which matches the gold answer requirements: validating assumptions before deployment and maintaining cross-references to appendix 5 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 6, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 6 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 7, which matches the gold answer requirements: validating assumptions before deployment and maintaining cross-references to appendix 7 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 8, which matches the gold answer requirements about validating assumptions and maintaining cross-references to appendix 8.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "ops_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "ops_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 1 regarding incident, specifically mentioning the need for practitioners to validate assumptions before deployment and maintaining cross-references to appendix 1 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 2, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 2 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 3, which specifies the requirements for incident response, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 4, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 4 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 5, which matches the gold answer by stating that practitioners must validate assumptions before deployment and that cross-references to appendix 5 must remain intact across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 6, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 6 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 7, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 7 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 8, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 8 across chunk boundaries.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "legal_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "legal_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context provides the necessary details from Section 1, confirming the requirements about validating assumptions and maintaining cross-references to appendix 1, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 2, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 2 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 3, which confirms the requirements: practitioners must validate assumptions before deployment and maintain cross-references to appendix 3 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 4, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 4 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 5, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 5.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 6, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 6.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 7, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 7 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 8, which matches the requirements mentioned in the gold answer, confirming the need to validate assumptions before deployment and maintain cross-references to appendix 8.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "finance_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "finance_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 1, matching the gold answer exactly.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from Section 2, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 2 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 3, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 3 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 4, matching the gold answer exactly.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 5, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 5.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 6, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 6 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 7, which confirms the requirements: practitioners must validate assumptions before deployment and maintain cross-references to appendix 7 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 8, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 8.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "sustainability_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "sustainability_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 1 regarding climate, matching the gold answer. It confirms that practitioners must validate assumptions before deployment and maintain cross-references to appendix 1 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 2 regarding climate, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 2 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 3, which specifies that practitioners must validate assumptions before deployment and maintain cross-references to appendix 3, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 4, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 4 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 5, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 5 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 6, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 6 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 7, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 7 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 8, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 8 across chunk boundaries.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "sample.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "3/3",
+        "n_queries": 3,
+        "judgments": [
+          {
+            "qa_id": "sample.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context contains the exact statement about 'Adaptive chunking' as mentioned in the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sample.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the exact sentence that explains the continuation of the sentence without terminal punctuation, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sample.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the exact table and formula needed to answer the question about '| Item | Qty'.",
+            "parse_error": false
+          }
+        ]
+      }
+    ],
+    "recursive_text": [
+      {
+        "doc_id": "technical_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "technical_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 1, matching the gold answer: practitioners must validate assumptions before deployment and cross-references to appendix 1 must remain intact across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the exact requirements from section 2, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 3, which matches the gold answer requirements about validating assumptions and maintaining cross-references to appendix 3.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 4, which matches the gold answer by stating that practitioners must validate assumptions before deployment and that cross-references to appendix 4 must remain intact across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 5, which matches the gold answer requirements about validating assumptions and maintaining cross-references to appendix 5.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 6, matching the gold answer: validating assumptions before deployment and maintaining cross-references to appendix 6 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 7, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 8, which matches the gold answer requirements about validating assumptions and maintaining cross-references to appendix 8.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "ops_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "ops_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 1 regarding incident, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 2, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 3, matching the gold answer exactly.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 4, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 4 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 5, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 5, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 6, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 7, matching the gold answer. It confirms that practitioners must validate assumptions before deployment and maintain cross-references to appendix 7.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 8, which matches the gold answer's requirements regarding incident response and cross-references to appendix 8.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "legal_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "legal_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 1, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 1, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 2, which match the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 2 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 3, which matches the requirements mentioned in the gold answer, confirming the need to validate assumptions and maintain cross-references to appendix 3.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 4, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 4 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 5, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 6, matching the gold answer. It confirms that practitioners must validate assumptions before deployment and maintain cross-references to appendix 6 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the relevant information from Section 7, confirming the requirements about validating assumptions and maintaining cross-references to appendix 7.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 8, matching the gold answer. It confirms the need to validate assumptions before deployment and maintain cross-references to appendix 8.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "finance_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "finance_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 1, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 1 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from Section 2, matching the gold answer: practitioners must validate assumptions before deployment and cross-references to appendix 2 must remain intact across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 3, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 3 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from Section 4, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 4 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 5, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 5.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 6, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 6 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 7, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 7 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 8, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 8 across chunk boundaries.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "sustainability_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "sustainability_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 1 regarding climate, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 2 regarding climate, matching the gold answer. It specifies that practitioners must validate assumptions before deployment and maintain cross-references to appendix 2 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 3 regarding climate, matching the gold answer exactly.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 4, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 4 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 5 regarding climate, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 6 regarding climate, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 7, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 7 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 8, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 8.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "sample.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "3/3",
+        "n_queries": 3,
+        "judgments": [
+          {
+            "qa_id": "sample.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context contains the exact statement about 'Adaptive chunking' as mentioned in the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sample.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context contains the exact evidence quote that supports the answer to the question.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sample.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the table with '| Item | Qty | Price |' and the formula, matching the gold answer.",
+            "parse_error": false
+          }
+        ]
+      }
+    ],
+    "fixed_token_512": [
+      {
+        "doc_id": "technical_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "technical_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes both requirements mentioned in the gold answer: validating assumptions before deployment and maintaining cross-references to appendix 1 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 2, specifically the need to validate assumptions before deployment and maintain cross-references to appendix 2 across chunk boundaries, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from Section 3, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 3 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 4, matching the gold answer: validating assumptions before deployment and maintaining cross-references to appendix 4 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 5, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 5 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 6, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 6 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 7, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 7 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 8, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 8 across chunk boundaries.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "ops_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "ops_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 1 regarding incident, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 2, matching the gold answer exactly.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 3, matching the gold answer exactly.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 4, matching the gold answer, including the need to validate assumptions before deployment and maintaining cross-references to appendix 4.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 5, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 6 regarding incident response, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 7, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 7.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 8, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 8 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "legal_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "legal_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 1, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 1, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 2, matching the gold answer exactly.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 3, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 4, matching the gold answer, including the need to validate assumptions before deployment and maintaining cross-references to appendix 4.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 5, matching the gold answer, including the need to validate assumptions before deployment and maintaining cross-references to appendix 5.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 6, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 6 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 7, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 7.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 8, matching the gold answer, including the need to validate assumptions before deployment and maintaining cross-references to appendix 8.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "finance_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "finance_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 1, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 1 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from Section 2, specifically mentioning the need for practitioners to validate assumptions before deployment and maintaining cross-references to appendix 2 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from Section 3, matching the gold answer exactly.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 4, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 4 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 5, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 5 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 6, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 6 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 7, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 7 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 8, matching the gold answer: practitioners must validate assumptions before deployment and cross-references to appendix 8 must remain intact across chunk boundaries.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "sustainability_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "sustainability_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 1 regarding climate, matching the gold answer exactly.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 2 regarding climate, matching the gold answer. It mentions the need to validate assumptions before deployment and maintaining cross-references to appendix 2.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 3 regarding climate, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 4 regarding climate, matching the gold answer. It confirms that practitioners must validate assumptions before deployment and maintain cross-references to appendix 4.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirement from section 5 about validating assumptions before deployment and maintaining cross-references to appendix 5, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirement from section 6 that practitioners must validate assumptions before deployment and maintain cross-references to appendix 6, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 7 regarding climate, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 8 regarding climate, matching the gold answer.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "sample.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "3/3",
+        "n_queries": 3,
+        "judgments": [
+          {
+            "qa_id": "sample.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context contains the exact statement about 'Manual ## Introduction Adaptive' as the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sample.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context contains the exact statement about the sentence intentionally continuing without terminal punctuation for evaluation purposes.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sample.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the table with columns 'Item', 'Qty', and 'Price', matching the gold answer. It also includes the formula for calculating the total, which supports the question.",
+            "parse_error": false
+          }
+        ]
+      }
+    ],
+    "fixed_token_256": [
+      {
+        "doc_id": "technical_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "technical_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes both requirements mentioned in the gold answer: validating assumptions before deployment and maintaining cross-references to appendix 1 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 2, matching the gold answer: validating assumptions before deployment and maintaining cross-references to appendix 2 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from Section 3, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 3 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 4, specifically the need to validate assumptions before deployment and maintain cross-references to appendix 4 across chunk boundaries, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 5, specifically the need to validate assumptions before deployment and maintain cross-references to appendix 5 across chunk boundaries, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 6, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 6 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 7, specifically the need for practitioners to validate assumptions before deployment and maintaining cross-references to appendix 7 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 8, specifically the need to validate assumptions before deployment and maintaining cross-references to appendix 8 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "ops_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "ops_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 1 regarding incident, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 1.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 2, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 2.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 3, matching the gold answer, including the need to validate assumptions before deployment and maintaining cross-references to appendix 3.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the necessary information from Section 4 about validating assumptions before deployment and maintaining cross-references to appendix 4, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 5, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 5.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 6 regarding incident response, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the necessary information from Section 7 about validating assumptions before deployment and maintaining cross-references to appendix 7, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 8 regarding incident response, matching the gold answer.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "legal_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "legal_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 1, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 1 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 2, matching the gold answer exactly.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 3, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 3.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 4, matching the gold answer exactly.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirement to validate assumptions before deployment and mentions cross-references to appendix 5, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 6, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 6.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context confirms that Section 7 discusses contractual liability and data processing obligations, and it includes the requirement for practitioners to validate assumptions before deployment. It also mentions the need for cross-references to appendix 7 to remain intact, which aligns with the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 8, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 8 across chunk boundaries.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "finance_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "finance_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 1, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 1 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 2, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 2 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 3, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 3 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 4, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 4 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 5, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 5 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 6, which are to validate assumptions before deployment and maintain cross-references to appendix 6 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 7, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 7.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 8, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 8 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "sustainability_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "sustainability_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 1 regarding climate, specifically the need for practitioners to validate assumptions before deployment and maintain cross-references to appendix 1 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 2 regarding climate, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 2 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 3 regarding climate, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 4 regarding climate, matching the gold answer. It confirms that practitioners must validate assumptions before deployment and maintain cross-references to appendix 4 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirement from section 5 that practitioners must validate assumptions before deployment and maintain cross-references to appendix 5, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirement to validate assumptions before deployment and the need to maintain cross-references to appendix 6, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the necessary information from Section 7 about validating assumptions before deployment and maintaining cross-references to appendix 7, which supports the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 8 regarding climate, matching the gold answer.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "sample.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "3/3",
+        "n_queries": 3,
+        "judgments": [
+          {
+            "qa_id": "sample.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context contains the exact statement about 'Manual ## Introduction Adaptive' as the gold answer, confirming both retrieval completeness and answer correctness.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sample.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context contains the exact statement about the sentence intentionally continuing without terminal punctuation for evaluation purposes.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sample.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the table with columns 'Item', 'Qty', and 'Price', matching the gold answer.",
+            "parse_error": false
+          }
+        ]
+      }
+    ],
+    "heading_section": [
+      {
+        "doc_id": "technical_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "technical_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes both requirements mentioned in the gold answer: validating assumptions before deployment and maintaining cross-references to appendix 1 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 2, specifically the need to validate assumptions before deployment and maintain cross-references to appendix 2 across chunk boundaries, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from Section 3, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 3 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from Section 4, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 4 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 5, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 5 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 6, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 6 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 7, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 7 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 8, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 8 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "ops_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "ops_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 1 regarding incident response, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 2, matching the gold answer exactly.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from Section 3, matching the gold answer exactly.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 4, matching the gold answer, including the need to validate assumptions before deployment and maintaining cross-references to appendix 4.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 5, matching the gold answer, including the need to validate assumptions before deployment and maintaining cross-references to appendix 5.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 6 regarding incident response, specifically the need to validate assumptions before deployment and maintain cross-references to appendix 6.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 7, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 7, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 8, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 8 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "legal_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "legal_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 1, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 1, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from Section 2, matching the gold answer exactly.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 3, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 4, matching the gold answer, including the need to validate assumptions before deployment and maintaining cross-references to appendix 4.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 5, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 5 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 6, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 6.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 7, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 7.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 8, matching the gold answer, including the need to validate assumptions before deployment and maintaining cross-references to appendix 8.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "finance_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "finance_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 1, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 1 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 2, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 2 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from Section 3, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 3 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 4, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 4 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 5, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 5 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 6, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 6 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 7, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 7 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 8, matching the gold answer: practitioners must validate assumptions before deployment and cross-references to appendix 8 must remain intact across chunk boundaries.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "sustainability_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "sustainability_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 1 regarding climate, matching the gold answer. It mentions the need to validate assumptions before deployment and maintaining cross-references to appendix 1, which aligns with the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 2 regarding climate, specifically the need for practitioners to validate assumptions before deployment and maintain cross-references to appendix 2 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 3 regarding climate, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 4 regarding climate, matching the gold answer. It confirms that practitioners must validate assumptions before deployment and maintain cross-references to appendix 4.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 5 regarding climate, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirement from section 6 that practitioners must validate assumptions before deployment and maintain cross-references to appendix 6, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 7 regarding climate, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 8 regarding climate, matching the gold answer.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "sample.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "3/3",
+        "n_queries": 3,
+        "judgments": [
+          {
+            "qa_id": "sample.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context contains the exact statement about 'Introduction Adaptive' as the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sample.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context contains the exact sentence needed to answer the question, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sample.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the table with columns 'Item', 'Qty', and 'Price', which matches the gold answer. It also includes the formula for calculating the total, supporting the question about '| Item | Qty'.",
+            "parse_error": false
+          }
+        ]
+      }
+    ],
+    "no_split": [
+      {
+        "doc_id": "technical_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "technical_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 1, specifically the need for practitioners to validate assumptions before deployment and maintain cross-references to appendix 1 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 2, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 2 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 3, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 3 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 4, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 4 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 5, which matches the gold answer requirements: validating assumptions before deployment and maintaining cross-references to appendix 5 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 6, which matches the gold answer requirements about validating assumptions and maintaining cross-references to appendix 6.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 7, which matches the gold answer requirements: validating assumptions before deployment and maintaining cross-references to appendix 7 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 8, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 8 across chunk boundaries.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "ops_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "ops_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 1 regarding incident, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 1 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 2, matching the gold answer exactly.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 3, which matches the gold answer requirements about validating assumptions and maintaining cross-references to appendix 3.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 4, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 4.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 5, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 5.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 6, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 6.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 7, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 7.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 8, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 8 across chunk boundaries.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "legal_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "legal_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context provides the necessary details from Section 1, confirming the requirements to validate assumptions before deployment and maintain cross-references to appendix 1 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 2, matching the gold answer: practitioners must validate assumptions before deployment and maintain cross-references to appendix 2 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 3, which confirms the requirements: practitioners must validate assumptions before deployment and maintain cross-references to appendix 3 across chunk boundaries. This matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 4, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 4 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 5, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 5 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 6, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 6.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 7, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 7 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 8, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 8 across chunk boundaries.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "finance_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "finance_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 1, specifically mentioning the need to validate assumptions before deployment and maintaining cross-references to appendix 1 across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirements from section 2, matching the gold answer exactly.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 3, matching the gold answer exactly.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 4, matching the gold answer exactly.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 5, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 5.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 6, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 6.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 7, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 7.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 8, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 8.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "sustainability_long.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "8/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "sustainability_long.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 1 regarding climate, matching the gold answer exactly.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 2 regarding climate, matching the gold answer exactly.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the specific requirements from section 3 regarding climate, matching the gold answer exactly.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 4, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 4 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q4",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 5, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 5 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 6, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 6 across chunk boundaries.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 7, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 7.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes Section 8, which matches the gold answer by stating that practitioners must validate assumptions before deployment and maintain cross-references to appendix 8 across chunk boundaries.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "sample.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "3/3",
+        "n_queries": 3,
+        "judgments": [
+          {
+            "qa_id": "sample.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context contains the exact statement about 'Adaptive chunking' as mentioned in the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sample.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the exact evidence quote that matches the gold answer, fully supporting the question.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sample.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context contains the exact table and formula needed to answer the question about '| Item | Qty |'.",
+            "parse_error": false
+          }
+        ]
+      }
+    ],
+    "sentence_window": [
+      {
+        "doc_id": "technical_long.md",
+        "retrieval_completeness": 50.0,
+        "answer_correctness": 50.0,
+        "answered_queries": "3/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "technical_long.md-q0",
+            "retrieval_completeness": 0.5,
+            "answer_correctness": 0.5,
+            "answered": false,
+            "rationale": "The retrieved context partially supports the answer by mentioning the need to validate assumptions before deployment, but it incorrectly associates cross-references with appendix 1 to section 2 instead of section 1.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q1",
+            "retrieval_completeness": 0.5,
+            "answer_correctness": 0.5,
+            "answered": false,
+            "rationale": "The retrieved context partially supports the gold answer by mentioning the need to validate assumptions before deployment, but it incorrectly references appendix 1 instead of appendix 2 for cross-references.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q2",
+            "retrieval_completeness": 0.5,
+            "answer_correctness": 0.5,
+            "answered": false,
+            "rationale": "The retrieved context partially supports the gold answer by mentioning the need to validate assumptions before deployment, but it incorrectly references appendix 2 instead of appendix 3 for cross-references.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q3",
+            "retrieval_completeness": 0.5,
+            "answer_correctness": 0.5,
+            "answered": true,
+            "rationale": "The retrieved context partially supports the answer. It confirms the need to validate assumptions before deployment but incorrectly mentions appendix 3 instead of appendix 4 for cross-references.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q4",
+            "retrieval_completeness": 0.5,
+            "answer_correctness": 0.5,
+            "answered": true,
+            "rationale": "The retrieved context partially supports the answer. It confirms the need to validate assumptions before deployment but incorrectly mentions appendix 4 instead of appendix 5 for cross-references.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q5",
+            "retrieval_completeness": 0.5,
+            "answer_correctness": 0.5,
+            "answered": false,
+            "rationale": "The retrieved context partially supports the answer by mentioning the need to validate assumptions before deployment, but it incorrectly references appendix 5 instead of appendix 6 for cross-references.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q6",
+            "retrieval_completeness": 0.5,
+            "answer_correctness": 0.5,
+            "answered": true,
+            "rationale": "The retrieved context partially supports the answer by mentioning the need to validate assumptions before deployment, but it incorrectly references appendix 6 instead of appendix 7 for cross-references.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "technical_long.md-q7",
+            "retrieval_completeness": 0.5,
+            "answer_correctness": 0.5,
+            "answered": false,
+            "rationale": "The retrieved context partially supports the gold answer by mentioning the need to validate assumptions before deployment. However, it incorrectly references appendix 7 instead of appendix 8 for cross-references, leading to incomplete support.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "ops_long.md",
+        "retrieval_completeness": 69.38,
+        "answer_correctness": 75.0,
+        "answered_queries": "5/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "ops_long.md-q0",
+            "retrieval_completeness": 0.5,
+            "answer_correctness": 0.5,
+            "answered": false,
+            "rationale": "The retrieved context does not explicitly mention Section 1, making it unclear if the requirements apply specifically to Section 1. The requirement about validating assumptions is mentioned, but without clear linkage to Section 1.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirement from section 2 that practitioners must validate assumptions before deployment and that cross-references to appendix 2 must remain intact across chunk boundaries, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q2",
+            "retrieval_completeness": 0.5,
+            "answer_correctness": 0.5,
+            "answered": false,
+            "rationale": "The retrieved context partially supports the gold answer by mentioning the need to validate assumptions before deployment, but it incorrectly references appendix 2 instead of appendix 3 for cross-references.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q3",
+            "retrieval_completeness": 0.5,
+            "answer_correctness": 0.5,
+            "answered": false,
+            "rationale": "The retrieved context partially supports the gold answer by mentioning the requirement to validate assumptions before deployment. However, it incorrectly references appendix 3 instead of appendix 4 for cross-references, and does not fully match the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q4",
+            "retrieval_completeness": 0.8,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirement to validate assumptions before deployment and mentions cross-references to appendix 5, which supports the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirement from section 6 that practitioners must validate assumptions before deployment, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q6",
+            "retrieval_completeness": 0.5,
+            "answer_correctness": 0.5,
+            "answered": true,
+            "rationale": "The retrieved context partially supports the answer by mentioning the requirement to validate assumptions before deployment, but it incorrectly references appendix 6 instead of appendix 7 for cross-references.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "ops_long.md-q7",
+            "retrieval_completeness": 0.75,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirement to validate assumptions before deployment and mentions section 8's focus on incident response escalation and service continuity, which supports the gold answer.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "legal_long.md",
+        "retrieval_completeness": 47.5,
+        "answer_correctness": 47.5,
+        "answered_queries": "1/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "legal_long.md-q0",
+            "retrieval_completeness": 0.0,
+            "answer_correctness": 0.0,
+            "answered": false,
+            "rationale": "The retrieved context does not include information about Section 1, which is necessary to answer the question about requirements in that section.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q1",
+            "retrieval_completeness": 0.5,
+            "answer_correctness": 0.5,
+            "answered": false,
+            "rationale": "The retrieved context partially supports the answer by mentioning the requirement to validate assumptions before deployment. However, it incorrectly references appendix 1 instead of appendix 2 for cross-references, which is crucial for full correctness.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q2",
+            "retrieval_completeness": 0.5,
+            "answer_correctness": 0.5,
+            "answered": false,
+            "rationale": "The retrieved context partially supports the answer by mentioning the validation of assumptions before deployment, but it incorrectly references appendix 2 instead of appendix 3 for cross-references.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q3",
+            "retrieval_completeness": 0.5,
+            "answer_correctness": 0.5,
+            "answered": false,
+            "rationale": "The retrieved context partially supports the answer by mentioning the need to validate assumptions before deployment, but it incorrectly references appendix 3 instead of appendix 4 for cross-references.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q4",
+            "retrieval_completeness": 0.5,
+            "answer_correctness": 0.5,
+            "answered": false,
+            "rationale": "The retrieved context partially supports the answer by mentioning the need to validate assumptions before deployment, but it incorrectly references appendix 4 instead of appendix 5 for cross-references.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q5",
+            "retrieval_completeness": 0.5,
+            "answer_correctness": 0.5,
+            "answered": false,
+            "rationale": "The retrieved context partially supports the answer by mentioning the need to validate assumptions before deployment, but it incorrectly references appendix 5 instead of appendix 6 for cross-references.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q6",
+            "retrieval_completeness": 0.8,
+            "answer_correctness": 0.8,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirement to validate assumptions before deployment and mentions cross-references to appendix 7, which aligns with the gold answer. However, there is some confusion with appendix 6 in the context.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "legal_long.md-q7",
+            "retrieval_completeness": 0.5,
+            "answer_correctness": 0.5,
+            "answered": false,
+            "rationale": "The retrieved context partially supports the answer by mentioning the need to validate assumptions before deployment, but it incorrectly references appendix 7 instead of appendix 8 for cross-references.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "finance_long.md",
+        "retrieval_completeness": 63.75,
+        "answer_correctness": 63.75,
+        "answered_queries": "4/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "finance_long.md-q0",
+            "retrieval_completeness": 0.5,
+            "answer_correctness": 0.5,
+            "answered": false,
+            "rationale": "The retrieved context partially supports the answer by mentioning the requirement to validate assumptions before deployment, but it does not specify that this is in Section 1. The requirement about cross-references to appendix 1 is not clearly linked to Section 1 in the retrieved context.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q1",
+            "retrieval_completeness": 0.5,
+            "answer_correctness": 0.5,
+            "answered": false,
+            "rationale": "The retrieved context partially supports the gold answer by mentioning the requirement to validate assumptions before deployment. However, it incorrectly references appendix 1 instead of appendix 2 for cross-references, which is crucial for full correctness.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q2",
+            "retrieval_completeness": 0.75,
+            "answer_correctness": 0.75,
+            "answered": true,
+            "rationale": "The retrieved context confirms the requirement to validate assumptions before deployment but incorrectly mentions appendix 2 instead of appendix 3 for cross-references.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q3",
+            "retrieval_completeness": 0.8,
+            "answer_correctness": 0.8,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirement to validate assumptions before deployment and mentions cross-references to appendix 4, which aligns with the gold answer. However, there is some confusion with appendix numbers in the context, slightly affecting completeness and correctness.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q4",
+            "retrieval_completeness": 0.5,
+            "answer_correctness": 0.5,
+            "answered": false,
+            "rationale": "The retrieved context partially supports the gold answer by mentioning the requirement to validate assumptions before deployment. However, it incorrectly references appendix 4 instead of appendix 5 for cross-references, which is crucial for full correctness.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q5",
+            "retrieval_completeness": 0.75,
+            "answer_correctness": 0.75,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirement to validate assumptions before deployment, which matches the gold answer. However, it incorrectly mentions appendix 5 instead of appendix 6 in some parts, affecting completeness and correctness.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q6",
+            "retrieval_completeness": 0.8,
+            "answer_correctness": 0.8,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirement to validate assumptions before deployment and mentions cross-references to appendix 7, which aligns with the gold answer. However, there is some confusion with appendix 6 in parts of the context, slightly affecting completeness and correctness.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "finance_long.md-q7",
+            "retrieval_completeness": 0.5,
+            "answer_correctness": 0.5,
+            "answered": false,
+            "rationale": "The retrieved context partially supports the gold answer by mentioning the requirement to validate assumptions before deployment. However, it incorrectly references appendix 7 instead of appendix 8 for cross-references, which is crucial for full support.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "sustainability_long.md",
+        "retrieval_completeness": 75.0,
+        "answer_correctness": 81.25,
+        "answered_queries": "7/8",
+        "n_queries": 8,
+        "judgments": [
+          {
+            "qa_id": "sustainability_long.md-q0",
+            "retrieval_completeness": 0.5,
+            "answer_correctness": 0.5,
+            "answered": false,
+            "rationale": "The retrieved context mentions practitioners must validate assumptions before deployment, which aligns with the gold answer. However, it incorrectly attributes this to Section 2 instead of Section 1, and does not mention cross-references to appendix 1. Thus, the retrieval is incomplete and partially correct.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q1",
+            "retrieval_completeness": 0.5,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirement to validate assumptions before deployment, which is part of the gold answer. However, it incorrectly mentions appendix 1 instead of appendix 2.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q2",
+            "retrieval_completeness": 0.5,
+            "answer_correctness": 0.5,
+            "answered": true,
+            "rationale": "The retrieved context partially supports the answer by mentioning the need to validate assumptions before deployment, but it lacks the specific detail about cross-references to appendix 3.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q3",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirement that practitioners must validate assumptions before deployment, which matches the gold answer. It also mentions cross-references to appendix 4, aligning with the gold answer's details.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q4",
+            "retrieval_completeness": 0.5,
+            "answer_correctness": 0.5,
+            "answered": true,
+            "rationale": "The retrieved context partially supports the gold answer by mentioning the need to validate assumptions before deployment, but it incorrectly references appendix 4 instead of appendix 5 for cross-references.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q5",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirement to validate assumptions before deployment and mentions cross-references to appendix 6, which aligns with the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q6",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirement from section 7 that practitioners must validate assumptions before deployment, which matches the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sustainability_long.md-q7",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the requirement to validate assumptions before deployment and mentions cross-references to appendix 8, which aligns with the gold answer.",
+            "parse_error": false
+          }
+        ]
+      },
+      {
+        "doc_id": "sample.md",
+        "retrieval_completeness": 100.0,
+        "answer_correctness": 100.0,
+        "answered_queries": "3/3",
+        "n_queries": 3,
+        "judgments": [
+          {
+            "qa_id": "sample.md-q0",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the exact statement from the manual's introduction about adaptive chunking, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sample.md-q1",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context contains the exact sentence that explains the continuation without terminal punctuation, matching the gold answer.",
+            "parse_error": false
+          },
+          {
+            "qa_id": "sample.md-q2",
+            "retrieval_completeness": 1.0,
+            "answer_correctness": 1.0,
+            "answered": true,
+            "rationale": "The retrieved context includes the table with columns 'Item', 'Qty', and 'Price', matching the gold answer.",
+            "parse_error": false
+          }
+        ]
+      }
+    ]
+  },
+  "protocol": {
+    "provider": "openrouter",
+    "base_url": "https://openrouter.ai/api/v1",
+    "chat_model": "openai/gpt-4o",
+    "embed_model": "Qwen/Qwen3-Embedding-8B",
+    "rerank_model": "cohere/rerank-v3.5",
+    "adaptive_mode": "intrinsic",
+    "intrinsic": "RC/ICC/DCC/BI/SC with neural embeddings for ICC/DCC",
+    "rag": "dense retrieval top-20 + cohere/rerank-v3.5 rerank top-5 + openai/gpt-4o JSON LLM judge"
+  },
+  "paper_reference": {
+    "title": "Adaptive Chunking: Optimizing Chunking-Method Selection for RAG",
+    "arxiv": "https://arxiv.org/abs/2603.25333",
+    "code": "https://github.com/ekimetrics/adaptive-chunking",
+    "venue": "LREC 2026"
+  },
+  "comparison_note": "OpenRouter live ACE rows use `Qwen/Qwen3-Embedding-8B` for ICC/DCC + dense retrieval, `cohere/rerank-v3.5` rerank, adaptive_mode=`intrinsic`, and `openai/gpt-4o` as LLM judge. Paper CLAIR rows remain published baselines (33 docs, different embedder/judge). Compare ranks, not absolute magnitudes.",
+  "corpus": {
+    "n_documents": 6,
+    "domains": [
+      "legal",
+      "sustainability",
+      "technical"
+    ],
+    "approx_words": 8766
+  },
+  "ace_openrouter_intrinsic_table": [
+    {
+      "method": "adaptive_ace",
+      "RC": 100.0,
+      "ICC": 53.34,
+      "DCC": 96.5,
+      "BI": 100.0,
+      "SC": 100.0,
+      "Mean": 89.97
+    },
+    {
+      "method": "recursive_text",
+      "RC": 100.0,
+      "ICC": 53.54,
+      "DCC": 96.94,
+      "BI": 98.7,
+      "SC": 100.0,
+      "Mean": 89.84
+    },
+    {
+      "method": "recursive_text_1100",
+      "RC": 100.0,
+      "ICC": 53.08,
+      "DCC": 95.93,
+      "BI": 100.0,
+      "SC": 100.0,
+      "Mean": 89.8
+    },
+    {
+      "method": "fixed_token_512",
+      "RC": 100.0,
+      "ICC": 53.74,
+      "DCC": 95.05,
+      "BI": 97.66,
+      "SC": 100.0,
+      "Mean": 89.29
+    },
+    {
+      "method": "fixed_token_256",
+      "RC": 99.25,
+      "ICC": 55.32,
+      "DCC": 95.0,
+      "BI": 96.69,
+      "SC": 99.02,
+      "Mean": 89.06
+    },
+    {
+      "method": "heading_section",
+      "RC": 100.0,
+      "ICC": 54.68,
+      "DCC": 90.01,
+      "BI": 97.66,
+      "SC": 83.33,
+      "Mean": 85.13
+    },
+    {
+      "method": "no_split",
+      "RC": 100.0,
+      "ICC": 52.58,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "SC": 16.67,
+      "Mean": 73.85
+    },
+    {
+      "method": "sentence_window",
+      "RC": 58.33,
+      "ICC": 61.57,
+      "DCC": 84.0,
+      "BI": 21.35,
+      "SC": 60.69,
+      "Mean": 57.19
+    }
+  ],
+  "paper_intrinsic_table": [
+    {
+      "method": "Adaptive Chunking (paper)",
+      "RC": 99.0,
+      "ICC": 68.2,
+      "DCC": 88.8,
+      "BI": 99.4,
+      "SC": 99.9,
+      "Mean": 91.07
+    },
+    {
+      "method": "LLM regex (GPT) (paper)",
+      "RC": 98.0,
+      "ICC": 70.9,
+      "DCC": 82.4,
+      "BI": 98.1,
+      "SC": 99.6,
+      "Mean": 89.8
+    },
+    {
+      "method": "LangChain recursive (paper)",
+      "RC": 96.1,
+      "ICC": 65.6,
+      "DCC": 88.8,
+      "BI": 95.0,
+      "SC": 97.7,
+      "Mean": 88.62
+    },
+    {
+      "method": "Semantic (paper)",
+      "RC": 97.5,
+      "ICC": 69.3,
+      "DCC": 76.3,
+      "BI": 91.3,
+      "SC": 48.1,
+      "Mean": 76.49
+    },
+    {
+      "method": "Sentence (paper)",
+      "RC": 86.3,
+      "ICC": 78.4,
+      "DCC": 72.5,
+      "BI": 61.9,
+      "SC": 67.2,
+      "Mean": 73.26
+    }
+  ],
+  "ace_openrouter_rag_table": [
+    {
+      "method": "adaptive_ace",
+      "retrieval_completeness": 100.0,
+      "answer_correctness": 100.0,
+      "answered_queries": "43/43"
+    },
+    {
+      "method": "recursive_text_1100",
+      "retrieval_completeness": 100.0,
+      "answer_correctness": 100.0,
+      "answered_queries": "43/43"
+    },
+    {
+      "method": "recursive_text",
+      "retrieval_completeness": 100.0,
+      "answer_correctness": 100.0,
+      "answered_queries": "43/43"
+    },
+    {
+      "method": "fixed_token_512",
+      "retrieval_completeness": 100.0,
+      "answer_correctness": 100.0,
+      "answered_queries": "43/43"
+    },
+    {
+      "method": "fixed_token_256",
+      "retrieval_completeness": 100.0,
+      "answer_correctness": 100.0,
+      "answered_queries": "43/43"
+    },
+    {
+      "method": "heading_section",
+      "retrieval_completeness": 100.0,
+      "answer_correctness": 100.0,
+      "answered_queries": "43/43"
+    },
+    {
+      "method": "no_split",
+      "retrieval_completeness": 100.0,
+      "answer_correctness": 100.0,
+      "answered_queries": "43/43"
+    },
+    {
+      "method": "sentence_window",
+      "retrieval_completeness": 67.61,
+      "answer_correctness": 69.58,
+      "answered_queries": "23/43"
+    }
+  ],
+  "paper_rag_table": [
+    {
+      "method": "Adaptive Chunking (paper)",
+      "retrieval_completeness": 67.7,
+      "answer_correctness": 78.0,
+      "answered_queries": "65/99"
+    },
+    {
+      "method": "LangChain recursive (paper)",
+      "retrieval_completeness": 58.1,
+      "answer_correctness": 70.1,
+      "answered_queries": "49/99"
+    },
+    {
+      "method": "Page splitting (paper)",
+      "retrieval_completeness": 59.1,
+      "answer_correctness": 73.3,
+      "answered_queries": "49/99"
+    }
+  ],
+  "domain_breakdown": {
+    "fixed_token_512": {
+      "technical": 89.97,
+      "legal": 88.74,
+      "sustainability": 88.33
+    },
+    "fixed_token_256": {
+      "technical": 90.15,
+      "legal": 88.46,
+      "sustainability": 86.96
+    },
+    "recursive_text": {
+      "technical": 90.55,
+      "legal": 89.26,
+      "sustainability": 88.84
+    },
+    "recursive_text_1100": {
+      "technical": 90.54,
+      "legal": 89.09,
+      "sustainability": 89.0
+    },
+    "sentence_window": {
+      "technical": 61.22,
+      "legal": 52.62,
+      "sustainability": 54.22
+    },
+    "heading_section": {
+      "technical": 81.67,
+      "legal": 88.74,
+      "sustainability": 88.33
+    },
+    "no_split": {
+      "technical": 77.87,
+      "legal": 70.0,
+      "sustainability": 69.47
+    },
+    "adaptive_ace": {
+      "technical": 90.64,
+      "legal": 89.44,
+      "sustainability": 89.0
+    }
+  },
+  "usage": {
+    "embed_calls": 1791,
+    "embed_texts": 2595,
+    "embed_cache_hits": 49982,
+    "rerank_calls": 286,
+    "rerank_docs": 2736,
+    "chat_calls": 344,
+    "prompt_tokens": 772415,
+    "completion_tokens": 21965,
+    "total_tokens": 794380,
+    "estimated_cost_usd": 1.8131693299999974
+  }
+}

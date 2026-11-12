@@ -2,199 +2,166 @@
   {
     "doc_id": "Ada (technique)_Discussion Paper Hamburg DPA KI Models",
     "domain": "technical",
-    "n_chars": 29345,
-    "n_pages": 10
+    "n_chars": 29345
   },
   {
     "doc_id": "Ada (technique)_Recommandations de s\u00e9curit\u00e9 pour un syst\u00e8me d'IA g\u00e9n\u00e9rative",
     "domain": "technical",
-    "n_chars": 77515,
-    "n_pages": 38
+    "n_chars": 77515
   },
   {
     "doc_id": "Ada (technique)_Standards - Explicability",
     "domain": "technical",
-    "n_chars": 7160,
-    "n_pages": 4
+    "n_chars": 7160
   },
   {
     "doc_id": "Ada (technique)_Standards - Interpretability",
     "domain": "technical",
-    "n_chars": 41684,
-    "n_pages": 22
+    "n_chars": 41684
   },
   {
     "doc_id": "Ada (technique)_Standards - Robustness",
     "domain": "technical",
-    "n_chars": 8140,
-    "n_pages": 4
+    "n_chars": 8140
   },
   {
     "doc_id": "Ada (technique)_Standards - Security",
     "domain": "technical",
-    "n_chars": 11712,
-    "n_pages": 6
+    "n_chars": 11712
   },
   {
     "doc_id": "Ada (technique)_Standards - Sustainability",
     "domain": "technical",
-    "n_chars": 19788,
-    "n_pages": 10
+    "n_chars": 19788
   },
   {
     "doc_id": "Ada (technique)_Standards - Transparency",
     "domain": "technical",
-    "n_chars": 7378,
-    "n_pages": 6
+    "n_chars": 7378
   },
   {
     "doc_id": "Ada (technique)_Standards - Vigilance",
     "domain": "technical",
-    "n_chars": 11049,
-    "n_pages": 6
+    "n_chars": 11049
   },
   {
     "doc_id": "Norma (l\u00e9gal)_Artificial Intelligence for Europe",
     "domain": "legal",
-    "n_chars": 63588,
-    "n_pages": 20
+    "n_chars": 63588
   },
   {
     "doc_id": "Norma (l\u00e9gal)_CCPA Act",
     "domain": "legal",
-    "n_chars": 167617,
-    "n_pages": 65
+    "n_chars": 167617
   },
   {
     "doc_id": "Norma (l\u00e9gal)_Code of Practice for General Purpose - AI Models Copyright - Chapter 3",
     "domain": "legal",
-    "n_chars": 13972,
-    "n_pages": 6
+    "n_chars": 13972
   },
   {
     "doc_id": "Norma (l\u00e9gal)_Code of Practice for General Purpose - AI Models Safety and Security - Chapter 1",
     "domain": "legal",
-    "n_chars": 109272,
-    "n_pages": 40
+    "n_chars": 109272
   },
   {
     "doc_id": "Norma (l\u00e9gal)_Code of Practice for General Purpose - AI Models Transparency - Chapter 2",
     "domain": "legal",
-    "n_chars": 30052,
-    "n_pages": 9
+    "n_chars": 30052
   },
   {
     "doc_id": "Norma (l\u00e9gal)_Council of Europe Framework Convention on Artificial Intelligence and Human Rights, Democracy and the Rule of Law",
     "domain": "legal",
-    "n_chars": 33345,
-    "n_pages": 12
+    "n_chars": 33345
   },
   {
     "doc_id": "Norma (l\u00e9gal)_EDPB statement on data protection authorities",
     "domain": "legal",
-    "n_chars": 15646,
-    "n_pages": 5
+    "n_chars": 15646
   },
   {
     "doc_id": "Norma (l\u00e9gal)_EDPS Generative AI guidelines",
     "domain": "legal",
-    "n_chars": 2695,
-    "n_pages": 2
+    "n_chars": 2695
   },
   {
     "doc_id": "Norma (l\u00e9gal)_Entr\u00e9e en vigueur du r\u00e8glement europ\u00e9en sur l\u2019IA - CNIL",
     "domain": "legal",
-    "n_chars": 25264,
-    "n_pages": 11
+    "n_chars": 25264
   },
   {
     "doc_id": "Norma (l\u00e9gal)_European Convention On Human Rights",
     "domain": "legal",
-    "n_chars": 76909,
-    "n_pages": 34
+    "n_chars": 76909
   },
   {
     "doc_id": "Norma (l\u00e9gal)_GDPR",
     "domain": "legal",
-    "n_chars": 363216,
-    "n_pages": 88
+    "n_chars": 363216
   },
   {
     "doc_id": "Norma (l\u00e9gal)_Harmonising AI - OXIL",
     "domain": "legal",
-    "n_chars": 154579,
-    "n_pages": 42
+    "n_chars": 154579
   },
   {
     "doc_id": "Norma (l\u00e9gal)_Les fiches pratiques IA -  CNIL",
     "domain": "legal",
-    "n_chars": 164143,
-    "n_pages": 58
+    "n_chars": 164143
   },
   {
     "doc_id": "Norma (l\u00e9gal)_Provider Guidelines - European Commission",
     "domain": "legal",
-    "n_chars": 98641,
-    "n_pages": 36
+    "n_chars": 98641
   },
   {
     "doc_id": "Norma (l\u00e9gal)_The AI Act",
     "domain": "legal",
-    "n_chars": 607929,
-    "n_pages": 144
+    "n_chars": 607929
   },
   {
     "doc_id": "Norma (l\u00e9gal)_Verification for International AI Governnace",
     "domain": "legal",
-    "n_chars": 548156,
-    "n_pages": 172
+    "n_chars": 548156
   },
   {
     "doc_id": "Sophia (sciences sociales)_AI & Algorithmic Risks Report Netherlands",
     "domain": "social",
-    "n_chars": 210654,
-    "n_pages": 65
+    "n_chars": 210654
   },
   {
     "doc_id": "Sophia (sciences sociales)_Artificial Intelligence, Human Rights, Democracy, and The Rule Of Law",
     "domain": "social",
-    "n_chars": 131534,
-    "n_pages": 48
+    "n_chars": 131534
   },
   {
     "doc_id": "Sophia (sciences sociales)_Consultation paper on AI regulation - emerging approaches across the world",
     "domain": "social",
-    "n_chars": 84480,
-    "n_pages": 50
+    "n_chars": 84480
   },
   {
     "doc_id": "Sophia (sciences sociales)_DataForGood - Livre Blanc IA Generative",
     "domain": "social",
-    "n_chars": 251602,
-    "n_pages": 112
+    "n_chars": 251602
   },
   {
     "doc_id": "Sophia (sciences sociales)_Livre blanc - Impact AI",
     "domain": "social",
-    "n_chars": 59442,
-    "n_pages": 21
+    "n_chars": 59442
   },
   {
     "doc_id": "Sophia (sciences sociales)_RAPPORT CI INTELLIGENCE ARTIFICIELLE",
     "domain": "social",
-    "n_chars": 370374,
-    "n_pages": 130
+    "n_chars": 370374
   },
   {
     "doc_id": "Sophia (sciences sociales)_Regulating under Uncertainty - Governance Options for Generative AI",
     "domain": "social",
-    "n_chars": 1795567,
-    "n_pages": 470
+    "n_chars": 1795567
   },
   {
     "doc_id": "Sophia (sciences sociales)_Responsible AI - A competitive edge in the data and GenAI landscape",
     "domain": "social",
-    "n_chars": 40254,
-    "n_pages": 19
+    "n_chars": 40254
   }
 ]

@@ -279,8 +279,9 @@ def eval_dataset(
         if mode == "openrouter" and len(text) > 80_000:
             text = text[:50_000] + "\n\n...\n\n" + text[-20_000:]
             print(f"  truncate {doc.doc_id} → {len(text)} chars")
-        print(f"  intrinsic: {doc.doc_id} ({doc.domain})")
+        print(f"  intrinsic: {doc.doc_id} ({doc.domain})", flush=True)
         for mname, sid, params in methods:
+            print(f"    method={mname}", flush=True)
             if mname == "adaptive_ace":
                 selected, chunks, detail = adaptive_select(
                     text,
@@ -328,6 +329,10 @@ def eval_dataset(
             qa_pairs = doc.qa_pairs
             if mode == "openrouter" and profile == "smoke":
                 qa_pairs = qa_pairs[:2]
+            elif mode == "openrouter" and profile == "full":
+                # Contain live cost while covering all documents in the full release.
+                max_qa = int(os.environ.get("ACE_LIVE_MAX_QA_PER_DOC", "3"))
+                qa_pairs = qa_pairs[:max_qa]
             if mname == "adaptive_ace":
                 _selected, chunks, _detail = adaptive_select(
                     text,
@@ -484,12 +489,14 @@ def main() -> None:
     if args.mode == "openrouter":
         from openrouter_client import OpenRouterClient
 
+        default_batch = 16 if ("Qwen" in embed_model or "qwen" in embed_model) else 16
+        batch_size = int(os.environ.get("ACE_EMBED_BATCH", str(default_batch)))
         client = OpenRouterClient(
             chat_model=chat_model,
             embed_model=embed_model,
             rerank_model=rerank_model,
             cache_dir=out_dir / "cache",
-            batch_size=8 if "Qwen" in embed_model or "qwen" in embed_model else 16,
+            batch_size=batch_size,
         )
 
         def embed_fn(texts):
