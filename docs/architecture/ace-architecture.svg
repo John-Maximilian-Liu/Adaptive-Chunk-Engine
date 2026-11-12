@@ -74,9 +74,9 @@
   </g>
   <text class="t label" x="640" y="266">DOMAIN ENGINE</text>
   <text class="t h" x="640" y="290">Canonical + Adaptive Core</text>
-  <text class="t p" x="640" y="312">Parsers · Strategy Registry · LLM Gateway</text>
-  <text class="t p" x="640" y="332">Chunk planning · QA factory · Evaluation engine</text>
-  <text class="t p" x="640" y="352">Failure taxonomy · Optimization patches · Visual/SVG</text>
+  <text class="t p" x="640" y="312">Parsers · Strategy Registry · adaptive_ace select</text>
+  <text class="t p" x="640" y="332">Intrinsic metrics · RAG micro-loop · Rerank eval</text>
+  <text class="t p" x="640" y="352">QA factory · Failure taxonomy · Optimization gate</text>
   <text class="t p" x="640" y="372">CanonicalChunk 1.0.0 · Evidence &amp; Reproduction Manifests</text>
   <rect x="640" y="388" width="120" height="24" rx="12" fill="#1F8A7A"/>
   <text class="t chip" x="654" y="404" fill="#fff">Provider-neutral</text>

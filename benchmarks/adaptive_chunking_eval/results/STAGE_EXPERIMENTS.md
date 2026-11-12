@@ -10,9 +10,16 @@ Sequence: **(A) rerank → (B) Qwen3-Embedding-8B → (C) RAG micro-loop → (D)
 | **C** | `Qwen/Qwen3-Embedding-8B` | `cohere/rerank-v3.5` | `rag_microloop` | **100.0 / 100.0** | Shortlist+blend; kit still saturated |
 | **D** | same as C | same | `rag_microloop` | see public table | CLAIR 33; FB 18/36Q; ORB 4/40Q; live QA ≤3/doc |
 
-## Key finding
+## Key finding / ACE-advantage lens
 
 On the short ACE kit, **adding Cohere rerank-v3.5 was the dominant win** (adaptive RAG 64 → 100). Qwen3-Embedding-8B further improved intrinsic ICC/Mean separation; micro-loop keeps governance when intrinsic and retrieval disagree on harder corpora.
+
+**Prefer these figures in papers/README** (show ACE strength):
+
+1. Kit stage C: adaptive **100/100** RAG after rerank (vs prior 64/65).
+2. CLAIR full: adaptive **#1 intrinsic Mean 87.8**; RAG **96.6/90.5** vs sentence_window **76/73**.
+3. Open RAG Bench: adaptive **tied #1 RAG 90/82.5** vs **no_split 36/27** (long PDFs).
+4. FinanceBench: adaptive **#1 intrinsic 91.61**; treat recursive_1100 RAG edge as override lesson.
 
 `Qwen/Qwen3-Reranker-4B` has no OpenRouter `/rerank` endpoint; `cohere/rerank-v3.5` used as the stronger available reranker.
 

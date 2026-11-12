@@ -16,6 +16,8 @@ The repository technical report remains at [`../paper.md`](../paper.md). This fo
 - **Category:** Emerging / enabling infrastructure (governed per-document chunking), with evaluation + negative-result lessons  
 - **Themes (2027 CFP):** Data & Model Governance; Evaluation & QA; Human-in-the-loop; Negative Results & Trade-Offs; domain corpora (legal/finance/arxiv)  
 - **Review mode:** **Double-blind** (changed from COLING 2025 single-blind)
+- **Primary live stack in draft:** `Qwen3-Embedding-8B` + Cohere `rerank-v3.5` + `rag_microloop` + `gpt-4o`
+- **Lead results (ACE-advantage filter):** kit 100/100 after rerank; CLAIR full intrinsic #1 (87.8); Open RAG Bench RAG tied #1 vs `no_split` collapse on long PDFs
 
 ## Next steps before OpenReview
 

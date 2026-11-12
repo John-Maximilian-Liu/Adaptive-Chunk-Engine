@@ -46,6 +46,28 @@ sequenceDiagram
   U->>API: Create next experiment (manual)
 ```
 
+## Adaptive selection → RAG → governance loop
+
+Primary live path used in the evaluation kit (stages C/D):
+
+```mermaid
+flowchart LR
+  Doc[Document] --> Cand[Candidate strategies S]
+  Cand --> Intr[Intrinsic RC/ICC/DCC/BI/SC<br/>Qwen3-Embedding-8B]
+  Intr --> Micro[RAG micro-loop shortlist<br/>evidence-coverage blend]
+  Micro --> Pick["Select s*(d) + Manifest"]
+  Pick --> Index[CanonicalChunk index]
+  Index --> Dense[Dense retrieve top-20]
+  Dense --> Rerank[Cohere rerank-v3.5 top-5]
+  Rerank --> Judge[gpt-4o JSON judge]
+  Judge --> Gate{RAG vs locked baseline}
+  Gate -->|ok| Lock[Accept Auto]
+  Gate -->|regress| Human[Human review / constrain S]
+```
+
+Diagram: [`docs/architecture/ace-selection-rag-flow.svg`](docs/architecture/ace-selection-rag-flow.svg).
+
+Offline CI keeps hashed n-gram ICC/DCC + lexical RAG as a cheap rank-order gate; do not mix absolute live vs offline magnitudes.
 ## Canonical schema
 
 `CanonicalChunk` v1.0.0 groups identity, content, measurements, source locators, relationships, strategy, decision evidence, quality, indexing, and extensions. Library-specific fields belong under `extensions.provider_payload`.

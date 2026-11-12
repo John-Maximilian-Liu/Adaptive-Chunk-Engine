@@ -13,6 +13,8 @@
 
 <img src="docs/architecture/ace-architecture.svg" alt="Adaptive Chunk Engine enterprise architecture" width="900">
 
+<img src="docs/architecture/ace-selection-rag-flow.svg" alt="ACE adaptive selection and RAG governance flow" width="900">
+
 </div>
 
 ---
@@ -24,19 +26,28 @@ Production-oriented platform for **adaptive document chunking**, retrieval evalu
 
 ## 中文简介
 
-**ACE** 将 LREC 2026 Adaptive Chunking 的「按文档用 RC/ICC/DCC/BI/SC 选择最优切块」做成企业控制面。测评覆盖 ACE 自有语料，以及 **CLAIR / FinanceBench / Open RAG Bench**；协议含 offline（hashed）与 OpenRouter live（`gpt-4o` + `text-embedding-3-small`）。详细结果与论文见 `benchmarks/adaptive_chunking_eval/`。
+**ACE** 将 LREC 2026 Adaptive Chunking 的「按文档用 RC/ICC/DCC/BI/SC 选择最优切块」做成企业控制面，并补齐生产检索链路：**dense top-20 → Cohere rerank → gpt-4o 评判**，以及可选的 **RAG micro-loop** 选择目标。测评覆盖 ACE kit 与 **CLAIR / FinanceBench / Open RAG Bench**；主结果栈为 `Qwen3-Embedding-8B` + `cohere/rerank-v3.5` + `rag_microloop`。详细流程与论文见 `ARCHITECTURE.md`、`docs/architecture/ace-selection-rag-flow.svg`、`benchmarks/adaptive_chunking_eval/`。
 
 ## What is Adaptive Chunk Engine?
 
-No single chunking method wins on every document. Adaptive Chunking selects the best splitter **per document** using five intrinsic metrics [1], [2]. **ACE** industrializes that idea with canonical schemas, audit trails, human-triggered optimization, Excel-native strategies, Azure-ready packaging, and a public-benchmark suite.
+No single chunking method wins on every document. Adaptive Chunking selects the best splitter **per document** using five intrinsic metrics [1], [2]. **ACE** industrializes that idea with canonical schemas, audit trails, RAG micro-loop selection, dense+rerank evaluation, human-triggered optimization, Excel-native strategies, Azure-ready packaging, and a public-benchmark suite.
 
 | Research idea (LREC 2026) | ACE productization |
 |---------------------------|--------------------|
-| Per-document selection | `adaptive_ace` + Strategy Registry |
+| Per-document selection | `adaptive_ace` + Strategy Registry + optional RAG micro-loop |
 | Five intrinsic metrics | eval kit + product `evaluation_engine` |
-| RAG evaluation | Offline lexical + live dense/`gpt-4o` judge |
+| RAG evaluation | Offline lexical + live dense → rerank → `gpt-4o` judge |
 | Public corpora | CLAIR · FinanceBench · Open RAG Bench |
 | Research reproducibility | Audit + ReproductionManifest + Docker/Azure |
+
+### Headline live results (stage C/D stack)
+
+| Study | Adaptive intrinsic Mean | Adaptive RAG RC/AC | Why it shows ACE |
+|-------|------------------------:|-------------------:|------------------|
+| ACE kit (C) | **89.94** (1st) | **100 / 100** | Rerank recovers kit (was 64/65) |
+| CLAIR full 33 (D) | **87.8** (1st) | **96.6 / 90.5** | Beats sentence_window by ~20 pts RAG |
+| Open RAG Bench (D) | 88.0 | **90.0 / 82.5** (tied 1st) | vs `no_split` **35.8 / 26.7** on long PDFs |
+| FinanceBench (D) | **91.61** (1st) | 95.8 / 88.9 | Intrinsic lead; residual RAG override case |
 
 ## Architecture overview
 
@@ -47,7 +58,7 @@ No single chunking method wins on every document. Adaptive Chunking selects the 
 - **Local stack**: PostgreSQL 17, Redis, object storage (adobe/s3mock fallback when MinIO is unavailable), Qdrant via Docker Compose.
 - **Production target**: Azure Container Apps + Flexible Server + Blob + Key Vault + AI Search (+ Service Bus migration path).
 
-See [ARCHITECTURE.md](ARCHITECTURE.md) and [docs/adr](docs/adr).
+See [ARCHITECTURE.md](ARCHITECTURE.md) (includes the adaptive selection → RAG → governance loop), [docs/architecture/ace-selection-rag-flow.svg](docs/architecture/ace-selection-rag-flow.svg), and [docs/adr](docs/adr).
 
 ## Prerequisites
 
