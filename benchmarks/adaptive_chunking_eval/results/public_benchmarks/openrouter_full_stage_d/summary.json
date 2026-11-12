@@ -1,0 +1,455 @@
+{
+  "mode": "openrouter",
+  "profile": "full",
+  "chat_model": "openai/gpt-4o",
+  "embed_model": "Qwen/Qwen3-Embedding-8B",
+  "rerank_model": "cohere/rerank-v3.5",
+  "adaptive_mode": "rag_microloop",
+  "comparison_note": "ACE public-benchmark suite on CLAIR + FinanceBench + Open RAG Bench. CLAIR paper rows are published Adaptive Chunking results. Compare ranks within each dataset/protocol; absolute RAG scores are not cross-dataset comparable. Live config: embed=`Qwen/Qwen3-Embedding-8B`, rerank=`cohere/rerank-v3.5`, adaptive=`rag_microloop`.",
+  "datasets": [
+    {
+      "dataset": "clair",
+      "n_documents": 33,
+      "n_queries": 130,
+      "domains": [
+        "legal",
+        "social",
+        "technical"
+      ],
+      "approx_chars": 5632702,
+      "intrinsic_table": [
+        {
+          "method": "adaptive_ace",
+          "RC": 99.92,
+          "ICC": 52.12,
+          "DCC": 86.85,
+          "BI": 99.13,
+          "SC": 99.62,
+          "Mean": 87.8
+        },
+        {
+          "method": "fixed_token_512",
+          "RC": 100.0,
+          "ICC": 49.06,
+          "DCC": 86.65,
+          "BI": 99.55,
+          "SC": 100.0,
+          "Mean": 87.05
+        },
+        {
+          "method": "fixed_token_256",
+          "RC": 99.81,
+          "ICC": 47.63,
+          "DCC": 86.15,
+          "BI": 98.85,
+          "SC": 99.73,
+          "Mean": 86.74
+        },
+        {
+          "method": "recursive_text",
+          "RC": 99.96,
+          "ICC": 46.76,
+          "DCC": 82.48,
+          "BI": 99.39,
+          "SC": 99.93,
+          "Mean": 85.7
+        },
+        {
+          "method": "recursive_text_1100",
+          "RC": 99.96,
+          "ICC": 47.24,
+          "DCC": 76.72,
+          "BI": 99.72,
+          "SC": 100.0,
+          "Mean": 84.73
+        },
+        {
+          "method": "sentence_window",
+          "RC": 97.57,
+          "ICC": 54.76,
+          "DCC": 91.3,
+          "BI": 90.65,
+          "SC": 88.32,
+          "Mean": 84.52
+        },
+        {
+          "method": "heading_section",
+          "RC": 99.8,
+          "ICC": 50.58,
+          "DCC": 81.06,
+          "BI": 98.81,
+          "SC": 87.21,
+          "Mean": 83.49
+        },
+        {
+          "method": "no_split",
+          "RC": 100.0,
+          "ICC": 53.63,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "SC": 3.03,
+          "Mean": 71.33
+        }
+      ],
+      "rag_table": [
+        {
+          "method": "no_split",
+          "retrieval_completeness": 98.99,
+          "answer_correctness": 94.95,
+          "answered_queries": "97/98"
+        },
+        {
+          "method": "adaptive_ace",
+          "retrieval_completeness": 96.57,
+          "answer_correctness": 90.5,
+          "answered_queries": "94/98"
+        },
+        {
+          "method": "recursive_text_1100",
+          "retrieval_completeness": 95.96,
+          "answer_correctness": 92.93,
+          "answered_queries": "93/98"
+        },
+        {
+          "method": "fixed_token_512",
+          "retrieval_completeness": 93.23,
+          "answer_correctness": 88.69,
+          "answered_queries": "89/98"
+        },
+        {
+          "method": "recursive_text",
+          "retrieval_completeness": 92.73,
+          "answer_correctness": 89.7,
+          "answered_queries": "89/98"
+        },
+        {
+          "method": "sentence_window",
+          "retrieval_completeness": 76.26,
+          "answer_correctness": 73.23,
+          "answered_queries": "71/98"
+        }
+      ],
+      "paper_intrinsic_table": [
+        {
+          "method": "Adaptive Chunking (paper)",
+          "RC": 99.0,
+          "ICC": 68.2,
+          "DCC": 88.8,
+          "BI": 99.4,
+          "SC": 99.9,
+          "Mean": 91.07
+        },
+        {
+          "method": "LLM regex (GPT) (paper)",
+          "RC": 98.0,
+          "ICC": 70.9,
+          "DCC": 82.4,
+          "BI": 98.1,
+          "SC": 99.6,
+          "Mean": 89.8
+        },
+        {
+          "method": "LangChain recursive (paper)",
+          "RC": 96.1,
+          "ICC": 65.6,
+          "DCC": 88.8,
+          "BI": 95.0,
+          "SC": 97.7,
+          "Mean": 88.62
+        },
+        {
+          "method": "Semantic (paper)",
+          "RC": 97.5,
+          "ICC": 69.3,
+          "DCC": 76.3,
+          "BI": 91.3,
+          "SC": 48.1,
+          "Mean": 76.49
+        },
+        {
+          "method": "Sentence (paper)",
+          "RC": 86.3,
+          "ICC": 78.4,
+          "DCC": 72.5,
+          "BI": 61.9,
+          "SC": 67.2,
+          "Mean": 73.26
+        }
+      ],
+      "paper_rag_table": [
+        {
+          "method": "Adaptive Chunking (paper)",
+          "retrieval_completeness": 67.7,
+          "answer_correctness": 78.0,
+          "answered_queries": "65/99"
+        },
+        {
+          "method": "LangChain recursive (paper)",
+          "retrieval_completeness": 58.1,
+          "answer_correctness": 70.1,
+          "answered_queries": "49/99"
+        },
+        {
+          "method": "Page splitting (paper)",
+          "retrieval_completeness": 59.1,
+          "answer_correctness": 73.3,
+          "answered_queries": "49/99"
+        }
+      ]
+    },
+    {
+      "dataset": "financebench",
+      "n_documents": 18,
+      "n_queries": 36,
+      "domains": [
+        "finance"
+      ],
+      "approx_chars": 111735,
+      "intrinsic_table": [
+        {
+          "method": "adaptive_ace",
+          "RC": 99.84,
+          "ICC": 61.21,
+          "DCC": 89.34,
+          "BI": 97.64,
+          "SC": 100.0,
+          "Mean": 91.61
+        },
+        {
+          "method": "recursive_text_1100",
+          "RC": 100.0,
+          "ICC": 61.87,
+          "DCC": 88.27,
+          "BI": 98.8,
+          "SC": 100.0,
+          "Mean": 90.64
+        },
+        {
+          "method": "fixed_token_512",
+          "RC": 99.89,
+          "ICC": 53.59,
+          "DCC": 84.66,
+          "BI": 98.79,
+          "SC": 100.0,
+          "Mean": 89.82
+        },
+        {
+          "method": "heading_section",
+          "RC": 99.89,
+          "ICC": 53.59,
+          "DCC": 84.66,
+          "BI": 98.79,
+          "SC": 100.0,
+          "Mean": 89.82
+        },
+        {
+          "method": "fixed_token_256",
+          "RC": 100.0,
+          "ICC": 48.17,
+          "DCC": 79.72,
+          "BI": 98.04,
+          "SC": 98.95,
+          "Mean": 88.08
+        },
+        {
+          "method": "sentence_window",
+          "RC": 98.92,
+          "ICC": 65.28,
+          "DCC": 90.88,
+          "BI": 95.51,
+          "SC": 84.29,
+          "Mean": 88.02
+        },
+        {
+          "method": "recursive_text",
+          "RC": 99.84,
+          "ICC": 56.81,
+          "DCC": 79.38,
+          "BI": 97.23,
+          "SC": 97.22,
+          "Mean": 87.82
+        },
+        {
+          "method": "no_split",
+          "RC": 100.0,
+          "ICC": 64.93,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "SC": 50.0,
+          "Mean": 83.77
+        }
+      ],
+      "rag_table": [
+        {
+          "method": "recursive_text_1100",
+          "retrieval_completeness": 99.07,
+          "answer_correctness": 93.52,
+          "answered_queries": "32/33"
+        },
+        {
+          "method": "recursive_text",
+          "retrieval_completeness": 96.43,
+          "answer_correctness": 91.52,
+          "answered_queries": "31/33"
+        },
+        {
+          "method": "no_split",
+          "retrieval_completeness": 96.3,
+          "answer_correctness": 91.67,
+          "answered_queries": "31/33"
+        },
+        {
+          "method": "adaptive_ace",
+          "retrieval_completeness": 95.83,
+          "answer_correctness": 88.89,
+          "answered_queries": "29/33"
+        },
+        {
+          "method": "fixed_token_512",
+          "retrieval_completeness": 94.17,
+          "answer_correctness": 89.07,
+          "answered_queries": "28/33"
+        },
+        {
+          "method": "sentence_window",
+          "retrieval_completeness": 86.48,
+          "answer_correctness": 76.85,
+          "answered_queries": "27/33"
+        }
+      ]
+    },
+    {
+      "dataset": "open_rag_bench",
+      "n_documents": 4,
+      "n_queries": 40,
+      "domains": [
+        "arxiv"
+      ],
+      "approx_chars": 480513,
+      "intrinsic_table": [
+        {
+          "method": "fixed_token_512",
+          "RC": 100.0,
+          "ICC": 60.04,
+          "DCC": 87.84,
+          "BI": 99.33,
+          "SC": 100.0,
+          "Mean": 89.44
+        },
+        {
+          "method": "adaptive_ace",
+          "RC": 99.89,
+          "ICC": 56.8,
+          "DCC": 84.93,
+          "BI": 98.9,
+          "SC": 99.51,
+          "Mean": 88.0
+        },
+        {
+          "method": "heading_section",
+          "RC": 100.0,
+          "ICC": 52.35,
+          "DCC": 86.38,
+          "BI": 98.67,
+          "SC": 99.51,
+          "Mean": 87.38
+        },
+        {
+          "method": "fixed_token_256",
+          "RC": 99.38,
+          "ICC": 49.3,
+          "DCC": 87.63,
+          "BI": 98.21,
+          "SC": 100.0,
+          "Mean": 86.91
+        },
+        {
+          "method": "recursive_text",
+          "RC": 99.82,
+          "ICC": 51.61,
+          "DCC": 84.74,
+          "BI": 97.69,
+          "SC": 100.0,
+          "Mean": 86.78
+        },
+        {
+          "method": "recursive_text_1100",
+          "RC": 100.0,
+          "ICC": 53.46,
+          "DCC": 78.16,
+          "BI": 99.18,
+          "SC": 100.0,
+          "Mean": 86.16
+        },
+        {
+          "method": "sentence_window",
+          "RC": 94.66,
+          "ICC": 63.22,
+          "DCC": 89.66,
+          "BI": 69.62,
+          "SC": 69.04,
+          "Mean": 77.24
+        },
+        {
+          "method": "no_split",
+          "RC": 100.0,
+          "ICC": 58.6,
+          "DCC": 100.0,
+          "BI": 100.0,
+          "SC": 0.0,
+          "Mean": 71.72
+        }
+      ],
+      "rag_table": [
+        {
+          "method": "adaptive_ace",
+          "retrieval_completeness": 90.0,
+          "answer_correctness": 82.5,
+          "answered_queries": "10/12"
+        },
+        {
+          "method": "fixed_token_512",
+          "retrieval_completeness": 90.0,
+          "answer_correctness": 82.5,
+          "answered_queries": "10/12"
+        },
+        {
+          "method": "recursive_text",
+          "retrieval_completeness": 87.5,
+          "answer_correctness": 83.34,
+          "answered_queries": "10/12"
+        },
+        {
+          "method": "recursive_text_1100",
+          "retrieval_completeness": 83.33,
+          "answer_correctness": 79.17,
+          "answered_queries": "9/12"
+        },
+        {
+          "method": "sentence_window",
+          "retrieval_completeness": 80.0,
+          "answer_correctness": 73.34,
+          "answered_queries": "9/12"
+        },
+        {
+          "method": "no_split",
+          "retrieval_completeness": 35.83,
+          "answer_correctness": 26.66,
+          "answered_queries": "3/12"
+        }
+      ]
+    }
+  ],
+  "usage": {
+    "embed_calls": 1782,
+    "embed_texts": 13020,
+    "embed_cache_hits": 88382,
+    "rerank_calls": 1073,
+    "rerank_docs": 15985,
+    "chat_calls": 858,
+    "prompt_tokens": 4740346,
+    "completion_tokens": 57736,
+    "total_tokens": 4798082,
+    "estimated_cost_usd": 6.654138189999922
+  }
+}

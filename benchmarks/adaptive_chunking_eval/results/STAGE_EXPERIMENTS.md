@@ -8,13 +8,30 @@ Sequence: **(A) rerank → (B) Qwen3-Embedding-8B → (C) RAG micro-loop → (D)
 | **A** | `text-embedding-3-small` | `cohere/rerank-v3.5` | intrinsic | **100.0 / 100.0** | Rerank closed the kit gap |
 | **B** | `Qwen/Qwen3-Embedding-8B` | `cohere/rerank-v3.5` | intrinsic | **100.0 / 100.0** | Intrinsic Mean **89.97** (↑) |
 | **C** | `Qwen/Qwen3-Embedding-8B` | `cohere/rerank-v3.5` | `rag_microloop` | **100.0 / 100.0** | Shortlist+blend; kit still saturated |
-| **D** | same as C | same | `rag_microloop` | _(public full)_ | CLAIR all 33; FB ≤36 Q; ORB ≤40 Q; live QA ≤3/doc |
+| **D** | same as C | same | `rag_microloop` | see public table | CLAIR 33; FB 18/36Q; ORB 4/40Q; live QA ≤3/doc |
 
 ## Key finding
 
 On the short ACE kit, **adding Cohere rerank-v3.5 was the dominant win** (adaptive RAG 64 → 100). Qwen3-Embedding-8B further improved intrinsic ICC/Mean separation; micro-loop keeps governance when intrinsic and retrieval disagree on harder corpora.
 
-`Qwen/Qwen3-Reranker-4B` has no OpenRouter `/rerank` endpoint; `cohere/rerank-v3.5` used as the stronger available reranker (`Qwen/Qwen3-Reranker-0.6B` is the Qwen fallback).
+`Qwen/Qwen3-Reranker-4B` has no OpenRouter `/rerank` endpoint; `cohere/rerank-v3.5` used as the stronger available reranker.
+
+## Stage D — public full (live)
+
+Config: chat `gpt-4o` · embed `Qwen3-Embedding-8B` · rerank `cohere/rerank-v3.5` · adaptive `rag_microloop`.
+
+| Dataset | Docs / QA scored | Adaptive intrinsic Mean | Adaptive RAG RC/AC | Adaptive RAG rank |
+|---------|------------------:|------------------------:|-------------------:|:------------------|
+| CLAIR | 33 / 98 | **87.8** (1st) | **96.57 / 90.5** | 2nd (after no_split) |
+| FinanceBench | 18 / 33 | **91.61** (1st) | **95.83 / 88.89** | 4th (recursive_1100 leads) |
+| Open RAG Bench | 4 / 12 | **88.0** (2nd) | **90.0 / 82.5** | **1st** (tie fixed_512) |
+
+Notes:
+- CLAIR `no_split` still tops RAG by stuffing the full doc into context; adaptive wins the governed intrinsic ranking and stays close on RAG.
+- FinanceBench favors larger recursive chunks for this QA mix; adaptive still leads intrinsic Mean.
+- Open RAG Bench: adaptive ties best RAG RC and leads the governed selection tradeoff vs `no_split` (which collapses on long arXiv papers).
+
+Full tables: `public_benchmarks/openrouter_full_stage_d/tables.md`.
 
 ## Reproduce
 
