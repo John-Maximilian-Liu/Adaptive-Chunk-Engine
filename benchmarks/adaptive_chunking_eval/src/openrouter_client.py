@@ -254,7 +254,7 @@ class OpenRouterClient:
             ],
         }
         self.stats["chat_calls"] += 1
-        with httpx.Client(timeout=self.timeout) as client:
+        with httpx.Client(timeout=self._http_timeout()) as client:
             resp = client.post(f"{self.base_url}/chat/completions", headers=self._headers(), json=payload)
             resp.raise_for_status()
             data = resp.json()
