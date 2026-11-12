@@ -102,32 +102,63 @@ class OpenRouterClient:
             cleaned = cleaned[:head] + "\n...\n" + cleaned[-tail:]
         return cleaned
 
+    def _http_timeout(self) -> httpx.Timeout:
+        # Separate connect/read so a stalled upstream cannot hang forever.
+        read = float(self.timeout)
+        return httpx.Timeout(connect=20.0, read=read, write=30.0, pool=20.0)
+
     def _embed_batch(self, batch: list[str]) -> list[list[float]]:
         payload = {"model": self.embed_model, "input": batch}
         self.stats["embed_calls"] += 1
         self.stats["embed_texts"] += len(batch)
-        with httpx.Client(timeout=self.timeout) as client:
-            resp = client.post(f"{self.base_url}/embeddings", headers=self._headers(), json=payload)
-            if resp.status_code >= 400:
-                # Fall back to one-by-one with stronger truncation.
-                if len(batch) > 1:
-                    vecs: list[list[float]] = []
-                    for item in batch:
-                        vecs.extend(self._embed_batch([item]))
-                    return vecs
-                shorter = self._sanitize_embed_text(batch[0], max_chars=2000)
-                payload = {"model": self.embed_model, "input": [shorter]}
-                resp = client.post(f"{self.base_url}/embeddings", headers=self._headers(), json=payload)
-                if resp.status_code >= 400:
-                    raise httpx.HTTPStatusError(
-                        f"{resp.status_code} embeddings error: {resp.text[:500]}",
-                        request=resp.request,
-                        response=resp,
+        last_err: Exception | None = None
+        for attempt in range(4):
+            try:
+                with httpx.Client(timeout=self._http_timeout()) as client:
+                    resp = client.post(
+                        f"{self.base_url}/embeddings",
+                        headers=self._headers(),
+                        json=payload,
                     )
-            data = resp.json()
-        self._record_usage(data.get("usage") or {})
-        rows = sorted(data["data"], key=lambda r: r["index"])
-        return [row["embedding"] for row in rows]
+                    if resp.status_code in {408, 409, 429} or resp.status_code >= 500:
+                        raise httpx.HTTPStatusError(
+                            f"{resp.status_code} embeddings retryable: {resp.text[:200]}",
+                            request=resp.request,
+                            response=resp,
+                        )
+                    if resp.status_code >= 400:
+                        # Fall back to one-by-one with stronger truncation.
+                        if len(batch) > 1:
+                            vecs: list[list[float]] = []
+                            for item in batch:
+                                vecs.extend(self._embed_batch([item]))
+                            return vecs
+                        shorter = self._sanitize_embed_text(batch[0], max_chars=2000)
+                        payload = {"model": self.embed_model, "input": [shorter]}
+                        resp = client.post(
+                            f"{self.base_url}/embeddings",
+                            headers=self._headers(),
+                            json=payload,
+                        )
+                        if resp.status_code >= 400:
+                            raise httpx.HTTPStatusError(
+                                f"{resp.status_code} embeddings error: {resp.text[:500]}",
+                                request=resp.request,
+                                response=resp,
+                            )
+                    data = resp.json()
+                self._record_usage(data.get("usage") or {})
+                rows = sorted(data["data"], key=lambda r: r["index"])
+                return [row["embedding"] for row in rows]
+            except (httpx.TimeoutException, httpx.TransportError, httpx.HTTPStatusError) as exc:
+                last_err = exc
+                # On timeout with a multi-item batch, split to isolate bad inputs.
+                if isinstance(exc, httpx.TimeoutException) and len(batch) > 1:
+                    mid = max(1, len(batch) // 2)
+                    return self._embed_batch(batch[:mid]) + self._embed_batch(batch[mid:])
+                time.sleep(min(30.0, 1.5 * (2**attempt)))
+        assert last_err is not None
+        raise last_err
 
     def embed(self, texts: Sequence[str]) -> list[list[float]]:
         """Embed texts with disk cache + batched OpenRouter calls."""
@@ -171,7 +202,7 @@ class OpenRouterClient:
             payload["top_n"] = max(1, min(int(top_n), len(docs)))
         self.stats["rerank_calls"] += 1
         self.stats["rerank_docs"] += len(docs)
-        with httpx.Client(timeout=self.timeout) as client:
+        with httpx.Client(timeout=self._http_timeout()) as client:
             resp = client.post(f"{self.base_url}/rerank", headers=self._headers(), json=payload)
             if resp.status_code >= 400:
                 raise httpx.HTTPStatusError(
