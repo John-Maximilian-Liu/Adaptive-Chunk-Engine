@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+  <title id="title">ACE adaptive selection and RAG evaluation flow</title>
+  <desc id="desc">Per-document strategy candidates scored by intrinsic metrics, optionally blended with a RAG micro-loop, then indexed, retrieved with dense+rerank, judged, and gated by human optimization.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0B1F33"/>
+      <stop offset="100%" stop-color="#0E6B6A"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F7FAFC"/>
+      <stop offset="100%" stop-color="#E8EEF3"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#9EC5D8"/>
+    </marker>
+    <style>
+      .t { font-family: ui-sans-serif, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+      .title { fill: #F4FBFF; font-size: 24px; font-weight: 700; }
+      .sub { fill: #B7D4E3; font-size: 13px; }
+      .h { fill: #0B1F33; font-size: 13px; font-weight: 700; }
+      .p { fill: #334155; font-size: 11px; }
+      .label { fill: #9EC5D8; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; }
+    </style>
+  </defs>
+  <rect width="1200" height="520" rx="20" fill="url(#bg)"/>
+  <text class="t title" x="40" y="42">ACE selection ’ retrieval ’ governance loop</text>
+  <text class="t sub" x="40" y="66">Intrinsic metrics · optional RAG micro-loop · dense retrieve + rerank · human gate</text>
+
+  <!-- Row 1: selection -->
+  <g>
+    <rect x="40" y="100" width="160" height="88" rx="12" fill="url(#card)"/>
+    <text class="t h" x="54" y="128">1. Document</text>
+    <text class="t p" x="54" y="150">Parsed units +</text>
+    <text class="t p" x="54" y="166">candidate set S</text>
+
+    <rect x="230" y="100" width="190" height="88" rx="12" fill="url(#card)"/>
+    <text class="t h" x="244" y="128">2. Intrinsic score</text>
+    <text class="t p" x="244" y="150">RC · ICC · DCC · BI · SC</text>
+    <text class="t p" x="244" y="166">Qwen3-Embedding-8B</text>
+
+    <rect x="450" y="100" width="210" height="88" rx="12" fill="url(#card)"/>
+    <text class="t h" x="464" y="128">3. RAG micro-loop</text>
+    <text class="t p" x="464" y="150">Shortlist top-3 by Mean</text>
+    <text class="t p" x="464" y="166">Blend evidence coverage</text>
+
+    <rect x="690" y="100" width="200" height="88" rx="12" fill="url(#card)"/>
+    <text class="t h" x="704" y="128">4. Select s*(d)</text>
+    <text class="t p" x="704" y="150">adaptive_ace decision</text>
+    <text class="t p" x="704" y="166">+ ReproductionManifest</text>
+
+    <rect x="920" y="100" width="240" height="88" rx="12" fill="url(#card)"/>
+    <text class="t h" x="934" y="128">5. Index</text>
+    <text class="t p" x="934" y="150">CanonicalChunk upsert</text>
+    <text class="t p" x="934" y="166">Qdrant / AI Search / Dify</text>
+  </g>
+
+  <path d="M200 144 H226" stroke="#9EC5D8" stroke-width="2.5" marker-end="url(#arrow)" fill="none"/>
+  <path d="M420 144 H446" stroke="#9EC5D8" stroke-width="2.5" marker-end="url(#arrow)" fill="none"/>
+  <path d="M660 144 H686" stroke="#9EC5D8" stroke-width="2.5" marker-end="url(#arrow)" fill="none"/>
+  <path d="M890 144 H916" stroke="#9EC5D8" stroke-width="2.5" marker-end="url(#arrow)" fill="none"/>
+
+  <!-- Row 2: RAG eval -->
+  <text class="t label" x="40" y="230">LIVE RAG / EVAL LANE</text>
+  <g>
+    <rect x="40" y="250" width="200" height="88" rx="12" fill="url(#card)"/>
+    <text class="t h" x="54" y="278">6. Dense retrieve</text>
+    <text class="t p" x="54" y="300">Top-20 cosine hits</text>
+    <text class="t p" x="54" y="316">same embed model</text>
+
+    <rect x="270" y="250" width="200" height="88" rx="12" fill="url(#card)"/>
+    <text class="t h" x="284" y="278">7. Rerank</text>
+    <text class="t p" x="284" y="300">cohere/rerank-v3.5</text>
+    <text class="t p" x="284" y="316">keep Top-5 evidence</text>
+
+    <rect x="500" y="250" width="200" height="88" rx="12" fill="url(#card)"/>
+    <text class="t h" x="514" y="278">8. LLM judge</text>
+    <text class="t p" x="514" y="300">gpt-4o JSON scores</text>
+    <text class="t p" x="514" y="316">RC / AC / answered</text>
+
+    <rect x="730" y="250" width="430" height="88" rx="12" fill="url(#card)"/>
+    <text class="t h" x="744" y="278">9. Governance gate</text>
+    <text class="t p" x="744" y="300">If RAG regresses vs locked baseline ’ human review</text>
+    <text class="t p" x="744" y="316">Reject Auto · constrain S · start next experiment (never silent)</text>
+  </g>
+
+  <path d="M1040 188 V236" stroke="#9EC5D8" stroke-width="2.5" marker-end="url(#arrow)" fill="none"/>
+  <path d="M1040 236 H140" stroke="#9EC5D8" stroke-width="2" fill="none"/>
+  <path d="M140 236 V246" stroke="#9EC5D8" stroke-width="2.5" marker-end="url(#arrow)" fill="none"/>
+  <path d="M240 294 H266" stroke="#9EC5D8" stroke-width="2.5" marker-end="url(#arrow)" fill="none"/>
+  <path d="M470 294 H496" stroke="#9EC5D8" stroke-width="2.5" marker-end="url(#arrow)" fill="none"/>
+  <path d="M700 294 H726" stroke="#9EC5D8" stroke-width="2.5" marker-end="url(#arrow)" fill="none"/>
+
+  <!-- Footnote chips -->
+  <rect x="40" y="380" width="1120" height="100" rx="14" fill="url(#card)"/>
+  <text class="t h" x="60" y="412">Default live stack (stage C/D)</text>
+  <text class="t p" x="60" y="436">Embed: Qwen/Qwen3-Embedding-8B · Rerank: cohere/rerank-v3.5 · Adaptive: rag_microloop · Judge: openai/gpt-4o</text>
+  <text class="t p" x="60" y="458">Offline CI lane remains hashed n-grams + lexical RAG (cheap regression gate; ranks only vs live).</text>
+</svg>

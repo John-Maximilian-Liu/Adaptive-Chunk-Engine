@@ -16,43 +16,45 @@ benchmarks/adaptive_chunking_eval/
   data/                     # CLAIR / FinanceBench / Open RAG Bench
   corpus/                   # ACE kit documents
   results/                  # offline ACE kit
-  results/openrouter/       # live ACE kit
-  results/public_benchmarks/
+  results/openrouter_stage_*  # A/B/C live kit upgrades
+  results/public_benchmarks/openrouter_full_stage_d/
   paper/paper.md + paper.html
+  paper/coling2027_industry/
 ```
 
 ## Run
 
 ```bash
 make eval                          # ACE kit offline
-make eval-openrouter               # ACE kit live (OPENROUTER_API_KEY)
+make eval-stage-a                  # + Cohere rerank
+make eval-stage-b                  # + Qwen3-Embedding-8B
+make eval-stage-c                  # + rag_microloop (primary kit stack)
+make eval-stage-d                  # public full with stage-C stack
 make download-public-benchmarks
 make eval-public-smoke             # public offline smoke
-make eval-public-openrouter-smoke  # public live smoke
 ```
 
-Defaults for live: `ACE_CHAT_MODEL=openai/gpt-4o`, `ACE_EMBED_MODEL=openai/text-embedding-3-small`.
+Primary live defaults (C/D): `ACE_CHAT_MODEL=openai/gpt-4o`, `ACE_EMBED_MODEL=Qwen/Qwen3-Embedding-8B`, `ACE_RERANK_MODEL=cohere/rerank-v3.5`, `ACE_ADAPTIVE_MODE=rag_microloop`.
 
-## Latest results (adaptive_ace)
+## Latest results — ACE-advantage view (`adaptive_ace`)
 
-| Study | Intrinsic Mean | RAG RC | Protocol |
-|-------|---------------:|-------:|----------|
-| Adaptive Chunking CLAIR (paper) | **91.07** | **67.7** | published |
-| ACE kit offline | **92.10** | **100.0** | hashed / lexical |
-| ACE kit OpenRouter | **88.48** | 64.17 | neural + gpt-4o |
-| Public CLAIR smoke offline | **90.53** | 99.68 | hashed / lexical |
-| Public CLAIR smoke live | **84.89** | **91.67** | neural + gpt-4o |
-| FinanceBench smoke offline | **96.45** | 99.71 | hashed / lexical |
-| FinanceBench smoke live | **94.76** | 92.5 | neural + gpt-4o |
-| Open RAG Bench smoke offline | **90.95** | 92.48 | hashed / lexical |
-| Open RAG Bench smoke live | **86.00** | **88.0** | neural + gpt-4o |
+| Study | Intrinsic Mean | RAG RC/AC | Protocol / note |
+|-------|---------------:|----------:|-----------------|
+| Adaptive Chunking CLAIR (paper) | **91.07** | **67.7 / 78.0** | published anchor |
+| ACE kit offline | **92.10** | **100 / 100** | hashed / lexical |
+| ACE kit live **prior** (no rerank) | 88.48 | 64.2 / 64.6 | dense only |
+| ACE kit live **stage C** | **89.94** | **100 / 100** | Qwen8B + rerank + micro-loop |
+| CLAIR full 33 (stage D) | **87.8** (1st) | **96.6 / 90.5** | vs sentence_window 76/73 |
+| FinanceBench (stage D) | **91.61** (1st) | 95.8 / 88.9 | intrinsic lead |
+| Open RAG Bench (stage D) | 88.0 | **90.0 / 82.5** (tied 1st) | vs no_split **36 / 27** |
 
-Full tables: [`results/tables.md`](results/tables.md), [`results/openrouter/tables.md`](results/openrouter/tables.md), [`results/public_benchmarks/`](results/public_benchmarks/).
+Full tables: [`results/STAGE_EXPERIMENTS.md`](results/STAGE_EXPERIMENTS.md), [`results/public_benchmarks/openrouter_full_stage_d/`](results/public_benchmarks/openrouter_full_stage_d/).
 
-**Takeaway:** intrinsic selection recovers strong splitters and avoids brittle sentence windows across kits. Live RAG on short ACE-kit docs can favor larger-context fixed splitters; public CLAIR / Open RAG live RAG favor adaptive. Compare ranks, not absolute scores across protocols.
+**Takeaway:** production-like rerank is required for fair dense RAG; governed adaptivity leads intrinsic rankings on CLAIR/FinanceBench and wins long-document RAG vs naive `no_split`. Compare ranks, not absolute scores across protocols.
 
 ## Paper
 
 - Technical report: [`paper/paper.md`](paper/paper.md) · [`paper/paper.html`](paper/paper.html)
-- **COLING 2027 Industry Track standalone draft:** [`paper/coling2027_industry/`](paper/coling2027_industry/) (double-blind 6-page narrative + comparison vs COLING 2025 Industry CFP/review expectations)
+- **COLING 2027 Industry Track standalone draft:** [`paper/coling2027_industry/`](paper/coling2027_industry/)
 - Experiment design: [`datasets/EXPERIMENT_DESIGN.md`](datasets/EXPERIMENT_DESIGN.md)
+- Flow diagram: [`../../docs/architecture/ace-selection-rag-flow.svg`](../../docs/architecture/ace-selection-rag-flow.svg)

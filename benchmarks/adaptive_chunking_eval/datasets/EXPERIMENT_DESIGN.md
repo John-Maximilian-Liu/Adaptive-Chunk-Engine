@@ -5,91 +5,82 @@ Compare **ACE `adaptive_ace`** against fixed chunkers (and published Adaptive Ch
 | Dataset | Role | Primary comparison |
 |---------|------|--------------------|
 | **CLAIR** | Academic alignment with LREC 2026 Adaptive Chunking | Intrinsic mean + RAG vs paper Tables 3/5 |
-| **FinanceBench** | Industry financial long-doc QA (Patronus) | Intrinsic + dense/LLM-judge RAG on SEC-style evidence |
-| **Open RAG Bench** | PDF→RAG multimodal arXiv corpus (Vectara) | Intrinsic + dense/LLM-judge RAG on section-grounded queries |
+| **FinanceBench** | Industry financial long-doc QA (Patronus) | Intrinsic + dense/rerank/LLM-judge RAG |
+| **Open RAG Bench** | PDF→RAG multimodal arXiv corpus (Vectara) | Intrinsic + dense/rerank/LLM-judge RAG |
 
 ## Protocol (shared)
+
+### End-to-end flow
+
+```text
+candidates → intrinsic Mean → optional rag_microloop blend → select
+→ dense top-20 → Cohere rerank top-5 → gpt-4o judge
+→ human gate if RAG regresses
+```
 
 ### Chunking methods
 
 | Name | Strategy |
 |------|----------|
-| `adaptive_ace` | Per-doc argmax of intrinsic mean over candidates below |
+| `adaptive_ace` | Per-doc selection (intrinsic or `rag_microloop`) over candidates below |
 | `recursive_text_1100` | recursive, size 1100 / overlap 100 |
 | `recursive_text` | recursive, size 512 / overlap 64 |
 | `fixed_token_512` | fixed token 512 / 64 |
 | `fixed_token_256` | fixed token 256 / 32 |
 | `heading_section` | heading-aware |
 | `sentence_window` | sentence window (brittle baseline) |
-| `no_split` | whole document |
+| `no_split` | whole document (non-production indexer upper bound) |
 
 ### Metrics
 
 1. **Intrinsic** — RC, ICC, DCC, BI, SC → Mean  
    - Offline: hashed n-gram embeddings  
-   - Live: OpenRouter `openai/text-embedding-3-small` for ICC/DCC
-2. **RAG** — dense cosine retrieval (same embed model) + OpenRouter `openai/gpt-4o` JSON judge  
+   - Live (primary): OpenRouter `Qwen/Qwen3-Embedding-8B` for ICC/DCC + retrieve
+2. **RAG** — dense cosine top-20 + `cohere/rerank-v3.5` top-5 + `openai/gpt-4o` JSON judge  
    - Outputs: retrieval completeness, answer correctness, answered/N
-
-Judge / models match the prior ACE OpenRouter run (`ACE_CHAT_MODEL`, `ACE_EMBED_MODEL`).
 
 ### Profiles
 
 | Profile | CLAIR docs | FinanceBench Q | Open RAG Bench |
 |---------|------------|----------------|----------------|
-| `smoke` | 6 stratified (2 tech / 2 legal / 2 social) | 24 Q (~12 docs) | 10 docs / ≤40 Q |
-| `full` | all 33 | all 150 Q | selected corpus + all their Q (extendable) |
+| `smoke` | 6 stratified | ~12 Q | 10 docs / ≤40 Q |
+| `full` (stage D caps) | all 33 | ≤36 Q (`ACE_FB_MAX_QUESTIONS`) | ≤40 Q (`ACE_ORB_MAX_QUERIES`) · live QA ≤3/doc |
 
-Use `smoke` for iteration; `full` for paper-grade numbers (live cost scales with docs × methods × queries).
+### Reporting policy (ACE advantage)
 
-### Baselines reported alongside ACE
+Prefer tables that show governed adaptivity:
 
-- Published Adaptive Chunking CLAIR intrinsic / RAG (paper)  
-- ACE offline ACE-kit results (hashed) when available  
-- Prior ACE OpenRouter ACE-kit results when available  
+1. **Kit recovery** after adding rerank (64 → 100).
+2. **Intrinsic Mean leadership** on CLAIR / FinanceBench.
+3. **Long-doc RAG** on Open RAG Bench vs `no_split` collapse.
+4. Keep FinanceBench residual RAG gaps as **override lessons**, not lead figures.
+5. Do not market short-doc `no_split` dumps as production winners.
 
 **Compare ranks within a dataset/protocol; do not equate absolute RAG scores across datasets.**
 
 ## Hypotheses
 
-1. On CLAIR, neural-intrinsic `adaptive_ace` ranks near the top recursive method and above `sentence_window`, matching the paper’s qualitative claim.
-2. On FinanceBench / Open RAG Bench, intrinsic argmax may diverge from LLM-judge RAG (as seen on the ACE kit)—documenting when human-triggered optimization should override Auto selection.
-3. Larger-context methods help short/medium docs; very long SEC/legal docs favor mid-size recursive / adaptive selection.
+1. On CLAIR, neural-intrinsic `adaptive_ace` ranks at/near the top and above `sentence_window`.
+2. Production-like rerank is necessary for fair dense RAG evaluation of adaptive chunking.
+3. On long PDFs, adaptive chunking beats naive `no_split` under the same retrieve+rerank+judge stack.
+4. Residual RAG gaps (e.g. FinanceBench vs recursive_1100) are handled by human-triggered optimization—not by abandoning metric selection.
 
 ## Reproduce
 
 ```bash
-# Ensure data is present (idempotent)
 python benchmarks/adaptive_chunking_eval/datasets/download.py
-
-# Offline smoke (no API)
 make eval-public-smoke
-
-# Live OpenRouter smoke (OPENROUTER_API_KEY)
-make eval-public-openrouter-smoke
-
-# Full live (expensive)
-ACE_BENCH_PROFILE=full make eval-public-openrouter
+make eval-stage-c
+make eval-stage-d
 ```
 
-Outputs: `benchmarks/adaptive_chunking_eval/results/public_benchmarks/`
+Outputs: `benchmarks/adaptive_chunking_eval/results/` and `results/public_benchmarks/openrouter_full_stage_d/`.
 
-## Smoke results (latest)
+## Latest ACE-advantage snapshot (stage C/D)
 
-### Offline (`hashed` + lexical)
-
-| Dataset | adaptive_ace Mean | Notes |
-|---------|------------------:|-------|
-| CLAIR (6 docs) | **90.53** | Paper Adaptive mean 91.07 (full 33, neural) |
-| FinanceBench (8 docs / 12 Q) | **96.45** | Evidence-page docs |
-| Open RAG Bench (10 docs / 40 Q) | **90.95** | arXiv section text |
-
-### OpenRouter live (`text-embedding-3-small` + `gpt-4o`)
-
-| Dataset | adaptive_ace Mean | adaptive_ace RAG RC / AC |
-|---------|------------------:|-------------------------:|
-| CLAIR | **84.89** | **91.67 / 91.67** (11/12) |
-| FinanceBench | **94.76** | 92.5 / 86.25 (10/12) |
-| Open RAG Bench | **86.00** | **88.0 / 84.0** (17/20) |
-
-Live smoke approx. cost ≈ \$1.10 (OpenRouter reported). Full profile remains available via `ACE_BENCH_PROFILE=full make eval-public-openrouter`.
+| Dataset | adaptive Mean | adaptive RAG RC/AC |
+|---------|--------------:|-------------------:|
+| ACE kit (C) | **89.94** | **100 / 100** |
+| CLAIR full (D) | **87.8** | **96.57 / 90.5** |
+| FinanceBench (D) | **91.61** | 95.83 / 88.89 |
+| Open RAG Bench (D) | 88.0 | **90.0 / 82.5** |
