@@ -1,0 +1,153 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/>
+<title>ACE — COLING 2027 Industry Track Draft</title>
+<style>
+body{font-family:Georgia,serif;max-width:880px;margin:2rem auto;padding:0 1rem;line-height:1.55;color:#1a1a1a}
+table{border-collapse:collapse;width:100%;font-size:0.92rem;margin:1rem 0}
+th,td{border:1px solid #ccc;padding:0.4rem 0.55rem;text-align:left}
+th{background:#f4f6f8}
+code,pre{font-family:ui-monospace,Menlo,monospace;font-size:0.88rem}
+h1,h2,h3{font-family:Helvetica,Arial,sans-serif}
+.banner{background:#0b3d91;color:#fff;padding:0.75rem 1rem;border-radius:4px;margin-bottom:1.5rem;font-family:Helvetica,Arial,sans-serif;font-size:0.95rem}
+</style></head><body>
+<div class="banner">COLING 2027 Industry Track draft · double-blind · 6-page target</div>
+<h1>Adaptive Chunk Engine: Governed Per-Document Chunking Selection for Enterprise RAG</h1>
+<p><strong>Anonymous authors</strong> Paper under double-blind review for COLING 2027 Industry Track</p>
+<hr />
+<h2>Abstract</h2>
+<p>Chunking is a first-order design choice in enterprise Retrieval-Augmented Generation (RAG), yet production systems still default to a single global splitter. Building on Adaptive Chunking (LREC 2026), which selects a splitter <strong>per document</strong> using five intrinsic metrics (RC, ICC, DCC, BI, SC), we present <strong>Adaptive Chunk Engine (ACE)</strong>: an enterprise control plane that turns metric-guided selection into an auditable product decision with strategy registries, reproduction manifests, and a human-triggered optimization gate. We evaluate ACE under two production-relevant protocols—(i) offline hashed embeddings with lexical RAG and (ii) live OpenRouter with <code>text-embedding-3-small</code> and <code>gpt-4o</code> as LLM judge—on an ACE kit corpus and three public benchmarks (CLAIR, FinanceBench, Open RAG Bench). Intrinsic tables consistently rank <code>adaptive_ace</code> first or tied for first and penalize brittle <code>sentence_window</code> splits. On public live RAG smoke runs, adaptive retrieval completeness reaches 91.67 (CLAIR), 92.5 (FinanceBench), and 88.0 (Open RAG Bench). Critically, on short ACE-kit documents, live RAG can prefer larger-context fixed splitters over intrinsic argmax—motivating governed human override rather than silent Auto lock-in. We report cost, rank-order interpretation guidance, and practitioner lessons for deploying adaptive chunking under enterprise audit constraints.</p>
+<h2>1 Introduction</h2>
+<p>Enterprise RAG pipelines rarely fail only because the LLM is weak; they often fail because documents are segmented with a one-size-fits-all splitter that ignores genre, length, and structure. Adaptive Chunking (de Moura et al., 2026) showed that scoring candidate splitters with document-intrinsic metrics and selecting the winner per document improves RAG on CLAIR. Translating that idea into industry systems, however, surfaces a different problem set: <strong>who may accept Auto recommendations, how decisions are audited, how offline CI gates relate to live neural judges, and what to do when intrinsic metrics disagree with RAG feedback</strong>.</p>
+<p>COLING Industry Track submissions are judged less on research novelty than on practical deployment insight (COLING 2025/2027 Industry Track CFPs). ACE is therefore framed as <strong>enabling infrastructure</strong> for governed chunking selection, with evaluation lessons that include negative and trade-off results.</p>
+<p><strong>Contributions for practitioners:</strong></p>
+<ol>
+<li>A productized selection loop (<code>adaptive_ace</code>) with Strategy Registry, CanonicalChunk contracts, and ReproductionManifests.</li>
+<li>A dual-protocol evaluation kit: cheap offline hashed/lexical gates vs. live embedding + LLM-judge RAG.</li>
+<li>Evidence on CLAIR, FinanceBench, and Open RAG Bench that intrinsic adaptivity recovers strong splitters while exposing when human override is required.</li>
+<li>Operational lessons: rank-order comparison across protocols, smoke-scale cost envelopes, and governance gates when intrinsic ≠ RAG optimum.</li>
+</ol>
+<h2>2 Problem Setting and Design Goals</h2>
+<h3>2.1 Industrial problem</h3>
+<p>In multi-tenant RAG platforms, chunking strategy is simultaneously a <strong>quality lever</strong>, a <strong>cost lever</strong> (index size, embedding spend), and a <strong>compliance artifact</strong>. Legal, sustainability, technical, financial, and arXiv-style PDFs respond differently to fixed-token, recursive, heading-aware, sentence-window, and no-split strategies. A global default is easy to ship and hard to defend in audit reviews.</p>
+<h3>2.2 Design goals</h3>
+<p>ACE targets four non-negotiable enterprise properties:</p>
+<ul>
+<li><strong>Per-document adaptivity</strong> without requiring a new model train per corpus.</li>
+<li><strong>Auditability</strong>: every Auto choice must be reproducible from a manifest.</li>
+<li><strong>Human veto</strong>: Auto must not silently override RAG regressions.</li>
+<li><strong>Protocol honesty</strong>: offline CI scores must not be marketed as live neural RAG scores.</li>
+</ul>
+<p>These map to COLING 2027 Industry themes of <em>Data &amp; Model Governance</em>, <em>Evaluation &amp; Quality Assurance</em>, <em>Human-in-the-Loop</em>, and <em>Negative Results &amp; Trade-Offs</em>.</p>
+<h2>3 System: Adaptive Chunk Engine</h2>
+<h3>3.1 Selection rule</h3>
+<p>For document <em>d</em> and candidate strategy set <em>\mathcal{S}</em>,</p>
+<p>$<em> s^\star(d)=\arg\max_{s\in\mathcal{S}} \mathrm{mean}\{\mathrm{RC},\mathrm{ICC},\mathrm{DCC},\mathrm{BI},\mathrm{SC}\}(s,d). </em>$</p>
+<p>RC (reconstruction), ICC/DCC (intra-/inter-chunk coherence via embeddings), BI (boundary integrity), and SC (size consistency) follow Adaptive Chunking. ACE wraps this argmax behind a Strategy Registry so new splitters can be registered without rewriting the control plane.</p>
+<h3>3.2 Governance surface</h3>
+<p>Beyond picking <em>s^\star(d)</em>, ACE records:</p>
+<ul>
+<li><strong>CanonicalChunk</strong> schema for multi-sink indexing.</li>
+<li><strong>ReproductionManifest</strong> capturing strategy id, metric vector, corpus hash, and model ids.</li>
+<li><strong>Human-triggered optimization</strong> when RAG gates disagree with intrinsic ranking (reject Auto, lock a baseline, or re-run with constrained <em>\mathcal{S}</em>).</li>
+</ul>
+<p>This is the industrial delta versus a research notebook that prints a table and stops.</p>
+<h3>3.3 Candidate methods</h3>
+<p>We evaluate: <code>fixed_token_{256,512}</code>, <code>recursive_text</code>, <code>recursive_text_1100</code>, <code>sentence_window</code>, <code>heading_section</code>, <code>no_split</code>, and <code>adaptive_ace</code> (per-document intrinsic argmax over the registry).</p>
+<h2>4 Evaluation Protocol</h2>
+<p>Industry reviewers expect transparent, replicable methodology even when proprietary data cannot ship. ACE therefore publishes a dual protocol and public-corpus adapters.</p>
+<h3>4.1 Protocols</h3>
+<table>
+<tr><th>Protocol</th><th>Embeddings (ICC/DCC)</th><th>Retrieval</th><th>Judge</th><th>Role</th></tr>
+<tr><td>Offline</td><td>Hashed char n-grams</td><td>Lexical top-<em>k</em></td><td>Term-coverage proxy</td><td>CI / regression gate</td></tr>
+<tr><td>OpenRouter live</td><td><code>text-embedding-3-small</code></td><td>Dense cosine</td><td><code>gpt-4o</code> JSON scores</td><td>Production-like neural eval</td></tr>
+</table>
+<p><strong>Interpretation rule (enforced in reporting):</strong> compare <strong>ranks within a protocol</strong>. Absolute RAG magnitudes are not transferable across corpora, judges, or offline vs live setups.</p>
+<h3>4.2 Corpora (smoke profile)</h3>
+<table>
+<tr><th>Corpus</th><th>Industrial role</th><th>Smoke scale</th></tr>
+<tr><td>ACE kit</td><td>Controlled multi-domain markdown</td><td>6 docs · ≈8.8k words · 43 Q</td></tr>
+<tr><td>CLAIR</td><td>Align with Adaptive Chunking paper</td><td>6 stratified docs · 24 Q (live RAG: 12)</td></tr>
+<tr><td>FinanceBench</td><td>Financial QA over filing evidence</td><td>8 docs · 12 Q</td></tr>
+<tr><td>Open RAG Bench</td><td>PDF/arXiv RAG sections</td><td>10 docs · 40 Q (live RAG: 20)</td></tr>
+</table>
+<p>Full CLAIR (33 docs) and FinanceBench (150 Q) remain available via a <code>full</code> profile; this paper reports the smoke profile actually executed under live API cost constraints.</p>
+<h3>4.3 Cost envelope</h3>
+<p>ACE-kit OpenRouter run: ≈1.31 USD (≈1.7k embed calls, ≈340 chat calls, ≈0.79M tokens). Public live smoke across three datasets: ≈1.10 USD reported. Offline runs are essentially free after local compute—useful as a daily gate before spending live budget.</p>
+<h2>5 Results</h2>
+<h3>5.1 ACE kit — offline intrinsic (excerpt)</h3>
+<table>
+<tr><th>Method</th><th>Mean</th><th>Note</th></tr>
+<tr><td><strong>adaptive_ace</strong> / recursive_text_1100</td><td><strong>92.10</strong></td><td>Tied first</td></tr>
+<tr><td>recursive_text</td><td>91.81</td><td></td></tr>
+<tr><td>fixed_token_512</td><td>91.47</td><td></td></tr>
+<tr><td>sentence_window</td><td>59.39</td><td>Brittle</td></tr>
+</table>
+<p>Offline RAG-lite: adaptive <strong>100.0 / 100.0</strong> (43/43 answered); sentence_window 91.48 / 89.84.</p>
+<h3>5.2 ACE kit — live OpenRouter (the hard case)</h3>
+<table>
+<tr><th>Method</th><th>Intrinsic Mean</th><th>RAG RC</th><th>RAG AC</th><th>Answered</th></tr>
+<tr><td><strong>adaptive_ace</strong></td><td><strong>88.48</strong></td><td>64.17</td><td>64.58</td><td>26/43</td></tr>
+<tr><td>recursive_text_1100</td><td>88.44</td><td>82.92</td><td>83.33</td><td>35/43</td></tr>
+<tr><td>fixed_token_512</td><td>87.92</td><td>93.75</td><td>93.75</td><td>40/43</td></tr>
+<tr><td>no_split</td><td>72.37</td><td><strong>100.0</strong></td><td><strong>100.0</strong></td><td>43/43</td></tr>
+<tr><td>sentence_window</td><td>55.64</td><td>90.83</td><td>92.71</td><td>38/43</td></tr>
+</table>
+<p><strong>Lesson.</strong> Neural intrinsic still ranks adaptive first and sentence windows last, but on this <em>short</em> kit, dense retrieval + LLM judge rewards larger context. Shipping Auto without a RAG gate would silently hurt answerability. ACE’s human-triggered optimization exists for exactly this disagreement.</p>
+<h3>5.3 Published CLAIR baselines (Adaptive Chunking)</h3>
+<p>Adaptive Chunking reports intrinsic Mean <strong>91.07</strong> and RAG RC/AC <strong>67.7 / 78.0</strong> on full CLAIR (33 docs, different embedder/judge). We cite these as external published anchors; we do <strong>not</strong> claim numerical parity with our smoke rows.</p>
+<h3>5.4 Public offline smoke</h3>
+<table>
+<tr><th>Dataset</th><th>adaptive Mean</th><th>Best non-adaptive Mean</th><th>adaptive RAG RC</th></tr>
+<tr><td>CLAIR</td><td><strong>90.53</strong></td><td>89.74 (recursive_text)</td><td>99.68</td></tr>
+<tr><td>FinanceBench</td><td><strong>96.45</strong></td><td>95.76 (fixed_token_512)</td><td>99.71</td></tr>
+<tr><td>Open RAG Bench</td><td><strong>90.95</strong></td><td>90.74 (recursive_text_1100)</td><td>92.48</td></tr>
+</table>
+<h3>5.5 Public live OpenRouter smoke</h3>
+<table>
+<tr><th>Dataset</th><th>adaptive Mean</th><th>adaptive RAG RC / AC</th><th>Answered</th></tr>
+<tr><td>CLAIR</td><td><strong>84.89</strong></td><td><strong>91.67 / 91.67</strong></td><td>11/12</td></tr>
+<tr><td>FinanceBench</td><td><strong>94.76</strong></td><td>92.5 / 86.25</td><td>10/12</td></tr>
+<tr><td>Open RAG Bench</td><td><strong>86.00</strong></td><td><strong>88.0 / 84.0</strong></td><td>17/20</td></tr>
+</table>
+<p>On CLAIR and Open RAG Bench live RAG, adaptive leads or ties strong recursives. FinanceBench live RAG slightly prefers <code>recursive_text_1100</code> (100.0 RC) over adaptive (92.5)—again an override case, not a reason to abandon metric selection.</p>
+<h3>5.6 Claim checklist</h3>
+<table>
+<tr><th>Claim</th><th>Supported?</th></tr>
+<tr><td>Metric-guided adaptivity recovers strong splitters</td><td>Yes — kit + three public sets, offline &amp; live intrinsic</td></tr>
+<tr><td>Brittle sentence fragmentation loses</td><td>Yes</td></tr>
+<tr><td>Intrinsic argmax = RAG optimum always</td><td><strong>No</strong> — ACE-kit live &amp; FinanceBench live gaps</td></tr>
+<tr><td>Absolute scores transfer across protocols</td><td><strong>No</strong> — ranks only</td></tr>
+</table>
+<h2>6 Practitioner Lessons</h2>
+<ol>
+<li><strong>Ship two evaluation lanes.</strong> Use offline hashed/lexical gates for CI; reserve live embeddings + LLM judges for release candidates. Do not mix magnitudes in dashboards.</li>
+<li><strong>Treat Auto as a proposal.</strong> When RAG completeness drops vs. a locked baseline, route to human review with the metric vector attached.</li>
+<li><strong>Budget for smoke before full.</strong> Public live smoke ≈ \<em>1; ACE-kit live ≈ \</em>1.3. Full CLAIR/FinanceBench should be scheduled deliberately.</li>
+<li><strong>Document genre matters.</strong> Short multi-domain markdown (ACE kit) rewards large context under dense RAG; stratified public PDFs/filings reward adaptive more often.</li>
+<li><strong>Governance is the product.</strong> ReproductionManifests and CanonicalChunk contracts are what make per-document selection acceptable to security/compliance stakeholders.</li>
+</ol>
+<h2>7 Conclusion</h2>
+<p>ACE industrializes Adaptive Chunking as a governed control plane for enterprise RAG. Across offline and live protocols on an ACE kit plus CLAIR, FinanceBench, and Open RAG Bench, intrinsic evidence favors <code>adaptive_ace</code> over brittle splitters, while live RAG disagreements motivate human-triggered optimization. For COLING Industry Track audiences, the transferable artifact is not a single leaderboard number but a <strong>deployable decision process</strong>: measure, select, audit, and override when RAG reality diverges from intrinsic ranking.</p>
+<h2>Limitations</h2>
+<p>Reported public and ACE-kit live numbers are <strong>smoke-scale</strong> under API cost constraints; full CLAIR (33 docs) and FinanceBench (150 Q) should be run before claiming domain production readiness. Offline lexical RAG is a CI proxy, not a substitute for neural retrieval. LLM-as-judge introduces judge variance; we report answered fractions alongside RC/AC. Absolute scores must not be compared across protocols. The system is evaluated as an evaluation/control plane; large-scale multi-tenant production telemetry (latency SLOs, index churn) is out of scope for this draft.</p>
+<h2>Ethical Considerations</h2>
+<p>ACE evaluates document chunking for RAG and does not generate user-facing advice without retrieval. FinanceBench and legal CLAIR subsets can contain sensitive corporate or regulatory text; we use published benchmark subsets and do not redistribute proprietary filings beyond the adapters’ licensed sources. Live evaluations call third-party LLM/embedding APIs; operators must ensure contractual compliance and PII scrubbing before sending production documents. Human override is intentional: automated selection should not silently degrade retrieval quality in regulated workflows.</p>
+<h2>References</h2>
+<p>de Moura Junior, P. R., Lelong, J., and Blangero, A. (2026). Adaptive Chunking: Optimizing Chunking-Method Selection for RAG. LREC 2026. https://arxiv.org/abs/2603.25333</p>
+<p>Ekimetrics. adaptive-chunking. https://github.com/ekimetrics/adaptive-chunking</p>
+<p>Islam, P., et al. (2023). FinanceBench: A New Benchmark for Financial Question Answering. https://github.com/patronus-ai/financebench</p>
+<p>Vectara. Open RAG Bench. https://huggingface.co/datasets/vectara/open_ragbench</p>
+<p>COLING 2025 Industry Track Call for Papers. https://coling2025.org/calls/industry_track/</p>
+<p>COLING 2027 Industry Track Call for Papers (SIGDIAL redistribution / conference site). https://2027.coling-iccl.org/calls/industry_track/</p>
+<p>Jain, A., Aggarwal, P., and Saladi, A. (2025). AutoChunker: Structured Text Chunking and its Evaluation. ACL 2025 Industry Track.</p>
+<p>Darwish, K. and Agarwal, A. (2025). Preface / overview remarks in <em>Proceedings of COLING 2025: Industry Track</em>. ACL Anthology.</p>
+<hr />
+<h2>Appendix A: Reproduction commands (non-counting)</h2>
+<pre><code>make eval                          # ACE kit offline
+make eval-openrouter               # ACE kit live
+make download-public-benchmarks
+make eval-public-smoke
+make eval-public-openrouter-smoke</code></pre>
+<p>Live defaults: <code>ACE_CHAT_MODEL=openai/gpt-4o</code>, <code>ACE_EMBED_MODEL=openai/text-embedding-3-small</code>.</p>
+<h2>Appendix B: Full tables pointer</h2>
+<p>Complete intrinsic/RAG tables live under the evaluation kit <code>results/</code> directories (offline, openrouter, public_benchmarks). Reviewers need only the main-body tables; appendices are optional under Industry Track rules.</p>
+</body></html>
