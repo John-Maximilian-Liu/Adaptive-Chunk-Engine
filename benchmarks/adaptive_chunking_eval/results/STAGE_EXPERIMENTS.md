@@ -8,7 +8,7 @@ Sequence: **(A) rerank → (B) Qwen3-Embedding-8B → (C) RAG micro-loop → (D)
 | **A** | `text-embedding-3-small` | `cohere/rerank-v3.5` | intrinsic | **100.0 / 100.0** | Rerank closed the kit gap |
 | **B** | `Qwen/Qwen3-Embedding-8B` | `cohere/rerank-v3.5` | intrinsic | **100.0 / 100.0** | Intrinsic Mean **89.97** (↑) |
 | **C** | `Qwen/Qwen3-Embedding-8B` | `cohere/rerank-v3.5` | `rag_microloop` | **100.0 / 100.0** | Shortlist+blend; kit still saturated |
-| **D** | same as C | same | `rag_microloop` | _(public full)_ | All docs; live QA ≤3/doc |
+| **D** | same as C | same | `rag_microloop` | _(public full)_ | CLAIR all 33; FB ≤36 Q; ORB ≤40 Q; live QA ≤3/doc |
 
 ## Key finding
 

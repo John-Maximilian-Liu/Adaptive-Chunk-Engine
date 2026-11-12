@@ -83,7 +83,8 @@ eval-stage-c:
 	ACE_RESULTS_DIR=results/openrouter_stage_c_microloop \
 	PYTHONPATH=apps/api:packages/python python3 benchmarks/adaptive_chunking_eval/run_eval_openrouter.py
 
-# D: full public benchmarks with stage-C stack (all docs; live QA capped per doc)
+# D: full public benchmarks with stage-C stack
+# CLAIR=all docs; FB expanded beyond smoke; ORB=selected docs; live QA ≤3/doc
 eval-stage-d:
 	PYTHONUNBUFFERED=1 \
 	ACE_EMBED_MODEL=Qwen/Qwen3-Embedding-8B \
@@ -91,6 +92,9 @@ eval-stage-d:
 	ACE_USE_RERANK=1 \
 	ACE_ADAPTIVE_MODE=rag_microloop \
 	ACE_LIVE_MAX_QA_PER_DOC=3 \
+	ACE_FB_MAX_QUESTIONS=36 \
+	ACE_ORB_MAX_QUERIES=40 \
+	ACE_EMBED_BATCH=16 \
 	ACE_BENCH_PROFILE=full \
 	PYTHONPATH=apps/api:packages/python python3 benchmarks/adaptive_chunking_eval/run_public_benchmarks.py \
 	  --mode openrouter --profile full --out-name openrouter_full_stage_d

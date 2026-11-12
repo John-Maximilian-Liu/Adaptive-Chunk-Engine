@@ -528,9 +528,17 @@ def main() -> None:
     if "clair" in wanted:
         corpus["clair"] = load_clair(profile=args.profile)
     if "financebench" in wanted:
-        corpus["financebench"] = load_financebench(profile=args.profile)
+        fb_max = os.environ.get("ACE_FB_MAX_QUESTIONS")
+        corpus["financebench"] = load_financebench(
+            profile=args.profile,
+            max_questions=int(fb_max) if fb_max else None,
+        )
     if "open_rag_bench" in wanted:
-        corpus["open_rag_bench"] = load_open_rag_bench(profile=args.profile)
+        orb_max = os.environ.get("ACE_ORB_MAX_QUERIES")
+        corpus["open_rag_bench"] = load_open_rag_bench(
+            profile=args.profile,
+            max_queries=int(orb_max) if orb_max else None,
+        )
 
     dataset_results = []
     for name, docs in corpus.items():
