@@ -1,0 +1,3255 @@
+{
+  "dataset": "financebench",
+  "n_documents": 18,
+  "n_queries": 36,
+  "domains": [
+    "finance"
+  ],
+  "approx_chars": 111735,
+  "intrinsic_table": [
+    {
+      "method": "adaptive_ace",
+      "RC": 99.84,
+      "ICC": 61.21,
+      "DCC": 89.34,
+      "BI": 97.64,
+      "SC": 100.0,
+      "Mean": 91.61
+    },
+    {
+      "method": "recursive_text_1100",
+      "RC": 100.0,
+      "ICC": 61.87,
+      "DCC": 88.27,
+      "BI": 98.8,
+      "SC": 100.0,
+      "Mean": 90.64
+    },
+    {
+      "method": "fixed_token_512",
+      "RC": 99.89,
+      "ICC": 53.59,
+      "DCC": 84.66,
+      "BI": 98.79,
+      "SC": 100.0,
+      "Mean": 89.82
+    },
+    {
+      "method": "heading_section",
+      "RC": 99.89,
+      "ICC": 53.59,
+      "DCC": 84.66,
+      "BI": 98.79,
+      "SC": 100.0,
+      "Mean": 89.82
+    },
+    {
+      "method": "fixed_token_256",
+      "RC": 100.0,
+      "ICC": 48.17,
+      "DCC": 79.72,
+      "BI": 98.04,
+      "SC": 98.95,
+      "Mean": 88.08
+    },
+    {
+      "method": "sentence_window",
+      "RC": 98.92,
+      "ICC": 65.28,
+      "DCC": 90.88,
+      "BI": 95.51,
+      "SC": 84.29,
+      "Mean": 88.02
+    },
+    {
+      "method": "recursive_text",
+      "RC": 99.84,
+      "ICC": 56.81,
+      "DCC": 79.38,
+      "BI": 97.23,
+      "SC": 97.22,
+      "Mean": 87.82
+    },
+    {
+      "method": "no_split",
+      "RC": 100.0,
+      "ICC": 64.93,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "SC": 50.0,
+      "Mean": 83.77
+    }
+  ],
+  "rag_table": [
+    {
+      "method": "recursive_text_1100",
+      "retrieval_completeness": 99.07,
+      "answer_correctness": 93.52,
+      "answered_queries": "32/33"
+    },
+    {
+      "method": "recursive_text",
+      "retrieval_completeness": 96.43,
+      "answer_correctness": 91.52,
+      "answered_queries": "31/33"
+    },
+    {
+      "method": "no_split",
+      "retrieval_completeness": 96.3,
+      "answer_correctness": 91.67,
+      "answered_queries": "31/33"
+    },
+    {
+      "method": "adaptive_ace",
+      "retrieval_completeness": 95.83,
+      "answer_correctness": 88.89,
+      "answered_queries": "29/33"
+    },
+    {
+      "method": "fixed_token_512",
+      "retrieval_completeness": 94.17,
+      "answer_correctness": 89.07,
+      "answered_queries": "28/33"
+    },
+    {
+      "method": "sentence_window",
+      "retrieval_completeness": 86.48,
+      "answer_correctness": 76.85,
+      "answered_queries": "27/33"
+    }
+  ],
+  "per_document": [
+    {
+      "doc_id": "3M_2018_10K",
+      "domain": "finance",
+      "method": "fixed_token_512",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 80.21,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 95.05
+    },
+    {
+      "doc_id": "3M_2018_10K",
+      "domain": "finance",
+      "method": "fixed_token_256",
+      "n_chunks": 5,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 78.99,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 94.75
+    },
+    {
+      "doc_id": "3M_2018_10K",
+      "domain": "finance",
+      "method": "recursive_text",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 69.63,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 92.41
+    },
+    {
+      "doc_id": "3M_2018_10K",
+      "domain": "finance",
+      "method": "recursive_text_1100",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 90.89,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 98.18
+    },
+    {
+      "doc_id": "3M_2018_10K",
+      "domain": "finance",
+      "method": "sentence_window",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": 85.86,
+      "DCC": 95.27,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 96.22
+    },
+    {
+      "doc_id": "3M_2018_10K",
+      "domain": "finance",
+      "method": "heading_section",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 80.21,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 95.05
+    },
+    {
+      "doc_id": "3M_2018_10K",
+      "domain": "finance",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 90.89,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 98.18
+    },
+    {
+      "doc_id": "3M_2018_10K",
+      "domain": "finance",
+      "method": "adaptive_ace",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 90.89,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 98.18,
+      "selected": "recursive_text_1100",
+      "selection": {
+        "mode": "rag_microloop",
+        "candidates": {
+          "fixed_token_512": {
+            "SC": 100.0,
+            "ICC": null,
+            "DCC": 80.21,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 95.05
+          },
+          "fixed_token_256": {
+            "SC": 100.0,
+            "ICC": null,
+            "DCC": 78.99,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 94.75
+          },
+          "recursive_text": {
+            "SC": 100.0,
+            "ICC": null,
+            "DCC": 69.63,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 92.41
+          },
+          "recursive_text_1100": {
+            "SC": 100.0,
+            "ICC": 90.89,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 98.18,
+            "micro_rag": 99.42,
+            "blend": 98.74
+          },
+          "sentence_window": {
+            "SC": 100.0,
+            "ICC": 85.86,
+            "DCC": 95.27,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 96.22,
+            "micro_rag": 99.42,
+            "blend": 97.66
+          },
+          "heading_section": {
+            "SC": 100.0,
+            "ICC": null,
+            "DCC": 80.21,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 95.05
+          },
+          "no_split": {
+            "SC": 100.0,
+            "ICC": 90.89,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 98.18,
+            "micro_rag": 99.42,
+            "blend": 98.74
+          }
+        },
+        "selected_by": "rag_microloop",
+        "selected_intrinsic_mean": 0.9817856274365315,
+        "selected_micro_rag": 0.9941860465116279,
+        "selected_blend": 0.9873658160203249,
+        "micro_alpha": 0.55,
+        "shortlist": [
+          "recursive_text_1100",
+          "no_split",
+          "sentence_window"
+        ]
+      }
+    },
+    {
+      "doc_id": "3M_2022_10K",
+      "domain": "finance",
+      "method": "fixed_token_512",
+      "n_chunks": 7,
+      "SC": 100.0,
+      "ICC": 43.62,
+      "DCC": 76.67,
+      "BI": 95.83,
+      "RC": 100.0,
+      "Mean": 83.22
+    },
+    {
+      "doc_id": "3M_2022_10K",
+      "domain": "finance",
+      "method": "fixed_token_256",
+      "n_chunks": 13,
+      "SC": 100.0,
+      "ICC": 41.97,
+      "DCC": 80.96,
+      "BI": 95.83,
+      "RC": 100.0,
+      "Mean": 83.75
+    },
+    {
+      "doc_id": "3M_2022_10K",
+      "domain": "finance",
+      "method": "recursive_text",
+      "n_chunks": 6,
+      "SC": 100.0,
+      "ICC": 44.1,
+      "DCC": 74.87,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 83.79
+    },
+    {
+      "doc_id": "3M_2022_10K",
+      "domain": "finance",
+      "method": "recursive_text_1100",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 46.67,
+      "DCC": 69.67,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 83.27
+    },
+    {
+      "doc_id": "3M_2022_10K",
+      "domain": "finance",
+      "method": "sentence_window",
+      "n_chunks": 22,
+      "SC": 90.91,
+      "ICC": 52.36,
+      "DCC": 90.31,
+      "BI": 91.67,
+      "RC": 100.0,
+      "Mean": 85.05
+    },
+    {
+      "doc_id": "3M_2022_10K",
+      "domain": "finance",
+      "method": "heading_section",
+      "n_chunks": 7,
+      "SC": 100.0,
+      "ICC": 43.62,
+      "DCC": 76.67,
+      "BI": 95.83,
+      "RC": 100.0,
+      "Mean": 83.22
+    },
+    {
+      "doc_id": "3M_2022_10K",
+      "domain": "finance",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 58.31,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 71.66
+    },
+    {
+      "doc_id": "3M_2022_10K",
+      "domain": "finance",
+      "method": "adaptive_ace",
+      "n_chunks": 6,
+      "SC": 100.0,
+      "ICC": 44.1,
+      "DCC": 74.87,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 83.79,
+      "selected": "recursive_text",
+      "selection": {
+        "mode": "rag_microloop",
+        "candidates": {
+          "fixed_token_512": {
+            "SC": 100.0,
+            "ICC": 43.62,
+            "DCC": 76.67,
+            "BI": 95.83,
+            "RC": 100.0,
+            "Mean": 83.22
+          },
+          "fixed_token_256": {
+            "SC": 100.0,
+            "ICC": 41.97,
+            "DCC": 80.96,
+            "BI": 95.83,
+            "RC": 100.0,
+            "Mean": 83.75,
+            "micro_rag": 100.0,
+            "blend": 91.06
+          },
+          "recursive_text": {
+            "SC": 100.0,
+            "ICC": 44.1,
+            "DCC": 74.87,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 83.79,
+            "micro_rag": 100.0,
+            "blend": 91.09
+          },
+          "recursive_text_1100": {
+            "SC": 100.0,
+            "ICC": 46.67,
+            "DCC": 69.67,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 83.27
+          },
+          "sentence_window": {
+            "SC": 90.91,
+            "ICC": 52.36,
+            "DCC": 90.31,
+            "BI": 91.67,
+            "RC": 100.0,
+            "Mean": 85.05,
+            "micro_rag": 80.46,
+            "blend": 82.98
+          },
+          "heading_section": {
+            "SC": 100.0,
+            "ICC": 43.62,
+            "DCC": 76.67,
+            "BI": 95.83,
+            "RC": 100.0,
+            "Mean": 83.22
+          },
+          "no_split": {
+            "SC": 0.0,
+            "ICC": 58.31,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 71.66
+          }
+        },
+        "selected_by": "rag_microloop",
+        "selected_intrinsic_mean": 0.8379383457017916,
+        "selected_micro_rag": 1.0,
+        "selected_blend": 0.9108660901359853,
+        "micro_alpha": 0.55,
+        "shortlist": [
+          "recursive_text",
+          "fixed_token_256",
+          "sentence_window"
+        ]
+      }
+    },
+    {
+      "doc_id": "3M_2023Q2_10Q",
+      "domain": "finance",
+      "method": "fixed_token_512",
+      "n_chunks": 6,
+      "SC": 100.0,
+      "ICC": 42.99,
+      "DCC": 81.06,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 84.81
+    },
+    {
+      "doc_id": "3M_2023Q2_10Q",
+      "domain": "finance",
+      "method": "fixed_token_256",
+      "n_chunks": 11,
+      "SC": 100.0,
+      "ICC": 41.6,
+      "DCC": 79.72,
+      "BI": 87.5,
+      "RC": 100.0,
+      "Mean": 81.76
+    },
+    {
+      "doc_id": "3M_2023Q2_10Q",
+      "domain": "finance",
+      "method": "recursive_text",
+      "n_chunks": 5,
+      "SC": 100.0,
+      "ICC": 54.44,
+      "DCC": 79.52,
+      "BI": 87.5,
+      "RC": 100.0,
+      "Mean": 84.29
+    },
+    {
+      "doc_id": "3M_2023Q2_10Q",
+      "domain": "finance",
+      "method": "recursive_text_1100",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 46.16,
+      "DCC": 76.07,
+      "BI": 87.5,
+      "RC": 100.0,
+      "Mean": 81.95
+    },
+    {
+      "doc_id": "3M_2023Q2_10Q",
+      "domain": "finance",
+      "method": "sentence_window",
+      "n_chunks": 32,
+      "SC": 100.0,
+      "ICC": 61.39,
+      "DCC": 88.63,
+      "BI": 75.0,
+      "RC": 100.0,
+      "Mean": 85.0
+    },
+    {
+      "doc_id": "3M_2023Q2_10Q",
+      "domain": "finance",
+      "method": "heading_section",
+      "n_chunks": 6,
+      "SC": 100.0,
+      "ICC": 42.99,
+      "DCC": 81.06,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 84.81
+    },
+    {
+      "doc_id": "3M_2023Q2_10Q",
+      "domain": "finance",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 47.78,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 69.56
+    },
+    {
+      "doc_id": "3M_2023Q2_10Q",
+      "domain": "finance",
+      "method": "adaptive_ace",
+      "n_chunks": 32,
+      "SC": 100.0,
+      "ICC": 61.39,
+      "DCC": 88.63,
+      "BI": 75.0,
+      "RC": 100.0,
+      "Mean": 85.0,
+      "selected": "sentence_window",
+      "selection": {
+        "mode": "rag_microloop",
+        "candidates": {
+          "fixed_token_512": {
+            "SC": 100.0,
+            "ICC": 42.99,
+            "DCC": 81.06,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 84.81,
+            "micro_rag": 100.0,
+            "blend": 91.65
+          },
+          "fixed_token_256": {
+            "SC": 100.0,
+            "ICC": 41.6,
+            "DCC": 79.72,
+            "BI": 87.5,
+            "RC": 100.0,
+            "Mean": 81.76
+          },
+          "recursive_text": {
+            "SC": 100.0,
+            "ICC": 54.44,
+            "DCC": 79.52,
+            "BI": 87.5,
+            "RC": 100.0,
+            "Mean": 84.29
+          },
+          "recursive_text_1100": {
+            "SC": 100.0,
+            "ICC": 46.16,
+            "DCC": 76.07,
+            "BI": 87.5,
+            "RC": 100.0,
+            "Mean": 81.95
+          },
+          "sentence_window": {
+            "SC": 100.0,
+            "ICC": 61.39,
+            "DCC": 88.63,
+            "BI": 75.0,
+            "RC": 100.0,
+            "Mean": 85.0,
+            "micro_rag": 100.0,
+            "blend": 91.75
+          },
+          "heading_section": {
+            "SC": 100.0,
+            "ICC": 42.99,
+            "DCC": 81.06,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 84.81,
+            "micro_rag": 100.0,
+            "blend": 91.65
+          },
+          "no_split": {
+            "SC": 0.0,
+            "ICC": 47.78,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 69.56
+          }
+        },
+        "selected_by": "rag_microloop",
+        "selected_intrinsic_mean": 0.8500448417444464,
+        "selected_micro_rag": 1.0,
+        "selected_blend": 0.9175246629594456,
+        "micro_alpha": 0.55,
+        "shortlist": [
+          "sentence_window",
+          "fixed_token_512",
+          "heading_section"
+        ]
+      }
+    },
+    {
+      "doc_id": "ACTIVISIONBLIZZARD_2019_10K",
+      "domain": "finance",
+      "method": "fixed_token_512",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 53.19,
+      "DCC": 78.38,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 86.32
+    },
+    {
+      "doc_id": "ACTIVISIONBLIZZARD_2019_10K",
+      "domain": "finance",
+      "method": "fixed_token_256",
+      "n_chunks": 7,
+      "SC": 85.71,
+      "ICC": 50.4,
+      "DCC": 76.46,
+      "BI": 99.07,
+      "RC": 100.0,
+      "Mean": 82.33
+    },
+    {
+      "doc_id": "ACTIVISIONBLIZZARD_2019_10K",
+      "domain": "finance",
+      "method": "recursive_text",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 52.22,
+      "DCC": 74.3,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 85.3
+    },
+    {
+      "doc_id": "ACTIVISIONBLIZZARD_2019_10K",
+      "domain": "finance",
+      "method": "recursive_text_1100",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": 51.0,
+      "DCC": 73.43,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 84.89
+    },
+    {
+      "doc_id": "ACTIVISIONBLIZZARD_2019_10K",
+      "domain": "finance",
+      "method": "sentence_window",
+      "n_chunks": 8,
+      "SC": 87.5,
+      "ICC": 55.08,
+      "DCC": 76.78,
+      "BI": 99.07,
+      "RC": 100.0,
+      "Mean": 83.68
+    },
+    {
+      "doc_id": "ACTIVISIONBLIZZARD_2019_10K",
+      "domain": "finance",
+      "method": "heading_section",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 53.19,
+      "DCC": 78.38,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 86.32
+    },
+    {
+      "doc_id": "ACTIVISIONBLIZZARD_2019_10K",
+      "domain": "finance",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 64.09,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 72.82
+    },
+    {
+      "doc_id": "ACTIVISIONBLIZZARD_2019_10K",
+      "domain": "finance",
+      "method": "adaptive_ace",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 53.19,
+      "DCC": 78.38,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 86.32,
+      "selected": "fixed_token_512",
+      "selection": {
+        "mode": "rag_microloop",
+        "candidates": {
+          "fixed_token_512": {
+            "SC": 100.0,
+            "ICC": 53.19,
+            "DCC": 78.38,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 86.32,
+            "micro_rag": 99.4,
+            "blend": 92.2
+          },
+          "fixed_token_256": {
+            "SC": 85.71,
+            "ICC": 50.4,
+            "DCC": 76.46,
+            "BI": 99.07,
+            "RC": 100.0,
+            "Mean": 82.33
+          },
+          "recursive_text": {
+            "SC": 100.0,
+            "ICC": 52.22,
+            "DCC": 74.3,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 85.3,
+            "micro_rag": 99.4,
+            "blend": 91.65
+          },
+          "recursive_text_1100": {
+            "SC": 100.0,
+            "ICC": 51.0,
+            "DCC": 73.43,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 84.89
+          },
+          "sentence_window": {
+            "SC": 87.5,
+            "ICC": 55.08,
+            "DCC": 76.78,
+            "BI": 99.07,
+            "RC": 100.0,
+            "Mean": 83.68
+          },
+          "heading_section": {
+            "SC": 100.0,
+            "ICC": 53.19,
+            "DCC": 78.38,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 86.32,
+            "micro_rag": 99.4,
+            "blend": 92.2
+          },
+          "no_split": {
+            "SC": 0.0,
+            "ICC": 64.09,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 72.82
+          }
+        },
+        "selected_by": "rag_microloop",
+        "selected_intrinsic_mean": 0.8631505814898217,
+        "selected_micro_rag": 0.9939759036144578,
+        "selected_blend": 0.9220219764459079,
+        "micro_alpha": 0.55,
+        "shortlist": [
+          "fixed_token_512",
+          "heading_section",
+          "recursive_text"
+        ]
+      }
+    },
+    {
+      "doc_id": "ADOBE_2015_10K",
+      "domain": "finance",
+      "method": "fixed_token_512",
+      "n_chunks": 7,
+      "SC": 100.0,
+      "ICC": 42.78,
+      "DCC": 76.15,
+      "BI": 95.65,
+      "RC": 100.0,
+      "Mean": 82.92
+    },
+    {
+      "doc_id": "ADOBE_2015_10K",
+      "domain": "finance",
+      "method": "fixed_token_256",
+      "n_chunks": 14,
+      "SC": 100.0,
+      "ICC": 41.6,
+      "DCC": 77.76,
+      "BI": 95.65,
+      "RC": 100.0,
+      "Mean": 83.0
+    },
+    {
+      "doc_id": "ADOBE_2015_10K",
+      "domain": "finance",
+      "method": "recursive_text",
+      "n_chunks": 6,
+      "SC": 100.0,
+      "ICC": 43.31,
+      "DCC": 72.26,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 83.11
+    },
+    {
+      "doc_id": "ADOBE_2015_10K",
+      "domain": "finance",
+      "method": "recursive_text_1100",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 46.43,
+      "DCC": 78.74,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 85.04
+    },
+    {
+      "doc_id": "ADOBE_2015_10K",
+      "domain": "finance",
+      "method": "sentence_window",
+      "n_chunks": 78,
+      "SC": 98.72,
+      "ICC": 40.85,
+      "DCC": 85.69,
+      "BI": 95.65,
+      "RC": 100.0,
+      "Mean": 84.18
+    },
+    {
+      "doc_id": "ADOBE_2015_10K",
+      "domain": "finance",
+      "method": "heading_section",
+      "n_chunks": 7,
+      "SC": 100.0,
+      "ICC": 42.78,
+      "DCC": 76.15,
+      "BI": 95.65,
+      "RC": 100.0,
+      "Mean": 82.92
+    },
+    {
+      "doc_id": "ADOBE_2015_10K",
+      "domain": "finance",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 51.93,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 70.39
+    },
+    {
+      "doc_id": "ADOBE_2015_10K",
+      "domain": "finance",
+      "method": "adaptive_ace",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 46.43,
+      "DCC": 78.74,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 85.04,
+      "selected": "recursive_text_1100",
+      "selection": {
+        "mode": "rag_microloop",
+        "candidates": {
+          "fixed_token_512": {
+            "SC": 100.0,
+            "ICC": 42.78,
+            "DCC": 76.15,
+            "BI": 95.65,
+            "RC": 100.0,
+            "Mean": 82.92
+          },
+          "fixed_token_256": {
+            "SC": 100.0,
+            "ICC": 41.6,
+            "DCC": 77.76,
+            "BI": 95.65,
+            "RC": 100.0,
+            "Mean": 83.0
+          },
+          "recursive_text": {
+            "SC": 100.0,
+            "ICC": 43.31,
+            "DCC": 72.26,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 83.11,
+            "micro_rag": 100.0,
+            "blend": 90.71
+          },
+          "recursive_text_1100": {
+            "SC": 100.0,
+            "ICC": 46.43,
+            "DCC": 78.74,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 85.04,
+            "micro_rag": 100.0,
+            "blend": 91.77
+          },
+          "sentence_window": {
+            "SC": 98.72,
+            "ICC": 40.85,
+            "DCC": 85.69,
+            "BI": 95.65,
+            "RC": 100.0,
+            "Mean": 84.18,
+            "micro_rag": 85.0,
+            "blend": 84.55
+          },
+          "heading_section": {
+            "SC": 100.0,
+            "ICC": 42.78,
+            "DCC": 76.15,
+            "BI": 95.65,
+            "RC": 100.0,
+            "Mean": 82.92
+          },
+          "no_split": {
+            "SC": 0.0,
+            "ICC": 51.93,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 70.39
+          }
+        },
+        "selected_by": "rag_microloop",
+        "selected_intrinsic_mean": 0.8503531694162488,
+        "selected_micro_rag": 1.0,
+        "selected_blend": 0.9176942431789368,
+        "micro_alpha": 0.55,
+        "shortlist": [
+          "recursive_text_1100",
+          "recursive_text",
+          "sentence_window"
+        ]
+      }
+    },
+    {
+      "doc_id": "ADOBE_2016_10K",
+      "domain": "finance",
+      "method": "fixed_token_512",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 100.0
+    },
+    {
+      "doc_id": "ADOBE_2016_10K",
+      "domain": "finance",
+      "method": "fixed_token_256",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 77.99,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 94.5
+    },
+    {
+      "doc_id": "ADOBE_2016_10K",
+      "domain": "finance",
+      "method": "recursive_text",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 100.0
+    },
+    {
+      "doc_id": "ADOBE_2016_10K",
+      "domain": "finance",
+      "method": "recursive_text_1100",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 100.0
+    },
+    {
+      "doc_id": "ADOBE_2016_10K",
+      "domain": "finance",
+      "method": "sentence_window",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 100.0
+    },
+    {
+      "doc_id": "ADOBE_2016_10K",
+      "domain": "finance",
+      "method": "heading_section",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 100.0
+    },
+    {
+      "doc_id": "ADOBE_2016_10K",
+      "domain": "finance",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 100.0
+    },
+    {
+      "doc_id": "ADOBE_2016_10K",
+      "domain": "finance",
+      "method": "adaptive_ace",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 100.0,
+      "selected": "fixed_token_512",
+      "selection": {
+        "mode": "rag_microloop",
+        "candidates": {
+          "fixed_token_512": {
+            "SC": 100.0,
+            "ICC": null,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 100.0,
+            "micro_rag": 100.0,
+            "blend": 100.0
+          },
+          "fixed_token_256": {
+            "SC": 100.0,
+            "ICC": null,
+            "DCC": 77.99,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 94.5
+          },
+          "recursive_text": {
+            "SC": 100.0,
+            "ICC": null,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 100.0,
+            "micro_rag": 100.0,
+            "blend": 100.0
+          },
+          "recursive_text_1100": {
+            "SC": 100.0,
+            "ICC": null,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 100.0,
+            "micro_rag": 100.0,
+            "blend": 100.0
+          },
+          "sentence_window": {
+            "SC": 100.0,
+            "ICC": null,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 100.0
+          },
+          "heading_section": {
+            "SC": 100.0,
+            "ICC": null,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 100.0
+          },
+          "no_split": {
+            "SC": 100.0,
+            "ICC": null,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 100.0
+          }
+        },
+        "selected_by": "rag_microloop",
+        "selected_intrinsic_mean": 1.0,
+        "selected_micro_rag": 1.0,
+        "selected_blend": 1.0,
+        "micro_alpha": 0.55,
+        "shortlist": [
+          "fixed_token_512",
+          "recursive_text",
+          "recursive_text_1100"
+        ]
+      }
+    },
+    {
+      "doc_id": "ADOBE_2017_10K",
+      "domain": "finance",
+      "method": "fixed_token_512",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 79.22,
+      "DCC": 79.7,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 91.78
+    },
+    {
+      "doc_id": "ADOBE_2017_10K",
+      "domain": "finance",
+      "method": "fixed_token_256",
+      "n_chunks": 6,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 77.42,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 94.36
+    },
+    {
+      "doc_id": "ADOBE_2017_10K",
+      "domain": "finance",
+      "method": "recursive_text",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 67.65,
+      "DCC": 67.73,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 87.07
+    },
+    {
+      "doc_id": "ADOBE_2017_10K",
+      "domain": "finance",
+      "method": "recursive_text_1100",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": 91.33,
+      "DCC": 76.24,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 93.51
+    },
+    {
+      "doc_id": "ADOBE_2017_10K",
+      "domain": "finance",
+      "method": "sentence_window",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 92.58,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 78.52
+    },
+    {
+      "doc_id": "ADOBE_2017_10K",
+      "domain": "finance",
+      "method": "heading_section",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 79.22,
+      "DCC": 79.7,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 91.78
+    },
+    {
+      "doc_id": "ADOBE_2017_10K",
+      "domain": "finance",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 92.58,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 78.52
+    },
+    {
+      "doc_id": "ADOBE_2017_10K",
+      "domain": "finance",
+      "method": "adaptive_ace",
+      "n_chunks": 6,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 77.42,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 94.36,
+      "selected": "fixed_token_256",
+      "selection": {
+        "mode": "rag_microloop",
+        "candidates": {
+          "fixed_token_512": {
+            "SC": 100.0,
+            "ICC": 79.22,
+            "DCC": 79.7,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 91.78,
+            "micro_rag": 100.0,
+            "blend": 95.48
+          },
+          "fixed_token_256": {
+            "SC": 100.0,
+            "ICC": null,
+            "DCC": 77.42,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 94.36,
+            "micro_rag": 100.0,
+            "blend": 96.9
+          },
+          "recursive_text": {
+            "SC": 100.0,
+            "ICC": 67.65,
+            "DCC": 67.73,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 87.07
+          },
+          "recursive_text_1100": {
+            "SC": 100.0,
+            "ICC": 91.33,
+            "DCC": 76.24,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 93.51,
+            "micro_rag": 100.0,
+            "blend": 96.43
+          },
+          "sentence_window": {
+            "SC": 0.0,
+            "ICC": 92.58,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 78.52
+          },
+          "heading_section": {
+            "SC": 100.0,
+            "ICC": 79.22,
+            "DCC": 79.7,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 91.78
+          },
+          "no_split": {
+            "SC": 0.0,
+            "ICC": 92.58,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 78.52
+          }
+        },
+        "selected_by": "rag_microloop",
+        "selected_intrinsic_mean": 0.9435530879832339,
+        "selected_micro_rag": 1.0,
+        "selected_blend": 0.9689541983907787,
+        "micro_alpha": 0.55,
+        "shortlist": [
+          "fixed_token_256",
+          "recursive_text_1100",
+          "fixed_token_512"
+        ]
+      }
+    },
+    {
+      "doc_id": "ADOBE_2022_10K",
+      "domain": "finance",
+      "method": "fixed_token_512",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": 52.92,
+      "DCC": 75.72,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 85.73
+    },
+    {
+      "doc_id": "ADOBE_2022_10K",
+      "domain": "finance",
+      "method": "fixed_token_256",
+      "n_chunks": 4,
+      "SC": 100.0,
+      "ICC": 49.07,
+      "DCC": 74.92,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 84.8
+    },
+    {
+      "doc_id": "ADOBE_2022_10K",
+      "domain": "finance",
+      "method": "recursive_text",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": 52.28,
+      "DCC": 75.5,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 85.56
+    },
+    {
+      "doc_id": "ADOBE_2022_10K",
+      "domain": "finance",
+      "method": "recursive_text_1100",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 64.55,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 92.91
+    },
+    {
+      "doc_id": "ADOBE_2022_10K",
+      "domain": "finance",
+      "method": "sentence_window",
+      "n_chunks": 4,
+      "SC": 100.0,
+      "ICC": 59.97,
+      "DCC": 87.57,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 89.51
+    },
+    {
+      "doc_id": "ADOBE_2022_10K",
+      "domain": "finance",
+      "method": "heading_section",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": 52.92,
+      "DCC": 75.72,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 85.73
+    },
+    {
+      "doc_id": "ADOBE_2022_10K",
+      "domain": "finance",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 64.55,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 92.91
+    },
+    {
+      "doc_id": "ADOBE_2022_10K",
+      "domain": "finance",
+      "method": "adaptive_ace",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 64.55,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 92.91,
+      "selected": "recursive_text_1100",
+      "selection": {
+        "mode": "rag_microloop",
+        "candidates": {
+          "fixed_token_512": {
+            "SC": 100.0,
+            "ICC": 52.92,
+            "DCC": 75.72,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 85.73
+          },
+          "fixed_token_256": {
+            "SC": 100.0,
+            "ICC": 49.07,
+            "DCC": 74.92,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 84.8
+          },
+          "recursive_text": {
+            "SC": 100.0,
+            "ICC": 52.28,
+            "DCC": 75.5,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 85.56
+          },
+          "recursive_text_1100": {
+            "SC": 100.0,
+            "ICC": 64.55,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 92.91,
+            "micro_rag": 100.0,
+            "blend": 96.1
+          },
+          "sentence_window": {
+            "SC": 100.0,
+            "ICC": 59.97,
+            "DCC": 87.57,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 89.51,
+            "micro_rag": 100.0,
+            "blend": 94.23
+          },
+          "heading_section": {
+            "SC": 100.0,
+            "ICC": 52.92,
+            "DCC": 75.72,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 85.73
+          },
+          "no_split": {
+            "SC": 100.0,
+            "ICC": 64.55,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 92.91,
+            "micro_rag": 100.0,
+            "blend": 96.1
+          }
+        },
+        "selected_by": "rag_microloop",
+        "selected_intrinsic_mean": 0.9291041858669022,
+        "selected_micro_rag": 1.0,
+        "selected_blend": 0.9610073022267962,
+        "micro_alpha": 0.55,
+        "shortlist": [
+          "recursive_text_1100",
+          "no_split",
+          "sentence_window"
+        ]
+      }
+    },
+    {
+      "doc_id": "AES_2022_10K",
+      "domain": "finance",
+      "method": "fixed_token_512",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 82.05,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 95.51
+    },
+    {
+      "doc_id": "AES_2022_10K",
+      "domain": "finance",
+      "method": "fixed_token_256",
+      "n_chunks": 6,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 80.45,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 95.11
+    },
+    {
+      "doc_id": "AES_2022_10K",
+      "domain": "finance",
+      "method": "recursive_text",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 79.51,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 94.88
+    },
+    {
+      "doc_id": "AES_2022_10K",
+      "domain": "finance",
+      "method": "recursive_text_1100",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": 84.38,
+      "DCC": 86.12,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 94.1
+    },
+    {
+      "doc_id": "AES_2022_10K",
+      "domain": "finance",
+      "method": "sentence_window",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 90.11,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 78.02
+    },
+    {
+      "doc_id": "AES_2022_10K",
+      "domain": "finance",
+      "method": "heading_section",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 82.05,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 95.51
+    },
+    {
+      "doc_id": "AES_2022_10K",
+      "domain": "finance",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 90.11,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 78.02
+    },
+    {
+      "doc_id": "AES_2022_10K",
+      "domain": "finance",
+      "method": "adaptive_ace",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 82.05,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 95.51,
+      "selected": "fixed_token_512",
+      "selection": {
+        "mode": "rag_microloop",
+        "candidates": {
+          "fixed_token_512": {
+            "SC": 100.0,
+            "ICC": null,
+            "DCC": 82.05,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 95.51,
+            "micro_rag": 100.0,
+            "blend": 97.53
+          },
+          "fixed_token_256": {
+            "SC": 100.0,
+            "ICC": null,
+            "DCC": 80.45,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 95.11,
+            "micro_rag": 81.06,
+            "blend": 88.79
+          },
+          "recursive_text": {
+            "SC": 100.0,
+            "ICC": null,
+            "DCC": 79.51,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 94.88
+          },
+          "recursive_text_1100": {
+            "SC": 100.0,
+            "ICC": 84.38,
+            "DCC": 86.12,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 94.1
+          },
+          "sentence_window": {
+            "SC": 0.0,
+            "ICC": 90.11,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 78.02
+          },
+          "heading_section": {
+            "SC": 100.0,
+            "ICC": null,
+            "DCC": 82.05,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 95.51,
+            "micro_rag": 100.0,
+            "blend": 97.53
+          },
+          "no_split": {
+            "SC": 0.0,
+            "ICC": 90.11,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 78.02
+          }
+        },
+        "selected_by": "rag_microloop",
+        "selected_intrinsic_mean": 0.9551241250036508,
+        "selected_micro_rag": 1.0,
+        "selected_blend": 0.975318268752008,
+        "micro_alpha": 0.55,
+        "shortlist": [
+          "fixed_token_512",
+          "heading_section",
+          "fixed_token_256"
+        ]
+      }
+    },
+    {
+      "doc_id": "AMAZON_2017_10K",
+      "domain": "finance",
+      "method": "fixed_token_512",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": 52.37,
+      "DCC": 75.36,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 85.54
+    },
+    {
+      "doc_id": "AMAZON_2017_10K",
+      "domain": "finance",
+      "method": "fixed_token_256",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 57.46,
+      "DCC": 77.43,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 86.98
+    },
+    {
+      "doc_id": "AMAZON_2017_10K",
+      "domain": "finance",
+      "method": "recursive_text",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": 50.24,
+      "DCC": 69.27,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 83.9
+    },
+    {
+      "doc_id": "AMAZON_2017_10K",
+      "domain": "finance",
+      "method": "recursive_text_1100",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 66.3,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 93.26
+    },
+    {
+      "doc_id": "AMAZON_2017_10K",
+      "domain": "finance",
+      "method": "sentence_window",
+      "n_chunks": 4,
+      "SC": 100.0,
+      "ICC": 56.0,
+      "DCC": 86.57,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 88.51
+    },
+    {
+      "doc_id": "AMAZON_2017_10K",
+      "domain": "finance",
+      "method": "heading_section",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": 52.37,
+      "DCC": 75.36,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 85.54
+    },
+    {
+      "doc_id": "AMAZON_2017_10K",
+      "domain": "finance",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 66.3,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 93.26
+    },
+    {
+      "doc_id": "AMAZON_2017_10K",
+      "domain": "finance",
+      "method": "adaptive_ace",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 66.3,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 93.26,
+      "selected": "recursive_text_1100",
+      "selection": {
+        "mode": "rag_microloop",
+        "candidates": {
+          "fixed_token_512": {
+            "SC": 100.0,
+            "ICC": 52.37,
+            "DCC": 75.36,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 85.54
+          },
+          "fixed_token_256": {
+            "SC": 100.0,
+            "ICC": 57.46,
+            "DCC": 77.43,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 86.98
+          },
+          "recursive_text": {
+            "SC": 100.0,
+            "ICC": 50.24,
+            "DCC": 69.27,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 83.9
+          },
+          "recursive_text_1100": {
+            "SC": 100.0,
+            "ICC": 66.3,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 93.26,
+            "micro_rag": 100.0,
+            "blend": 96.29
+          },
+          "sentence_window": {
+            "SC": 100.0,
+            "ICC": 56.0,
+            "DCC": 86.57,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 88.51,
+            "micro_rag": 100.0,
+            "blend": 93.68
+          },
+          "heading_section": {
+            "SC": 100.0,
+            "ICC": 52.37,
+            "DCC": 75.36,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 85.54
+          },
+          "no_split": {
+            "SC": 100.0,
+            "ICC": 66.3,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 93.26,
+            "micro_rag": 100.0,
+            "blend": 96.29
+          }
+        },
+        "selected_by": "rag_microloop",
+        "selected_intrinsic_mean": 0.9326058261103413,
+        "selected_micro_rag": 1.0,
+        "selected_blend": 0.9629332043606877,
+        "micro_alpha": 0.55,
+        "shortlist": [
+          "recursive_text_1100",
+          "no_split",
+          "sentence_window"
+        ]
+      }
+    },
+    {
+      "doc_id": "AMAZON_2019_10K",
+      "domain": "finance",
+      "method": "fixed_token_512",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 75.9,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 95.18
+    },
+    {
+      "doc_id": "AMAZON_2019_10K",
+      "domain": "finance",
+      "method": "fixed_token_256",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": 60.03,
+      "DCC": 77.57,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 87.52
+    },
+    {
+      "doc_id": "AMAZON_2019_10K",
+      "domain": "finance",
+      "method": "recursive_text",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 76.46,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 95.29
+    },
+    {
+      "doc_id": "AMAZON_2019_10K",
+      "domain": "finance",
+      "method": "recursive_text_1100",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 76.46,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 95.29
+    },
+    {
+      "doc_id": "AMAZON_2019_10K",
+      "domain": "finance",
+      "method": "sentence_window",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": 74.26,
+      "DCC": 88.34,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 92.52
+    },
+    {
+      "doc_id": "AMAZON_2019_10K",
+      "domain": "finance",
+      "method": "heading_section",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 75.9,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 95.18
+    },
+    {
+      "doc_id": "AMAZON_2019_10K",
+      "domain": "finance",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 76.46,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 95.29
+    },
+    {
+      "doc_id": "AMAZON_2019_10K",
+      "domain": "finance",
+      "method": "adaptive_ace",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 76.46,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 95.29,
+      "selected": "recursive_text",
+      "selection": {
+        "mode": "rag_microloop",
+        "candidates": {
+          "fixed_token_512": {
+            "SC": 100.0,
+            "ICC": 75.9,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 95.18
+          },
+          "fixed_token_256": {
+            "SC": 100.0,
+            "ICC": 60.03,
+            "DCC": 77.57,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 87.52
+          },
+          "recursive_text": {
+            "SC": 100.0,
+            "ICC": 76.46,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 95.29,
+            "micro_rag": 99.12,
+            "blend": 97.01
+          },
+          "recursive_text_1100": {
+            "SC": 100.0,
+            "ICC": 76.46,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 95.29,
+            "micro_rag": 99.12,
+            "blend": 97.01
+          },
+          "sentence_window": {
+            "SC": 100.0,
+            "ICC": 74.26,
+            "DCC": 88.34,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 92.52
+          },
+          "heading_section": {
+            "SC": 100.0,
+            "ICC": 75.9,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 95.18
+          },
+          "no_split": {
+            "SC": 100.0,
+            "ICC": 76.46,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 95.29,
+            "micro_rag": 99.12,
+            "blend": 97.01
+          }
+        },
+        "selected_by": "rag_microloop",
+        "selected_intrinsic_mean": 0.9529183339730661,
+        "selected_micro_rag": 0.9911504424778761,
+        "selected_blend": 0.9701227828002306,
+        "micro_alpha": 0.55,
+        "shortlist": [
+          "recursive_text",
+          "recursive_text_1100",
+          "no_split"
+        ]
+      }
+    },
+    {
+      "doc_id": "AMCOR_2020_10K",
+      "domain": "finance",
+      "method": "fixed_token_512",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 100.0
+    },
+    {
+      "doc_id": "AMCOR_2020_10K",
+      "domain": "finance",
+      "method": "fixed_token_256",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 78.66,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 94.66
+    },
+    {
+      "doc_id": "AMCOR_2020_10K",
+      "domain": "finance",
+      "method": "recursive_text",
+      "n_chunks": 2,
+      "SC": 50.0,
+      "ICC": 75.2,
+      "DCC": 70.94,
+      "BI": 80.0,
+      "RC": 100.0,
+      "Mean": 75.23
+    },
+    {
+      "doc_id": "AMCOR_2020_10K",
+      "domain": "finance",
+      "method": "recursive_text_1100",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 100.0
+    },
+    {
+      "doc_id": "AMCOR_2020_10K",
+      "domain": "finance",
+      "method": "sentence_window",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 100.0
+    },
+    {
+      "doc_id": "AMCOR_2020_10K",
+      "domain": "finance",
+      "method": "heading_section",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 100.0
+    },
+    {
+      "doc_id": "AMCOR_2020_10K",
+      "domain": "finance",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 100.0
+    },
+    {
+      "doc_id": "AMCOR_2020_10K",
+      "domain": "finance",
+      "method": "adaptive_ace",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 100.0,
+      "selected": "fixed_token_512",
+      "selection": {
+        "mode": "rag_microloop",
+        "candidates": {
+          "fixed_token_512": {
+            "SC": 100.0,
+            "ICC": null,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 100.0,
+            "micro_rag": 98.89,
+            "blend": 99.5
+          },
+          "fixed_token_256": {
+            "SC": 100.0,
+            "ICC": null,
+            "DCC": 78.66,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 94.66
+          },
+          "recursive_text": {
+            "SC": 50.0,
+            "ICC": 75.2,
+            "DCC": 70.94,
+            "BI": 80.0,
+            "RC": 100.0,
+            "Mean": 75.23
+          },
+          "recursive_text_1100": {
+            "SC": 100.0,
+            "ICC": null,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 100.0,
+            "micro_rag": 98.89,
+            "blend": 99.5
+          },
+          "sentence_window": {
+            "SC": 100.0,
+            "ICC": null,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 100.0,
+            "micro_rag": 98.89,
+            "blend": 99.5
+          },
+          "heading_section": {
+            "SC": 100.0,
+            "ICC": null,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 100.0
+          },
+          "no_split": {
+            "SC": 100.0,
+            "ICC": null,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 100.0
+          }
+        },
+        "selected_by": "rag_microloop",
+        "selected_intrinsic_mean": 1.0,
+        "selected_micro_rag": 0.9888888888888889,
+        "selected_blend": 0.995,
+        "micro_alpha": 0.55,
+        "shortlist": [
+          "fixed_token_512",
+          "recursive_text_1100",
+          "sentence_window"
+        ]
+      }
+    },
+    {
+      "doc_id": "AMCOR_2022_8K_dated-2022-07-01",
+      "domain": "finance",
+      "method": "fixed_token_512",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 59.14,
+      "DCC": 90.96,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 90.02
+    },
+    {
+      "doc_id": "AMCOR_2022_8K_dated-2022-07-01",
+      "domain": "finance",
+      "method": "fixed_token_256",
+      "n_chunks": 6,
+      "SC": 100.0,
+      "ICC": 55.99,
+      "DCC": 89.64,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 89.13
+    },
+    {
+      "doc_id": "AMCOR_2022_8K_dated-2022-07-01",
+      "domain": "finance",
+      "method": "recursive_text",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 56.3,
+      "DCC": 88.29,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 88.92
+    },
+    {
+      "doc_id": "AMCOR_2022_8K_dated-2022-07-01",
+      "domain": "finance",
+      "method": "recursive_text_1100",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": 54.93,
+      "DCC": 90.09,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 89.0
+    },
+    {
+      "doc_id": "AMCOR_2022_8K_dated-2022-07-01",
+      "domain": "finance",
+      "method": "sentence_window",
+      "n_chunks": 23,
+      "SC": 86.96,
+      "ICC": 59.54,
+      "DCC": 90.92,
+      "BI": 93.33,
+      "RC": 100.0,
+      "Mean": 86.15
+    },
+    {
+      "doc_id": "AMCOR_2022_8K_dated-2022-07-01",
+      "domain": "finance",
+      "method": "heading_section",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 59.14,
+      "DCC": 90.96,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 90.02
+    },
+    {
+      "doc_id": "AMCOR_2022_8K_dated-2022-07-01",
+      "domain": "finance",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 66.51,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 73.3
+    },
+    {
+      "doc_id": "AMCOR_2022_8K_dated-2022-07-01",
+      "domain": "finance",
+      "method": "adaptive_ace",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 59.14,
+      "DCC": 90.96,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 90.02,
+      "selected": "fixed_token_512",
+      "selection": {
+        "mode": "rag_microloop",
+        "candidates": {
+          "fixed_token_512": {
+            "SC": 100.0,
+            "ICC": 59.14,
+            "DCC": 90.96,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 90.02,
+            "micro_rag": 100.0,
+            "blend": 94.51
+          },
+          "fixed_token_256": {
+            "SC": 100.0,
+            "ICC": 55.99,
+            "DCC": 89.64,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 89.13,
+            "micro_rag": 100.0,
+            "blend": 94.02
+          },
+          "recursive_text": {
+            "SC": 100.0,
+            "ICC": 56.3,
+            "DCC": 88.29,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 88.92
+          },
+          "recursive_text_1100": {
+            "SC": 100.0,
+            "ICC": 54.93,
+            "DCC": 90.09,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 89.0
+          },
+          "sentence_window": {
+            "SC": 86.96,
+            "ICC": 59.54,
+            "DCC": 90.92,
+            "BI": 93.33,
+            "RC": 100.0,
+            "Mean": 86.15
+          },
+          "heading_section": {
+            "SC": 100.0,
+            "ICC": 59.14,
+            "DCC": 90.96,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 90.02,
+            "micro_rag": 100.0,
+            "blend": 94.51
+          },
+          "no_split": {
+            "SC": 0.0,
+            "ICC": 66.51,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 73.3
+          }
+        },
+        "selected_by": "rag_microloop",
+        "selected_intrinsic_mean": 0.9002056195672063,
+        "selected_micro_rag": 1.0,
+        "selected_blend": 0.9451130907619635,
+        "micro_alpha": 0.55,
+        "shortlist": [
+          "fixed_token_512",
+          "heading_section",
+          "fixed_token_256"
+        ]
+      }
+    },
+    {
+      "doc_id": "AMCOR_2023_10K",
+      "domain": "finance",
+      "method": "fixed_token_512",
+      "n_chunks": 7,
+      "SC": 100.0,
+      "ICC": 40.9,
+      "DCC": 80.47,
+      "BI": 90.91,
+      "RC": 98.11,
+      "Mean": 82.08
+    },
+    {
+      "doc_id": "AMCOR_2023_10K",
+      "domain": "finance",
+      "method": "fixed_token_256",
+      "n_chunks": 13,
+      "SC": 100.0,
+      "ICC": 34.57,
+      "DCC": 83.38,
+      "BI": 90.91,
+      "RC": 100.0,
+      "Mean": 81.77
+    },
+    {
+      "doc_id": "AMCOR_2023_10K",
+      "domain": "finance",
+      "method": "recursive_text",
+      "n_chunks": 6,
+      "SC": 100.0,
+      "ICC": 51.99,
+      "DCC": 76.76,
+      "BI": 90.91,
+      "RC": 98.11,
+      "Mean": 83.55
+    },
+    {
+      "doc_id": "AMCOR_2023_10K",
+      "domain": "finance",
+      "method": "recursive_text_1100",
+      "n_chunks": 3,
+      "SC": 100.0,
+      "ICC": 43.46,
+      "DCC": 73.14,
+      "BI": 90.91,
+      "RC": 100.0,
+      "Mean": 81.5
+    },
+    {
+      "doc_id": "AMCOR_2023_10K",
+      "domain": "finance",
+      "method": "sentence_window",
+      "n_chunks": 54,
+      "SC": 98.15,
+      "ICC": 64.23,
+      "DCC": 89.67,
+      "BI": 81.82,
+      "RC": 88.68,
+      "Mean": 84.51
+    },
+    {
+      "doc_id": "AMCOR_2023_10K",
+      "domain": "finance",
+      "method": "heading_section",
+      "n_chunks": 7,
+      "SC": 100.0,
+      "ICC": 40.9,
+      "DCC": 80.47,
+      "BI": 90.91,
+      "RC": 98.11,
+      "Mean": 82.08
+    },
+    {
+      "doc_id": "AMCOR_2023_10K",
+      "domain": "finance",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 41.65,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 68.33
+    },
+    {
+      "doc_id": "AMCOR_2023_10K",
+      "domain": "finance",
+      "method": "adaptive_ace",
+      "n_chunks": 6,
+      "SC": 100.0,
+      "ICC": 51.99,
+      "DCC": 76.76,
+      "BI": 90.91,
+      "RC": 98.11,
+      "Mean": 83.55,
+      "selected": "recursive_text",
+      "selection": {
+        "mode": "rag_microloop",
+        "candidates": {
+          "fixed_token_512": {
+            "SC": 100.0,
+            "ICC": 40.9,
+            "DCC": 80.47,
+            "BI": 90.91,
+            "RC": 98.11,
+            "Mean": 82.08,
+            "micro_rag": 100.0,
+            "blend": 90.14
+          },
+          "fixed_token_256": {
+            "SC": 100.0,
+            "ICC": 34.57,
+            "DCC": 83.38,
+            "BI": 90.91,
+            "RC": 100.0,
+            "Mean": 81.77
+          },
+          "recursive_text": {
+            "SC": 100.0,
+            "ICC": 51.99,
+            "DCC": 76.76,
+            "BI": 90.91,
+            "RC": 98.11,
+            "Mean": 83.55,
+            "micro_rag": 100.0,
+            "blend": 90.95
+          },
+          "recursive_text_1100": {
+            "SC": 100.0,
+            "ICC": 43.46,
+            "DCC": 73.14,
+            "BI": 90.91,
+            "RC": 100.0,
+            "Mean": 81.5
+          },
+          "sentence_window": {
+            "SC": 98.15,
+            "ICC": 64.23,
+            "DCC": 89.67,
+            "BI": 81.82,
+            "RC": 88.68,
+            "Mean": 84.51,
+            "micro_rag": 92.34,
+            "blend": 88.03
+          },
+          "heading_section": {
+            "SC": 100.0,
+            "ICC": 40.9,
+            "DCC": 80.47,
+            "BI": 90.91,
+            "RC": 98.11,
+            "Mean": 82.08
+          },
+          "no_split": {
+            "SC": 0.0,
+            "ICC": 41.65,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 68.33
+          }
+        },
+        "selected_by": "rag_microloop",
+        "selected_intrinsic_mean": 0.8355340980577282,
+        "selected_micro_rag": 1.0,
+        "selected_blend": 0.9095437539317505,
+        "micro_alpha": 0.55,
+        "shortlist": [
+          "recursive_text",
+          "fixed_token_512",
+          "sentence_window"
+        ]
+      }
+    },
+    {
+      "doc_id": "AMCOR_2023Q2_10Q",
+      "domain": "finance",
+      "method": "fixed_token_512",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 74.79,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 94.96
+    },
+    {
+      "doc_id": "AMCOR_2023Q2_10Q",
+      "domain": "finance",
+      "method": "fixed_token_256",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": 65.76,
+      "DCC": 89.81,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 91.11
+    },
+    {
+      "doc_id": "AMCOR_2023Q2_10Q",
+      "domain": "finance",
+      "method": "recursive_text",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 75.66,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 95.13
+    },
+    {
+      "doc_id": "AMCOR_2023Q2_10Q",
+      "domain": "finance",
+      "method": "recursive_text_1100",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 75.66,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 95.13
+    },
+    {
+      "doc_id": "AMCOR_2023Q2_10Q",
+      "domain": "finance",
+      "method": "sentence_window",
+      "n_chunks": 5,
+      "SC": 80.0,
+      "ICC": 66.87,
+      "DCC": 89.02,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 87.18
+    },
+    {
+      "doc_id": "AMCOR_2023Q2_10Q",
+      "domain": "finance",
+      "method": "heading_section",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 74.79,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 94.96
+    },
+    {
+      "doc_id": "AMCOR_2023Q2_10Q",
+      "domain": "finance",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 75.66,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 95.13
+    },
+    {
+      "doc_id": "AMCOR_2023Q2_10Q",
+      "domain": "finance",
+      "method": "adaptive_ace",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 75.66,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 95.13,
+      "selected": "recursive_text",
+      "selection": {
+        "mode": "rag_microloop",
+        "candidates": {
+          "fixed_token_512": {
+            "SC": 100.0,
+            "ICC": 74.79,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 94.96
+          },
+          "fixed_token_256": {
+            "SC": 100.0,
+            "ICC": 65.76,
+            "DCC": 89.81,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 91.11
+          },
+          "recursive_text": {
+            "SC": 100.0,
+            "ICC": 75.66,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 95.13,
+            "micro_rag": 100.0,
+            "blend": 97.32
+          },
+          "recursive_text_1100": {
+            "SC": 100.0,
+            "ICC": 75.66,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 95.13,
+            "micro_rag": 100.0,
+            "blend": 97.32
+          },
+          "sentence_window": {
+            "SC": 80.0,
+            "ICC": 66.87,
+            "DCC": 89.02,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 87.18
+          },
+          "heading_section": {
+            "SC": 100.0,
+            "ICC": 74.79,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 94.96
+          },
+          "no_split": {
+            "SC": 100.0,
+            "ICC": 75.66,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 95.13,
+            "micro_rag": 100.0,
+            "blend": 97.32
+          }
+        },
+        "selected_by": "rag_microloop",
+        "selected_intrinsic_mean": 0.9513210341373771,
+        "selected_micro_rag": 1.0,
+        "selected_blend": 0.9732265687755575,
+        "micro_alpha": 0.55,
+        "shortlist": [
+          "recursive_text",
+          "recursive_text_1100",
+          "no_split"
+        ]
+      }
+    },
+    {
+      "doc_id": "AMCOR_2023Q4_EARNINGS",
+      "domain": "finance",
+      "method": "fixed_token_512",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 86.45,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 96.61
+    },
+    {
+      "doc_id": "AMCOR_2023Q4_EARNINGS",
+      "domain": "finance",
+      "method": "fixed_token_256",
+      "n_chunks": 4,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 78.81,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 94.7
+    },
+    {
+      "doc_id": "AMCOR_2023Q4_EARNINGS",
+      "domain": "finance",
+      "method": "recursive_text",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 82.68,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 95.67
+    },
+    {
+      "doc_id": "AMCOR_2023Q4_EARNINGS",
+      "domain": "finance",
+      "method": "recursive_text_1100",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 58.87,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 91.77
+    },
+    {
+      "doc_id": "AMCOR_2023Q4_EARNINGS",
+      "domain": "finance",
+      "method": "sentence_window",
+      "n_chunks": 8,
+      "SC": 75.0,
+      "ICC": null,
+      "DCC": 84.12,
+      "BI": 99.23,
+      "RC": 100.0,
+      "Mean": 89.59
+    },
+    {
+      "doc_id": "AMCOR_2023Q4_EARNINGS",
+      "domain": "finance",
+      "method": "heading_section",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 86.45,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 96.61
+    },
+    {
+      "doc_id": "AMCOR_2023Q4_EARNINGS",
+      "domain": "finance",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 58.87,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 91.77
+    },
+    {
+      "doc_id": "AMCOR_2023Q4_EARNINGS",
+      "domain": "finance",
+      "method": "adaptive_ace",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": null,
+      "DCC": 86.45,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 96.61,
+      "selected": "fixed_token_512",
+      "selection": {
+        "mode": "rag_microloop",
+        "candidates": {
+          "fixed_token_512": {
+            "SC": 100.0,
+            "ICC": null,
+            "DCC": 86.45,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 96.61,
+            "micro_rag": 100.0,
+            "blend": 98.14
+          },
+          "fixed_token_256": {
+            "SC": 100.0,
+            "ICC": null,
+            "DCC": 78.81,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 94.7
+          },
+          "recursive_text": {
+            "SC": 100.0,
+            "ICC": null,
+            "DCC": 82.68,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 95.67,
+            "micro_rag": 100.0,
+            "blend": 97.62
+          },
+          "recursive_text_1100": {
+            "SC": 100.0,
+            "ICC": 58.87,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 91.77
+          },
+          "sentence_window": {
+            "SC": 75.0,
+            "ICC": null,
+            "DCC": 84.12,
+            "BI": 99.23,
+            "RC": 100.0,
+            "Mean": 89.59
+          },
+          "heading_section": {
+            "SC": 100.0,
+            "ICC": null,
+            "DCC": 86.45,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 96.61,
+            "micro_rag": 100.0,
+            "blend": 98.14
+          },
+          "no_split": {
+            "SC": 100.0,
+            "ICC": 58.87,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 91.77
+          }
+        },
+        "selected_by": "rag_microloop",
+        "selected_intrinsic_mean": 0.9661349763663489,
+        "selected_micro_rag": 1.0,
+        "selected_blend": 0.981374237001492,
+        "micro_alpha": 0.55,
+        "shortlist": [
+          "fixed_token_512",
+          "heading_section",
+          "recursive_text"
+        ]
+      }
+    },
+    {
+      "doc_id": "AMD_2015_10K",
+      "domain": "finance",
+      "method": "fixed_token_512",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": 49.38,
+      "DCC": 81.51,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 86.18
+    },
+    {
+      "doc_id": "AMD_2015_10K",
+      "domain": "finance",
+      "method": "fixed_token_256",
+      "n_chunks": 4,
+      "SC": 100.0,
+      "ICC": 48.6,
+      "DCC": 76.76,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 85.07
+    },
+    {
+      "doc_id": "AMD_2015_10K",
+      "domain": "finance",
+      "method": "recursive_text",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": 48.12,
+      "DCC": 73.72,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 84.37
+    },
+    {
+      "doc_id": "AMD_2015_10K",
+      "domain": "finance",
+      "method": "recursive_text_1100",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 58.25,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 91.65
+    },
+    {
+      "doc_id": "AMD_2015_10K",
+      "domain": "finance",
+      "method": "sentence_window",
+      "n_chunks": 5,
+      "SC": 100.0,
+      "ICC": 55.19,
+      "DCC": 90.95,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 89.23
+    },
+    {
+      "doc_id": "AMD_2015_10K",
+      "domain": "finance",
+      "method": "heading_section",
+      "n_chunks": 2,
+      "SC": 100.0,
+      "ICC": 49.38,
+      "DCC": 81.51,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 86.18
+    },
+    {
+      "doc_id": "AMD_2015_10K",
+      "domain": "finance",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 58.25,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 91.65
+    },
+    {
+      "doc_id": "AMD_2015_10K",
+      "domain": "finance",
+      "method": "adaptive_ace",
+      "n_chunks": 1,
+      "SC": 100.0,
+      "ICC": 58.25,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 91.65,
+      "selected": "recursive_text_1100",
+      "selection": {
+        "mode": "rag_microloop",
+        "candidates": {
+          "fixed_token_512": {
+            "SC": 100.0,
+            "ICC": 49.38,
+            "DCC": 81.51,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 86.18
+          },
+          "fixed_token_256": {
+            "SC": 100.0,
+            "ICC": 48.6,
+            "DCC": 76.76,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 85.07
+          },
+          "recursive_text": {
+            "SC": 100.0,
+            "ICC": 48.12,
+            "DCC": 73.72,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 84.37
+          },
+          "recursive_text_1100": {
+            "SC": 100.0,
+            "ICC": 58.25,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 91.65,
+            "micro_rag": 98.98,
+            "blend": 94.95
+          },
+          "sentence_window": {
+            "SC": 100.0,
+            "ICC": 55.19,
+            "DCC": 90.95,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 89.23,
+            "micro_rag": 98.98,
+            "blend": 93.62
+          },
+          "heading_section": {
+            "SC": 100.0,
+            "ICC": 49.38,
+            "DCC": 81.51,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 86.18
+          },
+          "no_split": {
+            "SC": 100.0,
+            "ICC": 58.25,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 91.65,
+            "micro_rag": 98.98,
+            "blend": 94.95
+          }
+        },
+        "selected_by": "rag_microloop",
+        "selected_intrinsic_mean": 0.9165091645860123,
+        "selected_micro_rag": 0.9897959183673469,
+        "selected_blend": 0.9494882037876129,
+        "micro_alpha": 0.55,
+        "shortlist": [
+          "recursive_text_1100",
+          "no_split",
+          "sentence_window"
+        ]
+      }
+    },
+    {
+      "doc_id": "AMD_2022_10K",
+      "domain": "finance",
+      "method": "fixed_token_512",
+      "n_chunks": 11,
+      "SC": 100.0,
+      "ICC": 29.49,
+      "DCC": 79.16,
+      "BI": 95.83,
+      "RC": 100.0,
+      "Mean": 80.9
+    },
+    {
+      "doc_id": "AMD_2022_10K",
+      "domain": "finance",
+      "method": "fixed_token_256",
+      "n_chunks": 22,
+      "SC": 95.45,
+      "ICC": 30.95,
+      "DCC": 78.29,
+      "BI": 95.83,
+      "RC": 100.0,
+      "Mean": 80.11
+    },
+    {
+      "doc_id": "AMD_2022_10K",
+      "domain": "finance",
+      "method": "recursive_text",
+      "n_chunks": 10,
+      "SC": 100.0,
+      "ICC": 47.38,
+      "DCC": 73.8,
+      "BI": 91.67,
+      "RC": 98.99,
+      "Mean": 82.37
+    },
+    {
+      "doc_id": "AMD_2022_10K",
+      "domain": "finance",
+      "method": "recursive_text_1100",
+      "n_chunks": 5,
+      "SC": 100.0,
+      "ICC": 34.58,
+      "DCC": 65.39,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 79.99
+    },
+    {
+      "doc_id": "AMD_2022_10K",
+      "domain": "finance",
+      "method": "sentence_window",
+      "n_chunks": 89,
+      "SC": 100.0,
+      "ICC": 64.86,
+      "DCC": 91.92,
+      "BI": 83.33,
+      "RC": 91.92,
+      "Mean": 86.41
+    },
+    {
+      "doc_id": "AMD_2022_10K",
+      "domain": "finance",
+      "method": "heading_section",
+      "n_chunks": 11,
+      "SC": 100.0,
+      "ICC": 29.49,
+      "DCC": 79.16,
+      "BI": 95.83,
+      "RC": 100.0,
+      "Mean": 80.9
+    },
+    {
+      "doc_id": "AMD_2022_10K",
+      "domain": "finance",
+      "method": "no_split",
+      "n_chunks": 1,
+      "SC": 0.0,
+      "ICC": 34.99,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "RC": 100.0,
+      "Mean": 67.0
+    },
+    {
+      "doc_id": "AMD_2022_10K",
+      "domain": "finance",
+      "method": "adaptive_ace",
+      "n_chunks": 10,
+      "SC": 100.0,
+      "ICC": 47.38,
+      "DCC": 73.8,
+      "BI": 91.67,
+      "RC": 98.99,
+      "Mean": 82.37,
+      "selected": "recursive_text",
+      "selection": {
+        "mode": "rag_microloop",
+        "candidates": {
+          "fixed_token_512": {
+            "SC": 100.0,
+            "ICC": 29.49,
+            "DCC": 79.16,
+            "BI": 95.83,
+            "RC": 100.0,
+            "Mean": 80.9,
+            "micro_rag": 99.65,
+            "blend": 89.33
+          },
+          "fixed_token_256": {
+            "SC": 95.45,
+            "ICC": 30.95,
+            "DCC": 78.29,
+            "BI": 95.83,
+            "RC": 100.0,
+            "Mean": 80.11
+          },
+          "recursive_text": {
+            "SC": 100.0,
+            "ICC": 47.38,
+            "DCC": 73.8,
+            "BI": 91.67,
+            "RC": 98.99,
+            "Mean": 82.37,
+            "micro_rag": 99.65,
+            "blend": 90.14
+          },
+          "recursive_text_1100": {
+            "SC": 100.0,
+            "ICC": 34.58,
+            "DCC": 65.39,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 79.99
+          },
+          "sentence_window": {
+            "SC": 100.0,
+            "ICC": 64.86,
+            "DCC": 91.92,
+            "BI": 83.33,
+            "RC": 91.92,
+            "Mean": 86.41,
+            "micro_rag": 82.44,
+            "blend": 84.62
+          },
+          "heading_section": {
+            "SC": 100.0,
+            "ICC": 29.49,
+            "DCC": 79.16,
+            "BI": 95.83,
+            "RC": 100.0,
+            "Mean": 80.9
+          },
+          "no_split": {
+            "SC": 0.0,
+            "ICC": 34.99,
+            "DCC": 100.0,
+            "BI": 100.0,
+            "RC": 100.0,
+            "Mean": 67.0
+          }
+        },
+        "selected_by": "rag_microloop",
+        "selected_intrinsic_mean": 0.8236775177611781,
+        "selected_micro_rag": 0.9964539007092199,
+        "selected_blend": 0.9014268900877969,
+        "micro_alpha": 0.55,
+        "shortlist": [
+          "recursive_text",
+          "fixed_token_512",
+          "sentence_window"
+        ]
+      }
+    }
+  ]
+}
