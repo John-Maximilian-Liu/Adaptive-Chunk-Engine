@@ -1,0 +1,12 @@
+{
+  "embed_calls": 1027,
+  "embed_texts": 1572,
+  "embed_cache_hits": 51803,
+  "rerank_calls": 376,
+  "rerank_docs": 3408,
+  "chat_calls": 344,
+  "prompt_tokens": 657881,
+  "completion_tokens": 22039,
+  "total_tokens": 679920,
+  "estimated_cost_usd": 1.9433211999999955
+}

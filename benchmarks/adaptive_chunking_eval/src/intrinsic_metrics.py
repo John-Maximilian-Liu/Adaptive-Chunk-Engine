@@ -13,6 +13,7 @@ Jina embedder via the optional ``embed_fn`` hook for paper-grade semantic scores
 """
 from __future__ import annotations
 
+import hashlib
 import math
 import re
 from dataclasses import dataclass
@@ -106,21 +107,45 @@ def compute_intrachunk_cohesion(
     full_text: str,
     *,
     embed_fn: Optional[EmbedFn] = None,
+    max_chunks: int = 24,
+    max_sents_per_chunk: int = 4,
 ) -> Optional[float]:
     if not chunks:
         return None
     embed = embed_fn or _hash_embed
-    chunk_embs = embed(chunks)
-    scores: list[float] = []
+    # Sample chunks for expensive neural embedders while keeping coverage.
+    if len(chunks) > max_chunks:
+        step = max(1, len(chunks) // max_chunks)
+        selected_idx = list(range(0, len(chunks), step))[:max_chunks]
+    else:
+        selected_idx = list(range(len(chunks)))
+    selected_chunks = [chunks[i] for i in selected_idx]
     bounds = _locate_chunks(chunks, full_text)
-    for chunk, emb, (start, end) in zip(chunks, chunk_embs, bounds):
+    # Collect sentence bags first, then one batched embed for chunks+sentences.
+    sent_bags: list[list[str]] = []
+    for local_i, chunk in enumerate(selected_chunks):
+        start, end = bounds[selected_idx[local_i]]
         local = full_text[start:end] if start < end else chunk
         splits = _sentence_splits(local)
         sents = [local[splits[i] : splits[i + 1]].strip() for i in range(len(splits) - 1)]
         sents = [s for s in sents if s]
-        if len(sents) < 2:
+        if len(sents) > max_sents_per_chunk:
+            step = max(1, len(sents) // max_sents_per_chunk)
+            sents = sents[::step][:max_sents_per_chunk]
+        sent_bags.append(sents)
+    flat_sents = [s for bag in sent_bags for s in bag]
+    all_embs = embed(selected_chunks + flat_sents)
+    chunk_embs = all_embs[: len(selected_chunks)]
+    sent_embs_flat = all_embs[len(selected_chunks) :]
+    scores: list[float] = []
+    cursor = 0
+    for emb, bag in zip(chunk_embs, sent_bags):
+        n = len(bag)
+        if n < 2:
+            cursor += n
             continue
-        sent_embs = embed(sents)
+        sent_embs = sent_embs_flat[cursor : cursor + n]
+        cursor += n
         sims = [_cosine(se, emb) for se in sent_embs]
         scores.append(sum(sims) / len(sims))
     if not scores:
@@ -134,21 +159,30 @@ def compute_contextual_coherence(
     *,
     embed_fn: Optional[EmbedFn] = None,
     window_chunks: int = 3,
+    max_chunks: int = 32,
 ) -> Optional[float]:
     if not chunks:
         return None
     if len(chunks) < 2:
         return 1.0
     embed = embed_fn or _hash_embed
-    chunk_embs = embed(chunks)
-    scores: list[float] = []
-    for i in range(len(chunks)):
-        left = max(0, i - window_chunks // 2)
+    if len(chunks) > max_chunks:
+        step = max(1, len(chunks) // max_chunks)
+        idxs = list(range(0, len(chunks), step))[:max_chunks]
+        sampled = [chunks[i] for i in idxs]
+    else:
+        idxs = list(range(len(chunks)))
+        sampled = chunks
+    windows: list[str] = []
+    for global_i in idxs:
+        left = max(0, global_i - window_chunks // 2)
         right = min(len(chunks), left + window_chunks)
         left = max(0, right - window_chunks)
-        window_text = "\n".join(chunks[left:right])
-        win_emb = embed([window_text])[0]
-        scores.append(_cosine(chunk_embs[i], win_emb))
+        windows.append("\n".join(chunks[left:right]))
+    all_embs = embed(sampled + windows)
+    chunk_embs = all_embs[: len(sampled)]
+    win_embs = all_embs[len(sampled) :]
+    scores = [_cosine(chunk_embs[i], win_embs[i]) for i in range(len(sampled))]
     return max(0.0, min(1.0, sum(scores) / len(scores)))
 
 
@@ -262,6 +296,25 @@ class IntrinsicScore:
         }
 
 
+_SCORE_MEMO: dict[str, IntrinsicScore] = {}
+
+
+def _score_memo_key(
+    chunks: list[str],
+    full_text: str,
+    *,
+    min_tokens: int,
+    max_tokens: int,
+) -> str:
+    h = hashlib.sha1()
+    h.update(f"{len(full_text)}|{min_tokens}|{max_tokens}|{len(chunks)}".encode())
+    for chunk in chunks:
+        h.update(f"|{len(chunk)}|".encode())
+        h.update(chunk[:48].encode("utf-8", errors="ignore"))
+        h.update(chunk[-24:].encode("utf-8", errors="ignore"))
+    return h.hexdigest()
+
+
 def score_chunks(
     chunks: list[str],
     full_text: str,
@@ -271,10 +324,19 @@ def score_chunks(
     gold_split_points: Optional[list[int]] = None,
     embed_fn: Optional[EmbedFn] = None,
 ) -> IntrinsicScore:
-    return IntrinsicScore(
+    # Process-local memo: adaptive_select re-scores the same strategy outputs.
+    if gold_split_points is None:
+        key = _score_memo_key(chunks, full_text, min_tokens=min_tokens, max_tokens=max_tokens)
+        cached = _SCORE_MEMO.get(key)
+        if cached is not None:
+            return cached
+    score = IntrinsicScore(
         sc=compute_size_compliance(chunks, min_tokens=min_tokens, max_tokens=max_tokens),
         icc=compute_intrachunk_cohesion(chunks, full_text, embed_fn=embed_fn),
         dcc=compute_contextual_coherence(chunks, full_text, embed_fn=embed_fn),
         bi=compute_block_integrity(chunks, full_text, gold_split_points=gold_split_points),
         rc=compute_references_completeness(chunks, full_text),
     )
+    if gold_split_points is None:
+        _SCORE_MEMO[key] = score
+    return score

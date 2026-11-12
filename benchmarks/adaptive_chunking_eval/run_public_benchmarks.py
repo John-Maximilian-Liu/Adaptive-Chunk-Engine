@@ -34,6 +34,7 @@ sys.path.insert(0, str(ROOT / "packages" / "python"))
 sys.path.insert(0, str(ROOT / "apps" / "api"))
 
 from intrinsic_metrics import score_chunks  # noqa: E402
+from retrieval import adaptive_select, env_flags, l2_normalize, retrieve_with_optional_rerank  # noqa: E402
 from loaders.clair import load_clair  # noqa: E402
 from loaders.financebench import load_financebench  # noqa: E402
 from loaders.open_rag_bench import load_open_rag_bench  # noqa: E402
@@ -44,6 +45,7 @@ from chunk_adapters.base import ChunkRequest  # noqa: E402
 from shared.ids import new_id  # noqa: E402
 
 OUT_ROOT = HERE / "results" / "public_benchmarks"
+FLAGS = env_flags()
 
 FIXED_STRATEGIES = [
     ("fixed_token_512", "fixed_token", {"chunk_size": 512, "chunk_overlap": 64}),
@@ -147,30 +149,6 @@ def _chunk_with_strategy(text: str, strategy_id: str, params: dict) -> list[str]
     return [c.text for c in adapter.chunk(req) if (c.text or "").strip()]
 
 
-def _cosine(a: list[float], b: list[float]) -> float:
-    return float(sum(x * y for x, y in zip(a, b)))
-
-
-def _l2_normalize(vecs: list[list[float]]) -> list[list[float]]:
-    out = []
-    for v in vecs:
-        norm = math.sqrt(sum(x * x for x in v)) or 1.0
-        out.append([x / norm for x in v])
-    return out
-
-
-def _adaptive_select(text: str, embed_fn) -> tuple[str, list[str], dict]:
-    best_name, best_chunks, best_score, details = None, [], -1.0, {}
-    for name, sid, params in FIXED_STRATEGIES:
-        chunks = _chunk_with_strategy(text, sid, params)
-        score = score_chunks(chunks, text, min_tokens=50, max_tokens=1100, embed_fn=embed_fn)
-        details[name] = score.as_percent_dict()
-        m = score.mean or 0.0
-        if m > best_score:
-            best_score, best_name, best_chunks = m, name, chunks
-    return best_name or "fixed_token_512", best_chunks, details
-
-
 def _lexical_rag(chunks: list[str], qa_pairs: list[QAItem], top_k: int = 5) -> dict:
     answered = 0
     completeness_scores, correctness_scores = [], []
@@ -205,15 +183,6 @@ def _lexical_rag(chunks: list[str], qa_pairs: list[QAItem], top_k: int = 5) -> d
     }
 
 
-def _dense_retrieve(embed_fn, question: str, chunks: list[str], top_k: int = 5) -> list[str]:
-    if not chunks:
-        return []
-    q_emb = embed_fn([question])[0]
-    c_embs = embed_fn(chunks)
-    ranked = sorted(((_cosine(q_emb, ce), c) for ce, c in zip(c_embs, chunks)), reverse=True)
-    return [c for _, c in ranked[:top_k]]
-
-
 def _llm_judge(client, qa: QAItem, retrieved: list[str]) -> dict:
     context = "\n\n---\n\n".join(retrieved)[:12000]
     system = (
@@ -244,11 +213,19 @@ def _llm_judge(client, qa: QAItem, retrieved: list[str]) -> dict:
     }
 
 
-def _llm_rag(client, embed_fn, chunks: list[str], qa_pairs: list[QAItem], top_k: int = 5) -> dict:
+def _llm_rag(client, embed_fn, rerank_fn, chunks: list[str], qa_pairs: list[QAItem], top_k: int = 5) -> dict:
     completeness_scores, correctness_scores = [], []
     answered = 0
+    candidate_k = int(FLAGS["retrieve_candidate_k"])
     for qa in qa_pairs:
-        hits = _dense_retrieve(embed_fn, qa.question, chunks, top_k=top_k)
+        hits = retrieve_with_optional_rerank(
+            embed_fn=embed_fn,
+            rerank_fn=rerank_fn,
+            question=qa.question,
+            chunks=chunks,
+            top_k=top_k,
+            candidate_k=candidate_k,
+        )
         judge = _llm_judge(client, qa, hits)
         completeness_scores.append(judge["retrieval_completeness"])
         correctness_scores.append(judge["answer_correctness"])
@@ -279,6 +256,7 @@ def eval_dataset(
     profile: str,
     embed_fn,
     client=None,
+    rerank_fn=None,
     out_dir: Path,
 ) -> dict:
     print(f"\n=== {name}: {len(docs)} docs / {sum(len(d.qa_pairs) for d in docs)} QA ===")
@@ -292,28 +270,44 @@ def eval_dataset(
     method_overall: dict[str, list[dict]] = defaultdict(list)
     per_doc = []
     rag_methods = RAG_METHODS_SMOKE_LIVE if (mode == "openrouter" and profile == "smoke") else RAG_METHODS
+    adaptive_mode = FLAGS["adaptive_mode"] if mode == "openrouter" else "intrinsic"
+    micro_alpha = float(FLAGS["micro_alpha"])
+    # Reuse adaptive selection between intrinsic + RAG for the same QA budget.
+    adaptive_by_doc: dict[str, tuple[str, list[str], dict]] = {}
+
+    def _qa_budget(doc: DocRecord) -> list:
+        qa_pairs = doc.qa_pairs
+        if mode == "openrouter" and profile == "smoke":
+            return qa_pairs[:2]
+        if mode == "openrouter" and profile == "full":
+            max_qa = int(os.environ.get("ACE_LIVE_MAX_QA_PER_DOC", "3"))
+            return qa_pairs[:max_qa]
+        return qa_pairs
 
     for doc in docs:
         # Truncate extreme docs for live cost (keep head+tail signal).
         text = doc.text
         if mode == "openrouter" and len(text) > 80_000:
             text = text[:50_000] + "\n\n...\n\n" + text[-20_000:]
-            print(f"  truncate {doc.doc_id} → {len(text)} chars")
-        print(f"  intrinsic: {doc.doc_id} ({doc.domain})")
+            print(f"  truncate {doc.doc_id} → {len(text)} chars", flush=True)
+        print(f"  intrinsic: {doc.doc_id} ({doc.domain})", flush=True)
+        qa_pairs = _qa_budget(doc)
         for mname, sid, params in methods:
+            print(f"    method={mname}", flush=True)
             if mname == "adaptive_ace":
-                # Adaptive over the active candidate set only.
-                best_name, best_chunks, best_score, detail = None, [], -1.0, {}
-                for cname, csid, cparams in strategies:
-                    cchunks = _chunk_with_strategy(text, csid, cparams)
-                    cscore = score_chunks(cchunks, text, min_tokens=50, max_tokens=1100, embed_fn=embed_fn)
-                    detail[cname] = cscore.as_percent_dict()
-                    m = cscore.mean or 0.0
-                    if m > best_score:
-                        best_score, best_name, best_chunks = m, cname, cchunks
-                chunks = best_chunks
+                selected, chunks, detail = adaptive_select(
+                    text,
+                    strategies=strategies,
+                    chunk_fn=_chunk_with_strategy,
+                    embed_fn=embed_fn,
+                    mode=adaptive_mode,
+                    qa_pairs=qa_pairs,
+                    rerank_fn=rerank_fn if mode == "openrouter" else None,
+                    micro_alpha=micro_alpha,
+                )
+                adaptive_by_doc[doc.doc_id] = (selected, chunks, detail)
                 score = score_chunks(chunks, text, min_tokens=50, max_tokens=1100, embed_fn=embed_fn)
-                meta = {"selected": best_name or "fixed_token_512", "candidates": detail}
+                meta = {"selected": selected, "selection": detail}
             else:
                 chunks = _chunk_with_strategy(text, sid, params)
                 score = score_chunks(chunks, text, min_tokens=50, max_tokens=1100, embed_fn=embed_fn)
@@ -339,25 +333,27 @@ def eval_dataset(
 
     rag_table = []
     for mname in rag_methods:
-        print(f"  rag: {mname}")
+        print(f"  rag: {mname}", flush=True)
         rc_scores, ac_scores, answered_n, total_n = [], [], 0, 0
         for doc in docs:
             text = doc.text
             if mode == "openrouter" and len(text) > 80_000:
                 text = text[:50_000] + "\n\n...\n\n" + text[-20_000:]
-            qa_pairs = doc.qa_pairs
-            if mode == "openrouter" and profile == "smoke":
-                qa_pairs = qa_pairs[:2]
+            qa_pairs = _qa_budget(doc)
             if mname == "adaptive_ace":
-                # Reuse selection among smoke candidates.
-                best_name, best_chunks, best_score = None, [], -1.0
-                for cname, csid, cparams in strategies:
-                    cchunks = _chunk_with_strategy(text, csid, cparams)
-                    cscore = score_chunks(cchunks, text, min_tokens=50, max_tokens=1100, embed_fn=embed_fn)
-                    m = cscore.mean or 0.0
-                    if m > best_score:
-                        best_score, best_name, best_chunks = m, cname, cchunks
-                chunks = best_chunks
+                if doc.doc_id in adaptive_by_doc:
+                    _selected, chunks, _detail = adaptive_by_doc[doc.doc_id]
+                else:
+                    _selected, chunks, _detail = adaptive_select(
+                        text,
+                        strategies=strategies,
+                        chunk_fn=_chunk_with_strategy,
+                        embed_fn=embed_fn,
+                        mode=adaptive_mode,
+                        qa_pairs=qa_pairs,
+                        rerank_fn=rerank_fn if mode == "openrouter" else None,
+                        micro_alpha=micro_alpha,
+                    )
             else:
                 sid, params = next((s, p) for n, s, p in FIXED_STRATEGIES if n == mname)
                 chunks = _chunk_with_strategy(text, sid, params)
@@ -365,7 +361,7 @@ def eval_dataset(
                 continue
             if mode == "openrouter":
                 assert client is not None
-                rag = _llm_rag(client, embed_fn, chunks, qa_pairs)
+                rag = _llm_rag(client, embed_fn, rerank_fn, chunks, qa_pairs)
             else:
                 rag = _lexical_rag(chunks, qa_pairs)
             rc_scores.append(rag["retrieval_completeness"])
@@ -406,7 +402,9 @@ def _write_tables(summary: dict, out_dir: Path) -> None:
     lines = [
         "# ACE Public Benchmark Results",
         "",
-        f"Mode: `{summary['mode']}` · profile: `{summary['profile']}` · chat `{summary.get('chat_model')}` · embed `{summary.get('embed_model')}`",
+        f"Mode: `{summary['mode']}` · profile: `{summary['profile']}` · chat `{summary.get('chat_model')}` · "
+        f"embed `{summary.get('embed_model')}` · rerank `{summary.get('rerank_model')}` · "
+        f"adaptive `{summary.get('adaptive_mode')}`",
         "",
         f"> {summary['comparison_note']}",
         "",
@@ -479,52 +477,68 @@ def main() -> None:
         default="clair,financebench,open_rag_bench",
         help="Comma-separated: clair,financebench,open_rag_bench",
     )
+    ap.add_argument(
+        "--out-name",
+        default=None,
+        help="Optional results subdirectory name under results/public_benchmarks/",
+    )
     args = ap.parse_args()
 
-    out_dir = OUT_ROOT / f"{args.mode}_{args.profile}"
+    out_name = args.out_name or f"{args.mode}_{args.profile}"
+    out_dir = OUT_ROOT / out_name
     out_dir.mkdir(parents=True, exist_ok=True)
 
     client = None
-    chat_model = os.environ.get("ACE_CHAT_MODEL", "openai/gpt-4o")
-    embed_model = os.environ.get("ACE_EMBED_MODEL", "openai/text-embedding-3-small")
+    rerank_fn = None
+    chat_model = FLAGS["chat_model"]
+    embed_model = FLAGS["embed_model"]
+    rerank_model = FLAGS["rerank_model"]
+    use_rerank = FLAGS["use_rerank"]
+    adaptive_mode = FLAGS["adaptive_mode"]
 
     if args.mode == "openrouter":
         from openrouter_client import OpenRouterClient
 
+        default_batch = 16 if ("Qwen" in embed_model or "qwen" in embed_model) else 16
+        batch_size = int(os.environ.get("ACE_EMBED_BATCH", str(default_batch)))
         client = OpenRouterClient(
             chat_model=chat_model,
             embed_model=embed_model,
+            rerank_model=rerank_model,
             cache_dir=out_dir / "cache",
+            batch_size=batch_size,
         )
 
         def embed_fn(texts):
-            return _l2_normalize(client.embed(list(texts)))
+            return l2_normalize(client.embed(list(texts)))
+
+        if use_rerank:
+            def rerank_fn(query: str, docs: list[str], top_n: int) -> list[str]:
+                return client.rerank_texts(query, docs, top_n=top_n)
 
     else:
 
-        def embed_fn(texts):  # hashed path via score_chunks default when None — wrap for RAG dense fallback
-            # For offline intrinsic we pass None-equivalent by using hashed inside score_chunks;
-            # provide a deterministic hashed embed for dense retrieval consistency.
+        def embed_fn(texts):
             from intrinsic_metrics import _hash_embed
 
             return _hash_embed(list(texts))
-
-        # Use default hashed inside score_chunks by passing None through a lambda that score_chunks accepts.
-        def embed_fn_intrinsic(texts):
-            from intrinsic_metrics import _hash_embed
-
-            return _hash_embed(list(texts))
-
-        embed_fn = embed_fn_intrinsic
 
     wanted = {x.strip() for x in args.datasets.split(",") if x.strip()}
     corpus: dict[str, list[DocRecord]] = {}
     if "clair" in wanted:
         corpus["clair"] = load_clair(profile=args.profile)
     if "financebench" in wanted:
-        corpus["financebench"] = load_financebench(profile=args.profile)
+        fb_max = os.environ.get("ACE_FB_MAX_QUESTIONS")
+        corpus["financebench"] = load_financebench(
+            profile=args.profile,
+            max_questions=int(fb_max) if fb_max else None,
+        )
     if "open_rag_bench" in wanted:
-        corpus["open_rag_bench"] = load_open_rag_bench(profile=args.profile)
+        orb_max = os.environ.get("ACE_ORB_MAX_QUERIES")
+        corpus["open_rag_bench"] = load_open_rag_bench(
+            profile=args.profile,
+            max_queries=int(orb_max) if orb_max else None,
+        )
 
     dataset_results = []
     for name, docs in corpus.items():
@@ -536,6 +550,7 @@ def main() -> None:
                 profile=args.profile,
                 embed_fn=embed_fn,
                 client=client,
+                rerank_fn=rerank_fn,
                 out_dir=out_dir,
             )
         )
@@ -545,10 +560,14 @@ def main() -> None:
         "profile": args.profile,
         "chat_model": chat_model if args.mode == "openrouter" else None,
         "embed_model": embed_model if args.mode == "openrouter" else "hashed_ngram",
+        "rerank_model": rerank_model if (args.mode == "openrouter" and use_rerank) else None,
+        "adaptive_mode": adaptive_mode if args.mode == "openrouter" else "intrinsic",
         "comparison_note": (
             "ACE public-benchmark suite on CLAIR + FinanceBench + Open RAG Bench. "
             "CLAIR paper rows are published Adaptive Chunking results. "
-            "Compare ranks within each dataset/protocol; absolute RAG scores are not cross-dataset comparable."
+            "Compare ranks within each dataset/protocol; absolute RAG scores are not cross-dataset comparable. "
+            f"Live config: embed=`{embed_model}`, rerank=`{rerank_model if use_rerank else 'off'}`, "
+            f"adaptive=`{adaptive_mode}`."
         ),
         "datasets": [
             {k: v for k, v in ds.items() if k != "per_document"} for ds in dataset_results

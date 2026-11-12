@@ -1,0 +1,273 @@
+{
+  "protocol": {
+    "provider": "openrouter",
+    "base_url": "https://openrouter.ai/api/v1",
+    "chat_model": "openai/gpt-4o",
+    "embed_model": "Qwen/Qwen3-Embedding-8B",
+    "rerank_model": "cohere/rerank-v3.5",
+    "adaptive_mode": "rag_microloop",
+    "intrinsic": "RC/ICC/DCC/BI/SC with neural embeddings for ICC/DCC",
+    "rag": "dense retrieval top-20 + cohere/rerank-v3.5 rerank top-5 + openai/gpt-4o JSON LLM judge"
+  },
+  "paper_reference": {
+    "title": "Adaptive Chunking: Optimizing Chunking-Method Selection for RAG",
+    "arxiv": "https://arxiv.org/abs/2603.25333",
+    "code": "https://github.com/ekimetrics/adaptive-chunking",
+    "venue": "LREC 2026"
+  },
+  "comparison_note": "OpenRouter live ACE rows use `Qwen/Qwen3-Embedding-8B` for ICC/DCC + dense retrieval, `cohere/rerank-v3.5` rerank, adaptive_mode=`rag_microloop`, and `openai/gpt-4o` as LLM judge. Paper CLAIR rows remain published baselines (33 docs, different embedder/judge). Compare ranks, not absolute magnitudes.",
+  "corpus": {
+    "n_documents": 6,
+    "domains": [
+      "legal",
+      "sustainability",
+      "technical"
+    ],
+    "approx_words": 8766
+  },
+  "ace_openrouter_intrinsic_table": [
+    {
+      "method": "adaptive_ace",
+      "RC": 100.0,
+      "ICC": 53.23,
+      "DCC": 96.48,
+      "BI": 100.0,
+      "SC": 100.0,
+      "Mean": 89.94
+    },
+    {
+      "method": "recursive_text",
+      "RC": 100.0,
+      "ICC": 53.43,
+      "DCC": 96.94,
+      "BI": 98.7,
+      "SC": 100.0,
+      "Mean": 89.81
+    },
+    {
+      "method": "recursive_text_1100",
+      "RC": 100.0,
+      "ICC": 53.01,
+      "DCC": 95.93,
+      "BI": 100.0,
+      "SC": 100.0,
+      "Mean": 89.79
+    },
+    {
+      "method": "fixed_token_512",
+      "RC": 100.0,
+      "ICC": 53.64,
+      "DCC": 95.06,
+      "BI": 97.66,
+      "SC": 100.0,
+      "Mean": 89.27
+    },
+    {
+      "method": "fixed_token_256",
+      "RC": 99.25,
+      "ICC": 55.31,
+      "DCC": 94.98,
+      "BI": 96.69,
+      "SC": 99.02,
+      "Mean": 89.05
+    },
+    {
+      "method": "heading_section",
+      "RC": 100.0,
+      "ICC": 54.57,
+      "DCC": 90.02,
+      "BI": 97.66,
+      "SC": 83.33,
+      "Mean": 85.12
+    },
+    {
+      "method": "no_split",
+      "RC": 100.0,
+      "ICC": 52.4,
+      "DCC": 100.0,
+      "BI": 100.0,
+      "SC": 16.67,
+      "Mean": 73.81
+    },
+    {
+      "method": "sentence_window",
+      "RC": 58.33,
+      "ICC": 61.43,
+      "DCC": 83.96,
+      "BI": 21.35,
+      "SC": 60.69,
+      "Mean": 57.15
+    }
+  ],
+  "paper_intrinsic_table": [
+    {
+      "method": "Adaptive Chunking (paper)",
+      "RC": 99.0,
+      "ICC": 68.2,
+      "DCC": 88.8,
+      "BI": 99.4,
+      "SC": 99.9,
+      "Mean": 91.07
+    },
+    {
+      "method": "LLM regex (GPT) (paper)",
+      "RC": 98.0,
+      "ICC": 70.9,
+      "DCC": 82.4,
+      "BI": 98.1,
+      "SC": 99.6,
+      "Mean": 89.8
+    },
+    {
+      "method": "LangChain recursive (paper)",
+      "RC": 96.1,
+      "ICC": 65.6,
+      "DCC": 88.8,
+      "BI": 95.0,
+      "SC": 97.7,
+      "Mean": 88.62
+    },
+    {
+      "method": "Semantic (paper)",
+      "RC": 97.5,
+      "ICC": 69.3,
+      "DCC": 76.3,
+      "BI": 91.3,
+      "SC": 48.1,
+      "Mean": 76.49
+    },
+    {
+      "method": "Sentence (paper)",
+      "RC": 86.3,
+      "ICC": 78.4,
+      "DCC": 72.5,
+      "BI": 61.9,
+      "SC": 67.2,
+      "Mean": 73.26
+    }
+  ],
+  "ace_openrouter_rag_table": [
+    {
+      "method": "adaptive_ace",
+      "retrieval_completeness": 100.0,
+      "answer_correctness": 100.0,
+      "answered_queries": "43/43"
+    },
+    {
+      "method": "recursive_text_1100",
+      "retrieval_completeness": 100.0,
+      "answer_correctness": 100.0,
+      "answered_queries": "43/43"
+    },
+    {
+      "method": "recursive_text",
+      "retrieval_completeness": 100.0,
+      "answer_correctness": 100.0,
+      "answered_queries": "43/43"
+    },
+    {
+      "method": "fixed_token_512",
+      "retrieval_completeness": 100.0,
+      "answer_correctness": 100.0,
+      "answered_queries": "43/43"
+    },
+    {
+      "method": "fixed_token_256",
+      "retrieval_completeness": 100.0,
+      "answer_correctness": 100.0,
+      "answered_queries": "43/43"
+    },
+    {
+      "method": "heading_section",
+      "retrieval_completeness": 100.0,
+      "answer_correctness": 100.0,
+      "answered_queries": "43/43"
+    },
+    {
+      "method": "no_split",
+      "retrieval_completeness": 100.0,
+      "answer_correctness": 100.0,
+      "answered_queries": "43/43"
+    },
+    {
+      "method": "sentence_window",
+      "retrieval_completeness": 70.42,
+      "answer_correctness": 73.12,
+      "answered_queries": "25/43"
+    }
+  ],
+  "paper_rag_table": [
+    {
+      "method": "Adaptive Chunking (paper)",
+      "retrieval_completeness": 67.7,
+      "answer_correctness": 78.0,
+      "answered_queries": "65/99"
+    },
+    {
+      "method": "LangChain recursive (paper)",
+      "retrieval_completeness": 58.1,
+      "answer_correctness": 70.1,
+      "answered_queries": "49/99"
+    },
+    {
+      "method": "Page splitting (paper)",
+      "retrieval_completeness": 59.1,
+      "answer_correctness": 73.3,
+      "answered_queries": "49/99"
+    }
+  ],
+  "domain_breakdown": {
+    "fixed_token_512": {
+      "technical": 89.97,
+      "legal": 88.71,
+      "sustainability": 88.31
+    },
+    "fixed_token_256": {
+      "technical": 90.16,
+      "legal": 88.43,
+      "sustainability": 86.95
+    },
+    "recursive_text": {
+      "technical": 90.54,
+      "legal": 89.23,
+      "sustainability": 88.81
+    },
+    "recursive_text_1100": {
+      "technical": 90.58,
+      "legal": 89.0,
+      "sustainability": 88.98
+    },
+    "sentence_window": {
+      "technical": 61.2,
+      "legal": 52.57,
+      "sustainability": 54.17
+    },
+    "heading_section": {
+      "technical": 81.66,
+      "legal": 88.71,
+      "sustainability": 88.31
+    },
+    "no_split": {
+      "technical": 77.84,
+      "legal": 69.97,
+      "sustainability": 69.44
+    },
+    "adaptive_ace": {
+      "technical": 90.65,
+      "legal": 89.35,
+      "sustainability": 88.98
+    }
+  },
+  "usage": {
+    "embed_calls": 1027,
+    "embed_texts": 1572,
+    "embed_cache_hits": 51803,
+    "rerank_calls": 376,
+    "rerank_docs": 3408,
+    "chat_calls": 344,
+    "prompt_tokens": 657881,
+    "completion_tokens": 22039,
+    "total_tokens": 679920,
+    "estimated_cost_usd": 1.9433211999999955
+  }
+}
