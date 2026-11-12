@@ -1,20 +1,18 @@
 #!/usr/bin/env python3
 """ACE Adaptive Chunking live evaluation via OpenRouter.
 
-Uses:
-  - Chat / LLM judge: openai/gpt-4o (override with ACE_CHAT_MODEL)
-  - Embeddings: openai/text-embedding-3-small (override with ACE_EMBED_MODEL)
+Env overrides:
+  ACE_CHAT_MODEL, ACE_EMBED_MODEL, ACE_RERANK_MODEL
+  ACE_USE_RERANK=1|0
+  ACE_ADAPTIVE_MODE=intrinsic|rag_microloop
+  ACE_RESULTS_DIR=relative/or/absolute output dir
 
 Requires OPENROUTER_API_KEY in the environment.
-
-Outputs under results/openrouter/:
-  summary.json, metrics.json, tables.md, usage.json
 """
 from __future__ import annotations
 
 import asyncio
 import json
-import math
 import os
 import re
 import statistics
@@ -30,21 +28,26 @@ sys.path.insert(0, str(ROOT / "packages" / "python"))
 sys.path.insert(0, str(ROOT / "apps" / "api"))
 
 from intrinsic_metrics import score_chunks  # noqa: E402
-from openrouter_client import (  # noqa: E402
-    DEFAULT_CHAT_MODEL,
-    DEFAULT_EMBED_MODEL,
-    OpenRouterClient,
-)
+from openrouter_client import OpenRouterClient  # noqa: E402
+from retrieval import adaptive_select, env_flags, l2_normalize, retrieve_with_optional_rerank  # noqa: E402
 from canonical_schemas.document import ElementModel, LogicalUnitModel, Locator  # noqa: E402
 from chunk_adapters import get_registry  # noqa: E402
 from chunk_adapters.base import ChunkRequest  # noqa: E402
 from shared.ids import new_id  # noqa: E402
 
-OUT = HERE / "results" / "openrouter"
+FLAGS = env_flags()
+_results_env = os.environ.get("ACE_RESULTS_DIR", "results/openrouter")
+OUT = Path(_results_env) if Path(_results_env).is_absolute() else (HERE / _results_env)
 CORPUS = HERE / "corpus"
 
-CHAT_MODEL = os.environ.get("ACE_CHAT_MODEL", DEFAULT_CHAT_MODEL)
-EMBED_MODEL = os.environ.get("ACE_EMBED_MODEL", DEFAULT_EMBED_MODEL)
+CHAT_MODEL = FLAGS["chat_model"]
+EMBED_MODEL = FLAGS["embed_model"]
+RERANK_MODEL = FLAGS["rerank_model"]
+USE_RERANK = FLAGS["use_rerank"]
+ADAPTIVE_MODE = FLAGS["adaptive_mode"]
+CANDIDATE_K = FLAGS["retrieve_candidate_k"]
+TOP_K = FLAGS["retrieve_top_k"]
+MICRO_ALPHA = FLAGS["micro_alpha"]
 
 FIXED_STRATEGIES = [
     ("fixed_token_512", "fixed_token", {"chunk_size": 512, "chunk_overlap": 64}),
@@ -171,42 +174,6 @@ def _qa_pairs_for(doc: dict) -> list[dict]:
     return pairs
 
 
-def _cosine(a: list[float], b: list[float]) -> float:
-    return float(sum(x * y for x, y in zip(a, b)))
-
-
-def _l2_normalize(vecs: list[list[float]]) -> list[list[float]]:
-    out = []
-    for v in vecs:
-        norm = math.sqrt(sum(x * x for x in v)) or 1.0
-        out.append([x / norm for x in v])
-    return out
-
-
-def _adaptive_select(text: str, embed_fn) -> tuple[str, list[str], dict]:
-    best_name, best_chunks, best_score, details = None, [], -1.0, {}
-    for name, sid, params in FIXED_STRATEGIES:
-        chunks = _chunk_with_strategy(text, sid, params)
-        score = score_chunks(chunks, text, min_tokens=50, max_tokens=1100, embed_fn=embed_fn)
-        details[name] = score.as_percent_dict()
-        m = score.mean or 0.0
-        if m > best_score:
-            best_score, best_name, best_chunks = m, name, chunks
-    return best_name or "fixed_token_512", best_chunks, details
-
-
-def _dense_retrieve(client: OpenRouterClient, question: str, chunks: list[str], top_k: int = 5) -> list[str]:
-    if not chunks:
-        return []
-    q_emb = _l2_normalize(client.embed([question]))[0]
-    c_embs = _l2_normalize(client.embed(chunks))
-    ranked = sorted(
-        ((_cosine(q_emb, ce), c) for ce, c in zip(c_embs, chunks)),
-        reverse=True,
-    )
-    return [c for _, c in ranked[:top_k]]
-
-
 def _llm_judge(client: OpenRouterClient, qa: dict, retrieved: list[str]) -> dict:
     context = "\n\n---\n\n".join(retrieved)[:12000]
     system = (
@@ -236,12 +203,26 @@ def _llm_judge(client: OpenRouterClient, qa: dict, retrieved: list[str]) -> dict
     }
 
 
-def _rag_llm(client: OpenRouterClient, chunks: list[str], qa_pairs: list[dict], top_k: int = 5) -> dict:
+def _rag_llm(
+    client: OpenRouterClient,
+    embed_fn,
+    rerank_fn,
+    chunks: list[str],
+    qa_pairs: list[dict],
+    top_k: int = TOP_K,
+) -> dict:
     completeness_scores, correctness_scores = [], []
     answered = 0
     judgments = []
     for qa in qa_pairs:
-        hits = _dense_retrieve(client, qa["question"], chunks, top_k=top_k)
+        hits = retrieve_with_optional_rerank(
+            embed_fn=embed_fn,
+            rerank_fn=rerank_fn,
+            question=qa["question"],
+            chunks=chunks,
+            top_k=top_k,
+            candidate_k=CANDIDATE_K,
+        )
         judge = _llm_judge(client, qa, hits)
         judgments.append({"qa_id": qa["qa_id"], **judge})
         completeness_scores.append(judge["retrieval_completeness"])
@@ -263,11 +244,18 @@ async def main() -> None:
     client = OpenRouterClient(
         chat_model=CHAT_MODEL,
         embed_model=EMBED_MODEL,
+        rerank_model=RERANK_MODEL,
         cache_dir=OUT / "cache",
+        batch_size=8 if "Qwen" in EMBED_MODEL or "qwen" in EMBED_MODEL else 16,
     )
 
     def embed_fn(texts):
-        return _l2_normalize(client.embed(list(texts)))
+        return l2_normalize(client.embed(list(texts)))
+
+    def rerank_fn(query: str, docs: list[str], top_n: int) -> list[str]:
+        return client.rerank_texts(query, docs, top_n=top_n)
+
+    active_rerank = rerank_fn if USE_RERANK else None
 
     corpus = _domain_corpus()
     method_domain_scores: dict[str, dict[str, list[float]]] = defaultdict(lambda: defaultdict(list))
@@ -275,16 +263,29 @@ async def main() -> None:
     per_doc_rows = []
     methods = [(n, s, p) for n, s, p in FIXED_STRATEGIES] + [("adaptive_ace", "adaptive", {})]
 
-    print(f"Live OpenRouter eval · chat={CHAT_MODEL} · embed={EMBED_MODEL} · docs={len(corpus)}")
+    print(
+        f"Live OpenRouter eval · chat={CHAT_MODEL} · embed={EMBED_MODEL} · "
+        f"rerank={RERANK_MODEL if USE_RERANK else 'off'} · adaptive={ADAPTIVE_MODE} · docs={len(corpus)}"
+    )
 
     for doc in corpus:
         text, domain = doc["text"], doc["domain"]
+        qa_pairs = _qa_pairs_for(doc)
         print(f"  intrinsic: {doc['doc_id']} ({domain})")
         for name, sid, params in methods:
             if name == "adaptive_ace":
-                selected, chunks, detail = _adaptive_select(text, embed_fn)
+                selected, chunks, detail = adaptive_select(
+                    text,
+                    strategies=FIXED_STRATEGIES,
+                    chunk_fn=_chunk_with_strategy,
+                    embed_fn=embed_fn,
+                    mode=ADAPTIVE_MODE,
+                    qa_pairs=qa_pairs,
+                    rerank_fn=active_rerank,
+                    micro_alpha=MICRO_ALPHA,
+                )
                 score = score_chunks(chunks, text, min_tokens=50, max_tokens=1100, embed_fn=embed_fn)
-                meta = {"selected": selected, "candidates": detail}
+                meta = {"selected": selected, "selection": detail}
             else:
                 chunks = _chunk_with_strategy(text, sid, params)
                 score = score_chunks(chunks, text, min_tokens=50, max_tokens=1100, embed_fn=embed_fn)
@@ -319,12 +320,22 @@ async def main() -> None:
         method_detail = []
         for doc in corpus:
             text = doc["text"]
+            qa_pairs = _qa_pairs_for(doc)
             if name == "adaptive_ace":
-                _, chunks, _ = _adaptive_select(text, embed_fn)
+                _, chunks, _ = adaptive_select(
+                    text,
+                    strategies=FIXED_STRATEGIES,
+                    chunk_fn=_chunk_with_strategy,
+                    embed_fn=embed_fn,
+                    mode=ADAPTIVE_MODE,
+                    qa_pairs=qa_pairs,
+                    rerank_fn=active_rerank,
+                    micro_alpha=MICRO_ALPHA,
+                )
             else:
                 sid, params = next((s, p) for n, s, p in FIXED_STRATEGIES if n == name)
                 chunks = _chunk_with_strategy(text, sid, params)
-            rag = _rag_llm(client, chunks, _qa_pairs_for(doc))
+            rag = _rag_llm(client, embed_fn, active_rerank, chunks, qa_pairs)
             method_detail.append({"doc_id": doc["doc_id"], **{k: v for k, v in rag.items() if k != "judgments"}, "judgments": rag["judgments"]})
             rc_scores.append(rag["retrieval_completeness"])
             ac_scores.append(rag["answer_correctness"])
@@ -348,8 +359,14 @@ async def main() -> None:
             "base_url": "https://openrouter.ai/api/v1",
             "chat_model": CHAT_MODEL,
             "embed_model": EMBED_MODEL,
+            "rerank_model": RERANK_MODEL if USE_RERANK else None,
+            "adaptive_mode": ADAPTIVE_MODE,
             "intrinsic": "RC/ICC/DCC/BI/SC with neural embeddings for ICC/DCC",
-            "rag": "dense retrieval (cosine) + gpt-4o JSON LLM judge",
+            "rag": (
+                f"dense retrieval top-{CANDIDATE_K}"
+                + (f" + {RERANK_MODEL} rerank top-{TOP_K}" if USE_RERANK else f" top-{TOP_K}")
+                + f" + {CHAT_MODEL} JSON LLM judge"
+            ),
         },
         "paper_reference": {
             "title": "Adaptive Chunking: Optimizing Chunking-Method Selection for RAG",
@@ -358,9 +375,11 @@ async def main() -> None:
             "venue": "LREC 2026",
         },
         "comparison_note": (
-            "OpenRouter live ACE rows use openai/text-embedding-3-small for ICC/DCC + dense retrieval "
-            "and openai/gpt-4o as LLM judge. Paper CLAIR rows remain published baselines "
-            "(33 docs, different embedder/judge). Compare ranks, not absolute magnitudes."
+            f"OpenRouter live ACE rows use `{EMBED_MODEL}` for ICC/DCC + dense retrieval"
+            + (f", `{RERANK_MODEL}` rerank" if USE_RERANK else "")
+            + f", adaptive_mode=`{ADAPTIVE_MODE}`, and `{CHAT_MODEL}` as LLM judge. "
+            "Paper CLAIR rows remain published baselines (33 docs, different embedder/judge). "
+            "Compare ranks, not absolute magnitudes."
         ),
         "corpus": {
             "n_documents": len(corpus),
@@ -385,7 +404,8 @@ async def main() -> None:
     lines = [
         "# ACE OpenRouter Live Evaluation Results",
         "",
-        f"Provider: **OpenRouter** · chat `{CHAT_MODEL}` · embed `{EMBED_MODEL}`",
+        f"Provider: **OpenRouter** · chat `{CHAT_MODEL}` · embed `{EMBED_MODEL}` · "
+        f"rerank `{RERANK_MODEL if USE_RERANK else 'off'}` · adaptive `{ADAPTIVE_MODE}`",
         "",
         f"Corpus: **{len(corpus)} documents** · domains `{summary['corpus']['domains']}` · ≈{summary['corpus']['approx_words']} words.",
         "",
@@ -393,8 +413,9 @@ async def main() -> None:
         "",
         f"> {summary['comparison_note']}",
         "",
-        f"API usage (approx): embed_calls={client.stats['embed_calls']}, chat_calls={client.stats['chat_calls']}, "
-        f"tokens={client.stats['total_tokens']}, cost_usd≈{client.stats['estimated_cost_usd']:.4f}",
+        f"API usage (approx): embed_calls={client.stats['embed_calls']}, rerank_calls={client.stats.get('rerank_calls', 0)}, "
+        f"chat_calls={client.stats['chat_calls']}, tokens={client.stats['total_tokens']}, "
+        f"cost_usd≈{client.stats['estimated_cost_usd']:.4f}",
         "",
         "## A. ACE OpenRouter intrinsic metrics (%)",
         "",
@@ -416,7 +437,7 @@ async def main() -> None:
         lines.append(f"| {mark}{r['method']}{mark} | {r['RC']} | {r['ICC']} | {r['DCC']} | {r['BI']} | {r['SC']} | **{r['Mean']}** |")
     lines += [
         "",
-        "## C. ACE OpenRouter RAG (dense retrieval + gpt-4o judge)",
+        f"## C. ACE OpenRouter RAG ({summary['protocol']['rag']})",
         "",
         "| Method | Retrieval Completeness | Answer Correctness | Answered |",
         "|---|---:|---:|---:|",

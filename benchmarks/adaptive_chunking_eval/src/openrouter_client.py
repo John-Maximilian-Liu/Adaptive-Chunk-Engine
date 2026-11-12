@@ -13,6 +13,7 @@ import httpx
 DEFAULT_BASE_URL = "https://openrouter.ai/api/v1"
 DEFAULT_CHAT_MODEL = "openai/gpt-4o"
 DEFAULT_EMBED_MODEL = "openai/text-embedding-3-small"
+DEFAULT_RERANK_MODEL = "cohere/rerank-v3.5"
 
 
 class OpenRouterClient:
@@ -23,6 +24,7 @@ class OpenRouterClient:
         base_url: str = DEFAULT_BASE_URL,
         chat_model: str = DEFAULT_CHAT_MODEL,
         embed_model: str = DEFAULT_EMBED_MODEL,
+        rerank_model: str = DEFAULT_RERANK_MODEL,
         cache_dir: Optional[Path] = None,
         timeout: float = 120.0,
         batch_size: int = 16,
@@ -33,6 +35,7 @@ class OpenRouterClient:
         self.base_url = base_url.rstrip("/")
         self.chat_model = chat_model
         self.embed_model = embed_model
+        self.rerank_model = rerank_model
         self.timeout = timeout
         self.batch_size = max(1, batch_size)
         self.cache_dir = Path(cache_dir) if cache_dir else Path(__file__).resolve().parents[1] / "results" / "openrouter" / "cache"
@@ -41,6 +44,8 @@ class OpenRouterClient:
             "embed_calls": 0,
             "embed_texts": 0,
             "embed_cache_hits": 0,
+            "rerank_calls": 0,
+            "rerank_docs": 0,
             "chat_calls": 0,
             "prompt_tokens": 0,
             "completion_tokens": 0,
@@ -151,6 +156,61 @@ class OpenRouterClient:
             time.sleep(0.05)
 
         return [v if v is not None else [] for v in out]
+
+    def rerank(self, query: str, documents: Sequence[str], *, top_n: Optional[int] = None) -> list[dict[str, Any]]:
+        """Call OpenRouter /rerank. Returns results sorted by relevance_score desc."""
+        docs = [d if d else " " for d in documents]
+        if not docs:
+            return []
+        payload: dict[str, Any] = {
+            "model": self.rerank_model,
+            "query": query or " ",
+            "documents": docs,
+        }
+        if top_n is not None:
+            payload["top_n"] = max(1, min(int(top_n), len(docs)))
+        self.stats["rerank_calls"] += 1
+        self.stats["rerank_docs"] += len(docs)
+        with httpx.Client(timeout=self.timeout) as client:
+            resp = client.post(f"{self.base_url}/rerank", headers=self._headers(), json=payload)
+            if resp.status_code >= 400:
+                raise httpx.HTTPStatusError(
+                    f"{resp.status_code} rerank error: {resp.text[:500]}",
+                    request=resp.request,
+                    response=resp,
+                )
+            data = resp.json()
+        usage = data.get("usage") or {}
+        self._record_usage(usage)
+        results = list(data.get("results") or [])
+        results.sort(key=lambda r: float(r.get("relevance_score") or 0.0), reverse=True)
+        return results
+
+    def rerank_texts(self, query: str, documents: Sequence[str], *, top_n: int = 5) -> list[str]:
+        """Return top_n document strings after reranking (stable fallback to input order)."""
+        docs = list(documents)
+        if not docs:
+            return []
+        try:
+            results = self.rerank(query, docs, top_n=top_n)
+        except Exception:
+            return docs[:top_n]
+        out: list[str] = []
+        for row in results:
+            idx = row.get("index")
+            if isinstance(idx, int) and 0 <= idx < len(docs):
+                out.append(docs[idx])
+            else:
+                doc = row.get("document")
+                if isinstance(doc, dict) and isinstance(doc.get("text"), str):
+                    out.append(doc["text"])
+                elif isinstance(doc, str):
+                    out.append(doc)
+            if len(out) >= top_n:
+                break
+        if not out:
+            return docs[:top_n]
+        return out
 
     def chat_json(self, *, system: str, user: str, temperature: float = 0.0) -> dict[str, Any]:
         payload = {

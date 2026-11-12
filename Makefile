@@ -1,4 +1,4 @@
-.PHONY: dev start stop reset logs migrate test lint e2e seed eval eval-openrouter download-public-benchmarks eval-public-smoke eval-public-openrouter-smoke eval-public-openrouter
+.PHONY: dev start stop reset logs migrate test lint e2e seed eval eval-openrouter download-public-benchmarks eval-public-smoke eval-public-openrouter-smoke eval-public-openrouter eval-stage-a eval-stage-b eval-stage-c eval-stage-d
 
 dev:
 	docker compose -f compose.yaml -f compose.dev.yaml up -d --build
@@ -36,7 +36,7 @@ seed:
 eval:
 	PYTHONPATH=apps/api:packages/python python3 benchmarks/adaptive_chunking_eval/run_eval.py
 
-# Live OpenRouter eval (requires OPENROUTER_API_KEY). Defaults: gpt-4o + text-embedding-3-small.
+# Live OpenRouter eval (requires OPENROUTER_API_KEY).
 eval-openrouter:
 	PYTHONPATH=apps/api:packages/python python3 benchmarks/adaptive_chunking_eval/run_eval_openrouter.py
 
@@ -51,3 +51,41 @@ eval-public-openrouter-smoke:
 
 eval-public-openrouter:
 	PYTHONPATH=apps/api:packages/python python3 benchmarks/adaptive_chunking_eval/run_public_benchmarks.py --mode openrouter --profile $${ACE_BENCH_PROFILE:-full}
+
+# Staged upgrade experiments (A→B→C→D)
+# A: add Cohere rerank-v3.5 (keep text-embedding-3-small)
+eval-stage-a:
+	ACE_EMBED_MODEL=openai/text-embedding-3-small \
+	ACE_RERANK_MODEL=cohere/rerank-v3.5 \
+	ACE_USE_RERANK=1 \
+	ACE_ADAPTIVE_MODE=intrinsic \
+	ACE_RESULTS_DIR=results/openrouter_stage_a_rerank \
+	PYTHONPATH=apps/api:packages/python python3 benchmarks/adaptive_chunking_eval/run_eval_openrouter.py
+
+# B: switch embedding to Qwen3-Embedding-8B (+ rerank)
+eval-stage-b:
+	ACE_EMBED_MODEL=Qwen/Qwen3-Embedding-8B \
+	ACE_RERANK_MODEL=cohere/rerank-v3.5 \
+	ACE_USE_RERANK=1 \
+	ACE_ADAPTIVE_MODE=intrinsic \
+	ACE_RESULTS_DIR=results/openrouter_stage_b_qwen8b \
+	PYTHONPATH=apps/api:packages/python python3 benchmarks/adaptive_chunking_eval/run_eval_openrouter.py
+
+# C: RAG micro-loop selection (+ Qwen8B + rerank)
+eval-stage-c:
+	ACE_EMBED_MODEL=Qwen/Qwen3-Embedding-8B \
+	ACE_RERANK_MODEL=cohere/rerank-v3.5 \
+	ACE_USE_RERANK=1 \
+	ACE_ADAPTIVE_MODE=rag_microloop \
+	ACE_RESULTS_DIR=results/openrouter_stage_c_microloop \
+	PYTHONPATH=apps/api:packages/python python3 benchmarks/adaptive_chunking_eval/run_eval_openrouter.py
+
+# D: full public benchmarks with stage-C stack
+eval-stage-d:
+	ACE_EMBED_MODEL=Qwen/Qwen3-Embedding-8B \
+	ACE_RERANK_MODEL=cohere/rerank-v3.5 \
+	ACE_USE_RERANK=1 \
+	ACE_ADAPTIVE_MODE=rag_microloop \
+	ACE_BENCH_PROFILE=full \
+	PYTHONPATH=apps/api:packages/python python3 benchmarks/adaptive_chunking_eval/run_public_benchmarks.py \
+	  --mode openrouter --profile full --out-name openrouter_full_stage_d
