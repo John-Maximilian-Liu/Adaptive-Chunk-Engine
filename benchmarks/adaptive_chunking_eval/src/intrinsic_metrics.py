@@ -13,6 +13,7 @@ Jina embedder via the optional ``embed_fn`` hook for paper-grade semantic scores
 """
 from __future__ import annotations
 
+import hashlib
 import math
 import re
 from dataclasses import dataclass
@@ -295,6 +296,25 @@ class IntrinsicScore:
         }
 
 
+_SCORE_MEMO: dict[str, IntrinsicScore] = {}
+
+
+def _score_memo_key(
+    chunks: list[str],
+    full_text: str,
+    *,
+    min_tokens: int,
+    max_tokens: int,
+) -> str:
+    h = hashlib.sha1()
+    h.update(f"{len(full_text)}|{min_tokens}|{max_tokens}|{len(chunks)}".encode())
+    for chunk in chunks:
+        h.update(f"|{len(chunk)}|".encode())
+        h.update(chunk[:48].encode("utf-8", errors="ignore"))
+        h.update(chunk[-24:].encode("utf-8", errors="ignore"))
+    return h.hexdigest()
+
+
 def score_chunks(
     chunks: list[str],
     full_text: str,
@@ -304,10 +324,19 @@ def score_chunks(
     gold_split_points: Optional[list[int]] = None,
     embed_fn: Optional[EmbedFn] = None,
 ) -> IntrinsicScore:
-    return IntrinsicScore(
+    # Process-local memo: adaptive_select re-scores the same strategy outputs.
+    if gold_split_points is None:
+        key = _score_memo_key(chunks, full_text, min_tokens=min_tokens, max_tokens=max_tokens)
+        cached = _SCORE_MEMO.get(key)
+        if cached is not None:
+            return cached
+    score = IntrinsicScore(
         sc=compute_size_compliance(chunks, min_tokens=min_tokens, max_tokens=max_tokens),
         icc=compute_intrachunk_cohesion(chunks, full_text, embed_fn=embed_fn),
         dcc=compute_contextual_coherence(chunks, full_text, embed_fn=embed_fn),
         bi=compute_block_integrity(chunks, full_text, gold_split_points=gold_split_points),
         rc=compute_references_completeness(chunks, full_text),
     )
+    if gold_split_points is None:
+        _SCORE_MEMO[key] = score
+    return score

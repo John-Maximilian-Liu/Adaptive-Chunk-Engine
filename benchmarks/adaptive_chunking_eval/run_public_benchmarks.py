@@ -272,14 +272,26 @@ def eval_dataset(
     rag_methods = RAG_METHODS_SMOKE_LIVE if (mode == "openrouter" and profile == "smoke") else RAG_METHODS
     adaptive_mode = FLAGS["adaptive_mode"] if mode == "openrouter" else "intrinsic"
     micro_alpha = float(FLAGS["micro_alpha"])
+    # Reuse adaptive selection between intrinsic + RAG for the same QA budget.
+    adaptive_by_doc: dict[str, tuple[str, list[str], dict]] = {}
+
+    def _qa_budget(doc: DocRecord) -> list:
+        qa_pairs = doc.qa_pairs
+        if mode == "openrouter" and profile == "smoke":
+            return qa_pairs[:2]
+        if mode == "openrouter" and profile == "full":
+            max_qa = int(os.environ.get("ACE_LIVE_MAX_QA_PER_DOC", "3"))
+            return qa_pairs[:max_qa]
+        return qa_pairs
 
     for doc in docs:
         # Truncate extreme docs for live cost (keep head+tail signal).
         text = doc.text
         if mode == "openrouter" and len(text) > 80_000:
             text = text[:50_000] + "\n\n...\n\n" + text[-20_000:]
-            print(f"  truncate {doc.doc_id} → {len(text)} chars")
+            print(f"  truncate {doc.doc_id} → {len(text)} chars", flush=True)
         print(f"  intrinsic: {doc.doc_id} ({doc.domain})", flush=True)
+        qa_pairs = _qa_budget(doc)
         for mname, sid, params in methods:
             print(f"    method={mname}", flush=True)
             if mname == "adaptive_ace":
@@ -289,10 +301,11 @@ def eval_dataset(
                     chunk_fn=_chunk_with_strategy,
                     embed_fn=embed_fn,
                     mode=adaptive_mode,
-                    qa_pairs=doc.qa_pairs,
+                    qa_pairs=qa_pairs,
                     rerank_fn=rerank_fn if mode == "openrouter" else None,
                     micro_alpha=micro_alpha,
                 )
+                adaptive_by_doc[doc.doc_id] = (selected, chunks, detail)
                 score = score_chunks(chunks, text, min_tokens=50, max_tokens=1100, embed_fn=embed_fn)
                 meta = {"selected": selected, "selection": detail}
             else:
@@ -320,30 +333,27 @@ def eval_dataset(
 
     rag_table = []
     for mname in rag_methods:
-        print(f"  rag: {mname}")
+        print(f"  rag: {mname}", flush=True)
         rc_scores, ac_scores, answered_n, total_n = [], [], 0, 0
         for doc in docs:
             text = doc.text
             if mode == "openrouter" and len(text) > 80_000:
                 text = text[:50_000] + "\n\n...\n\n" + text[-20_000:]
-            qa_pairs = doc.qa_pairs
-            if mode == "openrouter" and profile == "smoke":
-                qa_pairs = qa_pairs[:2]
-            elif mode == "openrouter" and profile == "full":
-                # Contain live cost while covering all documents in the full release.
-                max_qa = int(os.environ.get("ACE_LIVE_MAX_QA_PER_DOC", "3"))
-                qa_pairs = qa_pairs[:max_qa]
+            qa_pairs = _qa_budget(doc)
             if mname == "adaptive_ace":
-                _selected, chunks, _detail = adaptive_select(
-                    text,
-                    strategies=strategies,
-                    chunk_fn=_chunk_with_strategy,
-                    embed_fn=embed_fn,
-                    mode=adaptive_mode,
-                    qa_pairs=qa_pairs,
-                    rerank_fn=rerank_fn if mode == "openrouter" else None,
-                    micro_alpha=micro_alpha,
-                )
+                if doc.doc_id in adaptive_by_doc:
+                    _selected, chunks, _detail = adaptive_by_doc[doc.doc_id]
+                else:
+                    _selected, chunks, _detail = adaptive_select(
+                        text,
+                        strategies=strategies,
+                        chunk_fn=_chunk_with_strategy,
+                        embed_fn=embed_fn,
+                        mode=adaptive_mode,
+                        qa_pairs=qa_pairs,
+                        rerank_fn=rerank_fn if mode == "openrouter" else None,
+                        micro_alpha=micro_alpha,
+                    )
             else:
                 sid, params = next((s, p) for n, s, p in FIXED_STRATEGIES if n == mname)
                 chunks = _chunk_with_strategy(text, sid, params)
