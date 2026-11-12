@@ -218,15 +218,23 @@ def _llm_rag(client, embed_fn, rerank_fn, chunks: list[str], qa_pairs: list[QAIt
     answered = 0
     candidate_k = int(FLAGS["retrieve_candidate_k"])
     for qa in qa_pairs:
-        hits = retrieve_with_optional_rerank(
-            embed_fn=embed_fn,
-            rerank_fn=rerank_fn,
-            question=qa.question,
-            chunks=chunks,
-            top_k=top_k,
-            candidate_k=candidate_k,
-        )
-        judge = _llm_judge(client, qa, hits)
+        try:
+            hits = retrieve_with_optional_rerank(
+                embed_fn=embed_fn,
+                rerank_fn=rerank_fn,
+                question=qa.question,
+                chunks=chunks,
+                top_k=top_k,
+                candidate_k=candidate_k,
+            )
+            judge = _llm_judge(client, qa, hits)
+        except Exception as exc:  # noqa: BLE001 — keep full run alive across transient API failures
+            print(f"    rag qa failed ({type(exc).__name__}): {exc}", flush=True)
+            judge = {
+                "retrieval_completeness": 0.0,
+                "answer_correctness": 0.0,
+                "answered": False,
+            }
         completeness_scores.append(judge["retrieval_completeness"])
         correctness_scores.append(judge["answer_correctness"])
         if judge["answered"] or judge["retrieval_completeness"] >= 0.55:

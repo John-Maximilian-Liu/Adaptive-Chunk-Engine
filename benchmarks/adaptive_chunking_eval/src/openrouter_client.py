@@ -102,10 +102,38 @@ class OpenRouterClient:
             cleaned = cleaned[:head] + "\n...\n" + cleaned[-tail:]
         return cleaned
 
-    def _http_timeout(self) -> httpx.Timeout:
+    def _http_timeout(self, *, read: Optional[float] = None) -> httpx.Timeout:
         # Separate connect/read so a stalled upstream cannot hang forever.
-        read = float(self.timeout)
-        return httpx.Timeout(connect=20.0, read=read, write=30.0, pool=20.0)
+        read_s = float(self.timeout if read is None else read)
+        return httpx.Timeout(connect=20.0, read=read_s, write=30.0, pool=20.0)
+
+    def _post_json_with_retries(
+        self,
+        path: str,
+        payload: dict[str, Any],
+        *,
+        read_timeout: Optional[float] = None,
+        attempts: int = 5,
+    ) -> dict[str, Any]:
+        last_err: Exception | None = None
+        url = f"{self.base_url}{path}"
+        for attempt in range(attempts):
+            try:
+                with httpx.Client(timeout=self._http_timeout(read=read_timeout)) as client:
+                    resp = client.post(url, headers=self._headers(), json=payload)
+                    if resp.status_code in {408, 409, 429} or resp.status_code >= 500:
+                        raise httpx.HTTPStatusError(
+                            f"{resp.status_code} retryable: {resp.text[:200]}",
+                            request=resp.request,
+                            response=resp,
+                        )
+                    resp.raise_for_status()
+                    return resp.json()
+            except (httpx.TimeoutException, httpx.TransportError, httpx.HTTPStatusError) as exc:
+                last_err = exc
+                time.sleep(min(45.0, 2.0 * (2**attempt)))
+        assert last_err is not None
+        raise last_err
 
     def _embed_batch(self, batch: list[str]) -> list[list[float]]:
         payload = {"model": self.embed_model, "input": batch}
@@ -202,15 +230,7 @@ class OpenRouterClient:
             payload["top_n"] = max(1, min(int(top_n), len(docs)))
         self.stats["rerank_calls"] += 1
         self.stats["rerank_docs"] += len(docs)
-        with httpx.Client(timeout=self._http_timeout()) as client:
-            resp = client.post(f"{self.base_url}/rerank", headers=self._headers(), json=payload)
-            if resp.status_code >= 400:
-                raise httpx.HTTPStatusError(
-                    f"{resp.status_code} rerank error: {resp.text[:500]}",
-                    request=resp.request,
-                    response=resp,
-                )
-            data = resp.json()
+        data = self._post_json_with_retries("/rerank", payload, read_timeout=max(90.0, float(self.timeout)))
         usage = data.get("usage") or {}
         self._record_usage(usage)
         results = list(data.get("results") or [])
@@ -254,10 +274,12 @@ class OpenRouterClient:
             ],
         }
         self.stats["chat_calls"] += 1
-        with httpx.Client(timeout=self._http_timeout()) as client:
-            resp = client.post(f"{self.base_url}/chat/completions", headers=self._headers(), json=payload)
-            resp.raise_for_status()
-            data = resp.json()
+        # Judge calls can be slow with long retrieved contexts.
+        data = self._post_json_with_retries(
+            "/chat/completions",
+            payload,
+            read_timeout=max(180.0, float(self.timeout)),
+        )
         self._record_usage(data.get("usage") or {})
         content = data["choices"][0]["message"]["content"]
         try:
