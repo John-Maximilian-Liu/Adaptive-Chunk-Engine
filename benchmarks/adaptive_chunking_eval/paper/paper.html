@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"/><title>Adaptive Chunk Engine</title>
 <style>
-body{font-family:Georgia,serif;max-width:860px;margin:2rem auto;padding:0 1rem;line-height:1.55;color:#1a1a1a}
-h1,h2,h3{font-family:system-ui,sans-serif}
-table{border-collapse:collapse;width:100%;font-size:0.92rem;margin:1rem 0}
-th,td{border:1px solid #ccc;padding:0.4rem 0.55rem;text-align:left}
+body{font-family:Georgia,serif;max-width:900px;margin:2rem auto;padding:0 1rem;line-height:1.55;color:#1a1a1a}
+h1,h2,h3,h4{font-family:system-ui,sans-serif}
+table{border-collapse:collapse;width:100%;font-size:0.88rem;margin:1rem 0}
+th,td{border:1px solid #ccc;padding:0.35rem 0.5rem;text-align:left}
 th{background:#f4f6f8}
-code,pre{font-family:ui-monospace,monospace;font-size:0.88rem}
+code,pre{font-family:ui-monospace,monospace;font-size:0.86rem}
 pre{background:#f6f8fa;padding:0.8rem;overflow:auto}
-.arxiv-header{margin-bottom:1rem;color:#333}
 </style></head><body>
 <hr />
 <p>title: "Adaptive Chunk Engine: Governed Per-Document Chunking Selection for Enterprise RAG"
@@ -137,8 +136,8 @@ make eval-stage-d   # public full with stage-C stack
 </code></pre>
 <p>Details: <code>results/STAGE_EXPERIMENTS.md</code>, <code>results/public_benchmarks/openrouter_full_stage_d/</code>.</p>
 <h2>V. RESULTS</h2>
-<p>We <strong>foreground settings where governed adaptivity is advantageous</strong>: (i) kit recovery after adding rerank, (ii) intrinsic leadership on CLAIR/FinanceBench, (iii) long-document RAG on Open RAG Bench where <code>no_split</code> fails. We de-emphasize non-indexable <code>no_split</code> “wins” on short markdown as production baselines.</p>
-<h3>A. ACE kit — upgrade path (live)</h3>
+<p>We <strong>foreground settings where governed adaptivity is advantageous</strong>: (i) kit recovery after adding rerank, (ii) intrinsic leadership on CLAIR/FinanceBench, (iii) long-document RAG on Open RAG Bench where <code>no_split</code> fails. We de-emphasize non-indexable <code>no_split</code> “wins” on short markdown as production baselines. Intrinsic tables report the <strong>pre-aggregation metrics</strong> RC / ICC / DCC / BI / SC and their Mean; RAG tables report retrieval completeness (RC), answer correctness (AC), and answered fractions.</p>
+<h3>A. ACE kit — upgrade path (live summary)</h3>
 <table>
 <thead>
 <tr>
@@ -170,141 +169,663 @@ make eval-stage-d   # public full with stage-C stack
 </tr>
 </tbody>
 </table>
-<p><strong>Finding.</strong> Rerank is the dominant kit win (64 → 100). Qwen8B improves intrinsic separation; micro-loop preserves governance when intrinsic and retrieval disagree on harder corpora. Stage-C excerpt:</p>
+<p><strong>Finding.</strong> Rerank is the dominant kit win (64 → 100). Qwen8B improves intrinsic separation; micro-loop preserves governance when intrinsic and retrieval disagree on harder corpora.</p>
+<h4>A.1 Stage C — intrinsic metrics (%)</h4>
 <table>
 <thead>
 <tr>
 <th>Method</th>
-<th style="text-align: right;">Intrinsic Mean</th>
-<th style="text-align: right;">RAG RC</th>
-<th style="text-align: right;">RAG AC</th>
+<th style="text-align: right;">RC</th>
+<th style="text-align: right;">ICC</th>
+<th style="text-align: right;">DCC</th>
+<th style="text-align: right;">BI</th>
+<th style="text-align: right;">SC</th>
+<th style="text-align: right;"><strong>Mean</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>adaptive_ace</strong></td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">53.23</td>
+<td style="text-align: right;">96.48</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">100.0</td>
 <td style="text-align: right;"><strong>89.94</strong></td>
-<td style="text-align: right;"><strong>100.0</strong></td>
-<td style="text-align: right;"><strong>100.0</strong></td>
+</tr>
+<tr>
+<td>recursive_text</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">53.43</td>
+<td style="text-align: right;">96.94</td>
+<td style="text-align: right;">98.7</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;"><strong>89.81</strong></td>
 </tr>
 <tr>
 <td>recursive_text_1100</td>
-<td style="text-align: right;">89.79</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">53.01</td>
+<td style="text-align: right;">95.93</td>
 <td style="text-align: right;">100.0</td>
 <td style="text-align: right;">100.0</td>
+<td style="text-align: right;"><strong>89.79</strong></td>
 </tr>
 <tr>
 <td>fixed_token_512</td>
-<td style="text-align: right;">89.27</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">53.64</td>
+<td style="text-align: right;">95.06</td>
+<td style="text-align: right;">97.66</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;"><strong>89.27</strong></td>
+</tr>
+<tr>
+<td>fixed_token_256</td>
+<td style="text-align: right;">99.25</td>
+<td style="text-align: right;">55.31</td>
+<td style="text-align: right;">94.98</td>
+<td style="text-align: right;">96.69</td>
+<td style="text-align: right;">99.02</td>
+<td style="text-align: right;"><strong>89.05</strong></td>
+</tr>
+<tr>
+<td>heading_section</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">54.57</td>
+<td style="text-align: right;">90.02</td>
+<td style="text-align: right;">97.66</td>
+<td style="text-align: right;">83.33</td>
+<td style="text-align: right;"><strong>85.12</strong></td>
+</tr>
+<tr>
+<td>no_split</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">52.4</td>
 <td style="text-align: right;">100.0</td>
 <td style="text-align: right;">100.0</td>
+<td style="text-align: right;">16.67</td>
+<td style="text-align: right;"><strong>73.81</strong></td>
 </tr>
 <tr>
 <td>sentence_window</td>
-<td style="text-align: right;">57.15</td>
-<td style="text-align: right;">(brittle)</td>
-<td style="text-align: right;">(brittle)</td>
+<td style="text-align: right;">58.33</td>
+<td style="text-align: right;">61.43</td>
+<td style="text-align: right;">83.96</td>
+<td style="text-align: right;">21.35</td>
+<td style="text-align: right;">60.69</td>
+<td style="text-align: right;"><strong>57.15</strong></td>
 </tr>
 </tbody>
 </table>
-<h3>B. Published CLAIR baselines [2]</h3>
+<h4>A.2 Stage C — RAG (dense top-20 + Cohere rerank top-5 + gpt-4o)</h4>
 <table>
 <thead>
 <tr>
 <th>Method</th>
-<th style="text-align: right;">Intrinsic Mean</th>
-<th style="text-align: right;">RAG RC</th>
-<th style="text-align: right;">RAG AC</th>
+<th style="text-align: right;">Retrieval Completeness</th>
+<th style="text-align: right;">Answer Correctness</th>
+<th style="text-align: right;">Answered</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Adaptive Chunking</strong></td>
+<td><strong>adaptive_ace</strong></td>
+<td style="text-align: right;"><strong>100.0</strong></td>
+<td style="text-align: right;"><strong>100.0</strong></td>
+<td style="text-align: right;">43/43</td>
+</tr>
+<tr>
+<td>recursive_text_1100</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">43/43</td>
+</tr>
+<tr>
+<td>recursive_text</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">43/43</td>
+</tr>
+<tr>
+<td>fixed_token_512</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">43/43</td>
+</tr>
+<tr>
+<td>fixed_token_256</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">43/43</td>
+</tr>
+<tr>
+<td>heading_section</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">43/43</td>
+</tr>
+<tr>
+<td>no_split</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">43/43</td>
+</tr>
+<tr>
+<td>sentence_window</td>
+<td style="text-align: right;">70.42</td>
+<td style="text-align: right;">73.12</td>
+<td style="text-align: right;">25/43</td>
+</tr>
+</tbody>
+</table>
+<h3>B. Published CLAIR baselines [2] — full intrinsic + RAG</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th style="text-align: right;">RC</th>
+<th style="text-align: right;">ICC</th>
+<th style="text-align: right;">DCC</th>
+<th style="text-align: right;">BI</th>
+<th style="text-align: right;">SC</th>
+<th style="text-align: right;"><strong>Mean</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Adaptive Chunking (paper)</strong></td>
+<td style="text-align: right;">99.0</td>
+<td style="text-align: right;">68.2</td>
+<td style="text-align: right;">88.8</td>
+<td style="text-align: right;">99.4</td>
+<td style="text-align: right;">99.9</td>
 <td style="text-align: right;"><strong>91.07</strong></td>
+</tr>
+<tr>
+<td>LLM regex (GPT) (paper)</td>
+<td style="text-align: right;">98.0</td>
+<td style="text-align: right;">70.9</td>
+<td style="text-align: right;">82.4</td>
+<td style="text-align: right;">98.1</td>
+<td style="text-align: right;">99.6</td>
+<td style="text-align: right;"><strong>89.8</strong></td>
+</tr>
+<tr>
+<td>LangChain recursive (paper)</td>
+<td style="text-align: right;">96.1</td>
+<td style="text-align: right;">65.6</td>
+<td style="text-align: right;">88.8</td>
+<td style="text-align: right;">95.0</td>
+<td style="text-align: right;">97.7</td>
+<td style="text-align: right;"><strong>88.62</strong></td>
+</tr>
+<tr>
+<td>Semantic (paper)</td>
+<td style="text-align: right;">97.5</td>
+<td style="text-align: right;">69.3</td>
+<td style="text-align: right;">76.3</td>
+<td style="text-align: right;">91.3</td>
+<td style="text-align: right;">48.1</td>
+<td style="text-align: right;"><strong>76.49</strong></td>
+</tr>
+<tr>
+<td>Sentence (paper)</td>
+<td style="text-align: right;">86.3</td>
+<td style="text-align: right;">78.4</td>
+<td style="text-align: right;">72.5</td>
+<td style="text-align: right;">61.9</td>
+<td style="text-align: right;">67.2</td>
+<td style="text-align: right;"><strong>73.26</strong></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th style="text-align: right;">Retrieval Completeness</th>
+<th style="text-align: right;">Answer Correctness</th>
+<th style="text-align: right;">Answered</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Adaptive Chunking (paper)</strong></td>
 <td style="text-align: right;"><strong>67.7</strong></td>
 <td style="text-align: right;"><strong>78.0</strong></td>
+<td style="text-align: right;">65/99</td>
 </tr>
 <tr>
-<td>LangChain recursive</td>
-<td style="text-align: right;">88.62</td>
+<td>LangChain recursive (paper)</td>
 <td style="text-align: right;">58.1</td>
 <td style="text-align: right;">70.1</td>
+<td style="text-align: right;">49/99</td>
 </tr>
 <tr>
-<td>Page splitting</td>
-<td style="text-align: right;">—</td>
+<td>Page splitting (paper)</td>
 <td style="text-align: right;">59.1</td>
 <td style="text-align: right;">73.3</td>
+<td style="text-align: right;">49/99</td>
 </tr>
 </tbody>
 </table>
 <h3>C. Public full — OpenRouter stage D (primary)</h3>
 <p>Config: <code>Qwen3-Embedding-8B</code> + <code>cohere/rerank-v3.5</code> + <code>rag_microloop</code> + <code>gpt-4o</code>.</p>
-<h4>C.1 Intrinsic Mean (adaptive advantage)</h4>
+<h4>C.1 CLAIR (33 docs) — intrinsic (%)</h4>
 <table>
 <thead>
 <tr>
-<th>Dataset</th>
-<th style="text-align: right;"><strong>adaptive_ace</strong></th>
-<th style="text-align: right;">Best fixed competitor</th>
-<th style="text-align: right;">Margin</th>
+<th>Method</th>
+<th style="text-align: right;">RC</th>
+<th style="text-align: right;">ICC</th>
+<th style="text-align: right;">DCC</th>
+<th style="text-align: right;">BI</th>
+<th style="text-align: right;">SC</th>
+<th style="text-align: right;"><strong>Mean</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>CLAIR (33)</td>
+<td><strong>adaptive_ace</strong></td>
+<td style="text-align: right;">99.92</td>
+<td style="text-align: right;">52.12</td>
+<td style="text-align: right;">86.85</td>
+<td style="text-align: right;">99.13</td>
+<td style="text-align: right;">99.62</td>
 <td style="text-align: right;"><strong>87.8</strong></td>
-<td style="text-align: right;">87.05 (<code>fixed_token_512</code>)</td>
-<td style="text-align: right;">+0.75</td>
 </tr>
 <tr>
-<td>FinanceBench (18)</td>
-<td style="text-align: right;"><strong>91.61</strong></td>
-<td style="text-align: right;">90.64 (<code>recursive_text_1100</code>)</td>
-<td style="text-align: right;">+0.97</td>
+<td>fixed_token_512</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">49.06</td>
+<td style="text-align: right;">86.65</td>
+<td style="text-align: right;">99.55</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;"><strong>87.05</strong></td>
 </tr>
 <tr>
-<td>Open RAG Bench (4)</td>
-<td style="text-align: right;">88.0</td>
-<td style="text-align: right;"><strong>89.44</strong> (<code>fixed_token_512</code>)</td>
-<td style="text-align: right;">−1.44</td>
+<td>fixed_token_256</td>
+<td style="text-align: right;">99.81</td>
+<td style="text-align: right;">47.63</td>
+<td style="text-align: right;">86.15</td>
+<td style="text-align: right;">98.85</td>
+<td style="text-align: right;">99.73</td>
+<td style="text-align: right;"><strong>86.74</strong></td>
+</tr>
+<tr>
+<td>recursive_text</td>
+<td style="text-align: right;">99.96</td>
+<td style="text-align: right;">46.76</td>
+<td style="text-align: right;">82.48</td>
+<td style="text-align: right;">99.39</td>
+<td style="text-align: right;">99.93</td>
+<td style="text-align: right;"><strong>85.7</strong></td>
+</tr>
+<tr>
+<td>recursive_text_1100</td>
+<td style="text-align: right;">99.96</td>
+<td style="text-align: right;">47.24</td>
+<td style="text-align: right;">76.72</td>
+<td style="text-align: right;">99.72</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;"><strong>84.73</strong></td>
+</tr>
+<tr>
+<td>sentence_window</td>
+<td style="text-align: right;">97.57</td>
+<td style="text-align: right;">54.76</td>
+<td style="text-align: right;">91.3</td>
+<td style="text-align: right;">90.65</td>
+<td style="text-align: right;">88.32</td>
+<td style="text-align: right;"><strong>84.52</strong></td>
+</tr>
+<tr>
+<td>heading_section</td>
+<td style="text-align: right;">99.8</td>
+<td style="text-align: right;">50.58</td>
+<td style="text-align: right;">81.06</td>
+<td style="text-align: right;">98.81</td>
+<td style="text-align: right;">87.21</td>
+<td style="text-align: right;"><strong>83.49</strong></td>
+</tr>
+<tr>
+<td>no_split</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">53.63</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">3.03</td>
+<td style="text-align: right;"><strong>71.33</strong></td>
 </tr>
 </tbody>
 </table>
-<p>Adaptive <strong>wins Mean on CLAIR and FinanceBench</strong> and stays within ~1.5 of the best fixed splitter on ORB—while avoiding last-place <code>sentence_window</code> / zero-SC <code>no_split</code> traps.</p>
-<h4>C.2 RAG RC/AC (production-relevant contrast)</h4>
+<h4>C.2 CLAIR — RAG</h4>
 <table>
 <thead>
 <tr>
-<th>Dataset</th>
-<th style="text-align: right;"><strong>adaptive_ace</strong></th>
-<th style="text-align: right;">Strong competitor</th>
-<th>Brittle / non-prod contrast</th>
+<th>Method</th>
+<th style="text-align: right;">Retrieval Completeness</th>
+<th style="text-align: right;">Answer Correctness</th>
+<th style="text-align: right;">Answered</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>CLAIR</td>
-<td style="text-align: right;"><strong>96.57 / 90.5</strong></td>
-<td style="text-align: right;">recursive_1100 95.96 / 92.93</td>
-<td>sentence_window <strong>76.3 / 73.2</strong>; no_split 99.0 / 95.0†</td>
+<td>no_split†</td>
+<td style="text-align: right;">98.99</td>
+<td style="text-align: right;">94.95</td>
+<td style="text-align: right;">97/98</td>
 </tr>
 <tr>
-<td>FinanceBench</td>
-<td style="text-align: right;"><strong>95.83 / 88.89</strong></td>
-<td style="text-align: right;">recursive_1100 <strong>99.07 / 93.52</strong></td>
-<td>sentence_window 86.5 / 76.9</td>
+<td><strong>adaptive_ace</strong></td>
+<td style="text-align: right;"><strong>96.57</strong></td>
+<td style="text-align: right;"><strong>90.5</strong></td>
+<td style="text-align: right;">94/98</td>
 </tr>
 <tr>
-<td>Open RAG Bench</td>
-<td style="text-align: right;"><strong>90.0 / 82.5</strong> (<strong>tied 1st</strong>)</td>
-<td style="text-align: right;">fixed_512 90.0 / 82.5</td>
-<td><strong>no_split 35.8 / 26.7</strong></td>
+<td>recursive_text_1100</td>
+<td style="text-align: right;">95.96</td>
+<td style="text-align: right;">92.93</td>
+<td style="text-align: right;">93/98</td>
+</tr>
+<tr>
+<td>fixed_token_512</td>
+<td style="text-align: right;">93.23</td>
+<td style="text-align: right;">88.69</td>
+<td style="text-align: right;">89/98</td>
+</tr>
+<tr>
+<td>recursive_text</td>
+<td style="text-align: right;">92.73</td>
+<td style="text-align: right;">89.7</td>
+<td style="text-align: right;">89/98</td>
+</tr>
+<tr>
+<td>sentence_window</td>
+<td style="text-align: right;">76.26</td>
+<td style="text-align: right;">73.23</td>
+<td style="text-align: right;">71/98</td>
 </tr>
 </tbody>
 </table>
-<p>†<code>no_split</code> is not a viable production indexer for multi-query corpora; it is reported as an upper-bound context dump. On long arXiv PDFs (Open RAG Bench), that dump <strong>collapses</strong>, while <code>adaptive_ace</code> remains best-tied.</p>
-<h4>C.3 Offline smoke (CI lane, ranks only)</h4>
+<p>†<code>no_split</code> is a non-production context dump / upper bound, not a viable multi-query indexer.</p>
+<h4>C.3 FinanceBench (18 docs) — intrinsic (%)</h4>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th style="text-align: right;">RC</th>
+<th style="text-align: right;">ICC</th>
+<th style="text-align: right;">DCC</th>
+<th style="text-align: right;">BI</th>
+<th style="text-align: right;">SC</th>
+<th style="text-align: right;"><strong>Mean</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>adaptive_ace</strong></td>
+<td style="text-align: right;">99.84</td>
+<td style="text-align: right;">61.21</td>
+<td style="text-align: right;">89.34</td>
+<td style="text-align: right;">97.64</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;"><strong>91.61</strong></td>
+</tr>
+<tr>
+<td>recursive_text_1100</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">61.87</td>
+<td style="text-align: right;">88.27</td>
+<td style="text-align: right;">98.8</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;"><strong>90.64</strong></td>
+</tr>
+<tr>
+<td>fixed_token_512</td>
+<td style="text-align: right;">99.89</td>
+<td style="text-align: right;">53.59</td>
+<td style="text-align: right;">84.66</td>
+<td style="text-align: right;">98.79</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;"><strong>89.82</strong></td>
+</tr>
+<tr>
+<td>heading_section</td>
+<td style="text-align: right;">99.89</td>
+<td style="text-align: right;">53.59</td>
+<td style="text-align: right;">84.66</td>
+<td style="text-align: right;">98.79</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;"><strong>89.82</strong></td>
+</tr>
+<tr>
+<td>fixed_token_256</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">48.17</td>
+<td style="text-align: right;">79.72</td>
+<td style="text-align: right;">98.04</td>
+<td style="text-align: right;">98.95</td>
+<td style="text-align: right;"><strong>88.08</strong></td>
+</tr>
+<tr>
+<td>sentence_window</td>
+<td style="text-align: right;">98.92</td>
+<td style="text-align: right;">65.28</td>
+<td style="text-align: right;">90.88</td>
+<td style="text-align: right;">95.51</td>
+<td style="text-align: right;">84.29</td>
+<td style="text-align: right;"><strong>88.02</strong></td>
+</tr>
+<tr>
+<td>recursive_text</td>
+<td style="text-align: right;">99.84</td>
+<td style="text-align: right;">56.81</td>
+<td style="text-align: right;">79.38</td>
+<td style="text-align: right;">97.23</td>
+<td style="text-align: right;">97.22</td>
+<td style="text-align: right;"><strong>87.82</strong></td>
+</tr>
+<tr>
+<td>no_split</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">64.93</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">50.0</td>
+<td style="text-align: right;"><strong>83.77</strong></td>
+</tr>
+</tbody>
+</table>
+<h4>C.4 FinanceBench — RAG</h4>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th style="text-align: right;">Retrieval Completeness</th>
+<th style="text-align: right;">Answer Correctness</th>
+<th style="text-align: right;">Answered</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>recursive_text_1100</td>
+<td style="text-align: right;">99.07</td>
+<td style="text-align: right;">93.52</td>
+<td style="text-align: right;">32/33</td>
+</tr>
+<tr>
+<td>recursive_text</td>
+<td style="text-align: right;">96.43</td>
+<td style="text-align: right;">91.52</td>
+<td style="text-align: right;">31/33</td>
+</tr>
+<tr>
+<td>no_split†</td>
+<td style="text-align: right;">96.3</td>
+<td style="text-align: right;">91.67</td>
+<td style="text-align: right;">31/33</td>
+</tr>
+<tr>
+<td><strong>adaptive_ace</strong></td>
+<td style="text-align: right;"><strong>95.83</strong></td>
+<td style="text-align: right;"><strong>88.89</strong></td>
+<td style="text-align: right;">29/33</td>
+</tr>
+<tr>
+<td>fixed_token_512</td>
+<td style="text-align: right;">94.17</td>
+<td style="text-align: right;">89.07</td>
+<td style="text-align: right;">28/33</td>
+</tr>
+<tr>
+<td>sentence_window</td>
+<td style="text-align: right;">86.48</td>
+<td style="text-align: right;">76.85</td>
+<td style="text-align: right;">27/33</td>
+</tr>
+</tbody>
+</table>
+<h4>C.5 Open RAG Bench (4 docs) — intrinsic (%)</h4>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th style="text-align: right;">RC</th>
+<th style="text-align: right;">ICC</th>
+<th style="text-align: right;">DCC</th>
+<th style="text-align: right;">BI</th>
+<th style="text-align: right;">SC</th>
+<th style="text-align: right;"><strong>Mean</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fixed_token_512</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">60.04</td>
+<td style="text-align: right;">87.84</td>
+<td style="text-align: right;">99.33</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;"><strong>89.44</strong></td>
+</tr>
+<tr>
+<td><strong>adaptive_ace</strong></td>
+<td style="text-align: right;">99.89</td>
+<td style="text-align: right;">56.8</td>
+<td style="text-align: right;">84.93</td>
+<td style="text-align: right;">98.9</td>
+<td style="text-align: right;">99.51</td>
+<td style="text-align: right;"><strong>88.0</strong></td>
+</tr>
+<tr>
+<td>heading_section</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">52.35</td>
+<td style="text-align: right;">86.38</td>
+<td style="text-align: right;">98.67</td>
+<td style="text-align: right;">99.51</td>
+<td style="text-align: right;"><strong>87.38</strong></td>
+</tr>
+<tr>
+<td>fixed_token_256</td>
+<td style="text-align: right;">99.38</td>
+<td style="text-align: right;">49.3</td>
+<td style="text-align: right;">87.63</td>
+<td style="text-align: right;">98.21</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;"><strong>86.91</strong></td>
+</tr>
+<tr>
+<td>recursive_text</td>
+<td style="text-align: right;">99.82</td>
+<td style="text-align: right;">51.61</td>
+<td style="text-align: right;">84.74</td>
+<td style="text-align: right;">97.69</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;"><strong>86.78</strong></td>
+</tr>
+<tr>
+<td>recursive_text_1100</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">53.46</td>
+<td style="text-align: right;">78.16</td>
+<td style="text-align: right;">99.18</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;"><strong>86.16</strong></td>
+</tr>
+<tr>
+<td>sentence_window</td>
+<td style="text-align: right;">94.66</td>
+<td style="text-align: right;">63.22</td>
+<td style="text-align: right;">89.66</td>
+<td style="text-align: right;">69.62</td>
+<td style="text-align: right;">69.04</td>
+<td style="text-align: right;"><strong>77.24</strong></td>
+</tr>
+<tr>
+<td>no_split</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">58.6</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">100.0</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;"><strong>71.72</strong></td>
+</tr>
+</tbody>
+</table>
+<h4>C.6 Open RAG Bench — RAG</h4>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th style="text-align: right;">Retrieval Completeness</th>
+<th style="text-align: right;">Answer Correctness</th>
+<th style="text-align: right;">Answered</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>adaptive_ace</strong></td>
+<td style="text-align: right;"><strong>90.0</strong></td>
+<td style="text-align: right;"><strong>82.5</strong></td>
+<td style="text-align: right;">10/12</td>
+</tr>
+<tr>
+<td>fixed_token_512</td>
+<td style="text-align: right;">90.0</td>
+<td style="text-align: right;">82.5</td>
+<td style="text-align: right;">10/12</td>
+</tr>
+<tr>
+<td>recursive_text</td>
+<td style="text-align: right;">87.5</td>
+<td style="text-align: right;">83.34</td>
+<td style="text-align: right;">10/12</td>
+</tr>
+<tr>
+<td>recursive_text_1100</td>
+<td style="text-align: right;">83.33</td>
+<td style="text-align: right;">79.17</td>
+<td style="text-align: right;">9/12</td>
+</tr>
+<tr>
+<td>sentence_window</td>
+<td style="text-align: right;">80.0</td>
+<td style="text-align: right;">73.34</td>
+<td style="text-align: right;">9/12</td>
+</tr>
+<tr>
+<td>no_split</td>
+<td style="text-align: right;">35.83</td>
+<td style="text-align: right;">26.66</td>
+<td style="text-align: right;">3/12</td>
+</tr>
+</tbody>
+</table>
+<p>On long arXiv PDFs, <code>no_split</code> <strong>collapses</strong> while <code>adaptive_ace</code> remains best-tied on RAG.</p>
+<h4>C.7 Offline smoke (CI lane, ranks only)</h4>
 <table>
 <thead>
 <tr>
@@ -350,7 +871,7 @@ make eval-stage-d   # public full with stage-C stack
 </tr>
 <tr>
 <td>Brittle sentence fragmentation loses</td>
-<td><strong>Yes</strong> — last/near-last across tables</td>
+<td><strong>Yes</strong> — last/near-last; low BI/SC on kit</td>
 </tr>
 <tr>
 <td>Long-doc RAG needs governed chunking (not no_split)</td>

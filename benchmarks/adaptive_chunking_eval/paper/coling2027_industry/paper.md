@@ -102,17 +102,17 @@ We **select tables that show ACE’s industrial advantage**: kit recovery after 
 | + Qwen3-Embedding-8B (B) | **100 / 100** |
 | + rag_microloop (C) | **100 / 100** |
 
-Intrinsic Mean under stage C: **adaptive 89.94** (1st) vs sentence_window **57.15**.
+**Lesson.** Without rerank, short-kit dense RAG favored oversized context; with production-like rerank, governed adaptivity saturates the kit. Full RC/ICC/DCC/BI/SC and RAG rows: Appendix C.1.
 
-**Lesson.** Without rerank, short-kit dense RAG favored oversized context; with production-like rerank, governed adaptivity saturates the kit.
-
-### 5.2 Public full stage D — intrinsic leadership
+### 5.2 Public full stage D — intrinsic leadership (Mean)
 
 | Dataset | **adaptive Mean** | Best fixed Mean |
 |---------|------------------:|----------------:|
 | CLAIR (33) | **87.8** | 87.05 |
 | FinanceBench (18) | **91.61** | 90.64 |
 | Open RAG Bench (4) | 88.0 | **89.44** |
+
+Pre-aggregation metrics (RC/ICC/DCC/BI/SC) for every method: Appendix C.2–C.4.
 
 ### 5.3 Public full stage D — RAG (advantage-focused)
 
@@ -122,7 +122,7 @@ Intrinsic Mean under stage C: **adaptive 89.94** (1st) vs sentence_window **57.1
 | FinanceBench | **95.83 / 88.89** | Strong; recursive_1100 can edge RAG → override case |
 | Open RAG Bench | **90.0 / 82.5** (**tied 1st**) | vs **no_split 35.8 / 26.7** on long PDFs |
 
-Published Adaptive Chunking CLAIR anchors remain **91.07** intrinsic Mean and **67.7 / 78.0** RAG (different stack; cite, do not equate magnitudes).
+Full RAG tables (all methods + answered): Appendix C.2–C.4. Published Adaptive Chunking CLAIR anchors (full RC–SC + RAG): Appendix C.5.
 
 ### 5.4 Claim checklist
 
@@ -181,6 +181,126 @@ make eval-stage-d
 
 Live defaults for stages C/D: `ACE_EMBED_MODEL=Qwen/Qwen3-Embedding-8B`, `ACE_RERANK_MODEL=cohere/rerank-v3.5`, `ACE_ADAPTIVE_MODE=rag_microloop`, `ACE_CHAT_MODEL=openai/gpt-4o`.
 
-## Appendix B: Full tables pointer
+## Appendix B: Artifact paths (non-counting)
 
-Complete tables: evaluation kit `results/openrouter_stage_{a,b,c}_*/`, `results/public_benchmarks/openrouter_full_stage_d/`, and `results/STAGE_EXPERIMENTS.md`.
+Evaluation kit dumps: `results/openrouter_stage_{a,b,c}_*/`, `results/public_benchmarks/openrouter_full_stage_d/`, `results/STAGE_EXPERIMENTS.md`.
+
+## Appendix C: Detailed metrics before Mean aggregation (non-counting)
+
+Intrinsic tables report RC, ICC, DCC, BI, SC and Mean (%). RAG tables report retrieval completeness, answer correctness, and answered/N. Stack for C/D: `Qwen3-Embedding-8B` + `cohere/rerank-v3.5` + `rag_microloop` + `gpt-4o`.
+
+### C.1 ACE kit stage C — intrinsic
+
+| Method | RC | ICC | DCC | BI | SC | **Mean** |
+|--------|---:|----:|----:|---:|---:|--------:|
+| **adaptive_ace** | 100.0 | 53.23 | 96.48 | 100.0 | 100.0 | **89.94** |
+| recursive_text | 100.0 | 53.43 | 96.94 | 98.7 | 100.0 | **89.81** |
+| recursive_text_1100 | 100.0 | 53.01 | 95.93 | 100.0 | 100.0 | **89.79** |
+| fixed_token_512 | 100.0 | 53.64 | 95.06 | 97.66 | 100.0 | **89.27** |
+| fixed_token_256 | 99.25 | 55.31 | 94.98 | 96.69 | 99.02 | **89.05** |
+| heading_section | 100.0 | 54.57 | 90.02 | 97.66 | 83.33 | **85.12** |
+| no_split | 100.0 | 52.4 | 100.0 | 100.0 | 16.67 | **73.81** |
+| sentence_window | 58.33 | 61.43 | 83.96 | 21.35 | 60.69 | **57.15** |
+
+### C.1b ACE kit stage C — RAG
+
+| Method | Retrieval Completeness | Answer Correctness | Answered |
+|--------|-----------------------:|-------------------:|---------:|
+| **adaptive_ace** | **100.0** | **100.0** | 43/43 |
+| recursive_text_1100 | 100.0 | 100.0 | 43/43 |
+| recursive_text | 100.0 | 100.0 | 43/43 |
+| fixed_token_512 | 100.0 | 100.0 | 43/43 |
+| fixed_token_256 | 100.0 | 100.0 | 43/43 |
+| heading_section | 100.0 | 100.0 | 43/43 |
+| no_split | 100.0 | 100.0 | 43/43 |
+| sentence_window | 70.42 | 73.12 | 25/43 |
+
+### C.2 CLAIR full (33 docs) — intrinsic
+
+| Method | RC | ICC | DCC | BI | SC | **Mean** |
+|--------|---:|----:|----:|---:|---:|--------:|
+| **adaptive_ace** | 99.92 | 52.12 | 86.85 | 99.13 | 99.62 | **87.8** |
+| fixed_token_512 | 100.0 | 49.06 | 86.65 | 99.55 | 100.0 | **87.05** |
+| fixed_token_256 | 99.81 | 47.63 | 86.15 | 98.85 | 99.73 | **86.74** |
+| recursive_text | 99.96 | 46.76 | 82.48 | 99.39 | 99.93 | **85.7** |
+| recursive_text_1100 | 99.96 | 47.24 | 76.72 | 99.72 | 100.0 | **84.73** |
+| sentence_window | 97.57 | 54.76 | 91.3 | 90.65 | 88.32 | **84.52** |
+| heading_section | 99.8 | 50.58 | 81.06 | 98.81 | 87.21 | **83.49** |
+| no_split | 100.0 | 53.63 | 100.0 | 100.0 | 3.03 | **71.33** |
+
+### C.2b CLAIR — RAG
+
+| Method | Retrieval Completeness | Answer Correctness | Answered |
+|--------|-----------------------:|-------------------:|---------:|
+| no_split† | 98.99 | 94.95 | 97/98 |
+| **adaptive_ace** | **96.57** | **90.5** | 94/98 |
+| recursive_text_1100 | 95.96 | 92.93 | 93/98 |
+| fixed_token_512 | 93.23 | 88.69 | 89/98 |
+| recursive_text | 92.73 | 89.7 | 89/98 |
+| sentence_window | 76.26 | 73.23 | 71/98 |
+
+†Non-production context dump / upper bound.
+
+### C.3 FinanceBench (18 docs) — intrinsic
+
+| Method | RC | ICC | DCC | BI | SC | **Mean** |
+|--------|---:|----:|----:|---:|---:|--------:|
+| **adaptive_ace** | 99.84 | 61.21 | 89.34 | 97.64 | 100.0 | **91.61** |
+| recursive_text_1100 | 100.0 | 61.87 | 88.27 | 98.8 | 100.0 | **90.64** |
+| fixed_token_512 | 99.89 | 53.59 | 84.66 | 98.79 | 100.0 | **89.82** |
+| heading_section | 99.89 | 53.59 | 84.66 | 98.79 | 100.0 | **89.82** |
+| fixed_token_256 | 100.0 | 48.17 | 79.72 | 98.04 | 98.95 | **88.08** |
+| sentence_window | 98.92 | 65.28 | 90.88 | 95.51 | 84.29 | **88.02** |
+| recursive_text | 99.84 | 56.81 | 79.38 | 97.23 | 97.22 | **87.82** |
+| no_split | 100.0 | 64.93 | 100.0 | 100.0 | 50.0 | **83.77** |
+
+### C.3b FinanceBench — RAG
+
+| Method | Retrieval Completeness | Answer Correctness | Answered |
+|--------|-----------------------:|-------------------:|---------:|
+| recursive_text_1100 | 99.07 | 93.52 | 32/33 |
+| recursive_text | 96.43 | 91.52 | 31/33 |
+| no_split† | 96.3 | 91.67 | 31/33 |
+| **adaptive_ace** | **95.83** | **88.89** | 29/33 |
+| fixed_token_512 | 94.17 | 89.07 | 28/33 |
+| sentence_window | 86.48 | 76.85 | 27/33 |
+
+### C.4 Open RAG Bench (4 docs) — intrinsic
+
+| Method | RC | ICC | DCC | BI | SC | **Mean** |
+|--------|---:|----:|----:|---:|---:|--------:|
+| fixed_token_512 | 100.0 | 60.04 | 87.84 | 99.33 | 100.0 | **89.44** |
+| **adaptive_ace** | 99.89 | 56.8 | 84.93 | 98.9 | 99.51 | **88.0** |
+| heading_section | 100.0 | 52.35 | 86.38 | 98.67 | 99.51 | **87.38** |
+| fixed_token_256 | 99.38 | 49.3 | 87.63 | 98.21 | 100.0 | **86.91** |
+| recursive_text | 99.82 | 51.61 | 84.74 | 97.69 | 100.0 | **86.78** |
+| recursive_text_1100 | 100.0 | 53.46 | 78.16 | 99.18 | 100.0 | **86.16** |
+| sentence_window | 94.66 | 63.22 | 89.66 | 69.62 | 69.04 | **77.24** |
+| no_split | 100.0 | 58.6 | 100.0 | 100.0 | 0.0 | **71.72** |
+
+### C.4b Open RAG Bench — RAG
+
+| Method | Retrieval Completeness | Answer Correctness | Answered |
+|--------|-----------------------:|-------------------:|---------:|
+| **adaptive_ace** | **90.0** | **82.5** | 10/12 |
+| fixed_token_512 | 90.0 | 82.5 | 10/12 |
+| recursive_text | 87.5 | 83.34 | 10/12 |
+| recursive_text_1100 | 83.33 | 79.17 | 9/12 |
+| sentence_window | 80.0 | 73.34 | 9/12 |
+| no_split | 35.83 | 26.66 | 3/12 |
+
+### C.5 Published Adaptive Chunking CLAIR anchors (paper Tables 3/5)
+
+| Method | RC | ICC | DCC | BI | SC | **Mean** |
+|--------|---:|----:|----:|---:|---:|--------:|
+| **Adaptive Chunking (paper)** | 99.0 | 68.2 | 88.8 | 99.4 | 99.9 | **91.07** |
+| LLM regex (GPT) (paper) | 98.0 | 70.9 | 82.4 | 98.1 | 99.6 | **89.8** |
+| LangChain recursive (paper) | 96.1 | 65.6 | 88.8 | 95.0 | 97.7 | **88.62** |
+| Semantic (paper) | 97.5 | 69.3 | 76.3 | 91.3 | 48.1 | **76.49** |
+| Sentence (paper) | 86.3 | 78.4 | 72.5 | 61.9 | 67.2 | **73.26** |
+
+| Method | Retrieval Completeness | Answer Correctness | Answered |
+|--------|-----------------------:|-------------------:|---------:|
+| **Adaptive Chunking (paper)** | **67.7** | **78.0** | 65/99 |
+| LangChain recursive (paper) | 58.1 | 70.1 | 49/99 |
+| Page splitting (paper) | 59.1 | 73.3 | 49/99 |
