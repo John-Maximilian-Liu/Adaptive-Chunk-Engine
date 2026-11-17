@@ -96,9 +96,9 @@ Details: `results/STAGE_EXPERIMENTS.md`, `results/public_benchmarks/openrouter_f
 
 ## V. RESULTS
 
-We **foreground settings where governed adaptivity is advantageous**: (i) kit recovery after adding rerank, (ii) intrinsic leadership on CLAIR/FinanceBench, (iii) long-document RAG on Open RAG Bench where `no_split` fails. We de-emphasize non-indexable `no_split` “wins” on short markdown as production baselines.
+We **foreground settings where governed adaptivity is advantageous**: (i) kit recovery after adding rerank, (ii) intrinsic leadership on CLAIR/FinanceBench, (iii) long-document RAG on Open RAG Bench where `no_split` fails. We de-emphasize non-indexable `no_split` “wins” on short markdown as production baselines. Intrinsic tables report the **pre-aggregation metrics** RC / ICC / DCC / BI / SC and their Mean; RAG tables report retrieval completeness (RC), answer correctness (AC), and answered fractions.
 
-### A. ACE kit — upgrade path (live)
+### A. ACE kit — upgrade path (live summary)
 
 | Stack | Adaptive intrinsic Mean | Adaptive RAG RC/AC |
 |-------|------------------------:|-------------------:|
@@ -107,48 +107,131 @@ We **foreground settings where governed adaptivity is advantageous**: (i) kit re
 | **B** + Qwen3-Embedding-8B | ≈90.0 | **100.0 / 100.0** |
 | **C** + rag_microloop | **89.94** | **100.0 / 100.0** |
 
-**Finding.** Rerank is the dominant kit win (64 → 100). Qwen8B improves intrinsic separation; micro-loop preserves governance when intrinsic and retrieval disagree on harder corpora. Stage-C excerpt:
+**Finding.** Rerank is the dominant kit win (64 → 100). Qwen8B improves intrinsic separation; micro-loop preserves governance when intrinsic and retrieval disagree on harder corpora.
 
-| Method | Intrinsic Mean | RAG RC | RAG AC |
-|--------|---------------:|-------:|-------:|
-| **adaptive_ace** | **89.94** | **100.0** | **100.0** |
-| recursive_text_1100 | 89.79 | 100.0 | 100.0 |
-| fixed_token_512 | 89.27 | 100.0 | 100.0 |
-| sentence_window | 57.15 | (brittle) | (brittle) |
+#### A.1 Stage C — intrinsic metrics (%)
 
-### B. Published CLAIR baselines [2]
+| Method | RC | ICC | DCC | BI | SC | **Mean** |
+|--------|---:|----:|----:|---:|---:|--------:|
+| **adaptive_ace** | 100.0 | 53.23 | 96.48 | 100.0 | 100.0 | **89.94** |
+| recursive_text | 100.0 | 53.43 | 96.94 | 98.7 | 100.0 | **89.81** |
+| recursive_text_1100 | 100.0 | 53.01 | 95.93 | 100.0 | 100.0 | **89.79** |
+| fixed_token_512 | 100.0 | 53.64 | 95.06 | 97.66 | 100.0 | **89.27** |
+| fixed_token_256 | 99.25 | 55.31 | 94.98 | 96.69 | 99.02 | **89.05** |
+| heading_section | 100.0 | 54.57 | 90.02 | 97.66 | 83.33 | **85.12** |
+| no_split | 100.0 | 52.4 | 100.0 | 100.0 | 16.67 | **73.81** |
+| sentence_window | 58.33 | 61.43 | 83.96 | 21.35 | 60.69 | **57.15** |
 
-| Method | Intrinsic Mean | RAG RC | RAG AC |
-|--------|---------------:|-------:|-------:|
-| **Adaptive Chunking** | **91.07** | **67.7** | **78.0** |
-| LangChain recursive | 88.62 | 58.1 | 70.1 |
-| Page splitting | — | 59.1 | 73.3 |
+#### A.2 Stage C — RAG (dense top-20 + Cohere rerank top-5 + gpt-4o)
+
+| Method | Retrieval Completeness | Answer Correctness | Answered |
+|--------|-----------------------:|-------------------:|---------:|
+| **adaptive_ace** | **100.0** | **100.0** | 43/43 |
+| recursive_text_1100 | 100.0 | 100.0 | 43/43 |
+| recursive_text | 100.0 | 100.0 | 43/43 |
+| fixed_token_512 | 100.0 | 100.0 | 43/43 |
+| fixed_token_256 | 100.0 | 100.0 | 43/43 |
+| heading_section | 100.0 | 100.0 | 43/43 |
+| no_split | 100.0 | 100.0 | 43/43 |
+| sentence_window | 70.42 | 73.12 | 25/43 |
+
+### B. Published CLAIR baselines [2] — full intrinsic + RAG
+
+| Method | RC | ICC | DCC | BI | SC | **Mean** |
+|--------|---:|----:|----:|---:|---:|--------:|
+| **Adaptive Chunking (paper)** | 99.0 | 68.2 | 88.8 | 99.4 | 99.9 | **91.07** |
+| LLM regex (GPT) (paper) | 98.0 | 70.9 | 82.4 | 98.1 | 99.6 | **89.8** |
+| LangChain recursive (paper) | 96.1 | 65.6 | 88.8 | 95.0 | 97.7 | **88.62** |
+| Semantic (paper) | 97.5 | 69.3 | 76.3 | 91.3 | 48.1 | **76.49** |
+| Sentence (paper) | 86.3 | 78.4 | 72.5 | 61.9 | 67.2 | **73.26** |
+
+| Method | Retrieval Completeness | Answer Correctness | Answered |
+|--------|-----------------------:|-------------------:|---------:|
+| **Adaptive Chunking (paper)** | **67.7** | **78.0** | 65/99 |
+| LangChain recursive (paper) | 58.1 | 70.1 | 49/99 |
+| Page splitting (paper) | 59.1 | 73.3 | 49/99 |
 
 ### C. Public full — OpenRouter stage D (primary)
 
 Config: `Qwen3-Embedding-8B` + `cohere/rerank-v3.5` + `rag_microloop` + `gpt-4o`.
 
-#### C.1 Intrinsic Mean (adaptive advantage)
+#### C.1 CLAIR (33 docs) — intrinsic (%)
 
-| Dataset | **adaptive_ace** | Best fixed competitor | Margin |
-|---------|-----------------:|----------------------:|-------:|
-| CLAIR (33) | **87.8** | 87.05 (`fixed_token_512`) | +0.75 |
-| FinanceBench (18) | **91.61** | 90.64 (`recursive_text_1100`) | +0.97 |
-| Open RAG Bench (4) | 88.0 | **89.44** (`fixed_token_512`) | −1.44 |
+| Method | RC | ICC | DCC | BI | SC | **Mean** |
+|--------|---:|----:|----:|---:|---:|--------:|
+| **adaptive_ace** | 99.92 | 52.12 | 86.85 | 99.13 | 99.62 | **87.8** |
+| fixed_token_512 | 100.0 | 49.06 | 86.65 | 99.55 | 100.0 | **87.05** |
+| fixed_token_256 | 99.81 | 47.63 | 86.15 | 98.85 | 99.73 | **86.74** |
+| recursive_text | 99.96 | 46.76 | 82.48 | 99.39 | 99.93 | **85.7** |
+| recursive_text_1100 | 99.96 | 47.24 | 76.72 | 99.72 | 100.0 | **84.73** |
+| sentence_window | 97.57 | 54.76 | 91.3 | 90.65 | 88.32 | **84.52** |
+| heading_section | 99.8 | 50.58 | 81.06 | 98.81 | 87.21 | **83.49** |
+| no_split | 100.0 | 53.63 | 100.0 | 100.0 | 3.03 | **71.33** |
 
-Adaptive **wins Mean on CLAIR and FinanceBench** and stays within ~1.5 of the best fixed splitter on ORB—while avoiding last-place `sentence_window` / zero-SC `no_split` traps.
+#### C.2 CLAIR — RAG
 
-#### C.2 RAG RC/AC (production-relevant contrast)
+| Method | Retrieval Completeness | Answer Correctness | Answered |
+|--------|-----------------------:|-------------------:|---------:|
+| no_split† | 98.99 | 94.95 | 97/98 |
+| **adaptive_ace** | **96.57** | **90.5** | 94/98 |
+| recursive_text_1100 | 95.96 | 92.93 | 93/98 |
+| fixed_token_512 | 93.23 | 88.69 | 89/98 |
+| recursive_text | 92.73 | 89.7 | 89/98 |
+| sentence_window | 76.26 | 73.23 | 71/98 |
 
-| Dataset | **adaptive_ace** | Strong competitor | Brittle / non-prod contrast |
-|---------|-----------------:|------------------:|----------------------------|
-| CLAIR | **96.57 / 90.5** | recursive_1100 95.96 / 92.93 | sentence_window **76.3 / 73.2**; no_split 99.0 / 95.0† |
-| FinanceBench | **95.83 / 88.89** | recursive_1100 **99.07 / 93.52** | sentence_window 86.5 / 76.9 |
-| Open RAG Bench | **90.0 / 82.5** (**tied 1st**) | fixed_512 90.0 / 82.5 | **no_split 35.8 / 26.7** |
+†`no_split` is a non-production context dump / upper bound, not a viable multi-query indexer.
 
-†`no_split` is not a viable production indexer for multi-query corpora; it is reported as an upper-bound context dump. On long arXiv PDFs (Open RAG Bench), that dump **collapses**, while `adaptive_ace` remains best-tied.
+#### C.3 FinanceBench (18 docs) — intrinsic (%)
 
-#### C.3 Offline smoke (CI lane, ranks only)
+| Method | RC | ICC | DCC | BI | SC | **Mean** |
+|--------|---:|----:|----:|---:|---:|--------:|
+| **adaptive_ace** | 99.84 | 61.21 | 89.34 | 97.64 | 100.0 | **91.61** |
+| recursive_text_1100 | 100.0 | 61.87 | 88.27 | 98.8 | 100.0 | **90.64** |
+| fixed_token_512 | 99.89 | 53.59 | 84.66 | 98.79 | 100.0 | **89.82** |
+| heading_section | 99.89 | 53.59 | 84.66 | 98.79 | 100.0 | **89.82** |
+| fixed_token_256 | 100.0 | 48.17 | 79.72 | 98.04 | 98.95 | **88.08** |
+| sentence_window | 98.92 | 65.28 | 90.88 | 95.51 | 84.29 | **88.02** |
+| recursive_text | 99.84 | 56.81 | 79.38 | 97.23 | 97.22 | **87.82** |
+| no_split | 100.0 | 64.93 | 100.0 | 100.0 | 50.0 | **83.77** |
+
+#### C.4 FinanceBench — RAG
+
+| Method | Retrieval Completeness | Answer Correctness | Answered |
+|--------|-----------------------:|-------------------:|---------:|
+| recursive_text_1100 | 99.07 | 93.52 | 32/33 |
+| recursive_text | 96.43 | 91.52 | 31/33 |
+| no_split† | 96.3 | 91.67 | 31/33 |
+| **adaptive_ace** | **95.83** | **88.89** | 29/33 |
+| fixed_token_512 | 94.17 | 89.07 | 28/33 |
+| sentence_window | 86.48 | 76.85 | 27/33 |
+
+#### C.5 Open RAG Bench (4 docs) — intrinsic (%)
+
+| Method | RC | ICC | DCC | BI | SC | **Mean** |
+|--------|---:|----:|----:|---:|---:|--------:|
+| fixed_token_512 | 100.0 | 60.04 | 87.84 | 99.33 | 100.0 | **89.44** |
+| **adaptive_ace** | 99.89 | 56.8 | 84.93 | 98.9 | 99.51 | **88.0** |
+| heading_section | 100.0 | 52.35 | 86.38 | 98.67 | 99.51 | **87.38** |
+| fixed_token_256 | 99.38 | 49.3 | 87.63 | 98.21 | 100.0 | **86.91** |
+| recursive_text | 99.82 | 51.61 | 84.74 | 97.69 | 100.0 | **86.78** |
+| recursive_text_1100 | 100.0 | 53.46 | 78.16 | 99.18 | 100.0 | **86.16** |
+| sentence_window | 94.66 | 63.22 | 89.66 | 69.62 | 69.04 | **77.24** |
+| no_split | 100.0 | 58.6 | 100.0 | 100.0 | 0.0 | **71.72** |
+
+#### C.6 Open RAG Bench — RAG
+
+| Method | Retrieval Completeness | Answer Correctness | Answered |
+|--------|-----------------------:|-------------------:|---------:|
+| **adaptive_ace** | **90.0** | **82.5** | 10/12 |
+| fixed_token_512 | 90.0 | 82.5 | 10/12 |
+| recursive_text | 87.5 | 83.34 | 10/12 |
+| recursive_text_1100 | 83.33 | 79.17 | 9/12 |
+| sentence_window | 80.0 | 73.34 | 9/12 |
+| no_split | 35.83 | 26.66 | 3/12 |
+
+On long arXiv PDFs, `no_split` **collapses** while `adaptive_ace` remains best-tied on RAG.
+
+#### C.7 Offline smoke (CI lane, ranks only)
 
 | Dataset | adaptive Mean | adaptive RAG RC |
 |---------|--------------:|----------------:|
@@ -162,7 +245,7 @@ Adaptive **wins Mean on CLAIR and FinanceBench** and stays within ~1.5 of the be
 |-------|---------|
 | Metric-guided adaptivity recovers strong splitters | **Yes** — kit + CLAIR/FB intrinsic leadership |
 | Rerank is required for production-like dense RAG | **Yes** — kit 64 → 100 |
-| Brittle sentence fragmentation loses | **Yes** — last/near-last across tables |
+| Brittle sentence fragmentation loses | **Yes** — last/near-last; low BI/SC on kit |
 | Long-doc RAG needs governed chunking (not no_split) | **Yes** — ORB adaptive 90 vs no_split 36 |
 | Intrinsic argmax = RAG optimum always | **No** — FB live still slightly prefers recursive_1100 → human gate |
 
