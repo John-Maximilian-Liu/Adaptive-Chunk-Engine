@@ -5,9 +5,14 @@ Submission deadline (CFP): **30 Nov 2026 AoE**. Notification: **15 Mar 2027**.
 
 | File | Role |
 |------|------|
-| [`paper.md`](paper.md) | Double-blind Industry Track draft (~6-page narrative) |
-| [`paper.html`](paper.html) | HTML preview of the draft |
+| [`ACE_COLING2027_Industry_Manuscript.docx`](ACE_COLING2027_Industry_Manuscript.docx) | **Submission-oriented DOCX** (figures + advantage tables) |
+| [`manuscript_submission.md`](manuscript_submission.md) | Markdown source aligned with the DOCX |
+| [`paper.md`](paper.md) | Same narrative as manuscript (synced) |
+| [`paper.html`](paper.html) | HTML preview |
+| [`figures/`](figures/) | Figure 1 flow + Figure 2 results |
+| [`SUBMISSION_NOTES.md`](SUBMISSION_NOTES.md) | Figure/result filtering + packaging checklist |
 | [`COMPARISON_COLING2025_INDUSTRY.md`](COMPARISON_COLING2025_INDUSTRY.md) | Mapping vs COLING 2025 Industry CFP / chairs overview + 2027 changes |
+| [`build_docx.py`](build_docx.py) | Regenerate the DOCX |
 
 The repository technical report remains at [`../paper.md`](../paper.md). This folder is a **separate submission-oriented rewrite**, not a replacement.
 

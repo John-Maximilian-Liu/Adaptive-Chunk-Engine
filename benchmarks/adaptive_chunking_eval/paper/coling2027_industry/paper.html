@@ -1,68 +1,40 @@
-<!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"/><title>ACE COLING 2027 Industry</title>
-<style>
-body{font-family:Georgia,serif;max-width:900px;margin:2rem auto;padding:0 1rem;line-height:1.55;color:#1a1a1a}
-h1,h2,h3,h4{font-family:system-ui,sans-serif}
-table{border-collapse:collapse;width:100%;font-size:0.88rem;margin:1rem 0}
-th,td{border:1px solid #ccc;padding:0.35rem 0.5rem;text-align:left}
-th{background:#f4f6f8}
-code,pre{font-family:ui-monospace,monospace;font-size:0.86rem}
-pre{background:#f6f8fa;padding:0.8rem;overflow:auto}
-</style></head><body>
-<hr />
+<!DOCTYPE html><html><head><meta charset="utf-8"/><title>ACE COLING 2027 Industry</title>
+<style>body{font-family:Georgia,serif;max-width:900px;margin:2rem auto;padding:0 1rem;line-height:1.55}
+table{border-collapse:collapse;width:100%;font-size:0.88rem}th,td{border:1px solid #ccc;padding:0.35rem 0.5rem}
+th{background:#f4f6f8}img{max-width:100%}</style></head><body><hr />
 <p>title: "Adaptive Chunk Engine: Governed Per-Document Chunking Selection for Enterprise RAG"
-venue: "COLING 2027 Industry Track (draft)"
+venue: "COLING 2027 Industry Track"
 category: "Emerging / Enabling infrastructure + Deployed Methods &amp; System Evaluation"
 blind: true
-page_budget: "6 pages body (+ unlimited refs / ethics / appendix)"
-deadline_note: "COLING 2027 Industry Track: submit by 2026-11-30 AoE; notify 2027-03-15; conference 2027-05-09–14 (Macau)"
-anonymization: "Double-blind (COLING 2027 Industry Track). Do not include author names, affiliations, or identifiable repo URLs in the review PDF."</p>
+page_budget: "6 pages body (+ unlimited refs / ethics / appendix)"</p>
 <hr />
 <h1>Adaptive Chunk Engine: Governed Per-Document Chunking Selection for Enterprise RAG</h1>
 <p><strong>Anonymous authors</strong><br />
 Paper under double-blind review for COLING 2027 Industry Track</p>
-<hr />
 <h2>Abstract</h2>
-<p>Chunking is a first-order design choice in enterprise Retrieval-Augmented Generation (RAG), yet production systems still default to a single global splitter. Building on Adaptive Chunking (LREC 2026), which selects a splitter <strong>per document</strong> using five intrinsic metrics (RC, ICC, DCC, BI, SC), we present <strong>Adaptive Chunk Engine (ACE)</strong>: an enterprise control plane that turns metric-guided selection into an auditable product decision with strategy registries, reproduction manifests, a RAG micro-loop selection objective, dense retrieval with cross-encoder reranking, and a human-triggered optimization gate. Under a production-like OpenRouter stack (<code>Qwen3-Embedding-8B</code>, Cohere <code>rerank-v3.5</code>, <code>rag_microloop</code>, <code>gpt-4o</code> judge), ACE recovers <strong>100/100</strong> RAG completeness/correctness on a controlled kit (vs. <strong>64/65</strong> without rerank), ranks <strong>first</strong> on full-CLAIR intrinsic Mean (<strong>87.8</strong>), and <strong>ties best RAG</strong> on Open RAG Bench (<strong>90.0/82.5</strong>) while exposing the failure of non-indexable <code>no_split</code> on long arXiv PDFs (<strong>35.8/26.7</strong>). We report practitioner lessons: ship dual eval lanes, treat Auto as a proposal, and compare <strong>ranks within a protocol</strong>.</p>
+<p>Chunking is a first-order design choice in enterprise Retrieval-Augmented Generation (RAG), yet production systems still default to a single global splitter. Building on Adaptive Chunking (LREC 2026), which selects a splitter <strong>per document</strong> using five intrinsic metrics (RC, ICC, DCC, BI, SC), we present <strong>Adaptive Chunk Engine (ACE)</strong>: an enterprise control plane that turns metric-guided selection into an auditable product decision with strategy registries, reproduction manifests, a RAG micro-loop selection objective, dense retrieval with cross-encoder reranking, and a human-triggered optimization gate. Under a production-like stack (<code>Qwen3-Embedding-8B</code>, Cohere <code>rerank-v3.5</code>, <code>rag_microloop</code>, <code>gpt-4o</code> judge), ACE recovers <strong>100/100</strong> RAG completeness/correctness on a controlled kit (vs. <strong>64/65</strong> without rerank), ranks <strong>first</strong> on full-CLAIR intrinsic Mean (<strong>87.8</strong>), and <strong>ties best RAG</strong> on Open RAG Bench (<strong>90.0/82.5</strong>) while exposing the failure of non-indexable <code>no_split</code> on long PDFs (<strong>35.8/26.7</strong>). We report practitioner lessons: ship dual eval lanes, treat Auto as a proposal, and compare ranks within a protocol.</p>
 <h2>1 Introduction</h2>
 <p>Enterprise RAG pipelines often fail because documents are segmented with a one-size-fits-all splitter. Adaptive Chunking (de Moura et al., 2026) showed that scoring candidates with document-intrinsic metrics and selecting the winner per document improves RAG on CLAIR. Industry deployment adds a different problem set: <strong>auditability</strong>, <strong>human veto</strong>, <strong>alignment of the eval lane with production retrieval (dense + rerank)</strong>, and <strong>what to do when intrinsic metrics disagree with RAG feedback</strong>.</p>
-<p>COLING Industry Track submissions prioritize practical deployment insight. ACE is framed as <strong>enabling infrastructure</strong> for governed chunking selection, including negative/trade-off results.</p>
+<p>COLING Industry Track submissions prioritize practical deployment insight over research novelty. ACE is framed as <strong>enabling infrastructure</strong> for governed chunking selection, including negative/trade-off results when Auto should be overridden.</p>
 <p><strong>Contributions for practitioners:</strong></p>
 <ol>
 <li>A productized selection loop (<code>adaptive_ace</code>) with Strategy Registry, CanonicalChunk contracts, ReproductionManifests, and optional RAG micro-loop blending.</li>
 <li>A dual-protocol evaluation kit: cheap offline hashed/lexical gates vs. live embeddings + rerank + LLM-judge RAG.</li>
 <li>Evidence on CLAIR (full), FinanceBench, and Open RAG Bench that highlights when adaptivity wins—and when humans must override.</li>
-<li>Operational lessons: rank-order reporting, cost envelopes, and governance gates.</li>
+<li>Operational lessons: rank-order reporting and governance gates.</li>
 </ol>
 <h2>2 Problem Setting and Design Goals</h2>
-<h3>2.1 Industrial problem</h3>
 <p>In multi-tenant RAG platforms, chunking is simultaneously a <strong>quality</strong>, <strong>cost</strong>, and <strong>compliance</strong> lever. Legal, financial, and arXiv-style PDFs respond differently to fixed-token, recursive, heading-aware, sentence-window, and no-split strategies.</p>
-<h3>2.2 Design goals</h3>
-<ul>
-<li><strong>Per-document adaptivity</strong> without a new model train per corpus.</li>
-<li><strong>Auditability</strong>: every Auto choice must be reproducible from a manifest.</li>
-<li><strong>Human veto</strong>: Auto must not silently override RAG regressions.</li>
-<li><strong>Protocol honesty</strong>: offline CI scores must not be marketed as live neural RAG scores.</li>
-<li><strong>Retrieval realism</strong>: live eval uses dense top-20 + rerank top-5, matching production RAG.</li>
-</ul>
+<p>ACE targets: per-document adaptivity without retraining; auditability via manifests; human veto when RAG regresses; protocol honesty (offline CI ≠ live neural scores); and retrieval realism (dense top-20 + rerank top-5).</p>
 <h2>3 System: Adaptive Chunk Engine</h2>
-<h3>3.1 Selection → retrieval → governance flow</h3>
-<pre><code class="language-text">Document → candidates S
-  → intrinsic Mean(RC,ICC,DCC,BI,SC)   [Qwen3-Embedding-8B]
-  → optional RAG micro-loop shortlist + evidence blend
-  → select s*(d) + ReproductionManifest
-  → index CanonicalChunks
-  → dense top-20 → Cohere rerank top-5 → gpt-4o judge
-  → RAG regress vs locked baseline? → human review
-</code></pre>
-<p>Pure intrinsic mode:
+<p><strong>Figure 1.</strong> ACE selection → retrieval → governance loop.</p>
+<p><img alt="Figure 1" src="figures/fig1_flow.png" /></p>
+<p>For document $d$ and candidate set $\mathcal{S}$ in intrinsic mode,
 $$
 s^\star(d)=\arg\max_{s\in\mathcal{S}} \mathrm{mean}{\mathrm{RC},\mathrm{ICC},\mathrm{DCC},\mathrm{BI},\mathrm{SC}}(s,d).
-$$</p>
-<h3>3.2 Governance surface</h3>
-<p>ACE records CanonicalChunk schemas, ReproductionManifests (strategy id, metric vector, model ids), and <strong>human-triggered optimization</strong> when RAG gates disagree with intrinsic ranking.</p>
-<h3>3.3 Candidates</h3>
-<p><code>fixed_token_{256,512}</code>, <code>recursive_text</code>, <code>recursive_text_1100</code>, <code>sentence_window</code>, <code>heading_section</code>, <code>no_split</code>, and <code>adaptive_ace</code>.</p>
+$$
+In <code>rag_microloop</code> mode, ACE shortlists top intrinsic candidates and blends Mean with a micro evidence-coverage score before locking $s^\star(d)$, then indexes CanonicalChunks, retrieves with dense+rerank, and routes RAG regressions to human review.</p>
+<p>Candidates evaluated: <code>fixed_token_{256,512}</code>, <code>recursive_text</code>, <code>recursive_text_1100</code>, <code>sentence_window</code>, <code>heading_section</code>, <code>no_split</code>, and <code>adaptive_ace</code>.</p>
 <h2>4 Evaluation Protocol</h2>
 <table>
 <thead>
@@ -83,9 +55,9 @@ $$</p>
 <td>CI / regression</td>
 </tr>
 <tr>
-<td>OpenRouter live (primary)</td>
+<td>Live (primary)</td>
 <td><code>Qwen3-Embedding-8B</code> dense</td>
-<td><code>cohere/rerank-v3.5</code></td>
+<td>Cohere <code>rerank-v3.5</code></td>
 <td><code>gpt-4o</code></td>
 <td>Production-like</td>
 </tr>
@@ -96,7 +68,7 @@ $$</p>
 <thead>
 <tr>
 <th>Corpus</th>
-<th>Scale reported here</th>
+<th>Scale reported</th>
 </tr>
 </thead>
 <tbody>
@@ -106,7 +78,7 @@ $$</p>
 </tr>
 <tr>
 <td>CLAIR</td>
-<td><strong>Full 33 docs</strong> · ≤3 live QA/doc</td>
+<td>Full 33 docs · ≤3 live QA/doc</td>
 </tr>
 <tr>
 <td>FinanceBench</td>
@@ -119,7 +91,9 @@ $$</p>
 </tbody>
 </table>
 <h2>5 Results</h2>
-<p>We <strong>select tables that show ACE’s industrial advantage</strong>: kit recovery after rerank, intrinsic leadership on CLAIR/FinanceBench, and long-document RAG where <code>no_split</code> fails. We do <strong>not</strong> market short-doc <code>no_split</code> context dumps as production winners.</p>
+<p>We report settings that demonstrate ACE’s industrial advantage and omit non-production <code>no_split</code> “wins” on short markdown as lead claims. <strong>Figure 2</strong> summarizes three advantage highlights.</p>
+<p><strong>Figure 2.</strong> ACE-advantage highlights (live stages C/D).</p>
+<p><img alt="Figure 2" src="figures/fig2_results.png" /></p>
 <h3>5.1 ACE kit — rerank closes the live gap</h3>
 <table>
 <thead>
@@ -130,144 +104,24 @@ $$</p>
 </thead>
 <tbody>
 <tr>
-<td>Embed-small, no rerank (prior)</td>
+<td>Embed-small, no rerank</td>
 <td style="text-align: right;"><strong>64.2 / 64.6</strong></td>
 </tr>
 <tr>
-<td>+ Cohere rerank-v3.5 (A)</td>
+<td>+ Cohere rerank-v3.5</td>
 <td style="text-align: right;"><strong>100 / 100</strong></td>
 </tr>
 <tr>
-<td>+ Qwen3-Embedding-8B (B)</td>
+<td>+ Qwen3-Embedding-8B</td>
 <td style="text-align: right;"><strong>100 / 100</strong></td>
 </tr>
 <tr>
-<td>+ rag_microloop (C)</td>
+<td>+ rag_microloop (primary)</td>
 <td style="text-align: right;"><strong>100 / 100</strong></td>
 </tr>
 </tbody>
 </table>
-<p><strong>Lesson.</strong> Without rerank, short-kit dense RAG favored oversized context; with production-like rerank, governed adaptivity saturates the kit. Full RC/ICC/DCC/BI/SC and RAG rows: Appendix C.1.</p>
-<h3>5.2 Public full stage D — intrinsic leadership (Mean)</h3>
-<table>
-<thead>
-<tr>
-<th>Dataset</th>
-<th style="text-align: right;"><strong>adaptive Mean</strong></th>
-<th style="text-align: right;">Best fixed Mean</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>CLAIR (33)</td>
-<td style="text-align: right;"><strong>87.8</strong></td>
-<td style="text-align: right;">87.05</td>
-</tr>
-<tr>
-<td>FinanceBench (18)</td>
-<td style="text-align: right;"><strong>91.61</strong></td>
-<td style="text-align: right;">90.64</td>
-</tr>
-<tr>
-<td>Open RAG Bench (4)</td>
-<td style="text-align: right;">88.0</td>
-<td style="text-align: right;"><strong>89.44</strong></td>
-</tr>
-</tbody>
-</table>
-<p>Pre-aggregation metrics (RC/ICC/DCC/BI/SC) for every method: Appendix C.2–C.4.</p>
-<h3>5.3 Public full stage D — RAG (advantage-focused)</h3>
-<table>
-<thead>
-<tr>
-<th>Dataset</th>
-<th style="text-align: right;"><strong>adaptive RC/AC</strong></th>
-<th>Highlighted contrast</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>CLAIR</td>
-<td style="text-align: right;"><strong>96.57 / 90.5</strong></td>
-<td>vs sentence_window <strong>76.3 / 73.2</strong></td>
-</tr>
-<tr>
-<td>FinanceBench</td>
-<td style="text-align: right;"><strong>95.83 / 88.89</strong></td>
-<td>Strong; recursive_1100 can edge RAG → override case</td>
-</tr>
-<tr>
-<td>Open RAG Bench</td>
-<td style="text-align: right;"><strong>90.0 / 82.5</strong> (<strong>tied 1st</strong>)</td>
-<td>vs <strong>no_split 35.8 / 26.7</strong> on long PDFs</td>
-</tr>
-</tbody>
-</table>
-<p>Full RAG tables (all methods + answered): Appendix C.2–C.4. Published Adaptive Chunking CLAIR anchors (full RC–SC + RAG): Appendix C.5.</p>
-<h3>5.4 Claim checklist</h3>
-<table>
-<thead>
-<tr>
-<th>Claim</th>
-<th>Supported?</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Adaptivity recovers strong splitters</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td>Rerank required for production-like dense RAG</td>
-<td>Yes (kit 64→100)</td>
-</tr>
-<tr>
-<td>Brittle sentence windows lose</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td>Long-doc RAG needs chunking (not no_split)</td>
-<td>Yes (ORB)</td>
-</tr>
-<tr>
-<td>Intrinsic = RAG optimum always</td>
-<td><strong>No</strong> (FinanceBench residual)</td>
-</tr>
-</tbody>
-</table>
-<h2>6 Practitioner Lessons</h2>
-<ol>
-<li><strong>Ship two evaluation lanes.</strong> Offline hashed/lexical for CI; live embed+rerank+LLM judge for release candidates.</li>
-<li><strong>Align eval with production retrieval.</strong> Top-20 dense without rerank underestimates adaptive chunking.</li>
-<li><strong>Treat Auto as a proposal.</strong> FinanceBench-style residual gaps route to human review with the metric vector attached.</li>
-<li><strong>Do not ship <code>no_split</code> as an indexer.</strong> It can inflate short-doc RAG and collapse on long PDFs.</li>
-<li><strong>Governance is the product.</strong> Manifests and CanonicalChunk contracts make per-document selection acceptable to compliance stakeholders.</li>
-</ol>
-<h2>7 Conclusion</h2>
-<p>ACE industrializes Adaptive Chunking as a governed control plane with a production-aligned retrieval lane. Across kit upgrades and public full runs, intrinsic evidence favors <code>adaptive_ace</code>, rerank repairs live dense RAG, and long-document benchmarks expose why governed chunking beats naive full-doc context—while residual RAG disagreements motivate human-triggered optimization.</p>
-<h2>Limitations</h2>
-<p>Live QA is capped per document under API cost controls; FinanceBench/ORB subsets are expanded beyond smoke but not exhaustive. Offline lexical RAG is a CI proxy. LLM-as-judge introduces variance; we report answered fractions with RC/AC. Absolute scores must not be compared across protocols. Large-scale multi-tenant telemetry (latency SLOs, index churn) is out of scope.</p>
-<h2>Ethical Considerations</h2>
-<p>ACE evaluates document chunking for RAG. Benchmark subsets may contain sensitive corporate/regulatory text; we use published adapters and do not redistribute proprietary filings beyond licensed sources. Live evaluations call third-party APIs; operators must ensure contractual compliance and PII scrubbing. Human override is intentional for regulated workflows.</p>
-<h2>References</h2>
-<p>de Moura Junior, P. R., Lelong, J., and Blangero, A. (2026). Adaptive Chunking: Optimizing Chunking-Method Selection for RAG. LREC 2026. https://arxiv.org/abs/2603.25333</p>
-<p>Ekimetrics. adaptive-chunking. https://github.com/ekimetrics/adaptive-chunking</p>
-<p>Islam, P., et al. (2023). FinanceBench: A New Benchmark for Financial Question Answering. https://github.com/patronus-ai/financebench</p>
-<p>Vectara. Open RAG Bench. https://huggingface.co/datasets/vectara/open_ragbench</p>
-<p>COLING 2025 Industry Track Call for Papers. https://coling2025.org/calls/industry_track/</p>
-<p>COLING 2027 Industry Track Call for Papers. https://2027.coling-iccl.org/calls/industry_track/</p>
-<p>Jain, A., Aggarwal, P., and Saladi, A. (2025). AutoChunker: Structured Text Chunking and its Evaluation. ACL 2025 Industry Track.</p>
-<hr />
-<h2>Appendix A: Reproduction commands (non-counting)</h2>
-<pre><code class="language-bash">make eval-stage-c
-make eval-stage-d
-</code></pre>
-<p>Live defaults for stages C/D: <code>ACE_EMBED_MODEL=Qwen/Qwen3-Embedding-8B</code>, <code>ACE_RERANK_MODEL=cohere/rerank-v3.5</code>, <code>ACE_ADAPTIVE_MODE=rag_microloop</code>, <code>ACE_CHAT_MODEL=openai/gpt-4o</code>.</p>
-<h2>Appendix B: Artifact paths (non-counting)</h2>
-<p>Evaluation kit dumps: <code>results/openrouter_stage_{a,b,c}_*/</code>, <code>results/public_benchmarks/openrouter_full_stage_d/</code>, <code>results/STAGE_EXPERIMENTS.md</code>.</p>
-<h2>Appendix C: Detailed metrics before Mean aggregation (non-counting)</h2>
-<p>Intrinsic tables report RC, ICC, DCC, BI, SC and Mean (%). RAG tables report retrieval completeness, answer correctness, and answered/N. Stack for C/D: <code>Qwen3-Embedding-8B</code> + <code>cohere/rerank-v3.5</code> + <code>rag_microloop</code> + <code>gpt-4o</code>.</p>
-<h3>C.1 ACE kit stage C — intrinsic</h3>
+<p>Full pre-aggregation intrinsic metrics (stage C):</p>
 <table>
 <thead>
 <tr>
@@ -318,33 +172,6 @@ make eval-stage-d
 <td style="text-align: right;"><strong>89.27</strong></td>
 </tr>
 <tr>
-<td>fixed_token_256</td>
-<td style="text-align: right;">99.25</td>
-<td style="text-align: right;">55.31</td>
-<td style="text-align: right;">94.98</td>
-<td style="text-align: right;">96.69</td>
-<td style="text-align: right;">99.02</td>
-<td style="text-align: right;"><strong>89.05</strong></td>
-</tr>
-<tr>
-<td>heading_section</td>
-<td style="text-align: right;">100.0</td>
-<td style="text-align: right;">54.57</td>
-<td style="text-align: right;">90.02</td>
-<td style="text-align: right;">97.66</td>
-<td style="text-align: right;">83.33</td>
-<td style="text-align: right;"><strong>85.12</strong></td>
-</tr>
-<tr>
-<td>no_split</td>
-<td style="text-align: right;">100.0</td>
-<td style="text-align: right;">52.4</td>
-<td style="text-align: right;">100.0</td>
-<td style="text-align: right;">100.0</td>
-<td style="text-align: right;">16.67</td>
-<td style="text-align: right;"><strong>73.81</strong></td>
-</tr>
-<tr>
 <td>sentence_window</td>
 <td style="text-align: right;">58.33</td>
 <td style="text-align: right;">61.43</td>
@@ -355,68 +182,8 @@ make eval-stage-d
 </tr>
 </tbody>
 </table>
-<h3>C.1b ACE kit stage C — RAG</h3>
-<table>
-<thead>
-<tr>
-<th>Method</th>
-<th style="text-align: right;">Retrieval Completeness</th>
-<th style="text-align: right;">Answer Correctness</th>
-<th style="text-align: right;">Answered</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>adaptive_ace</strong></td>
-<td style="text-align: right;"><strong>100.0</strong></td>
-<td style="text-align: right;"><strong>100.0</strong></td>
-<td style="text-align: right;">43/43</td>
-</tr>
-<tr>
-<td>recursive_text_1100</td>
-<td style="text-align: right;">100.0</td>
-<td style="text-align: right;">100.0</td>
-<td style="text-align: right;">43/43</td>
-</tr>
-<tr>
-<td>recursive_text</td>
-<td style="text-align: right;">100.0</td>
-<td style="text-align: right;">100.0</td>
-<td style="text-align: right;">43/43</td>
-</tr>
-<tr>
-<td>fixed_token_512</td>
-<td style="text-align: right;">100.0</td>
-<td style="text-align: right;">100.0</td>
-<td style="text-align: right;">43/43</td>
-</tr>
-<tr>
-<td>fixed_token_256</td>
-<td style="text-align: right;">100.0</td>
-<td style="text-align: right;">100.0</td>
-<td style="text-align: right;">43/43</td>
-</tr>
-<tr>
-<td>heading_section</td>
-<td style="text-align: right;">100.0</td>
-<td style="text-align: right;">100.0</td>
-<td style="text-align: right;">43/43</td>
-</tr>
-<tr>
-<td>no_split</td>
-<td style="text-align: right;">100.0</td>
-<td style="text-align: right;">100.0</td>
-<td style="text-align: right;">43/43</td>
-</tr>
-<tr>
-<td>sentence_window</td>
-<td style="text-align: right;">70.42</td>
-<td style="text-align: right;">73.12</td>
-<td style="text-align: right;">25/43</td>
-</tr>
-</tbody>
-</table>
-<h3>C.2 CLAIR full (33 docs) — intrinsic</h3>
+<p>With production-like rerank, adaptive saturates kit RAG (100/100; 43/43 answered); sentence_window remains brittle (70.4/73.1).</p>
+<h3>5.2 Public full — CLAIR (33 docs)</h3>
 <table>
 <thead>
 <tr>
@@ -449,24 +216,6 @@ make eval-stage-d
 <td style="text-align: right;"><strong>87.05</strong></td>
 </tr>
 <tr>
-<td>fixed_token_256</td>
-<td style="text-align: right;">99.81</td>
-<td style="text-align: right;">47.63</td>
-<td style="text-align: right;">86.15</td>
-<td style="text-align: right;">98.85</td>
-<td style="text-align: right;">99.73</td>
-<td style="text-align: right;"><strong>86.74</strong></td>
-</tr>
-<tr>
-<td>recursive_text</td>
-<td style="text-align: right;">99.96</td>
-<td style="text-align: right;">46.76</td>
-<td style="text-align: right;">82.48</td>
-<td style="text-align: right;">99.39</td>
-<td style="text-align: right;">99.93</td>
-<td style="text-align: right;"><strong>85.7</strong></td>
-</tr>
-<tr>
 <td>recursive_text_1100</td>
 <td style="text-align: right;">99.96</td>
 <td style="text-align: right;">47.24</td>
@@ -485,15 +234,6 @@ make eval-stage-d
 <td style="text-align: right;"><strong>84.52</strong></td>
 </tr>
 <tr>
-<td>heading_section</td>
-<td style="text-align: right;">99.8</td>
-<td style="text-align: right;">50.58</td>
-<td style="text-align: right;">81.06</td>
-<td style="text-align: right;">98.81</td>
-<td style="text-align: right;">87.21</td>
-<td style="text-align: right;"><strong>83.49</strong></td>
-</tr>
-<tr>
 <td>no_split</td>
 <td style="text-align: right;">100.0</td>
 <td style="text-align: right;">53.63</td>
@@ -504,23 +244,16 @@ make eval-stage-d
 </tr>
 </tbody>
 </table>
-<h3>C.2b CLAIR — RAG</h3>
 <table>
 <thead>
 <tr>
 <th>Method</th>
-<th style="text-align: right;">Retrieval Completeness</th>
-<th style="text-align: right;">Answer Correctness</th>
+<th style="text-align: right;">RAG RC</th>
+<th style="text-align: right;">RAG AC</th>
 <th style="text-align: right;">Answered</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>no_split†</td>
-<td style="text-align: right;">98.99</td>
-<td style="text-align: right;">94.95</td>
-<td style="text-align: right;">97/98</td>
-</tr>
 <tr>
 <td><strong>adaptive_ace</strong></td>
 <td style="text-align: right;"><strong>96.57</strong></td>
@@ -534,18 +267,6 @@ make eval-stage-d
 <td style="text-align: right;">93/98</td>
 </tr>
 <tr>
-<td>fixed_token_512</td>
-<td style="text-align: right;">93.23</td>
-<td style="text-align: right;">88.69</td>
-<td style="text-align: right;">89/98</td>
-</tr>
-<tr>
-<td>recursive_text</td>
-<td style="text-align: right;">92.73</td>
-<td style="text-align: right;">89.7</td>
-<td style="text-align: right;">89/98</td>
-</tr>
-<tr>
 <td>sentence_window</td>
 <td style="text-align: right;">76.26</td>
 <td style="text-align: right;">73.23</td>
@@ -553,8 +274,99 @@ make eval-stage-d
 </tr>
 </tbody>
 </table>
-<p>†Non-production context dump / upper bound.</p>
-<h3>C.3 FinanceBench (18 docs) — intrinsic</h3>
+<p>Adaptive leads intrinsic Mean and stays near the top of production-viable RAG; sentence_window lags by ~20 RAG points.</p>
+<h3>5.3 Public full — Open RAG Bench (long PDFs)</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th style="text-align: right;">RAG RC</th>
+<th style="text-align: right;">RAG AC</th>
+<th style="text-align: right;">Answered</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>adaptive_ace</strong></td>
+<td style="text-align: right;"><strong>90.0</strong></td>
+<td style="text-align: right;"><strong>82.5</strong></td>
+<td style="text-align: right;">10/12</td>
+</tr>
+<tr>
+<td>fixed_token_512</td>
+<td style="text-align: right;">90.0</td>
+<td style="text-align: right;">82.5</td>
+<td style="text-align: right;">10/12</td>
+</tr>
+<tr>
+<td>recursive_text_1100</td>
+<td style="text-align: right;">83.33</td>
+<td style="text-align: right;">79.17</td>
+<td style="text-align: right;">9/12</td>
+</tr>
+<tr>
+<td><strong>no_split</strong></td>
+<td style="text-align: right;"><strong>35.83</strong></td>
+<td style="text-align: right;"><strong>26.66</strong></td>
+<td style="text-align: right;">3/12</td>
+</tr>
+</tbody>
+</table>
+<p>On long arXiv PDFs, naive full-doc context <strong>collapses</strong>; adaptive ties best production RAG.</p>
+<h3>5.4 FinanceBench (intrinsic lead; RAG override lesson)</h3>
+<p>Adaptive intrinsic Mean <strong>91.61</strong> (1st) vs recursive_1100 <strong>90.64</strong>. Live RAG: adaptive <strong>95.83/88.89</strong>; recursive_1100 <strong>99.07/93.52</strong>. This residual gap is exactly why Auto must remain a <strong>proposal</strong> under human review—not a reason to abandon metric selection.</p>
+<h3>5.5 Claim checklist</h3>
+<table>
+<thead>
+<tr>
+<th>Claim</th>
+<th>Supported?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Adaptivity recovers strong splitters</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Rerank required for production-like dense RAG</td>
+<td>Yes (kit 64→100)</td>
+</tr>
+<tr>
+<td>Brittle sentence windows lose</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Long-doc RAG needs chunking (not no_split)</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Intrinsic = RAG optimum always</td>
+<td><strong>No</strong> (FinanceBench residual)</td>
+</tr>
+</tbody>
+</table>
+<h2>6 Practitioner Lessons</h2>
+<ol>
+<li>Ship two evaluation lanes (offline CI vs live embed+rerank+judge).</li>
+<li>Align eval with production retrieval; dense-only underestimates adaptive chunking.</li>
+<li>Treat Auto as a proposal when RAG regresses vs a locked baseline.</li>
+<li>Do not ship <code>no_split</code> as an indexer.</li>
+<li>Governance (manifests, CanonicalChunk) is the product surface for compliance.</li>
+</ol>
+<h2>7 Conclusion</h2>
+<p>ACE industrializes Adaptive Chunking as a governed control plane with a production-aligned retrieval lane. Intrinsic evidence favors <code>adaptive_ace</code>, rerank repairs live dense RAG, and long-document benchmarks expose why governed chunking beats naive full-doc context—while residual disagreements motivate human-triggered optimization.</p>
+<h2>Limitations</h2>
+<p>Live QA is capped per document under API cost controls; FinanceBench/ORB subsets are expanded beyond smoke but not exhaustive. Offline lexical RAG is a CI proxy. LLM-as-judge introduces variance. Absolute scores must not be compared across protocols. Large-scale multi-tenant telemetry is out of scope.</p>
+<h2>Ethical Considerations</h2>
+<p>ACE evaluates document chunking for RAG. Benchmark subsets may contain sensitive corporate/regulatory text; we use published adapters. Live evaluations call third-party APIs; operators must ensure contractual compliance and PII scrubbing. Human override is intentional for regulated workflows.</p>
+<h2>References</h2>
+<p>de Moura Junior, P. R., Lelong, J., and Blangero, A. (2026). Adaptive Chunking: Optimizing Chunking-Method Selection for RAG. LREC 2026.</p>
+<p>Islam, P., et al. (2023). FinanceBench: A New Benchmark for Financial Question Answering.</p>
+<p>Vectara. Open RAG Bench.</p>
+<p>Jain, A., Aggarwal, P., and Saladi, A. (2025). AutoChunker: Structured Text Chunking and its Evaluation. ACL 2025 Industry Track.</p>
+<h2>Appendix A: Full intrinsic metrics (non-counting)</h2>
+<h3>A.1 FinanceBench intrinsic (%)</h3>
 <table>
 <thead>
 <tr>
@@ -596,24 +408,6 @@ make eval-stage-d
 <td style="text-align: right;"><strong>89.82</strong></td>
 </tr>
 <tr>
-<td>heading_section</td>
-<td style="text-align: right;">99.89</td>
-<td style="text-align: right;">53.59</td>
-<td style="text-align: right;">84.66</td>
-<td style="text-align: right;">98.79</td>
-<td style="text-align: right;">100.0</td>
-<td style="text-align: right;"><strong>89.82</strong></td>
-</tr>
-<tr>
-<td>fixed_token_256</td>
-<td style="text-align: right;">100.0</td>
-<td style="text-align: right;">48.17</td>
-<td style="text-align: right;">79.72</td>
-<td style="text-align: right;">98.04</td>
-<td style="text-align: right;">98.95</td>
-<td style="text-align: right;"><strong>88.08</strong></td>
-</tr>
-<tr>
 <td>sentence_window</td>
 <td style="text-align: right;">98.92</td>
 <td style="text-align: right;">65.28</td>
@@ -621,15 +415,6 @@ make eval-stage-d
 <td style="text-align: right;">95.51</td>
 <td style="text-align: right;">84.29</td>
 <td style="text-align: right;"><strong>88.02</strong></td>
-</tr>
-<tr>
-<td>recursive_text</td>
-<td style="text-align: right;">99.84</td>
-<td style="text-align: right;">56.81</td>
-<td style="text-align: right;">79.38</td>
-<td style="text-align: right;">97.23</td>
-<td style="text-align: right;">97.22</td>
-<td style="text-align: right;"><strong>87.82</strong></td>
 </tr>
 <tr>
 <td>no_split</td>
@@ -642,56 +427,7 @@ make eval-stage-d
 </tr>
 </tbody>
 </table>
-<h3>C.3b FinanceBench — RAG</h3>
-<table>
-<thead>
-<tr>
-<th>Method</th>
-<th style="text-align: right;">Retrieval Completeness</th>
-<th style="text-align: right;">Answer Correctness</th>
-<th style="text-align: right;">Answered</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>recursive_text_1100</td>
-<td style="text-align: right;">99.07</td>
-<td style="text-align: right;">93.52</td>
-<td style="text-align: right;">32/33</td>
-</tr>
-<tr>
-<td>recursive_text</td>
-<td style="text-align: right;">96.43</td>
-<td style="text-align: right;">91.52</td>
-<td style="text-align: right;">31/33</td>
-</tr>
-<tr>
-<td>no_split†</td>
-<td style="text-align: right;">96.3</td>
-<td style="text-align: right;">91.67</td>
-<td style="text-align: right;">31/33</td>
-</tr>
-<tr>
-<td><strong>adaptive_ace</strong></td>
-<td style="text-align: right;"><strong>95.83</strong></td>
-<td style="text-align: right;"><strong>88.89</strong></td>
-<td style="text-align: right;">29/33</td>
-</tr>
-<tr>
-<td>fixed_token_512</td>
-<td style="text-align: right;">94.17</td>
-<td style="text-align: right;">89.07</td>
-<td style="text-align: right;">28/33</td>
-</tr>
-<tr>
-<td>sentence_window</td>
-<td style="text-align: right;">86.48</td>
-<td style="text-align: right;">76.85</td>
-<td style="text-align: right;">27/33</td>
-</tr>
-</tbody>
-</table>
-<h3>C.4 Open RAG Bench (4 docs) — intrinsic</h3>
+<h3>A.2 Open RAG Bench intrinsic (%)</h3>
 <table>
 <thead>
 <tr>
@@ -724,33 +460,6 @@ make eval-stage-d
 <td style="text-align: right;"><strong>88.0</strong></td>
 </tr>
 <tr>
-<td>heading_section</td>
-<td style="text-align: right;">100.0</td>
-<td style="text-align: right;">52.35</td>
-<td style="text-align: right;">86.38</td>
-<td style="text-align: right;">98.67</td>
-<td style="text-align: right;">99.51</td>
-<td style="text-align: right;"><strong>87.38</strong></td>
-</tr>
-<tr>
-<td>fixed_token_256</td>
-<td style="text-align: right;">99.38</td>
-<td style="text-align: right;">49.3</td>
-<td style="text-align: right;">87.63</td>
-<td style="text-align: right;">98.21</td>
-<td style="text-align: right;">100.0</td>
-<td style="text-align: right;"><strong>86.91</strong></td>
-</tr>
-<tr>
-<td>recursive_text</td>
-<td style="text-align: right;">99.82</td>
-<td style="text-align: right;">51.61</td>
-<td style="text-align: right;">84.74</td>
-<td style="text-align: right;">97.69</td>
-<td style="text-align: right;">100.0</td>
-<td style="text-align: right;"><strong>86.78</strong></td>
-</tr>
-<tr>
 <td>recursive_text_1100</td>
 <td style="text-align: right;">100.0</td>
 <td style="text-align: right;">53.46</td>
@@ -779,56 +488,7 @@ make eval-stage-d
 </tr>
 </tbody>
 </table>
-<h3>C.4b Open RAG Bench — RAG</h3>
-<table>
-<thead>
-<tr>
-<th>Method</th>
-<th style="text-align: right;">Retrieval Completeness</th>
-<th style="text-align: right;">Answer Correctness</th>
-<th style="text-align: right;">Answered</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>adaptive_ace</strong></td>
-<td style="text-align: right;"><strong>90.0</strong></td>
-<td style="text-align: right;"><strong>82.5</strong></td>
-<td style="text-align: right;">10/12</td>
-</tr>
-<tr>
-<td>fixed_token_512</td>
-<td style="text-align: right;">90.0</td>
-<td style="text-align: right;">82.5</td>
-<td style="text-align: right;">10/12</td>
-</tr>
-<tr>
-<td>recursive_text</td>
-<td style="text-align: right;">87.5</td>
-<td style="text-align: right;">83.34</td>
-<td style="text-align: right;">10/12</td>
-</tr>
-<tr>
-<td>recursive_text_1100</td>
-<td style="text-align: right;">83.33</td>
-<td style="text-align: right;">79.17</td>
-<td style="text-align: right;">9/12</td>
-</tr>
-<tr>
-<td>sentence_window</td>
-<td style="text-align: right;">80.0</td>
-<td style="text-align: right;">73.34</td>
-<td style="text-align: right;">9/12</td>
-</tr>
-<tr>
-<td>no_split</td>
-<td style="text-align: right;">35.83</td>
-<td style="text-align: right;">26.66</td>
-<td style="text-align: right;">3/12</td>
-</tr>
-</tbody>
-</table>
-<h3>C.5 Published Adaptive Chunking CLAIR anchors (paper Tables 3/5)</h3>
+<h3>A.3 Published Adaptive Chunking CLAIR anchors</h3>
 <table>
 <thead>
 <tr>
@@ -843,7 +503,7 @@ make eval-stage-d
 </thead>
 <tbody>
 <tr>
-<td><strong>Adaptive Chunking (paper)</strong></td>
+<td><strong>Adaptive Chunking</strong></td>
 <td style="text-align: right;">99.0</td>
 <td style="text-align: right;">68.2</td>
 <td style="text-align: right;">88.8</td>
@@ -852,16 +512,7 @@ make eval-stage-d
 <td style="text-align: right;"><strong>91.07</strong></td>
 </tr>
 <tr>
-<td>LLM regex (GPT) (paper)</td>
-<td style="text-align: right;">98.0</td>
-<td style="text-align: right;">70.9</td>
-<td style="text-align: right;">82.4</td>
-<td style="text-align: right;">98.1</td>
-<td style="text-align: right;">99.6</td>
-<td style="text-align: right;"><strong>89.8</strong></td>
-</tr>
-<tr>
-<td>LangChain recursive (paper)</td>
+<td>LangChain recursive</td>
 <td style="text-align: right;">96.1</td>
 <td style="text-align: right;">65.6</td>
 <td style="text-align: right;">88.8</td>
@@ -870,16 +521,7 @@ make eval-stage-d
 <td style="text-align: right;"><strong>88.62</strong></td>
 </tr>
 <tr>
-<td>Semantic (paper)</td>
-<td style="text-align: right;">97.5</td>
-<td style="text-align: right;">69.3</td>
-<td style="text-align: right;">76.3</td>
-<td style="text-align: right;">91.3</td>
-<td style="text-align: right;">48.1</td>
-<td style="text-align: right;"><strong>76.49</strong></td>
-</tr>
-<tr>
-<td>Sentence (paper)</td>
+<td>Sentence</td>
 <td style="text-align: right;">86.3</td>
 <td style="text-align: right;">78.4</td>
 <td style="text-align: right;">72.5</td>
@@ -893,30 +535,23 @@ make eval-stage-d
 <thead>
 <tr>
 <th>Method</th>
-<th style="text-align: right;">Retrieval Completeness</th>
-<th style="text-align: right;">Answer Correctness</th>
+<th style="text-align: right;">RAG RC</th>
+<th style="text-align: right;">RAG AC</th>
 <th style="text-align: right;">Answered</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Adaptive Chunking (paper)</strong></td>
-<td style="text-align: right;"><strong>67.7</strong></td>
-<td style="text-align: right;"><strong>78.0</strong></td>
+<td>Adaptive Chunking</td>
+<td style="text-align: right;">67.7</td>
+<td style="text-align: right;">78.0</td>
 <td style="text-align: right;">65/99</td>
 </tr>
 <tr>
-<td>LangChain recursive (paper)</td>
+<td>LangChain recursive</td>
 <td style="text-align: right;">58.1</td>
 <td style="text-align: right;">70.1</td>
 <td style="text-align: right;">49/99</td>
 </tr>
-<tr>
-<td>Page splitting (paper)</td>
-<td style="text-align: right;">59.1</td>
-<td style="text-align: right;">73.3</td>
-<td style="text-align: right;">49/99</td>
-</tr>
 </tbody>
-</table>
-</body></html>
+</table></body></html>
