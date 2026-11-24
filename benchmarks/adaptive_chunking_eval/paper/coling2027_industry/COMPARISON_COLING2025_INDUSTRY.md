@@ -80,7 +80,7 @@ CFP 明确：**重点不是 research novelty，而是复杂真实环境中的落
 | 审稿关注点 | 本稿现状 | 风险与补强建议 |
 |------------|----------|----------------|
 | 真实用户超出 NLP lab | 企业 RAG 控制面定位清晰 | 若有可公开的内部试点/用户角色，可在 camera-ready 补一句 |
-| Enabling infrastructure | Strategy Registry + Manifest | 加一张系统框图（LaTeX 定稿时） |
+| Enabling infrastructure | Strategy Registry + Manifest | ✅ 已加 Figure 1 流程框图 + Figure 2 优势结果图（见 DOCX / `figures/`） |
 | 方法可复现 | `make eval*` 命令 + 公开基准适配器 | 双盲期用匿名附件/匿名 repo |
 | 实证透明 | 双协议、answered 分数、成本 | 写明 smoke vs full，避免被批「夸大」 |
 | 负结果 / 权衡 | ACE-kit live、FinanceBench 覆盖 | **保留并前置**——这是 Industry 加分项 |
@@ -104,12 +104,14 @@ COLING 2025 Industry 录用分布强调：LLM 应用与评测、NLP 应用（含
 
 ## 7. 投稿行动清单
 
-1. 用 COLING 2027 official style（会议站模板）把 `paper.md` 转成 **≤6 页** PDF。  
-2. 双盲检查：作者、机构、可识别 URL、截图。  
-3. OpenReview 提交：<https://openreview.net/group?id=coling-iccl.org/COLING/2027/Industry_Track>  
-4. 类别/主题标签（若表单要求）：勾选 **Emerging / Enabling infrastructure** + **Evaluation & Negative Results**。  
-5. 可选补充材料：匿名 `results/` 表；**正文必须自洽**（审稿人可不看附录）。  
-6. 截止：**2026-11-30 AoE**。
+1. ✅ 已产出可编辑 DOCX：`ACE_COLING2027_Industry_Manuscript.docx`（含 Fig 1–2 + 优势筛选表）。  
+2. 用 COLING 2027 official style（会议站模板）把 DOCX/`manuscript_submission.md` 转成 **≤6 页** PDF（OpenReview 通常要 PDF）。  
+3. 双盲检查：作者、机构、可识别 URL、截图。  
+4. OpenReview 提交：<https://openreview.net/group?id=coling-iccl.org/COLING/2027/Industry_Track>  
+5. 类别/主题标签（若表单要求）：勾选 **Emerging / Enabling infrastructure** + **Evaluation & Negative Results**。  
+6. 可选补充材料：匿名 `results/` 表；**正文必须自洽**（审稿人可不看附录）。  
+7. 截止：**2026-11-30 AoE**。  
+8. 细节见 [`SUBMISSION_NOTES.md`](SUBMISSION_NOTES.md)。
 
 ---
 
