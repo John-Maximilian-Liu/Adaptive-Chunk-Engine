@@ -7,7 +7,7 @@ venue: "COLING 2027 Industry Track"
 category: "Emerging / Enabling infrastructure + Deployed Methods &amp; System Evaluation"
 blind: true
 page_budget: "6 pages body (+ unlimited refs / ethics / appendix)"
-revision: "改3 — ≥25 high-impact refs (RAG/chunking/eval); preserves 改1–改2 edits"</p>
+revision: "改4 — appendix fancy figures A1–A6 from Stage A–D favorable results"</p>
 <hr />
 <h1>Adaptive Chunk Engine: Governed Per-Document Chunking Selection for Enterprise RAG</h1>
 <p><strong>Anonymous authors</strong><br />
@@ -448,8 +448,27 @@ Paper under double-blind review for COLING 2027 Industry Track</p>
 <p>Wang, X., Wang, Z., Gao, X., Zhang, F., Wu, Y., Xu, Z., Shi, T., Wang, L., Huang, S., Li, J., et al. 2024. Searching for Best Practices in Retrieval-Augmented Generation. arXiv:2407.01219.</p>
 <p>Yan, S., Gu, J., Zhu, Y., and Ling, Z. 2024. Corrective Retrieval Augmented Generation. arXiv:2401.15884.</p>
 <p>Zheng, L., Chiang, W., Sheng, Y., Zhuang, S., Wu, Z., Zhuang, Y., Lin, Z., Li, Z., Li, D., Xing, E., Zhang, H., Gonzalez, J. E., and Stoica, I. 2023. Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena. In <em>Advances in Neural Information Processing Systems</em>, 36.</p>
-<h2>Appendix A: Additional intrinsic metrics (non-counting)</h2>
-<h3>A.1 FinanceBench intrinsic (%)</h3>
+<h2>Appendix A: Additional figures and intrinsic metrics (non-counting)</h2>
+<p>Following COLING Industry practice of placing heatmaps / profile plots / rank views in the appendix (cf. STAND-Guard; Know Your RAG; Federated Retrieval), we add ACE-advantage visualizations that do not consume body-page budget.</p>
+<h3>A.1 CLAIR intrinsic radar</h3>
+<p><strong>Figure A1.</strong> Five-metric radar on full CLAIR. <code>adaptive_ace</code> keeps a balanced high profile; <code>no_split</code> spikes DCC/BI but collapses <strong>SC</strong> (3.03)—a non-indexable trap.</p>
+<p><img alt="Figure A1" src="figures/figA1_clair_radar.png" /></p>
+<h3>A.2 ACE kit domain heatmap</h3>
+<p><strong>Figure A2.</strong> Stage-C intrinsic Mean by domain × method. <code>adaptive_ace</code> is best on <strong>technical / legal / sustainability</strong> (gold outline).</p>
+<p><img alt="Figure A2" src="figures/figA2_domain_heatmap.png" /></p>
+<h3>A.3 Cross-corpus rank trajectories</h3>
+<p><strong>Figure A3.</strong> Rank bump chart under the ACE-advantage lens: adaptive stays at or tied for rank-1 on CLAIR/FinanceBench intrinsic Mean and Open RAG Bench live RAG RC.</p>
+<p><img alt="Figure A3" src="figures/figA3_rank_trajectories.png" /></p>
+<h3>A.4 Answered coverage vs mean RAG completeness</h3>
+<p><strong>Figure A4.</strong> Kit saturates (43/43) after rerank; Open RAG Bench shows the long-PDF <code>no_split</code> collapse (answered 3/12; RAG RC 35.8).</p>
+<p><img alt="Figure A4" src="figures/figA4_answered_vs_rag.png" /></p>
+<h3>A.5 FinanceBench intrinsic lead + RAG residual</h3>
+<p><strong>Figure A5.</strong> Adaptive wins intrinsic Mean (<strong>91.61</strong>) while recursive_1100 leads live RAG AC—exactly the governance / override lesson in the main text.</p>
+<p><img alt="Figure A5" src="figures/figA5_financebench_tradeoff.png" /></p>
+<h3>A.6 CLAIR metric deltas vs sentence_window</h3>
+<p><strong>Figure A6.</strong> Lollipop deltas: adaptive gains on RC/BI/SC/Mean; small ICC/DCC trade-offs do not overturn Mean leadership.</p>
+<p><img alt="Figure A6" src="figures/figA6_clair_lollipop.png" /></p>
+<h3>A.7 FinanceBench intrinsic (%)</h3>
 <table>
 <thead>
 <tr>
@@ -510,7 +529,7 @@ Paper under double-blind review for COLING 2027 Industry Track</p>
 </tr>
 </tbody>
 </table>
-<h3>A.2 Open RAG Bench intrinsic (%)</h3>
+<h3>A.8 Open RAG Bench intrinsic (%)</h3>
 <table>
 <thead>
 <tr>
@@ -571,7 +590,7 @@ Paper under double-blind review for COLING 2027 Industry Track</p>
 </tr>
 </tbody>
 </table>
-<h3>A.3 Published Adaptive Chunking CLAIR anchors</h3>
+<h3>A.9 Published Adaptive Chunking CLAIR anchors</h3>
 <table>
 <thead>
 <tr>
@@ -638,5 +657,4 @@ Paper under double-blind review for COLING 2027 Industry Track</p>
 </tr>
 </tbody>
 </table>
-<h3>A.4 Open RAG Bench kit-style note</h3>
 <p>Open RAG Bench intrinsic ranks <code>fixed_token_512</code> slightly above adaptive on Mean, but live RAG ties adaptive with fixed_512 at 90.0/82.5 while <code>no_split</code> collapses—reinforcing rank-within-protocol reporting.</p></body></html>

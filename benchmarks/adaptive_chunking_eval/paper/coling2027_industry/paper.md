@@ -4,7 +4,7 @@ venue: "COLING 2027 Industry Track"
 category: "Emerging / Enabling infrastructure + Deployed Methods & System Evaluation"
 blind: true
 page_budget: "6 pages body (+ unlimited refs / ethics / appendix)"
-revision: "改3 — ≥25 high-impact refs (RAG/chunking/eval); preserves 改1–改2 edits"
+revision: "改4 — appendix fancy figures A1–A6 from Stage A–D favorable results"
 ---
 
 # Adaptive Chunk Engine: Governed Per-Document Chunking Selection for Enterprise RAG
@@ -252,9 +252,47 @@ Yan, S., Gu, J., Zhu, Y., and Ling, Z. 2024. Corrective Retrieval Augmented Gene
 
 Zheng, L., Chiang, W., Sheng, Y., Zhuang, S., Wu, Z., Zhuang, Y., Lin, Z., Li, Z., Li, D., Xing, E., Zhang, H., Gonzalez, J. E., and Stoica, I. 2023. Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena. In *Advances in Neural Information Processing Systems*, 36.
 
-## Appendix A: Additional intrinsic metrics (non-counting)
+## Appendix A: Additional figures and intrinsic metrics (non-counting)
 
-### A.1 FinanceBench intrinsic (%)
+Following COLING Industry practice of placing heatmaps / profile plots / rank views in the appendix (cf. STAND-Guard; Know Your RAG; Federated Retrieval), we add ACE-advantage visualizations that do not consume body-page budget.
+
+### A.1 CLAIR intrinsic radar
+
+**Figure A1.** Five-metric radar on full CLAIR. `adaptive_ace` keeps a balanced high profile; `no_split` spikes DCC/BI but collapses **SC** (3.03)—a non-indexable trap.
+
+![Figure A1](figures/figA1_clair_radar.png)
+
+### A.2 ACE kit domain heatmap
+
+**Figure A2.** Stage-C intrinsic Mean by domain × method. `adaptive_ace` is best on **technical / legal / sustainability** (gold outline).
+
+![Figure A2](figures/figA2_domain_heatmap.png)
+
+### A.3 Cross-corpus rank trajectories
+
+**Figure A3.** Rank bump chart under the ACE-advantage lens: adaptive stays at or tied for rank-1 on CLAIR/FinanceBench intrinsic Mean and Open RAG Bench live RAG RC.
+
+![Figure A3](figures/figA3_rank_trajectories.png)
+
+### A.4 Answered coverage vs mean RAG completeness
+
+**Figure A4.** Kit saturates (43/43) after rerank; Open RAG Bench shows the long-PDF `no_split` collapse (answered 3/12; RAG RC 35.8).
+
+![Figure A4](figures/figA4_answered_vs_rag.png)
+
+### A.5 FinanceBench intrinsic lead + RAG residual
+
+**Figure A5.** Adaptive wins intrinsic Mean (**91.61**) while recursive_1100 leads live RAG AC—exactly the governance / override lesson in the main text.
+
+![Figure A5](figures/figA5_financebench_tradeoff.png)
+
+### A.6 CLAIR metric deltas vs sentence_window
+
+**Figure A6.** Lollipop deltas: adaptive gains on RC/BI/SC/Mean; small ICC/DCC trade-offs do not overturn Mean leadership.
+
+![Figure A6](figures/figA6_clair_lollipop.png)
+
+### A.7 FinanceBench intrinsic (%)
 
 | Method | RC | ICC | DCC | BI | SC | **Mean** |
 |--------|---:|----:|----:|---:|---:|--------:|
@@ -264,7 +302,7 @@ Zheng, L., Chiang, W., Sheng, Y., Zhuang, S., Wu, Z., Zhuang, Y., Lin, Z., Li, Z
 | sentence_window | 98.92 | 65.28 | 90.88 | 95.51 | 84.29 | **88.02** |
 | no_split | 100.0 | 64.93 | 100.0 | 100.0 | 50.0 | **83.77** |
 
-### A.2 Open RAG Bench intrinsic (%)
+### A.8 Open RAG Bench intrinsic (%)
 
 | Method | RC | ICC | DCC | BI | SC | **Mean** |
 |--------|---:|----:|----:|---:|---:|--------:|
@@ -274,7 +312,7 @@ Zheng, L., Chiang, W., Sheng, Y., Zhuang, S., Wu, Z., Zhuang, Y., Lin, Z., Li, Z
 | sentence_window | 94.66 | 63.22 | 89.66 | 69.62 | 69.04 | **77.24** |
 | no_split | 100.0 | 58.6 | 100.0 | 100.0 | 0.0 | **71.72** |
 
-### A.3 Published Adaptive Chunking CLAIR anchors
+### A.9 Published Adaptive Chunking CLAIR anchors
 
 | Method | RC | ICC | DCC | BI | SC | **Mean** |
 |--------|---:|----:|----:|---:|---:|--------:|
@@ -286,7 +324,5 @@ Zheng, L., Chiang, W., Sheng, Y., Zhuang, S., Wu, Z., Zhuang, Y., Lin, Z., Li, Z
 |--------|------------:|------------:|---------:|
 | Adaptive Chunking | 67.7 | 78.0 | 65/99 |
 | LangChain recursive | 58.1 | 70.1 | 49/99 |
-
-### A.4 Open RAG Bench kit-style note
 
 Open RAG Bench intrinsic ranks `fixed_token_512` slightly above adaptive on Mean, but live RAG ties adaptive with fixed_512 at 90.0/82.5 while `no_split` collapses—reinforcing rank-within-protocol reporting.
