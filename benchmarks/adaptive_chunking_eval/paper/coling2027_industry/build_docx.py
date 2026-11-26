@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-"""Build a submission-oriented DOCX for COLING 2027 Industry Track."""
+"""Build expanded COLING 2027 Industry DOCX from manuscript_submission.md content.
+
+Preserves author edits from ACE_COLING2027_Industry_Manuscript（改1）.docx:
+- soften absolute wording; replace 'control plane' with auditable framework
+- clarify 100/100 as mean scores + answered counts
+- keep author-rewritten Figure 1 caption/prose + uploaded flowchart
+- ACL (author–year) references, not APA
+"""
 from __future__ import annotations
 
 from pathlib import Path
@@ -7,11 +14,12 @@ from pathlib import Path
 from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_LINE_SPACING
 from docx.oxml.ns import qn
-from docx.shared import Inches, Pt, RGBColor
+from docx.shared import Inches, Pt
 
 ROOT = Path(__file__).resolve().parent
 FIG = ROOT / "figures"
 OUT = ROOT / "ACE_COLING2027_Industry_Manuscript.docx"
+OUT_REV = ROOT / "ACE_COLING2027_Industry_Manuscript（改2）.docx"
 
 
 def set_run_font(run, *, size=11, bold=False, italic=False, name="Times New Roman"):
@@ -37,9 +45,16 @@ def add_para(doc, text, *, size=11, bold=False, italic=False, space_after=8, ali
 
 
 def add_heading(doc, text, level=1):
-    # Manual headings to keep Times New Roman / Industry style
     sizes = {1: 14, 2: 12, 3: 11}
     add_para(doc, text, size=sizes.get(level, 11), bold=True, space_after=6)
+
+
+def add_bullet(doc, text):
+    p = doc.add_paragraph(style="List Bullet")
+    p.clear()
+    run = p.add_run(text)
+    set_run_font(run, size=11)
+    p.paragraph_format.space_after = Pt(4)
 
 
 def add_table(doc, headers, rows, col_widths=None):
@@ -65,7 +80,7 @@ def add_table(doc, headers, rows, col_widths=None):
     doc.add_paragraph()
 
 
-def add_figure(doc, path: Path, caption: str, width=6.3):
+def add_figure(doc, path: Path, caption: str, width=6.2):
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     run = p.add_run()
@@ -85,7 +100,6 @@ def build():
     section.left_margin = Inches(1.0)
     section.right_margin = Inches(1.0)
 
-    # Title
     add_para(
         doc,
         "Adaptive Chunk Engine: Governed Per-Document Chunking Selection for Enterprise RAG",
@@ -107,112 +121,206 @@ def build():
     add_heading(doc, "Abstract", 1)
     add_para(
         doc,
-        "Chunking is a first-order design choice in enterprise Retrieval-Augmented Generation (RAG), "
-        "yet production systems still default to a single global splitter. Building on Adaptive Chunking "
-        "(LREC 2026), which selects a splitter per document using five intrinsic metrics (RC, ICC, DCC, BI, SC), "
-        "we present Adaptive Chunk Engine (ACE): an enterprise control plane that turns metric-guided selection "
-        "into an auditable product decision with strategy registries, reproduction manifests, a RAG micro-loop "
-        "selection objective, dense retrieval with cross-encoder reranking, and a human-triggered optimization gate. "
-        "Under a production-like stack (Qwen3-Embedding-8B, Cohere rerank-v3.5, rag_microloop, gpt-4o judge), "
-        "ACE recovers 100/100 RAG completeness/correctness on a controlled kit (vs. 64/65 without rerank), "
-        "ranks first on full-CLAIR intrinsic Mean (87.8), and ties best RAG on Open RAG Bench (90.0/82.5) "
-        "while exposing the failure of non-indexable no_split on long PDFs (35.8/26.7). We report practitioner "
-        "lessons: ship dual eval lanes, treat Auto as a proposal, and compare ranks within a protocol.",
+        "Chunking is a first-order design choice in enterprise Retrieval-Augmented Generation "
+        "(RAG), yet production systems often rely on a single global splitter. Building on "
+        "Adaptive Chunking (de Moura et al., 2026), which selects a splitter per document using "
+        "five intrinsic metrics (RC, ICC, DCC, BI, SC), we present Adaptive Chunk Engine (ACE): "
+        "an auditable framework for per-document chunking selection in enterprise RAG settings "
+        "that turns metric-guided selection into a product decision with strategy registries, "
+        "reproduction manifests, a RAG micro-loop selection objective, dense retrieval with "
+        "cross-encoder reranking, and a human-triggered optimization gate. Under a "
+        "production-like stack (Qwen3-Embedding-8B, Cohere rerank-v3.5, rag_microloop, gpt-4o "
+        "judge), ACE reaches mean RAG completeness/correctness of 100.0 / 100.0 on a controlled "
+        "kit (43/43 answered; vs. 64.2 / 64.6 without rerank), ranks first on full-CLAIR "
+        "intrinsic Mean (87.8), and ties best RAG on Open RAG Bench (90.0 / 82.5) while exposing "
+        "the failure of non-indexable no_split on long PDFs (35.8 / 26.7). We report practitioner "
+        "lessons: ship dual eval lanes, treat Auto as a proposal, and compare ranks within a "
+        "protocol.",
         align="justify",
     )
 
     add_heading(doc, "1 Introduction", 1)
     add_para(
         doc,
-        "Enterprise RAG pipelines often fail because documents are segmented with a one-size-fits-all splitter. "
-        "Adaptive Chunking (de Moura et al., 2026) showed that scoring candidates with document-intrinsic metrics "
-        "and selecting the winner per document improves RAG on CLAIR. Industry deployment adds auditability, "
-        "human veto, alignment of the eval lane with production retrieval (dense + rerank), and handling "
-        "disagreement between intrinsic metrics and RAG feedback.",
+        "Enterprise RAG pipelines often fail because documents are segmented with a "
+        "one-size-fits-all splitter. Adaptive Chunking (de Moura et al., 2026) showed that "
+        "scoring candidates with document-intrinsic metrics and selecting the winner per "
+        "document improves RAG on CLAIR. Industry deployment adds auditability, human veto, "
+        "alignment of the eval lane with production retrieval (dense + rerank), and handling "
+        "disagreement between intrinsic metrics and RAG feedback (Lewis et al., 2020; Gao et "
+        "al., 2024).",
         align="justify",
     )
     add_para(
         doc,
-        "COLING Industry Track submissions prioritize practical deployment insight over research novelty. "
-        "ACE is framed as enabling infrastructure for governed chunking selection, including negative/trade-off "
-        "results when Auto should be overridden.",
+        "COLING Industry Track submissions prioritize practical deployment insight over "
+        "research novelty. ACE is framed as enabling infrastructure for governed chunking "
+        "selection, including negative/trade-off results when Auto should be overridden.",
         align="justify",
     )
     add_para(doc, "Contributions for practitioners:", bold=True, space_after=4)
-    for item in [
-        "A productized selection loop (adaptive_ace) with Strategy Registry, CanonicalChunk contracts, ReproductionManifests, and optional RAG micro-loop blending.",
-        "A dual-protocol evaluation kit: cheap offline hashed/lexical gates vs. live embeddings + rerank + LLM-judge RAG.",
-        "Evidence on CLAIR (full), FinanceBench, and Open RAG Bench that highlights when adaptivity wins—and when humans must override.",
-        "Operational lessons: rank-order reporting and governance gates.",
-    ]:
-        add_para(doc, "• " + item, size=11, space_after=3, align="justify")
+    add_bullet(
+        doc,
+        "A productized selection loop (adaptive_ace) with Strategy Registry, CanonicalChunk "
+        "contracts, ReproductionManifests, and optional RAG micro-loop blending.",
+    )
+    add_bullet(
+        doc,
+        "A dual-protocol evaluation kit: cheap offline hashed/lexical gates vs. live "
+        "embeddings + rerank + LLM-judge RAG.",
+    )
+    add_bullet(
+        doc,
+        "Evidence on CLAIR (full), FinanceBench, and Open RAG Bench that highlights when "
+        "adaptivity wins—and when humans must override—plus per-document strategy-mix "
+        "statistics under rag_microloop.",
+    )
+    add_bullet(doc, "Operational lessons: rank-order reporting and governance gates.")
 
-    add_heading(doc, "2 Problem Setting and Design Goals", 1)
+    add_heading(doc, "2 Related Work", 1)
     add_para(
         doc,
-        "In multi-tenant RAG platforms, chunking is simultaneously a quality, cost, and compliance lever. "
-        "Legal, financial, and arXiv-style PDFs respond differently to fixed-token, recursive, heading-aware, "
-        "sentence-window, and no-split strategies. ACE targets: per-document adaptivity without retraining; "
-        "auditability via manifests; human veto when RAG regresses; protocol honesty (offline CI ≠ live neural "
-        "scores); and retrieval realism (dense top-20 + rerank top-5).",
+        "RAG systems. Retrieval-augmented generation grounds LLM answers in retrieved "
+        "evidence (Lewis et al., 2020). Production quality depends as much on how documents "
+        "are segmented as on the retriever or generator (Gao et al., 2024). Industry "
+        "evaluations further stress dataset design and protocol honesty when comparing RAG "
+        "stacks (Teixeira de Lima et al., 2025).",
+        align="justify",
+    )
+    add_para(
+        doc,
+        "Chunking methods. Classical splitters include fixed-token windows, recursive "
+        "character/text splitters, heading-aware sections, and sentence windows. Recent "
+        "industry work proposes LLM-assisted structured chunking (e.g., AutoChunker; Jain et "
+        "al., 2025). These methods typically commit to one algorithm for all documents.",
+        align="justify",
+    )
+    add_para(
+        doc,
+        "Adaptive selection. Adaptive Chunking (de Moura et al., 2026) instead scores "
+        "candidate splitters with five intrinsic metrics and selects a winner per document on "
+        "CLAIR. ACE productizes that idea for enterprise RAG: registries, manifests, a "
+        "retrieval-aligned micro-loop, and a human gate when intrinsic ranking disagrees with "
+        "live RAG.",
         align="justify",
     )
 
-    add_heading(doc, "3 System: Adaptive Chunk Engine", 1)
+    add_heading(doc, "3 Problem Setting and Design Goals", 1)
     add_para(
         doc,
-        "Figure 1 shows the selection → retrieval → governance loop. In intrinsic mode, ACE selects "
-        "s*(d) = argmax mean{RC,ICC,DCC,BI,SC}. In rag_microloop mode, ACE shortlists top intrinsic candidates "
-        "and blends Mean with a micro evidence-coverage score before locking s*(d), then indexes CanonicalChunks, "
-        "retrieves with dense+rerank, and routes RAG regressions to human review.",
-        align="justify",
-    )
-    add_figure(doc, FIG / "fig1_flow.png", "Figure 1: ACE selection → retrieval → governance loop.")
-    add_para(
-        doc,
-        "Candidates evaluated: fixed_token_{256,512}, recursive_text, recursive_text_1100, sentence_window, "
-        "heading_section, no_split, and adaptive_ace.",
+        "In multi-tenant RAG platforms, chunking is simultaneously a quality, cost, and "
+        "compliance lever. Legal, financial, and arXiv-style PDFs respond differently to "
+        "fixed-token, recursive, heading-aware, sentence-window, and no-split strategies. ACE "
+        "targets: per-document adaptivity without retraining; auditability via manifests; "
+        "human veto when RAG regresses; protocol honesty (offline CI ≠ live neural scores); "
+        "and retrieval realism (dense top-20 + rerank top-5).",
         align="justify",
     )
 
-    add_heading(doc, "4 Evaluation Protocol", 1)
+    add_heading(doc, "4 System: Adaptive Chunk Engine", 1)
+    add_para(
+        doc,
+        "Figure 1 shows the overall workflow of the Adaptive Chunk Engine (ACE), organized "
+        "into three interconnected stages: strategy selection, retrieval and evaluation, and "
+        "governance. First, ACE evaluates candidate chunking strategies using five intrinsic "
+        "metrics (RC, ICC, DCC, BI, and SC). In intrinsic-only mode, the strategy with the "
+        "highest mean score is selected. In rag_microloop mode, ACE shortlists the top "
+        "intrinsic candidates and combines their intrinsic mean with a micro "
+        "evidence-coverage score before locking the selected strategy for the document.",
+        align="justify",
+    )
+    add_para(
+        doc,
+        "Next, the selected strategy is applied to generate CanonicalChunks, which are "
+        "indexed for dense retrieval. Evaluation questions are prepared independently and "
+        "used to assess retrieval performance through dense retrieval, cross-encoder "
+        "reranking, and LLM-based answer quality judging. Finally, retrieval regressions are "
+        "routed to a human review process, where practitioners can retain the current version "
+        "or revise the chunking configuration and initiate a new experiment. This feedback "
+        "loop makes chunking selection an auditable and human-governed process rather than a "
+        "fully automated decision.",
+        align="justify",
+    )
+    add_figure(
+        doc,
+        FIG / "fig1_flow.png",
+        "Figure 1: Adaptive Chunk Engine (ACE): Selection → Retrieval → Governance Loop.",
+        width=6.3,
+    )
+    add_para(
+        doc,
+        "Intrinsic metrics (brief). Following de Moura et al. (2026): RC "
+        "(retrieval/coverage-oriented completeness of chunks), ICC / DCC (intra-/document "
+        "coherence proxies under the live embedder), BI (boundary integrity), and SC "
+        "(structural coverage). Selection maximizes their mean, optionally blended with a "
+        "micro RAG evidence-coverage term.",
+        align="justify",
+    )
+    add_para(
+        doc,
+        "Candidates evaluated: fixed_token_{256,512}, recursive_text, recursive_text_1100, "
+        "sentence_window, heading_section, no_split, and adaptive_ace.",
+        align="justify",
+    )
+
+    add_heading(doc, "5 Evaluation Protocol", 1)
     add_table(
         doc,
         ["Protocol", "Embeddings / retrieve", "Rerank", "Judge", "Role"],
         [
             ["Offline", "Hashed n-grams / lexical", "—", "Term-coverage", "CI / regression"],
-            ["Live (primary)", "Qwen3-Embedding-8B dense", "Cohere rerank-v3.5", "gpt-4o", "Production-like"],
+            [
+                "Live (primary)",
+                "Qwen3-Embedding-8B dense",
+                "Cohere rerank-v3.5",
+                "gpt-4o",
+                "Production-like",
+            ],
         ],
-        col_widths=[1.2, 1.7, 1.3, 1.1, 1.2],
     )
     add_para(
         doc,
-        "Interpretation rule: compare ranks within a protocol. Absolute RAG magnitudes are not transferable "
-        "across corpora or offline vs live. Reported scales: ACE kit 6 docs/43 Q; CLAIR full 33 docs "
-        "(≤3 live QA/doc); FinanceBench 18 docs/≤36 Q; Open RAG Bench 4 docs/≤40 Q.",
+        "Score reporting. Unless noted, RAG completeness and correctness are mean scores on "
+        "a 0–100 scale over answered questions (LLM-judge JSON), not raw question counts. We "
+        "also report answered fractions (e.g., 43/43). Absolute magnitudes are not "
+        "transferable across corpora or offline vs live; compare ranks within a protocol. "
+        "Reported scales: ACE kit 6 docs/43 Q; CLAIR full 33 docs (98 scored); FinanceBench "
+        "(Islam et al., 2023) 18 docs/33 scored; Open RAG Bench (Vectara, 2024) 4 docs/12 "
+        "scored.",
         align="justify",
     )
 
-    add_heading(doc, "5 Results", 1)
+    add_heading(doc, "6 Results", 1)
     add_para(
         doc,
-        "We report settings that demonstrate ACE’s industrial advantage and omit non-production no_split "
-        "“wins” on short markdown as lead claims. Figure 2 summarizes three advantage highlights.",
+        "We report settings that demonstrate ACE’s industrial advantage and omit "
+        "non-production no_split “wins” on short markdown as lead claims. Figure 2 "
+        "summarizes three advantage highlights; Figures 3–6 add stack progression, "
+        "cross-corpus RAG, selection mix, and intrinsic Means.",
         align="justify",
     )
-    add_figure(doc, FIG / "fig2_results.png", "Figure 2: ACE-advantage highlights (live stages C/D).")
+    add_figure(
+        doc,
+        FIG / "fig2_results.png",
+        "Figure 2: ACE-advantage highlights (live stages C/D).",
+    )
 
-    add_heading(doc, "5.1 ACE kit — rerank closes the live gap", 2)
+    add_heading(doc, "6.1 ACE kit — rerank closes the live gap", 2)
     add_table(
         doc,
-        ["Stack", "Adaptive RAG RC/AC"],
+        ["Stack", "Adaptive mean RAG RC/AC", "Answered"],
         [
-            ["Embed-small, no rerank", "64.2 / 64.6"],
-            ["+ Cohere rerank-v3.5", "100 / 100"],
-            ["+ Qwen3-Embedding-8B", "100 / 100"],
-            ["+ rag_microloop (primary)", "100 / 100"],
+            ["Embed-small, no rerank", "64.2 / 64.6", "—"],
+            ["+ Cohere rerank-v3.5", "100.0 / 100.0", "43/43"],
+            ["+ Qwen3-Embedding-8B", "100.0 / 100.0", "43/43"],
+            ["+ rag_microloop (primary)", "100.0 / 100.0", "43/43"],
         ],
-        col_widths=[3.5, 2.5],
+    )
+    add_figure(
+        doc,
+        FIG / "fig4_kit_stages.png",
+        "Figure 4: ACE kit stack progression (stages A→C).",
+        width=5.8,
     )
     add_para(doc, "Full pre-aggregation intrinsic metrics (stage C):", space_after=4)
     add_table(
@@ -228,12 +336,12 @@ def build():
     )
     add_para(
         doc,
-        "With production-like rerank, adaptive saturates kit RAG (100/100; 43/43 answered); "
-        "sentence_window remains brittle (70.4/73.1).",
+        "With production-like rerank, adaptive saturates kit RAG (mean 100/100; 43/43 "
+        "answered); sentence_window remains brittle (70.4/73.1; 25/43 answered).",
         align="justify",
     )
 
-    add_heading(doc, "5.2 Public full — CLAIR (33 docs)", 2)
+    add_heading(doc, "6.2 Public full — CLAIR (33 docs)", 2)
     add_table(
         doc,
         ["Method", "RC", "ICC", "DCC", "BI", "SC", "Mean"],
@@ -247,7 +355,7 @@ def build():
     )
     add_table(
         doc,
-        ["Method", "RAG RC", "RAG AC", "Answered"],
+        ["Method", "Mean RAG RC", "Mean RAG AC", "Answered"],
         [
             ["adaptive_ace", "96.57", "90.5", "94/98"],
             ["recursive_text_1100", "95.96", "92.93", "93/98"],
@@ -257,14 +365,16 @@ def build():
     add_para(
         doc,
         "Adaptive leads intrinsic Mean and stays near the top of production-viable RAG; "
-        "sentence_window lags by ~20 RAG points.",
+        "sentence_window lags by ~20 RAG points. (no_split can still inflate short-context "
+        "RAG by stuffing full documents—treated as a non-indexer baseline, not a shippable "
+        "strategy.)",
         align="justify",
     )
 
-    add_heading(doc, "5.3 Public full — Open RAG Bench (long PDFs)", 2)
+    add_heading(doc, "6.3 Public full — Open RAG Bench (long PDFs)", 2)
     add_table(
         doc,
-        ["Method", "RAG RC", "RAG AC", "Answered"],
+        ["Method", "Mean RAG RC", "Mean RAG AC", "Answered"],
         [
             ["adaptive_ace", "90.0", "82.5", "10/12"],
             ["fixed_token_512", "90.0", "82.5", "10/12"],
@@ -274,78 +384,144 @@ def build():
     )
     add_para(
         doc,
-        "On long arXiv PDFs, naive full-doc context collapses; adaptive ties best production RAG.",
+        "On long arXiv PDFs, naive full-doc context collapses; adaptive ties best production "
+        "RAG.",
         align="justify",
     )
 
-    add_heading(doc, "5.4 FinanceBench (intrinsic lead; RAG override lesson)", 2)
+    add_heading(doc, "6.4 FinanceBench (intrinsic lead; RAG override lesson)", 2)
+    add_table(
+        doc,
+        ["Method", "Mean RAG RC", "Mean RAG AC", "Answered"],
+        [
+            ["recursive_text_1100", "99.07", "93.52", "32/33"],
+            ["recursive_text", "96.43", "91.52", "31/33"],
+            ["adaptive_ace", "95.83", "88.89", "29/33"],
+            ["sentence_window", "86.48", "76.85", "27/33"],
+        ],
+    )
     add_para(
         doc,
-        "Adaptive intrinsic Mean 91.61 (1st) vs recursive_1100 90.64. Live RAG: adaptive 95.83/88.89; "
-        "recursive_1100 99.07/93.52. This residual gap is exactly why Auto must remain a proposal under "
-        "human review—not a reason to abandon metric selection. Full RC/ICC/DCC/BI/SC rows are in Appendix A.",
+        "Adaptive intrinsic Mean 91.61 (1st) vs recursive_1100 90.64. Live RAG favors larger "
+        "recursive chunks on this QA mix. This residual gap is exactly why Auto must remain a "
+        "proposal under human review—not a reason to abandon metric selection. Full "
+        "RC/ICC/DCC/BI/SC rows are in Appendix A.",
         align="justify",
     )
+    add_figure(
+        doc,
+        FIG / "fig3_cross_corpus_rag.png",
+        "Figure 3: Cross-corpus live RAG — adaptive vs corpus-specific contrast methods.",
+    )
 
-    add_heading(doc, "5.5 Claim checklist", 2)
+    add_heading(doc, "6.5 What does ACE actually lock?", 2)
+    add_para(
+        doc,
+        "Under rag_microloop, ACE does not invent a new splitter; it locks a registry "
+        "strategy per document after blending intrinsic Mean with micro evidence-coverage. "
+        "Figure 5 shows locked-strategy histograms.",
+        align="justify",
+    )
+    add_figure(
+        doc,
+        FIG / "fig5_selection_mix.png",
+        "Figure 5: Per-document strategy locks (blend winner among micro-loop shortlist).",
+    )
+    add_para(
+        doc,
+        "On CLAIR, locks concentrate on fixed_token_512 (18/33) with a long tail of "
+        "recursive/sentence/heading choices. On FinanceBench, locks shift toward "
+        "recursive_text_1100 (8/18)—consistent with that corpus’s RAG preference—while still "
+        "diversifying when metrics disagree. This is the product story: adaptivity is a "
+        "governed mixture of known strategies, not a single global default.",
+        align="justify",
+    )
+    add_figure(
+        doc,
+        FIG / "fig6_intrinsic_cross.png",
+        "Figure 6: Intrinsic Mean across public corpora (live Stage D).",
+        width=5.8,
+    )
+
+    add_heading(doc, "6.6 Claim checklist", 2)
     add_table(
         doc,
         ["Claim", "Supported?"],
         [
             ["Adaptivity recovers strong splitters", "Yes"],
-            ["Rerank required for production-like dense RAG", "Yes (kit 64→100)"],
+            ["Rerank needed for production-like dense RAG", "Yes (kit 64.2→100.0 mean RC)"],
             ["Brittle sentence windows lose", "Yes"],
             ["Long-doc RAG needs chunking (not no_split)", "Yes"],
             ["Intrinsic = RAG optimum always", "No (FinanceBench residual)"],
+            ["ACE locks a diverse strategy mix", "Yes (Fig. 5)"],
         ],
-        col_widths=[4.2, 2.0],
     )
 
-    add_heading(doc, "6 Practitioner Lessons", 1)
-    for item in [
-        "Ship two evaluation lanes (offline CI vs live embed+rerank+judge).",
+    add_heading(doc, "7 Practitioner Lessons", 1)
+    add_bullet(doc, "Ship two evaluation lanes (offline CI vs live embed+rerank+judge).")
+    add_bullet(
+        doc,
         "Align eval with production retrieval; dense-only underestimates adaptive chunking.",
-        "Treat Auto as a proposal when RAG regresses vs a locked baseline.",
-        "Do not ship no_split as an indexer.",
-        "Governance (manifests, CanonicalChunk) is the product surface for compliance.",
-    ]:
-        add_para(doc, "• " + item, space_after=3, align="justify")
+    )
+    add_bullet(
+        doc,
+        "Report mean scores and answered counts explicitly—reviewers outside IR may misread "
+        "100/100 as question counts.",
+    )
+    add_bullet(doc, "Treat Auto as a proposal when RAG regresses vs a locked baseline.")
+    add_bullet(doc, "Do not ship no_split as an indexer for long documents.")
+    add_bullet(
+        doc,
+        "Governance (manifests, CanonicalChunk, human gate) is the product surface for "
+        "compliance.",
+    )
 
-    add_heading(doc, "7 Conclusion", 1)
+    add_heading(doc, "8 Conclusion", 1)
     add_para(
         doc,
-        "ACE industrializes Adaptive Chunking as a governed control plane with a production-aligned retrieval lane. "
-        "Intrinsic evidence favors adaptive_ace, rerank repairs live dense RAG, and long-document benchmarks expose "
-        "why governed chunking beats naive full-doc context—while residual disagreements motivate human-triggered optimization.",
+        "ACE extends Adaptive Chunking into an auditable framework for per-document chunking "
+        "selection, combining intrinsic metric-based selection, production-aligned retrieval "
+        "evaluation, and human-triggered governance. Intrinsic evidence favors adaptive_ace, "
+        "rerank repairs live dense RAG, and long-document benchmarks expose why governed "
+        "chunking beats naive full-doc context—while residual disagreements motivate "
+        "human-triggered optimization.",
         align="justify",
     )
 
     add_heading(doc, "Limitations", 1)
     add_para(
         doc,
-        "Live QA is capped per document under API cost controls; FinanceBench/ORB subsets are expanded beyond smoke "
-        "but not exhaustive. Offline lexical RAG is a CI proxy. LLM-as-judge introduces variance. Absolute scores "
-        "must not be compared across protocols. Large-scale multi-tenant telemetry is out of scope.",
+        "Live QA is capped per document under API cost controls; FinanceBench/ORB subsets "
+        "are expanded beyond smoke but not exhaustive. Offline lexical RAG is a CI proxy. "
+        "LLM-as-judge introduces variance. Absolute scores must not be compared across "
+        "protocols. Large-scale multi-tenant telemetry is out of scope for this Emerging "
+        "submission.",
         align="justify",
     )
 
     add_heading(doc, "Ethical Considerations", 1)
     add_para(
         doc,
-        "ACE evaluates document chunking for RAG. Benchmark subsets may contain sensitive corporate/regulatory text; "
-        "we use published adapters. Live evaluations call third-party APIs; operators must ensure contractual "
-        "compliance and PII scrubbing. Human override is intentional for regulated workflows.",
+        "ACE evaluates document chunking for RAG. Benchmark subsets may contain sensitive "
+        "corporate/regulatory text; we use published adapters. Live evaluations call "
+        "third-party APIs; operators must ensure contractual compliance and PII scrubbing. "
+        "Human override is intentional for regulated workflows.",
         align="justify",
     )
 
     add_heading(doc, "References", 1)
-    for ref in [
-        "de Moura Junior, P. R., Lelong, J., and Blangero, A. (2026). Adaptive Chunking: Optimizing Chunking-Method Selection for RAG. LREC 2026.",
-        "Islam, P., et al. (2023). FinanceBench: A New Benchmark for Financial Question Answering.",
-        "Vectara. Open RAG Bench.",
-        "Jain, A., Aggarwal, P., and Saladi, A. (2025). AutoChunker: Structured Text Chunking and its Evaluation. ACL 2025 Industry Track.",
-    ]:
-        add_para(doc, ref, size=10, space_after=4, align="justify")
+    refs = [
+        "de Moura Junior, P. R., Lelong, J., and Blangero, A. 2026. Adaptive Chunking: Optimizing Chunking-Method Selection for RAG. In Proceedings of LREC 2026.",
+        "Gao, Y., Xiong, Y., Gao, X., Jia, K., Pan, J., Bi, Y., Dai, Y., Sun, J., Wang, M., and Wang, H. 2024. Retrieval-Augmented Generation for Large Language Models: A Survey. arXiv:2312.10997.",
+        "Islam, P., Kannappan, A., Kiela, D., Qian, R., Scherrer, N., and Vidgen, B. 2023. FinanceBench: A New Benchmark for Financial Question Answering. arXiv:2311.11944.",
+        "Jain, A., Aggarwal, P., and Saladi, A. 2025. AutoChunker: Structured Text Chunking and its Evaluation. In Proceedings of ACL 2025 (Industry Track), pages 983–995.",
+        "Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N., Küttler, H., Lewis, M., Yih, W., Rocktäschel, T., Riedel, S., and Kiela, D. 2020. Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. In Advances in Neural Information Processing Systems, 33.",
+        "Teixeira de Lima, R., Gupta, S., Berrospi, C., Mishra, L., Dolfi, M., Staar, P., and Vagenas, P. 2025. Know Your RAG: Dataset Taxonomy and Generation Strategies for Evaluating RAG Systems. In Proceedings of COLING 2025: Industry Track, pages 39–57.",
+        "Vectara. 2024. Open RAG Bench. Benchmark suite for open-domain RAG evaluation.",
+        "Zheng, L., Chiang, W., Sheng, Y., Zhuang, S., Wu, Z., Zhuang, Y., Lin, Z., Li, Z., Li, D., Xing, E., Zhang, H., Gonzalez, J. E., and Stoica, I. 2023. Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena. In Advances in Neural Information Processing Systems, 36.",
+    ]
+    for r in refs:
+        add_para(doc, r, size=10, space_after=6, align="justify")
 
     add_heading(doc, "Appendix A: Additional intrinsic metrics (non-counting)", 1)
     add_heading(doc, "A.1 FinanceBench intrinsic (%)", 2)
@@ -382,9 +558,19 @@ def build():
             ["Sentence", "86.3", "78.4", "72.5", "61.9", "67.2", "73.26"],
         ],
     )
+    add_table(
+        doc,
+        ["Method", "Mean RAG RC", "Mean RAG AC", "Answered"],
+        [
+            ["Adaptive Chunking", "67.7", "78.0", "65/99"],
+            ["LangChain recursive", "58.1", "70.1", "49/99"],
+        ],
+    )
 
     doc.save(OUT)
+    doc.save(OUT_REV)
     print(f"Wrote {OUT}")
+    print(f"Wrote {OUT_REV}")
 
 
 if __name__ == "__main__":

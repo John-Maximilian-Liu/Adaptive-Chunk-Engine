@@ -6,12 +6,12 @@
 
 | 建议 | 本稿处理 |
 |------|----------|
-| **系统/流程框图（强烈建议）** | ✅ 已加 **Figure 1**（selection → micro-loop → dense+rerank → human gate） |
-| **结果可视化（建议）** | ✅ 已加 **Figure 2**（kit 64→100；CLAIR intrinsic；ORB vs no_split） |
+| **系统/流程框图（强烈建议）** | ✅ **Figure 1**（作者改1流程图：Selection → Retrieval → Governance） |
+| **结果可视化（建议）** | ✅ **Figures 2–6**（优势高亮、跨语料 RAG、kit 阶段、策略锁定分布、intrinsic Mean） |
 | 产品截图 / 可识别品牌图 | ❌ 双盲期不加 |
 | 大规模部署 telemetry 图 | ❌ Emerging 定位，不硬报 Deployed ROI |
 
-结论：**需要补图，且以 1 张流程 + 1 张优势结果图足够**；不必堆无关 dashboard。
+结论：对照 COLING 2025 Industry（6 页短文约 2 图、系统文可更多图），改2 用 **6 图 + Related Work + 扩充引用** 补 DOCX 下的偏薄感；正式 PDF 仍需压到 ≤6 页。详见 `REVISION_NOTES_改2.md`。
 
 ## 结果筛选（保留有利 / 去掉无关）
 

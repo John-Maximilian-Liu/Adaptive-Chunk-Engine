@@ -5,11 +5,14 @@ Submission deadline (CFP): **30 Nov 2026 AoE**. Notification: **15 Mar 2027**.
 
 | File | Role |
 |------|------|
-| [`ACE_COLING2027_Industry_Manuscript.docx`](ACE_COLING2027_Industry_Manuscript.docx) | **Submission-oriented DOCX** (figures + advantage tables) |
+| [`ACE_COLING2027_Industry_Manuscript.docx`](ACE_COLING2027_Industry_Manuscript.docx) | **Current submission DOCX** (6 figures + expanded tables/refs) |
+| [`ACE_COLING2027_Industry_Manuscript（改1）.docx`](ACE_COLING2027_Industry_Manuscript（改1）.docx) | Author-edited baseline (comments preserved) |
+| [`ACE_COLING2027_Industry_Manuscript（改2）.docx`](ACE_COLING2027_Industry_Manuscript（改2）.docx) | Same as current DOCX after expansion |
 | [`manuscript_submission.md`](manuscript_submission.md) | Markdown source aligned with the DOCX |
 | [`paper.md`](paper.md) | Same narrative as manuscript (synced) |
 | [`paper.html`](paper.html) | HTML preview |
-| [`figures/`](figures/) | Figure 1 flow + Figure 2 results |
+| [`figures/`](figures/) | Fig 1 (author flowchart) + Figs 2–6 from Stage A–D results |
+| [`REVISION_NOTES_改2.md`](REVISION_NOTES_改2.md) | How 改2 addresses 改1 comments + COLING density notes |
 | [`SUBMISSION_NOTES.md`](SUBMISSION_NOTES.md) | Figure/result filtering + packaging checklist |
 | [`COMPARISON_COLING2025_INDUSTRY.md`](COMPARISON_COLING2025_INDUSTRY.md) | Mapping vs COLING 2025 Industry CFP / chairs overview + 2027 changes |
 | [`build_docx.py`](build_docx.py) | Regenerate the DOCX |
