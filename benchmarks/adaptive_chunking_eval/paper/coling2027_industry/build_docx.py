@@ -19,7 +19,7 @@ from docx.shared import Inches, Pt
 ROOT = Path(__file__).resolve().parent
 FIG = ROOT / "figures"
 OUT = ROOT / "ACE_COLING2027_Industry_Manuscript.docx"
-OUT_REV = ROOT / "ACE_COLING2027_Industry_Manuscript（改3）.docx"
+OUT_REV = ROOT / "ACE_COLING2027_Industry_Manuscript（改4）.docx"
 
 
 def set_run_font(run, *, size=11, bold=False, italic=False, name="Times New Roman"):
@@ -580,8 +580,57 @@ def build():
     for r in refs:
         add_para(doc, r, size=10, space_after=6, align="justify")
 
-    add_heading(doc, "Appendix A: Additional intrinsic metrics (non-counting)", 1)
-    add_heading(doc, "A.1 FinanceBench intrinsic (%)", 2)
+    add_heading(doc, "Appendix A: Additional figures and intrinsic metrics (non-counting)", 1)
+    add_para(
+        doc,
+        "Following COLING Industry practice of placing heatmaps / profile plots / rank views "
+        "in the appendix, we add ACE-advantage visualizations that do not consume body-page "
+        "budget.",
+        align="justify",
+    )
+    add_heading(doc, "A.1 CLAIR intrinsic radar", 2)
+    add_figure(
+        doc,
+        FIG / "figA1_clair_radar.png",
+        "Figure A1: CLAIR intrinsic profile — adaptive balanced; no_split collapses SC.",
+        width=5.6,
+    )
+    add_heading(doc, "A.2 ACE kit domain heatmap", 2)
+    add_figure(
+        doc,
+        FIG / "figA2_domain_heatmap.png",
+        "Figure A2: Stage-C domain × method intrinsic Mean (adaptive leads every domain).",
+        width=5.8,
+    )
+    add_heading(doc, "A.3 Cross-corpus rank trajectories", 2)
+    add_figure(
+        doc,
+        FIG / "figA3_rank_trajectories.png",
+        "Figure A3: ACE-advantage rank trajectories across corpora.",
+        width=5.8,
+    )
+    add_heading(doc, "A.4 Answered coverage vs mean RAG completeness", 2)
+    add_figure(
+        doc,
+        FIG / "figA4_answered_vs_rag.png",
+        "Figure A4: Kit saturation vs Open RAG Bench no_split collapse.",
+        width=6.2,
+    )
+    add_heading(doc, "A.5 FinanceBench intrinsic lead + RAG residual", 2)
+    add_figure(
+        doc,
+        FIG / "figA5_financebench_tradeoff.png",
+        "Figure A5: FinanceBench — intrinsic Mean #1 with live RAG override lesson.",
+        width=5.8,
+    )
+    add_heading(doc, "A.6 CLAIR metric deltas vs sentence_window", 2)
+    add_figure(
+        doc,
+        FIG / "figA6_clair_lollipop.png",
+        "Figure A6: CLAIR lollipop deltas (adaptive vs sentence_window).",
+        width=5.6,
+    )
+    add_heading(doc, "A.7 FinanceBench intrinsic (%)", 2)
     add_table(
         doc,
         ["Method", "RC", "ICC", "DCC", "BI", "SC", "Mean"],
@@ -593,7 +642,7 @@ def build():
             ["no_split", "100.0", "64.93", "100.0", "100.0", "50.0", "83.77"],
         ],
     )
-    add_heading(doc, "A.2 Open RAG Bench intrinsic (%)", 2)
+    add_heading(doc, "A.8 Open RAG Bench intrinsic (%)", 2)
     add_table(
         doc,
         ["Method", "RC", "ICC", "DCC", "BI", "SC", "Mean"],
@@ -605,7 +654,7 @@ def build():
             ["no_split", "100.0", "58.6", "100.0", "100.0", "0.0", "71.72"],
         ],
     )
-    add_heading(doc, "A.3 Published Adaptive Chunking CLAIR anchors", 2)
+    add_heading(doc, "A.9 Published Adaptive Chunking CLAIR anchors", 2)
     add_table(
         doc,
         ["Method", "RC", "ICC", "DCC", "BI", "SC", "Mean"],
