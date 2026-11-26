@@ -19,7 +19,7 @@ from docx.shared import Inches, Pt
 ROOT = Path(__file__).resolve().parent
 FIG = ROOT / "figures"
 OUT = ROOT / "ACE_COLING2027_Industry_Manuscript.docx"
-OUT_REV = ROOT / "ACE_COLING2027_Industry_Manuscript（改4）.docx"
+OUT_REV = ROOT / "ACE_COLING2027_Industry_Manuscript（改5）.docx"
 
 
 def set_run_font(run, *, size=11, bold=False, italic=False, name="Times New Roman"):
@@ -57,27 +57,79 @@ def add_bullet(doc, text):
     p.paragraph_format.space_after = Pt(4)
 
 
+def _set_cell_border(cell, **edges):
+    """Set partial borders on a cell. edges: top/bottom/start/end -> (sz, color_hex)."""
+    from docx.oxml import OxmlElement
+
+    tc = cell._tc
+    tcPr = tc.get_or_add_tcPr()
+    tcBorders = tcPr.first_child_found_in("w:tcBorders")
+    if tcBorders is None:
+        tcBorders = OxmlElement("w:tcBorders")
+        tcPr.append(tcBorders)
+    for edge, spec in edges.items():
+        if spec is None:
+            continue
+        sz, color = spec
+        element = tcBorders.find(qn(f"w:{edge}"))
+        if element is None:
+            element = OxmlElement(f"w:{edge}")
+            tcBorders.append(element)
+        element.set(qn("w:val"), "single" if sz else "nil")
+        element.set(qn("w:sz"), str(sz))
+        element.set(qn("w:space"), "0")
+        element.set(qn("w:color"), color)
+
+
 def add_table(doc, headers, rows, col_widths=None):
+    """ACL/COLING-style three-line table (booktabs): top / mid / bottom only."""
     table = doc.add_table(rows=1 + len(rows), cols=len(headers))
+    # clear default grid look
     table.style = "Table Grid"
-    hdr = table.rows[0].cells
+    n_rows = 1 + len(rows)
+    n_cols = len(headers)
+
+    # populate
     for i, h in enumerate(headers):
-        hdr[i].text = ""
-        p = hdr[i].paragraphs[0]
+        cell = table.rows[0].cells[i]
+        cell.text = ""
+        p = cell.paragraphs[0]
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         run = p.add_run(h)
         set_run_font(run, size=9, bold=True)
     for r_i, row in enumerate(rows):
-        cells = table.rows[r_i + 1].cells
         for c_i, val in enumerate(row):
-            cells[c_i].text = ""
-            p = cells[c_i].paragraphs[0]
+            cell = table.rows[r_i + 1].cells[c_i]
+            cell.text = ""
+            p = cell.paragraphs[0]
+            p.alignment = WD_ALIGN_PARAGRAPH.CENTER
             run = p.add_run(str(val))
             set_run_font(run, size=9)
+
+    # apply three-line borders: thick top (sz=12), mid under header (sz=6), thick bottom (sz=12)
+    # remove vertical borders
+    TOP = (12, "000000")
+    MID = (6, "000000")
+    BOT = (12, "000000")
+    NIL = (0, "FFFFFF")
+    for r in range(n_rows):
+        for c in range(n_cols):
+            cell = table.rows[r].cells[c]
+            edges = {"start": NIL, "end": NIL, "top": NIL, "bottom": NIL}
+            if r == 0:
+                edges["top"] = TOP
+                edges["bottom"] = MID
+            elif r == n_rows - 1:
+                edges["bottom"] = BOT
+            _set_cell_border(cell, **edges)
+
     if col_widths:
         for row in table.rows:
             for i, w in enumerate(col_widths):
                 row.cells[i].width = Inches(w)
-    doc.add_paragraph()
+    # caption spacing
+    spacer = doc.add_paragraph()
+    spacer.paragraph_format.space_after = Pt(8)
 
 
 def add_figure(doc, path: Path, caption: str, width=6.2):
@@ -121,65 +173,104 @@ def build():
     add_heading(doc, "Abstract", 1)
     add_para(
         doc,
-        "Chunking is a first-order design choice in enterprise Retrieval-Augmented Generation "
-        "(RAG), yet production systems often rely on a single global splitter. Building on "
-        "Adaptive Chunking (de Moura et al., 2026), which selects a splitter per document using "
-        "five intrinsic metrics (RC, ICC, DCC, BI, SC), we present Adaptive Chunk Engine (ACE): "
-        "an auditable framework for per-document chunking selection in enterprise RAG settings "
-        "that turns metric-guided selection into a product decision with strategy registries, "
-        "reproduction manifests, a RAG micro-loop selection objective, dense retrieval with "
-        "cross-encoder reranking, and a human-triggered optimization gate. Under a "
-        "production-like stack (Qwen3-Embedding-8B, Cohere rerank-v3.5, rag_microloop, gpt-4o "
-        "judge), ACE reaches mean RAG completeness/correctness of 100.0 / 100.0 on a controlled "
-        "kit (43/43 answered; vs. 64.2 / 64.6 without rerank), ranks first on full-CLAIR "
-        "intrinsic Mean (87.8), and ties best RAG on Open RAG Bench (90.0 / 82.5) while exposing "
-        "the failure of non-indexable no_split on long PDFs (35.8 / 26.7). We report practitioner "
-        "lessons: ship dual eval lanes, treat Auto as a proposal, and compare ranks within a "
-        "protocol.",
+        "Retrieval-Augmented Generation (RAG) has become a default architecture for grounding "
+        "large language models (LLMs) on private enterprise corpora, yet industrial deployments "
+        "still treat document chunking as a one-size-fits-all preprocessing knob. In practice, "
+        "legal opinions, 10-K filings, and long scientific PDFs respond differently to "
+        "fixed-token, recursive, heading-aware, or sentence-window splitters; a globally locked "
+        "strategy therefore silently taxes retrieval quality, indexing cost, and compliance "
+        "auditability. Building on Adaptive Chunking (de Moura et al., 2026), which scores "
+        "candidates with five intrinsic metrics (RC, ICC, DCC, BI, SC) and selects a splitter "
+        "per document, we present Adaptive Chunk Engine (ACE)—an auditable productization of "
+        "that principle for enterprise RAG. ACE turns metric-guided selection into a reviewable "
+        "decision artifact with strategy registries, CanonicalChunk contracts, reproduction "
+        "manifests, a retrieval-aligned RAG micro-loop objective, dense retrieval with "
+        "cross-encoder reranking, and a human-triggered optimization gate when Auto and live "
+        "RAG disagree. Under a production-like stack (Qwen3-Embedding-8B, Cohere rerank-v3.5, "
+        "rag_microloop, gpt-4o judge), ACE reaches mean RAG completeness/correctness of "
+        "100.0/100.0 on a controlled kit (43/43 answered; vs. 64.2/64.6 without rerank), ranks "
+        "first on full-CLAIR intrinsic Mean (87.8), and ties best RAG on Open RAG Bench "
+        "(90.0/82.5) while exposing the collapse of non-indexable no_split on long PDFs "
+        "(35.8/26.7). We distill three practitioner lessons: ship dual evaluation lanes, treat "
+        "Auto as a proposal under human review, and compare ranks within a protocol—not "
+        "absolute scores across stacks.",
         align="justify",
     )
 
     add_heading(doc, "1 Introduction", 1)
     add_para(
         doc,
-        "Enterprise RAG pipelines often fail because documents are segmented with a "
-        "one-size-fits-all splitter, even though retrieval granularity is known to materially "
-        "affect both retrieval and downstream QA (Chen et al., 2024; Wang et al., 2024). "
-        "Adaptive Chunking (de Moura et al., 2026) showed that scoring candidates with "
-        "document-intrinsic metrics and selecting the winner per document improves RAG on "
-        "CLAIR. Industry deployment adds auditability, human veto, alignment of the eval lane "
-        "with production retrieval (dense retrieval + cross-encoder reranking; Karpukhin et "
-        "al., 2020; Nogueira and Cho, 2019), and handling disagreement between intrinsic "
-        "metrics and RAG feedback (Lewis et al., 2020; Gao et al., 2024; Asai et al., 2024).",
+        "A Retrieval-Augmented Generation (RAG) system pairs an LLM with an external knowledge "
+        "source so that private or time-sensitive evidence can enter the context window at "
+        "inference time (Lewis et al., 2020; Guu et al., 2020). This pattern has driven rapid "
+        "industrial adoption for enterprise search, customer support, and regulated document QA "
+        "(Gao et al., 2024; Teixeira de Lima et al., 2025). Yet in production, the first "
+        "irreversible decision in the pipeline is often not the retriever or the generator—it "
+        "is how documents are cut into chunks. Chunk size and splitter choice are known "
+        "first-order levers for both retrieval and downstream answer quality (Chen et al., "
+        "2024; Wang et al., 2024), and recent work continues to invent better single "
+        "algorithms: late contextual chunk embeddings (Günther et al., 2024), hierarchical "
+        "tree indexing (Sarthi et al., 2024), graph-community summaries (Edge et al., 2024), "
+        "and LLM-assisted structured chunking (Jain et al., 2025). What remains under-served "
+        "in industrial practice is a different question: given a registry of already-deployable "
+        "splitters, which strategy should be locked for this document, under audit constraints, "
+        "when intrinsic quality signals and live RAG feedback can disagree?",
         align="justify",
     )
     add_para(
         doc,
-        "COLING Industry Track submissions prioritize practical deployment insight over "
-        "research novelty. ACE is framed as enabling infrastructure for governed chunking "
-        "selection, including negative/trade-off results when Auto should be overridden—"
-        "complementing adaptive retrieval controllers such as Self-RAG and CRAG (Asai et al., "
-        "2024; Yan et al., 2024) with adaptive chunking governance.",
+        "Enterprise multi-tenant platforms make that question sharper. Legal, financial, and "
+        "arXiv-style PDFs differ in heading density, table structure, and evidence locality; a "
+        "recursive splitter that wins on 10-Ks can underperform on short regulatory notes, "
+        "while sentence windows that look coherent intrinsically can become brittle under "
+        "dense+rerank retrieval (Karpukhin et al., 2020; Nogueira and Cho, 2019). "
+        "Simultaneously, operators need more than a higher mean score: they need reproducible "
+        "manifests, CanonicalChunk contracts for multi-sink indexing, and a human veto when "
+        "Auto would regress a locked baseline—requirements that research demos rarely expose "
+        "as first-class product surfaces. Adaptive retrieval controllers such as Self-RAG and "
+        "CRAG (Asai et al., 2024; Yan et al., 2024) decide whether/how to fetch evidence at "
+        "query time; they do not govern the offline segmentation policy that determines what "
+        "can be retrieved in the first place.",
         align="justify",
     )
-    add_para(doc, "Contributions for practitioners:", bold=True, space_after=4)
+    add_para(
+        doc,
+        "Adaptive Chunking (de Moura et al., 2026) established that scoring candidates with "
+        "five document-intrinsic metrics and selecting a winner per document improves RAG on "
+        "CLAIR. We industrialize that idea as Adaptive Chunk Engine (ACE): an "
+        "enabling-infrastructure layer that (i) selects s*(d) from a strategy registry, (ii) "
+        "optionally blends intrinsic Mean with a cheap micro evidence-coverage signal "
+        "(rag_microloop), (iii) evaluates under a production-like dense top-Kc → rerank top-K "
+        "lane, and (iv) routes regressions to human review rather than silently shipping Auto. "
+        "Empirically, aligning the eval lane with rerank recovers kit RAG from 64→100 mean "
+        "scores; on public corpora ACE leads CLAIR/FinanceBench intrinsic Mean and ties best "
+        "long-document RAG while documenting the residual override case that motivates "
+        "governance.",
+        align="justify",
+    )
+    add_para(doc, "Contributions for practitioners.", bold=True, space_after=4)
     add_bullet(
         doc,
-        "A productized selection loop (adaptive_ace) with Strategy Registry, CanonicalChunk "
-        "contracts, ReproductionManifests, and optional RAG micro-loop blending.",
+        "Productized selection loop. adaptive_ace with Strategy Registry, CanonicalChunk "
+        "contracts, ReproductionManifests, and optional RAG micro-loop blending—turning "
+        "per-document choice into an auditable artifact.",
     )
     add_bullet(
         doc,
-        "A dual-protocol evaluation kit: cheap offline hashed/lexical gates vs. live "
-        "embeddings + rerank + LLM-judge RAG.",
+        "Dual-protocol evaluation kit. Offline hashed/lexical CI gates versus live embeddings "
+        "+ cross-encoder rerank + LLM-judge RAG, with explicit rank-within-protocol reporting.",
     )
     add_bullet(
         doc,
-        "Evidence on CLAIR (full), FinanceBench, and Open RAG Bench that highlights when "
-        "adaptivity wins—and when humans must override—plus per-document strategy-mix "
-        "statistics under rag_microloop.",
+        "Evidence with override honesty. Full CLAIR, FinanceBench, and Open RAG Bench results "
+        "that show when adaptivity wins, when long-doc no_split collapses, and when humans "
+        "must override Auto—plus per-document strategy-mix statistics under rag_microloop.",
     )
-    add_bullet(doc, "Operational lessons: rank-order reporting and governance gates.")
+    add_bullet(
+        doc,
+        "Operational lessons. Ship two eval lanes; treat Auto as a proposal; never ship "
+        "non-indexable full-doc context as a production indexer.",
+    )
 
     add_heading(doc, "2 Related Work", 1)
     add_para(
@@ -239,42 +330,28 @@ def build():
     add_para(
         doc,
         "In multi-tenant RAG platforms, chunking is simultaneously a quality, cost, and "
-        "compliance lever. Legal, financial, and arXiv-style PDFs respond differently to "
-        "fixed-token, recursive, heading-aware, sentence-window, and no-split strategies. ACE "
-        "targets: per-document adaptivity without retraining; auditability via manifests; "
-        "human veto when RAG regresses; protocol honesty (offline CI ≠ live neural scores; "
-        "Teixeira de Lima et al., 2025; Es et al., 2024); and retrieval realism (dense "
-        "top-20 + cross-encoder rerank top-5; Karpukhin et al., 2020; Nogueira and Cho, "
-        "2019), consistent with practitioner guidance that chunking and reranking dominate "
-        "RAG quality (Wang et al., 2024).",
+        "compliance lever. Formally, each document d is mapped by a splitter s∈S to an ordered "
+        "chunk set Cs(d)={c1,…,cns}. Enterprise goals are to maximize downstream RAG utility "
+        "while keeping |Cs(d)| and audit overhead within budget, and while preserving a "
+        "human-readable rationale for why s was locked.",
+        align="justify",
+    )
+    add_para(
+        doc,
+        "ACE targets five design goals: (i) per-document adaptivity without retraining; (ii) "
+        "auditability via manifests; (iii) human veto when RAG regresses; (iv) protocol honesty "
+        "(offline CI ≠ live neural scores; Teixeira de Lima et al., 2025; Es et al., 2024); "
+        "and (v) retrieval realism (dense top-Kc + cross-encoder rerank top-K; Karpukhin et "
+        "al., 2020; Nogueira and Cho, 2019), consistent with practitioner guidance that "
+        "chunking and reranking dominate RAG quality (Wang et al., 2024).",
         align="justify",
     )
 
     add_heading(doc, "4 System: Adaptive Chunk Engine", 1)
     add_para(
         doc,
-        "Figure 1 shows the overall workflow of the Adaptive Chunk Engine (ACE), organized "
-        "into three interconnected stages: strategy selection, retrieval and evaluation, and "
-        "governance. First, ACE evaluates candidate chunking strategies using five intrinsic "
-        "metrics (RC, ICC, DCC, BI, and SC). In intrinsic-only mode, the strategy with the "
-        "highest mean score is selected. In rag_microloop mode, ACE shortlists the top "
-        "intrinsic candidates and combines their intrinsic mean with a micro "
-        "evidence-coverage score before locking the selected strategy for the document.",
-        align="justify",
-    )
-    add_para(
-        doc,
-        "Next, the selected strategy is applied to generate CanonicalChunks, which are "
-        "indexed for dense retrieval (Reimers and Gurevych, 2019; Karpukhin et al., 2020). "
-        "Evaluation questions are prepared independently and used to assess retrieval "
-        "performance through dense retrieval, cross-encoder reranking (Nogueira and Cho, "
-        "2019), and LLM-based answer quality judging (Zheng et al., 2023; Saad-Falcon et al., "
-        "2024). Finally, retrieval regressions are routed to a human review process, where "
-        "practitioners can retain the current version or revise the chunking configuration "
-        "and initiate a new experiment—an offline analogue of corrective / reflective RAG "
-        "control loops (Yan et al., 2024; Asai et al., 2024). This feedback loop makes "
-        "chunking selection an auditable and human-governed process rather than a fully "
-        "automated decision.",
+        "Figure 1 shows the overall workflow of ACE in three stages: strategy selection, "
+        "retrieval & evaluation, and governance.",
         align="justify",
     )
     add_figure(
@@ -283,18 +360,111 @@ def build():
         "Figure 1: Adaptive Chunk Engine (ACE): Selection → Retrieval → Governance Loop.",
         width=6.3,
     )
+
+    add_heading(doc, "4.1 Intrinsic scoring and selection", 2)
     add_para(
         doc,
-        "Intrinsic metrics (brief). Following de Moura et al. (2026): RC "
-        "(retrieval/coverage-oriented completeness of chunks), ICC / DCC (intra-/document "
-        "coherence proxies under the live embedder), BI (boundary integrity), and SC "
-        "(structural coverage). Selection maximizes their mean, optionally blended with a "
-        "micro RAG evidence-coverage term.",
+        "Following de Moura et al. (2026), each candidate splitter s is scored with five "
+        "intrinsic metrics on Cs(d): RC (retrieval/coverage-oriented completeness), ICC / DCC "
+        "(intra-/document coherence under the live embedder), BI (boundary integrity), and SC "
+        "(structural coverage). We summarize them by their arithmetic mean (reported as 0–100 "
+        "in tables):",
         align="justify",
     )
     add_para(
         doc,
-        "Candidates evaluated: fixed_token_{256,512}, recursive_text, recursive_text_1100, "
+        "μ(s,d) = (1/5) (RC + ICC + DCC + BI + SC)(s,d).                                          (1)",
+        size=10,
+        italic=True,
+        align="center",
+        space_after=6,
+    )
+    add_para(
+        doc,
+        "In intrinsic-only mode, ACE locks s*(d) = argmax_s μ(s,d).                          (2)",
+        size=10,
+        italic=True,
+        align="center",
+        space_after=6,
+    )
+    add_para(
+        doc,
+        "This recovers Adaptive Chunking’s per-document rule while packaging the winner, score "
+        "vector, and parameters into a ReproductionManifest.",
+        align="justify",
+    )
+
+    add_heading(doc, "4.2 RAG micro-loop blending", 2)
+    add_para(
+        doc,
+        "Intrinsic leadership does not always imply live RAG leadership (FinanceBench residual "
+        "below). In rag_microloop mode, ACE first shortlists the top-m strategies by μ, then "
+        "blends each shortlisted mean with a cheap micro evidence-coverage score that does not "
+        "call the LLM judge. For a question q with gold evidence span e and retrieved chunks "
+        "R(q),",
+        align="justify",
+    )
+    add_para(
+        doc,
+        "Cov(e,R) = |T(e) ∩ T(R)| / |T(e)|,                                                   (3)",
+        size=10,
+        italic=True,
+        align="center",
+        space_after=6,
+    )
+    add_para(
+        doc,
+        "where T(·) extracts alphanumeric term sets. Averaging over up to Q probe questions "
+        "yields ρ(s,d). The blended objective is",
+        align="justify",
+    )
+    add_para(
+        doc,
+        "Blend(s,d) = α μ(s,d) + (1−α) ρ(s,d),   s*(d) = argmax_{s∈Shortlist_m(d)} Blend(s,d). (4)",
+        size=10,
+        italic=True,
+        align="center",
+        space_after=6,
+    )
+    add_para(
+        doc,
+        "with defaults m=3 and α=0.55. Intuitively, α trades intrinsic document structure "
+        "against a retrieval-aligned coverage proxy before the expensive judge is run.",
+        align="justify",
+    )
+
+    add_heading(doc, "4.3 Production-like retrieval lane", 2)
+    add_para(
+        doc,
+        "After locking s*(d), ACE materializes CanonicalChunks and indexes them for dense "
+        "retrieval (Reimers and Gurevych, 2019; Karpukhin et al., 2020). For query embedding q "
+        "and chunk embedding hi,",
+        align="justify",
+    )
+    add_para(
+        doc,
+        "sim(q,ci) = (q⊤ hi) / (‖q‖ ‖hi‖),   R_Kc(q) = Top-Kc {sim(q,ci)},                    (5)",
+        size=10,
+        italic=True,
+        align="center",
+        space_after=6,
+    )
+    add_para(
+        doc,
+        "followed by cross-encoder reranking to K passages (Nogueira and Cho, 2019). Our live "
+        "defaults are Kc=20 and K=5. An LLM judge (Zheng et al., 2023; Saad-Falcon et al., "
+        "2024) then returns per-question completeness/correctness scores in [0,100]; we report "
+        "their means over answered questions and the answered fraction Nans/N.",
+        align="justify",
+    )
+
+    add_heading(doc, "4.4 Governance gate", 2)
+    add_para(
+        doc,
+        "If live RAG regresses versus a locked baseline, ACE routes the case to human "
+        "review—retain, revise s, or start a new experiment—an offline analogue of "
+        "corrective/reflective control (Yan et al., 2024; Asai et al., 2024). Candidates "
+        "evaluated: fixed_token_{256,512}, recursive_text, recursive_text_1100, "
         "sentence_window, heading_section, no_split, and adaptive_ace.",
         align="justify",
     )
