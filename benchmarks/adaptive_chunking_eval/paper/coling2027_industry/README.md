@@ -7,7 +7,8 @@ Submission deadline (CFP): **30 Nov 2026 AoE**. Notification: **15 Mar 2027**.
 |------|------|
 | [`ACE_COLING2027_Industry_Manuscript.docx`](ACE_COLING2027_Industry_Manuscript.docx) | **Current submission DOCX** (6 figures + expanded tables/refs) |
 | [`ACE_COLING2027_Industry_Manuscript（改1）.docx`](ACE_COLING2027_Industry_Manuscript（改1）.docx) | Author-edited baseline (comments preserved) |
-| [`ACE_COLING2027_Industry_Manuscript（改2）.docx`](ACE_COLING2027_Industry_Manuscript（改2）.docx) | Same as current DOCX after expansion |
+| [`ACE_COLING2027_Industry_Manuscript（改2）.docx`](ACE_COLING2027_Industry_Manuscript（改2）.docx) | Prior expansion (figures) |
+| [`ACE_COLING2027_Industry_Manuscript（改3）.docx`](ACE_COLING2027_Industry_Manuscript（改3）.docx) | Current: ≥26 high-impact refs + denser Related Work |
 | [`manuscript_submission.md`](manuscript_submission.md) | Markdown source aligned with the DOCX |
 | [`paper.md`](paper.md) | Same narrative as manuscript (synced) |
 | [`paper.html`](paper.html) | HTML preview |
