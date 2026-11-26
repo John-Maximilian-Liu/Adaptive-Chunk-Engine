@@ -4,7 +4,7 @@ venue: "COLING 2027 Industry Track"
 category: "Emerging / Enabling infrastructure + Deployed Methods & System Evaluation"
 blind: true
 page_budget: "6 pages body (+ unlimited refs / ethics / appendix)"
-revision: "改4 — appendix fancy figures A1–A6 from Stage A–D favorable results"
+revision: "改5 — stronger Abstract/Intro (sample-paper style), pipeline math, three-line tables"
 ---
 
 # Adaptive Chunk Engine: Governed Per-Document Chunking Selection for Enterprise RAG
@@ -14,20 +14,22 @@ Paper under double-blind review for COLING 2027 Industry Track
 
 ## Abstract
 
-Chunking is a first-order design choice in enterprise Retrieval-Augmented Generation (RAG), yet production systems often rely on a single global splitter. Building on Adaptive Chunking (de Moura et al., 2026), which selects a splitter **per document** using five intrinsic metrics (RC, ICC, DCC, BI, SC), we present **Adaptive Chunk Engine (ACE)**: an auditable framework for per-document chunking selection in enterprise RAG settings that turns metric-guided selection into a product decision with strategy registries, reproduction manifests, a RAG micro-loop selection objective, dense retrieval with cross-encoder reranking, and a human-triggered optimization gate. Under a production-like stack (`Qwen3-Embedding-8B`, Cohere `rerank-v3.5`, `rag_microloop`, `gpt-4o` judge), ACE reaches **mean** RAG completeness/correctness of **100.0 / 100.0** on a controlled kit (**43/43** answered; vs. **64.2 / 64.6** without rerank), ranks **first** on full-CLAIR intrinsic Mean (**87.8**), and **ties best RAG** on Open RAG Bench (**90.0 / 82.5**) while exposing the failure of non-indexable `no_split` on long PDFs (**35.8 / 26.7**). We report practitioner lessons: ship dual eval lanes, treat Auto as a proposal, and compare ranks within a protocol.
+Retrieval-Augmented Generation (RAG) has become a default architecture for grounding large language models (LLMs) on private enterprise corpora, yet industrial deployments still treat document chunking as a one-size-fits-all preprocessing knob. In practice, legal opinions, 10-K filings, and long scientific PDFs respond differently to fixed-token, recursive, heading-aware, or sentence-window splitters; a globally locked strategy therefore silently taxes retrieval quality, indexing cost, and compliance auditability. Building on Adaptive Chunking (de Moura et al., 2026), which scores candidates with five intrinsic metrics (RC, ICC, DCC, BI, SC) and selects a splitter **per document**, we present **Adaptive Chunk Engine (ACE)**—an auditable productization of that principle for enterprise RAG. ACE turns metric-guided selection into a reviewable decision artifact with strategy registries, CanonicalChunk contracts, reproduction manifests, a retrieval-aligned RAG micro-loop objective, dense retrieval with cross-encoder reranking, and a human-triggered optimization gate when Auto and live RAG disagree. Under a production-like stack (`Qwen3-Embedding-8B`, Cohere `rerank-v3.5`, `rag_microloop`, `gpt-4o` judge), ACE reaches **mean** RAG completeness/correctness of **100.0/100.0** on a controlled kit (**43/43** answered; vs. **64.2/64.6** without rerank), ranks **first** on full-CLAIR intrinsic Mean (**87.8**), and **ties best RAG** on Open RAG Bench (**90.0/82.5**) while exposing the collapse of non-indexable `no_split` on long PDFs (**35.8/26.7**). We distill three practitioner lessons: ship dual evaluation lanes, treat Auto as a proposal under human review, and compare **ranks within a protocol**—not absolute scores across stacks.
 
 ## 1 Introduction
 
-Enterprise RAG pipelines often fail because documents are segmented with a one-size-fits-all splitter, even though retrieval granularity is known to materially affect both retrieval and downstream QA (Chen et al., 2024; Wang et al., 2024). Adaptive Chunking (de Moura et al., 2026) showed that scoring candidates with document-intrinsic metrics and selecting the winner per document improves RAG on CLAIR. Industry deployment adds auditability, human veto, alignment of the eval lane with production retrieval (dense retrieval + cross-encoder reranking; Karpukhin et al., 2020; Nogueira and Cho, 2019), and handling disagreement between intrinsic metrics and RAG feedback (Lewis et al., 2020; Gao et al., 2024; Asai et al., 2024).
+A Retrieval-Augmented Generation (RAG) system pairs an LLM with an external knowledge source so that private or time-sensitive evidence can enter the context window at inference time (Lewis et al., 2020; Guu et al., 2020). This pattern has driven rapid industrial adoption for enterprise search, customer support, and regulated document QA (Gao et al., 2024; Teixeira de Lima et al., 2025). Yet in production, the first irreversible decision in the pipeline is often not the retriever or the generator—it is **how documents are cut into chunks**. Chunk size and splitter choice are known first-order levers for both retrieval and downstream answer quality (Chen et al., 2024; Wang et al., 2024), and recent work continues to invent better single algorithms: late contextual chunk embeddings (Günther et al., 2024), hierarchical tree indexing (Sarthi et al., 2024), graph-community summaries (Edge et al., 2024), and LLM-assisted structured chunking (Jain et al., 2025). What remains under-served in industrial practice is a different question: given a *registry* of already-deployable splitters, **which strategy should be locked for this document**, under audit constraints, when intrinsic quality signals and live RAG feedback can disagree?
 
-COLING Industry Track submissions prioritize practical deployment insight over research novelty. ACE is framed as **enabling infrastructure** for governed chunking selection, including negative/trade-off results when Auto should be overridden—complementing adaptive *retrieval* controllers such as Self-RAG and CRAG (Asai et al., 2024; Yan et al., 2024) with adaptive *chunking* governance.
+Enterprise multi-tenant platforms make that question sharper. Legal, financial, and arXiv-style PDFs differ in heading density, table structure, and evidence locality; a recursive splitter that wins on 10-Ks can underperform on short regulatory notes, while sentence windows that look coherent intrinsically can become brittle under dense+rerank retrieval (Karpukhin et al., 2020; Nogueira and Cho, 2019). Simultaneously, operators need more than a higher mean score: they need **reproducible manifests**, **CanonicalChunk contracts** for multi-sink indexing, and a **human veto** when Auto would regress a locked baseline—requirements that research demos rarely expose as first-class product surfaces. Adaptive *retrieval* controllers such as Self-RAG and CRAG (Asai et al., 2024; Yan et al., 2024) decide whether/how to fetch evidence at query time; they do not govern the offline segmentation policy that determines what can be retrieved in the first place.
 
-**Contributions for practitioners:**
+Adaptive Chunking (de Moura et al., 2026) established that scoring candidates with five document-intrinsic metrics and selecting a winner per document improves RAG on CLAIR. We industrialize that idea as **Adaptive Chunk Engine (ACE)**: an enabling-infrastructure layer that (i) selects $s^\star(d)$ from a strategy registry, (ii) optionally blends intrinsic Mean with a cheap micro evidence-coverage signal (`rag_microloop`), (iii) evaluates under a production-like dense top-$K_c$ → rerank top-$K$ lane, and (iv) routes regressions to human review rather than silently shipping Auto. Empirically, aligning the eval lane with rerank recovers kit RAG from **64→100** mean scores; on public corpora ACE leads CLAIR/FinanceBench intrinsic Mean and ties best long-document RAG while documenting the residual override case that motivates governance.
 
-1. A productized selection loop (`adaptive_ace`) with Strategy Registry, CanonicalChunk contracts, ReproductionManifests, and optional RAG micro-loop blending.
-2. A dual-protocol evaluation kit: cheap offline hashed/lexical gates vs. live embeddings + rerank + LLM-judge RAG.
-3. Evidence on CLAIR (full), FinanceBench, and Open RAG Bench that highlights when adaptivity wins—and when humans must override—plus per-document strategy-mix statistics under `rag_microloop`.
-4. Operational lessons: rank-order reporting and governance gates.
+**Contributions for practitioners.**
+
+1. **Productized selection loop.** `adaptive_ace` with Strategy Registry, CanonicalChunk contracts, ReproductionManifests, and optional RAG micro-loop blending—turning per-document choice into an auditable artifact.
+2. **Dual-protocol evaluation kit.** Offline hashed/lexical CI gates versus live embeddings + cross-encoder rerank + LLM-judge RAG, with explicit rank-within-protocol reporting.
+3. **Evidence with override honesty.** Full CLAIR, FinanceBench, and Open RAG Bench results that show when adaptivity wins, when long-doc `no_split` collapses, and when humans must override Auto—plus per-document strategy-mix statistics under `rag_microloop`.
+4. **Operational lessons.** Ship two eval lanes; treat Auto as a proposal; never ship non-indexable full-doc context as a production indexer.
 
 ## 2 Related Work
 
@@ -41,23 +43,71 @@ COLING Industry Track submissions prioritize practical deployment insight over r
 
 ## 3 Problem Setting and Design Goals
 
-In multi-tenant RAG platforms, chunking is simultaneously a **quality**, **cost**, and **compliance** lever. Legal, financial, and arXiv-style PDFs respond differently to fixed-token, recursive, heading-aware, sentence-window, and no-split strategies.
+In multi-tenant RAG platforms, chunking is simultaneously a **quality**, **cost**, and **compliance** lever. Formally, each document $d$ is mapped by a splitter $s\in\mathcal{S}$ to an ordered chunk set $C_s(d)=\{c_1,\ldots,c_{n_s}\}$. Enterprise goals are to maximize downstream RAG utility while keeping $|C_s(d)|$ and audit overhead within budget, and while preserving a human-readable rationale for why $s$ was locked.
 
-ACE targets: per-document adaptivity without retraining; auditability via manifests; human veto when RAG regresses; protocol honesty (offline CI ≠ live neural scores; Teixeira de Lima et al., 2025; Es et al., 2024); and retrieval realism (dense top-20 + cross-encoder rerank top-5; Karpukhin et al., 2020; Nogueira and Cho, 2019), consistent with practitioner guidance that chunking and reranking dominate RAG quality (Wang et al., 2024).
+ACE targets five design goals: (i) per-document adaptivity without retraining; (ii) auditability via manifests; (iii) human veto when RAG regresses; (iv) protocol honesty (offline CI ≠ live neural scores; Teixeira de Lima et al., 2025; Es et al., 2024); and (v) retrieval realism (dense top-$K_c$ + cross-encoder rerank top-$K$; Karpukhin et al., 2020; Nogueira and Cho, 2019), consistent with practitioner guidance that chunking and reranking dominate RAG quality (Wang et al., 2024).
 
 ## 4 System: Adaptive Chunk Engine
 
-Figure 1 shows the overall workflow of the Adaptive Chunk Engine (ACE), organized into three interconnected stages: strategy selection, retrieval and evaluation, and governance. First, ACE evaluates candidate chunking strategies using five intrinsic metrics (RC, ICC, DCC, BI, and SC). In intrinsic-only mode, the strategy with the highest mean score is selected. In `rag_microloop` mode, ACE shortlists the top intrinsic candidates and combines their intrinsic mean with a micro evidence-coverage score before locking the selected strategy for the document.
-
-Next, the selected strategy is applied to generate CanonicalChunks, which are indexed for dense retrieval (Reimers and Gurevych, 2019; Karpukhin et al., 2020). Evaluation questions are prepared independently and used to assess retrieval performance through dense retrieval, cross-encoder reranking (Nogueira and Cho, 2019), and LLM-based answer quality judging (Zheng et al., 2023; Saad-Falcon et al., 2024). Finally, retrieval regressions are routed to a human review process, where practitioners can retain the current version or revise the chunking configuration and initiate a new experiment—an offline analogue of corrective / reflective RAG control loops (Yan et al., 2024; Asai et al., 2024). This feedback loop makes chunking selection an auditable and human-governed process rather than a fully automated decision.
+Figure 1 shows the overall workflow of ACE in three stages: **strategy selection**, **retrieval & evaluation**, and **governance**.
 
 **Figure 1.** Adaptive Chunk Engine (ACE): Selection → Retrieval → Governance Loop.
 
 ![Figure 1](figures/fig1_flow.png)
 
-**Intrinsic metrics (brief).** Following de Moura et al. (2026): **RC** (retrieval/coverage-oriented completeness of chunks), **ICC** / **DCC** (intra-/document coherence proxies under the live embedder), **BI** (boundary integrity), and **SC** (structural coverage). Selection maximizes their mean, optionally blended with a micro RAG evidence-coverage term.
+### 4.1 Intrinsic scoring and selection
 
-Candidates evaluated: `fixed_token_{256,512}`, `recursive_text`, `recursive_text_1100`, `sentence_window`, `heading_section`, `no_split`, and `adaptive_ace`.
+Following de Moura et al. (2026), each candidate splitter $s$ is scored with five intrinsic metrics on $C_s(d)$: **RC** (retrieval/coverage-oriented completeness), **ICC** / **DCC** (intra-/document coherence under the live embedder), **BI** (boundary integrity), and **SC** (structural coverage). We summarize them by their arithmetic mean (reported as a 0–100 percent in tables):
+
+$$
+\mu(s,d)=\frac{1}{5}\big(\mathrm{RC}+\mathrm{ICC}+\mathrm{DCC}+\mathrm{BI}+\mathrm{SC}\big)(s,d).
+\tag{1}
+$$
+
+In **intrinsic-only** mode, ACE locks
+
+$$
+s^\star(d)=\arg\max_{s\in\mathcal{S}}\mu(s,d).
+\tag{2}
+$$
+
+This recovers Adaptive Chunking’s per-document rule while packaging the winner, score vector, and parameters into a ReproductionManifest.
+
+### 4.2 RAG micro-loop blending
+
+Intrinsic leadership does not always imply live RAG leadership (FinanceBench residual below). In `rag_microloop` mode, ACE first shortlists the top-$m$ strategies by $\mu$, then blends each shortlisted mean with a cheap micro evidence-coverage score that **does not** call the LLM judge. For a question $q$ with gold evidence span $e$ and retrieved chunks $R(q)$,
+
+$$
+\mathrm{Cov}(e,R)=\frac{|T(e)\cap T(R)|}{|T(e)|},
+\tag{3}
+$$
+
+where $T(\cdot)$ extracts alphanumeric term sets. Averaging over up to $Q$ probe questions yields $\rho(s,d)$. The blended objective is
+
+$$
+\mathrm{Blend}(s,d)=\alpha\,\mu(s,d)+(1-\alpha)\,\rho(s,d),\qquad
+s^\star(d)=\arg\max_{s\in\mathrm{Shortlist}_m(d)}\mathrm{Blend}(s,d),
+\tag{4}
+$$
+
+with defaults $m{=}3$ and $\alpha{=}0.55$. Intuitively, $\alpha$ trades intrinsic document structure against a retrieval-aligned coverage proxy before the expensive judge is run.
+
+### 4.3 Production-like retrieval lane
+
+After locking $s^\star(d)$, ACE materializes CanonicalChunks and indexes them for dense retrieval (Reimers and Gurevych, 2019; Karpukhin et al., 2020). For query embedding $\mathbf{q}$ and chunk embedding $\mathbf{h}_i$,
+
+$$
+\mathrm{sim}(q,c_i)=\frac{\mathbf{q}^\top\mathbf{h}_i}{\|\mathbf{q}\|\,\|\mathbf{h}_i\|},
+\qquad
+R_{K_c}(q)=\mathrm{Top}\text{-}K_c\big\{\mathrm{sim}(q,c_i)\big\},
+\tag{5}
+$$
+
+followed by cross-encoder reranking to $K$ passages (Nogueira and Cho, 2019). Our live defaults are $K_c{=}20$ and $K{=}5$. An LLM judge (Zheng et al., 2023; Saad-Falcon et al., 2024) then returns per-question completeness/correctness scores in $[0,100]$; we report their means over answered questions and the answered fraction $N_{\mathrm{ans}}/N$.
+
+### 4.4 Governance gate
+
+If live RAG regresses versus a locked baseline, ACE routes the case to human review—retain, revise $s$, or start a new experiment—an offline analogue of corrective/reflective control (Yan et al., 2024; Asai et al., 2024). Candidates evaluated: `fixed_token_{256,512}`, `recursive_text`, `recursive_text_1100`, `sentence_window`, `heading_section`, `no_split`, and `adaptive_ace`.
 
 ## 5 Evaluation Protocol
 
