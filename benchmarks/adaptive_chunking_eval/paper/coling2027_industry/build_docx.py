@@ -19,7 +19,7 @@ from docx.shared import Inches, Pt
 ROOT = Path(__file__).resolve().parent
 FIG = ROOT / "figures"
 OUT = ROOT / "ACE_COLING2027_Industry_Manuscript.docx"
-OUT_REV = ROOT / "ACE_COLING2027_Industry_Manuscript（改5）.docx"
+OUT_REV = ROOT / "ACE_COLING2027_Industry_Manuscript（改6）.docx"
 
 
 def set_run_font(run, *, size=11, bold=False, italic=False, name="Times New Roman"):
@@ -564,17 +564,24 @@ def build():
         doc,
         ["Method", "Mean RAG RC", "Mean RAG AC", "Answered"],
         [
+            ["no_split", "98.99", "94.95", "97/98"],
             ["adaptive_ace", "96.57", "90.5", "94/98"],
             ["recursive_text_1100", "95.96", "92.93", "93/98"],
+            ["fixed_token_512", "93.23", "88.69", "89/98"],
+            ["recursive_text", "92.73", "89.7", "89/98"],
             ["sentence_window", "76.26", "73.23", "71/98"],
         ],
     )
     add_para(
         doc,
-        "Adaptive leads intrinsic Mean and stays near the top of production-viable RAG; "
-        "sentence_window lags by ~20 RAG points. (no_split can still inflate short-context "
-        "RAG by stuffing full documents—treated as a non-indexer baseline, not a shippable "
-        "strategy.)",
+        "Adaptive leads intrinsic Mean (87.8). On live RAG, adaptive_ace is second only to "
+        "no_split and ahead of all production-viable splitters (fixed_token_512, recursive "
+        "variants); sentence_window lags by ~20 RAG points. We report no_split in full for "
+        "transparency: it can inflate CLAIR-style RAG by stuffing nearly the entire document "
+        "into context, but its intrinsic SC collapses to 3.03 and it is not a shippable "
+        "indexer (see also Open RAG Bench, where the same strategy collapses on long PDFs). "
+        "Earlier drafts omitted no_split / fixed_token_512 from this RAG table only to keep "
+        "the lead narrative short—not because those rows were unavailable.",
         align="justify",
     )
 

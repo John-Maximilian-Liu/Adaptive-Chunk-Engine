@@ -1,8 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"/><title>ACE COLING 2027 Industry</title>
-<style>body{font-family:Georgia,serif;max-width:900px;margin:2rem auto;padding:0 1rem;line-height:1.55}
-table{border-collapse:collapse;width:100%;font-size:0.88rem}th,td{border:1px solid #ccc;padding:0.35rem 0.5rem}
-th{background:#f4f6f8}img{max-width:100%}
-.eq{text-align:center;font-style:italic;margin:0.8rem 0}</style></head><body><hr />
+<!DOCTYPE html><html><head><meta charset="utf-8"/></head><body><hr />
 <p>title: "Adaptive Chunk Engine: Governed Per-Document Chunking Selection for Enterprise RAG"
 venue: "COLING 2027 Industry Track"
 category: "Emerging / Enabling infrastructure + Deployed Methods &amp; System Evaluation"
@@ -301,6 +297,12 @@ $$</p>
 </thead>
 <tbody>
 <tr>
+<td>no_split</td>
+<td style="text-align: right;">98.99</td>
+<td style="text-align: right;">94.95</td>
+<td style="text-align: right;">97/98</td>
+</tr>
+<tr>
 <td><strong>adaptive_ace</strong></td>
 <td style="text-align: right;"><strong>96.57</strong></td>
 <td style="text-align: right;"><strong>90.5</strong></td>
@@ -313,6 +315,18 @@ $$</p>
 <td style="text-align: right;">93/98</td>
 </tr>
 <tr>
+<td>fixed_token_512</td>
+<td style="text-align: right;">93.23</td>
+<td style="text-align: right;">88.69</td>
+<td style="text-align: right;">89/98</td>
+</tr>
+<tr>
+<td>recursive_text</td>
+<td style="text-align: right;">92.73</td>
+<td style="text-align: right;">89.7</td>
+<td style="text-align: right;">89/98</td>
+</tr>
+<tr>
 <td>sentence_window</td>
 <td style="text-align: right;">76.26</td>
 <td style="text-align: right;">73.23</td>
@@ -320,7 +334,7 @@ $$</p>
 </tr>
 </tbody>
 </table>
-<p>Adaptive leads intrinsic Mean and stays near the top of production-viable RAG; sentence_window lags by ~20 RAG points. (<code>no_split</code> can still inflate short-context RAG by stuffing full documents—treated as a non-indexer baseline, not a shippable strategy.)</p>
+<p>Adaptive leads intrinsic Mean (<strong>87.8</strong>). On live RAG, <code>adaptive_ace</code> is second only to <code>no_split</code> and ahead of all production-viable splitters (<code>fixed_token_512</code>, recursive variants); <code>sentence_window</code> lags by ~20 RAG points. We report <code>no_split</code> in full for transparency: it can inflate CLAIR-style RAG by stuffing nearly the entire document into context, but its intrinsic <strong>SC collapses to 3.03</strong> and it is <strong>not</strong> a shippable indexer (see also Open RAG Bench, where the same strategy collapses on long PDFs). Earlier drafts omitted <code>no_split</code> / <code>fixed_token_512</code> from this RAG table only to keep the lead narrative short—not because those rows were unavailable.</p>
 <h3>6.3 Public full — Open RAG Bench (long PDFs)</h3>
 <table>
 <thead>
