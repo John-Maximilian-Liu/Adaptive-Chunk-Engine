@@ -57,20 +57,20 @@
 
 | Condition | Docs | Mean hidden evidence recall | Δ vs fixed (pp) | Degraded % | Review overrides | Review min/doc |
 |-----------|-----:|----------------------------:|----------------:|-----------:|-----------------:|---------------:|
-| ① strong_fixed | [[E_N]] | [[E_FIXED]] | 0.0 | — | — | 0.0 |
-| ② intrinsic | [[E_N]] | [[E_INTR]] | [[E_INTR_D]] | [[E_INTR_DEG]] | — | 0.0 |
-| ③ microloop | [[E_N]] | [[E_MICRO]] | [[E_MICRO_D]] | [[E_MICRO_DEG]] | — | 0.0 |
-| ④ human_review | [[E_N]] | [[E_HUM]] | [[E_HUM_D]] | [[E_HUM_DEG]] | [[E_OVERRIDES]] | [[E_MIN_DOC]] |
+| ① strong_fixed | 47 | 98.9 | 0.0 | — | — | 0.0 |
+| ② intrinsic | 47 | 92.2 | -6.6 | 19.1 | — | 0.0 |
+| ③ microloop | 47 | 92.3 | -6.6 | 19.1 | — | 0.0 |
+| ④ human_review | 47 | 92.6 | -6.2 | 14.9 | 2 | 0.2 |
 
-[[E_NARRATIVE]]
+Across **47** held-out-eligible documents, strong_fixed reaches **98.9** mean hidden evidence recall. Intrinsic-only **92.2** (Δ -6.6 pp; degraded **19.1%**). Microloop **92.3** (Δ -6.6 pp; degraded **19.1%**). Human gate: **2** alerts, **2** overrides, **0.2** min/doc → **92.6** hidden recall (degraded **14.9%**).
 
 ### Table S2 — Per corpus（摘要）
 
 | Corpus | strong_fixed | n | notes |
 |--------|--------------|--:|-------|
-| CLAIR | [[E_CLAIR_FIXED]] | [[E_CLAIR_N]] | |
-| FinanceBench | [[E_FB_FIXED]] | [[E_FB_N]] | Stage-D 18 篇中仅 ≥2 QA 可 held-out |
-| Open RAG Bench | [[E_ORB_FIXED]] | [[E_ORB_N]] | 长 PDF |
+| CLAIR | recursive_text_1100 | 33 | |
+| FinanceBench | fixed_token_512 | 10 | Stage-D 18 篇中仅 ≥2 QA 可 held-out |
+| Open RAG Bench | recursive_text_1100 | 4 | 长 PDF |
 
 （分条件明细见跑完后的 `tables.md`。）
 
@@ -93,12 +93,12 @@ Stage D 事实（已有，可先写入正文而不等 Stage E）：
 
 | Condition | Locked strategy | Hidden evidence recall |
 |-----------|-----------------|-----------------------:|
-| ① strong_fixed | [[W_FIXED]] | [[W_FIXED_H]] |
-| ② intrinsic | [[W_INTR]] | [[W_INTR_H]] |
-| ③ microloop | [[W_MICRO]] | [[W_MICRO_H]] |
-| ④ human_review | [[W_HUM]] | [[W_HUM_H]] |
+| ① strong_fixed | fixed_token_512 | 98.1 |
+| ② intrinsic | sentence_window | 100.0 |
+| ③ microloop | recursive_text | 100.0 |
+| ④ human_review | recursive_text | 100.0 |
 
-[[W_NARRATIVE]]
+Diagnostic alert=no; override=no (0.0 min). Hidden recall: microloop 100.0 → human 100.0 (strong_fixed 98.1).
 
 ---
 
@@ -186,7 +186,7 @@ Stage D 事实（已有，可先写入正文而不等 Stage E）：
 
 ## 9. 跑数状态
 
-- Runner：进行中 / 完成后将更新下方时间戳与 Table S1–S3。  
+- Runner：完成于 2026-11-27 06:31 UTC；数值已写入 Table S1–S3。
 - 最近检查：见 git 提交说明与 `heldout_paired_stage_e/summary.json`。  
 - 填充命令（结果齐后）：
 
