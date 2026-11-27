@@ -34,11 +34,7 @@ from loaders.clair import load_clair  # noqa: E402
 from loaders.financebench import load_financebench  # noqa: E402
 from loaders.open_rag_bench import load_open_rag_bench  # noqa: E402
 from openrouter_client import OpenRouterClient  # noqa: E402
-from retrieval import (  # noqa: E402
-    evidence_coverage,
-    l2_normalize,
-    retrieve_with_optional_rerank,
-)
+from retrieval import evidence_coverage, l2_normalize  # noqa: E402
 from run_public_benchmarks import FIXED_STRATEGIES, _chunk_with_strategy  # noqa: E402
 from schema import DocRecord, QAItem  # noqa: E402
 
@@ -122,6 +118,22 @@ def truncate_text(text: str) -> str:
     return text[:50_000] + "\n\n...\n\n" + text[-20_000:]
 
 
+def _dense_from_cached(
+    q_emb: list[float],
+    chunk_embs: list[list[float]],
+    chunks: list[str],
+    *,
+    top_k: int,
+) -> list[str]:
+    from retrieval import cosine
+
+    ranked = sorted(
+        ((cosine(q_emb, ce), c) for ce, c in zip(chunk_embs, chunks)),
+        reverse=True,
+    )
+    return [c for _, c in ranked[: min(top_k, len(ranked))]]
+
+
 def mean_cov(
     *,
     embed_fn,
@@ -130,19 +142,24 @@ def mean_cov(
     qa_pairs: list[QAItem],
     top_k: int = 5,
     candidate_k: int = 20,
+    chunk_embs: list[list[float]] | None = None,
 ) -> float:
+    """Evidence-term recall; embeds chunks once then only questions per QA."""
     if not qa_pairs or not chunks:
         return 0.0
+    if chunk_embs is None:
+        print(f"      embedding {len(chunks)} chunks…", flush=True)
+        chunk_embs = embed_fn(chunks)
     scores = []
     for qa in qa_pairs:
-        hits = retrieve_with_optional_rerank(
-            embed_fn=embed_fn,
-            rerank_fn=rerank_fn,
-            question=qa.question,
-            chunks=chunks,
-            top_k=top_k,
-            candidate_k=candidate_k,
+        q_emb = embed_fn([qa.question])[0]
+        pool = _dense_from_cached(
+            q_emb, chunk_embs, chunks, top_k=max(candidate_k, top_k)
         )
+        if rerank_fn is not None and len(pool) > 1:
+            hits = rerank_fn(qa.question, pool, top_k)
+        else:
+            hits = pool[:top_k]
         scores.append(evidence_coverage(qa.evidence_quote, hits))
     return float(sum(scores) / len(scores))
 
@@ -309,12 +326,15 @@ def main() -> None:
                 flush=True,
             )
             chunks_by: dict[str, list[str]] = {}
+            emb_by: dict[str, list[list[float]]] = {}
             diag_cov: dict[str, float] = {}
             n_chunks: dict[str, int] = {}
             for name, sid, params in PROD_STRATEGIES:
                 chunks = _chunk_with_strategy(text, sid, params)
                 chunks_by[name] = chunks
                 n_chunks[name] = len(chunks)
+                print(f"    [{name}] chunking done n_chunks={len(chunks)}; embedding…", flush=True)
+                emb_by[name] = embed_fn(chunks)
                 cov = mean_cov(
                     embed_fn=embed_fn,
                     rerank_fn=rerank_fn,
@@ -322,6 +342,7 @@ def main() -> None:
                     qa_pairs=diag,
                     top_k=top_k,
                     candidate_k=candidate_k,
+                    chunk_embs=emb_by[name],
                 )
                 diag_cov[name] = cov
                 corpus_diag[name].append(cov)
@@ -380,6 +401,7 @@ def main() -> None:
                     qa_pairs=hidden,
                     top_k=top_k,
                     candidate_k=candidate_k,
+                    chunk_embs=emb_by[name],
                 )
                 hidden_cov_all[name] = round(hcov, 6)
                 print(f"    hidden cov {name}={hcov:.3f}", flush=True)
@@ -389,6 +411,8 @@ def main() -> None:
             cp.write_text(json.dumps(to_save, indent=2), encoding="utf-8")
             doc_state[doc.doc_id] = to_save
             diag_by_doc[doc.doc_id] = diag_cov
+            # free memory before next doc
+            del emb_by, chunks_by
 
         corpus_fixed = pick_strong_fixed(corpus_diag)
         print(f"  corpus_diag_best[{ds_name}] = {corpus_fixed}", flush=True)
