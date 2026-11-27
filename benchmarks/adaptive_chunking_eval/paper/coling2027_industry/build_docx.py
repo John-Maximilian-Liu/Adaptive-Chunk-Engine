@@ -19,7 +19,7 @@ from docx.shared import Inches, Pt
 ROOT = Path(__file__).resolve().parent
 FIG = ROOT / "figures"
 OUT = ROOT / "ACE_COLING2027_Industry_Manuscript.docx"
-OUT_REV = ROOT / "ACE_COLING2027_Industry_Manuscript（改6）.docx"
+OUT_REV = ROOT / "ACE_COLING2027_Industry_Manuscript（改7）.docx"
 
 
 def set_run_font(run, *, size=11, bold=False, italic=False, name="Times New Roman"):
@@ -592,14 +592,16 @@ def build():
         [
             ["adaptive_ace", "90.0", "82.5", "10/12"],
             ["fixed_token_512", "90.0", "82.5", "10/12"],
+            ["recursive_text", "87.5", "83.34", "10/12"],
             ["recursive_text_1100", "83.33", "79.17", "9/12"],
+            ["sentence_window", "80.0", "73.34", "9/12"],
             ["no_split", "35.83", "26.66", "3/12"],
         ],
     )
     add_para(
         doc,
-        "On long arXiv PDFs, naive full-doc context collapses; adaptive ties best production "
-        "RAG.",
+        "On long arXiv PDFs, naive full-doc context collapses (no_split 3/12 answered); "
+        "adaptive_ace ties fixed_token_512 for best mean RAG RC/AC among all reported methods.",
         align="justify",
     )
 
@@ -610,22 +612,25 @@ def build():
         [
             ["recursive_text_1100", "99.07", "93.52", "32/33"],
             ["recursive_text", "96.43", "91.52", "31/33"],
+            ["no_split", "96.3", "91.67", "31/33"],
             ["adaptive_ace", "95.83", "88.89", "29/33"],
+            ["fixed_token_512", "94.17", "89.07", "28/33"],
             ["sentence_window", "86.48", "76.85", "27/33"],
         ],
     )
     add_para(
         doc,
         "Adaptive intrinsic Mean 91.61 (1st) vs recursive_1100 90.64. Live RAG favors larger "
-        "recursive chunks on this QA mix. This residual gap is exactly why Auto must remain a "
-        "proposal under human review—not a reason to abandon metric selection. Full "
-        "RC/ICC/DCC/BI/SC rows are in Appendix A.",
+        "recursive chunks on this QA mix (recursive_text_1100 leads; adaptive_ace is "
+        "competitive with fixed_token_512 and ahead of sentence_window). This residual gap "
+        "is exactly why Auto must remain a proposal under human review—not a reason to "
+        "abandon metric selection. Full RC/ICC/DCC/BI/SC rows are in Appendix A.",
         align="justify",
     )
     add_figure(
         doc,
         FIG / "fig3_cross_corpus_rag.png",
-        "Figure 3: Cross-corpus live RAG — adaptive vs corpus-specific contrast methods.",
+        "Figure 3: Cross-corpus live RAG completeness for all reported methods (Stage D).",
     )
 
     add_heading(doc, "6.5 What does ACE actually lock?", 2)

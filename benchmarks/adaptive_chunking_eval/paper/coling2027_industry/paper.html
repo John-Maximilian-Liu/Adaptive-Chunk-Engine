@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"/></head><body><hr />
+<!DOCTYPE html><meta charset="utf-8"><hr />
 <p>title: "Adaptive Chunk Engine: Governed Per-Document Chunking Selection for Enterprise RAG"
 venue: "COLING 2027 Industry Track"
 category: "Emerging / Enabling infrastructure + Deployed Methods &amp; System Evaluation"
@@ -359,9 +359,21 @@ $$</p>
 <td style="text-align: right;">10/12</td>
 </tr>
 <tr>
+<td>recursive_text</td>
+<td style="text-align: right;">87.5</td>
+<td style="text-align: right;">83.34</td>
+<td style="text-align: right;">10/12</td>
+</tr>
+<tr>
 <td>recursive_text_1100</td>
 <td style="text-align: right;">83.33</td>
 <td style="text-align: right;">79.17</td>
+<td style="text-align: right;">9/12</td>
+</tr>
+<tr>
+<td>sentence_window</td>
+<td style="text-align: right;">80.0</td>
+<td style="text-align: right;">73.34</td>
 <td style="text-align: right;">9/12</td>
 </tr>
 <tr>
@@ -372,7 +384,7 @@ $$</p>
 </tr>
 </tbody>
 </table>
-<p>On long arXiv PDFs, naive full-doc context <strong>collapses</strong>; adaptive ties best production RAG.</p>
+<p>On long arXiv PDFs, naive full-doc context <strong>collapses</strong> (<code>no_split</code> 3/12 answered); <code>adaptive_ace</code> <strong>ties</strong> <code>fixed_token_512</code> for best mean RAG RC/AC among all reported methods.</p>
 <h3>6.4 FinanceBench (intrinsic lead; RAG override lesson)</h3>
 <table>
 <thead>
@@ -397,10 +409,22 @@ $$</p>
 <td style="text-align: right;">31/33</td>
 </tr>
 <tr>
+<td>no_split</td>
+<td style="text-align: right;">96.3</td>
+<td style="text-align: right;">91.67</td>
+<td style="text-align: right;">31/33</td>
+</tr>
+<tr>
 <td><strong>adaptive_ace</strong></td>
 <td style="text-align: right;">95.83</td>
 <td style="text-align: right;">88.89</td>
 <td style="text-align: right;">29/33</td>
+</tr>
+<tr>
+<td>fixed_token_512</td>
+<td style="text-align: right;">94.17</td>
+<td style="text-align: right;">89.07</td>
+<td style="text-align: right;">28/33</td>
 </tr>
 <tr>
 <td>sentence_window</td>
@@ -410,8 +434,8 @@ $$</p>
 </tr>
 </tbody>
 </table>
-<p>Adaptive intrinsic Mean <strong>91.61</strong> (1st) vs recursive_1100 <strong>90.64</strong>. Live RAG favors larger recursive chunks on this QA mix. This residual gap is exactly why Auto must remain a <strong>proposal</strong> under human review—not a reason to abandon metric selection. Full RC/ICC/DCC/BI/SC rows are in Appendix A.</p>
-<p><strong>Figure 3.</strong> Cross-corpus live RAG: adaptive vs a corpus-specific contrast method (sentence_window on kit/CLAIR; recursive_1100 on FinanceBench; <code>no_split</code> on Open RAG Bench).</p>
+<p>Adaptive intrinsic Mean <strong>91.61</strong> (1st) vs recursive_1100 <strong>90.64</strong>. Live RAG favors larger recursive chunks on this QA mix (<code>recursive_text_1100</code> leads; <code>adaptive_ace</code> is competitive with <code>fixed_token_512</code> and ahead of <code>sentence_window</code>). This residual gap is exactly why Auto must remain a <strong>proposal</strong> under human review—not a reason to abandon metric selection. Full RC/ICC/DCC/BI/SC rows are in Appendix A.</p>
+<p><strong>Figure 3.</strong> Cross-corpus live RAG completeness for <strong>all</strong> reported methods on CLAIR, FinanceBench, and Open RAG Bench (Stage D). Adaptive stays near the top of production-viable strategies; <code>no_split</code> only looks strong on CLAIR and collapses on long PDFs.</p>
 <p><img alt="Figure 3" src="figures/fig3_cross_corpus_rag.png" /></p>
 <h3>6.5 What does ACE actually lock?</h3>
 <p>Under <code>rag_microloop</code>, ACE does <strong>not</strong> invent a new splitter; it locks a registry strategy per document after blending intrinsic Mean with micro evidence-coverage. Figure 5 shows locked-strategy histograms.</p>
@@ -706,4 +730,4 @@ $$</p>
 </tr>
 </tbody>
 </table>
-<p>Open RAG Bench intrinsic ranks <code>fixed_token_512</code> slightly above adaptive on Mean, but live RAG ties adaptive with fixed_512 at 90.0/82.5 while <code>no_split</code> collapses—reinforcing rank-within-protocol reporting.</p></body></html>
+<p>Open RAG Bench intrinsic ranks <code>fixed_token_512</code> slightly above adaptive on Mean, but live RAG ties adaptive with fixed_512 at 90.0/82.5 while <code>no_split</code> collapses—reinforcing rank-within-protocol reporting.</p>
