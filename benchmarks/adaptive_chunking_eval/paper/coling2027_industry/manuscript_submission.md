@@ -185,10 +185,12 @@ Adaptive leads intrinsic Mean (**87.8**). On live RAG, `adaptive_ace` is second 
 |--------|------------:|------------:|---------:|
 | **adaptive_ace** | **90.0** | **82.5** | 10/12 |
 | fixed_token_512 | 90.0 | 82.5 | 10/12 |
+| recursive_text | 87.5 | 83.34 | 10/12 |
 | recursive_text_1100 | 83.33 | 79.17 | 9/12 |
+| sentence_window | 80.0 | 73.34 | 9/12 |
 | **no_split** | **35.83** | **26.66** | 3/12 |
 
-On long arXiv PDFs, naive full-doc context **collapses**; adaptive ties best production RAG.
+On long arXiv PDFs, naive full-doc context **collapses** (`no_split` 3/12 answered); `adaptive_ace` **ties** `fixed_token_512` for best mean RAG RC/AC among all reported methods.
 
 ### 6.4 FinanceBench (intrinsic lead; RAG override lesson)
 
@@ -196,12 +198,14 @@ On long arXiv PDFs, naive full-doc context **collapses**; adaptive ties best pro
 |--------|------------:|------------:|---------:|
 | recursive_text_1100 | **99.07** | **93.52** | 32/33 |
 | recursive_text | 96.43 | 91.52 | 31/33 |
+| no_split | 96.3 | 91.67 | 31/33 |
 | **adaptive_ace** | 95.83 | 88.89 | 29/33 |
+| fixed_token_512 | 94.17 | 89.07 | 28/33 |
 | sentence_window | 86.48 | 76.85 | 27/33 |
 
-Adaptive intrinsic Mean **91.61** (1st) vs recursive_1100 **90.64**. Live RAG favors larger recursive chunks on this QA mix. This residual gap is exactly why Auto must remain a **proposal** under human review—not a reason to abandon metric selection. Full RC/ICC/DCC/BI/SC rows are in Appendix A.
+Adaptive intrinsic Mean **91.61** (1st) vs recursive_1100 **90.64**. Live RAG favors larger recursive chunks on this QA mix (`recursive_text_1100` leads; `adaptive_ace` is competitive with `fixed_token_512` and ahead of `sentence_window`). This residual gap is exactly why Auto must remain a **proposal** under human review—not a reason to abandon metric selection. Full RC/ICC/DCC/BI/SC rows are in Appendix A.
 
-**Figure 3.** Cross-corpus live RAG: adaptive vs a corpus-specific contrast method (sentence_window on kit/CLAIR; recursive_1100 on FinanceBench; `no_split` on Open RAG Bench).
+**Figure 3.** Cross-corpus live RAG completeness for **all** reported methods on CLAIR, FinanceBench, and Open RAG Bench (Stage D). Adaptive stays near the top of production-viable strategies; `no_split` only looks strong on CLAIR and collapses on long PDFs.
 
 ![Figure 3](figures/fig3_cross_corpus_rag.png)
 
