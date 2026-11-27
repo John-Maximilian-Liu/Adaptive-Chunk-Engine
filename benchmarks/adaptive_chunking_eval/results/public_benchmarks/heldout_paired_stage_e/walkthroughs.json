@@ -1,0 +1,175 @@
+[
+  {
+    "dataset": "clair",
+    "doc_id": "Norma (légal)_European Convention On Human Rights",
+    "diag_qa": [
+      {
+        "question": "What does the document state under the section 'European Convention on Human Rights'?",
+        "answer": "COUNCIL OF EUROPE\n\nEUROPEAN COURT OF HUMAN RIGHTS COUR EUROPÉENNE DES DROITS DE L'HOMME.",
+        "evidence_quote": "COUNCIL OF EUROPE\n\nEUROPEAN COURT OF HUMAN RIGHTS COUR EUROPÉENNE DES DROITS DE L'HOMME"
+      },
+      {
+        "question": "What does the document state under the section 'Contents'?",
+        "answer": "<Table>\n| 0 | 1 |\n| --- | --- |\n| Convention for the Protection of Human\\nand Fundamental Freedoms | Rights\\n5 |\n| Protocol | 33 |\n| Protocol No.",
+        "evidence_quote": "<Table>\n| 0 | 1 |\n| --- | --- |\n| Convention for the Protection of Human\\nand Fundamental Freedoms | Rights\\n5 |\n| Protocol | 33 |\n| Protocol No. 4 | 36 |\n| Protocol No. 6 | 40 |\n| Protocol No. 7 | 44 |\n| Protocol No. 12 | 50 |\n| Protocol No. 13 | 54 |\n| Protocol No. 16 | 58 |\n</Table>"
+      }
+    ],
+    "hidden_qa": [
+      {
+        "question": "What does the document state under the section 'Convention for the Protection of Human Rights and Fundamental Freedoms'?",
+        "answer": "Rome, 4.",
+        "evidence_quote": "Rome, 4.XI.1950\n\nTHE GOVERNMENTS SIGNATORY HERETO, being members of the Council of Europe,"
+      },
+      {
+        "question": "What does the document state under the section 'ARTICLE 1 Obligation to respect Human Rights'?",
+        "answer": "The High Contracting Parties shall secure to everyone within their jurisdiction the rights and freedoms defined in Section I of this Convention.",
+        "evidence_quote": "The High Contracting Parties shall secure to everyone within their jurisdiction the rights and freedoms defined in Section I of this Convention."
+      }
+    ],
+    "diag_cov": {
+      "fixed_token_512": 1.0,
+      "fixed_token_256": 0.87931,
+      "recursive_text": 1.0,
+      "recursive_text_1100": 1.0,
+      "sentence_window": 0.603448,
+      "heading_section": 0.551724
+    },
+    "hidden_cov_all": {
+      "fixed_token_512": 1.0,
+      "fixed_token_256": 1.0,
+      "recursive_text": 1.0,
+      "recursive_text_1100": 1.0,
+      "sentence_window": 1.0,
+      "heading_section": 1.0
+    },
+    "means": {
+      "fixed_token_512": 84.16,
+      "fixed_token_256": 82.74,
+      "recursive_text": 83.01,
+      "recursive_text_1100": 81.51,
+      "sentence_window": 85.77,
+      "heading_section": 79.37
+    },
+    "shortlist": [
+      "sentence_window",
+      "fixed_token_512",
+      "recursive_text"
+    ],
+    "blends": {
+      "sentence_window": 0.743287,
+      "fixed_token_512": 0.91288,
+      "recursive_text": 0.906555
+    },
+    "locked": {
+      "strong_fixed": "recursive_text_1100",
+      "intrinsic": "sentence_window",
+      "microloop": "fixed_token_512",
+      "human_review": "fixed_token_512"
+    },
+    "alert": false,
+    "overrode": false,
+    "review_minutes": 0.0,
+    "n_chunks": {
+      "fixed_token_512": 43,
+      "fixed_token_256": 86,
+      "recursive_text": 40,
+      "recursive_text_1100": 18,
+      "sentence_window": 509,
+      "heading_section": 150
+    }
+  },
+  {
+    "dataset": "financebench",
+    "doc_id": "AMD_2022_10K",
+    "diag_qa": [
+      {
+        "question": "Does AMD have a reasonably healthy liquidity profile based on its quick ratio for FY22? If the quick ratio is not relevant to measure liquidity, please state that and explain why.",
+        "answer": "Yes. The quick ratio is 1.57, calculated as (cash and cash equivalents+Short term investments+Accounts receivable, net+receivables from related parties)/ (current liabilities).",
+        "evidence_quote": "Consolidated Balance Sheets\n \nDecember 31,\n2022\nDecember 25,\n2021\n \n(In millions, except par value amounts)\nASSETS\nCurrent assets:\nCash and cash equivalents\n$\n4,835 \n$\n2,535 \nShort-term investments\n1,020 \n1,073 \nAccounts receivable, net\n4,126 \n2,706 \nInventories\n3,771 \n1,955 \nReceivables from related parties\n2 \n2 \nPrepaid expenses and other current assets\n1,265 \n312 \nTotal current assets\n15,019 \n8,583 \nProperty and equipment, net\n1,513 \n702 \nOperating lease right-of-use assets\n460 \n367 \nGoodwill\n24,177 \n289 \nAcquisition-related intangibles\n24,118 \n \nInvestment: equity method\n83 \n69 \nDeferred tax assets\n58 \n931 \nOther non-current assets\n2,152 \n1,478 \nTotal assets\n$\n67,580 \n$\n12,419 \nLIABILITIES AND STOCKHOLDERS EQUITY\nCurrent liabilities:\nAccounts payable\n$\n2,493 \n$\n1,321 \nPayables to relat"
+      },
+      {
+        "question": "What are the major products and services that AMD sells as of FY22?",
+        "answer": "AMD sells server microprocessors (CPUs) and graphics processing units (GPUs), data processing units (DPUs), Field Programmable Gate Arrays (FPGAs), and Adaptive System-on-Chip (SoC) products for data centers; CPUs, accelerated processing units (APUs) that integrate CPUs and GPUs, and chipsets for desktop and notebook personal computers; discrete GPUs, and semi-custom SoC products and development services; and embedded CPUs, GPUs, APUs, FPGAs, and Adaptive SoC products.",
+        "evidence_quote": "Overview\nWe are a global semiconductor company primarily offering:\n\nserver microprocessors (CPUs) and graphics processing units (GPUs), data processing units (DPUs), Field Programmable Gate Arrays (FPGAs), and\nAdaptive System-on-Chip (SoC) products for data centers;\n\nCPUs, accelerated processing units (APUs) that integrate CPUs and GPUs, and chipsets for desktop and notebook personal computers;\n\ndiscrete GPUs, and semi-custom SoC products and development services; and\n\nembedded CPUs, GPUs, APUs, FPGAs, and Adaptive SoC products.\nFrom time to time, we may also sell or license portions of our intellectual property (IP) portfolio."
+      },
+      {
+        "question": "What drove revenue change as of the FY22 for AMD?",
+        "answer": "In 2022, AMD reported Higher sales of their EPYC server processors, higher semi-custom product sales, and the inclusion of Xilinx embedded product sales",
+        "evidence_quote": "Net\nrevenue for 2022 was $23.6 billion, an increase of 44% compared to 2021 net revenue of $16.4 billion. The increase in net revenue was driven by a 64%\nincrease in Data Center segment revenue primarily due to higher sales of our EPYC server processors, a 21% increase in Gaming segment revenue\nprimarily due to higher semi-custom product sales, and a significant increase in Embedded segment revenue from the prior year period driven by the inclusion\nof Xilinx embedded product sales."
+      }
+    ],
+    "hidden_qa": [
+      {
+        "question": "What drove operating margin change as of the FY22 for AMD? If operating margin is not a useful metric for a company like this, then please state that and explain why.",
+        "answer": "The decrease in AMD's operating income was primarily driven by amortization of intangible assets associated with the Xilinx acquisition",
+        "evidence_quote": "Operating income for 2022 was $1.3 billion compared to operating income of $3.6 billion for 2021. The decrease in operating income was primarily driven by\namortization of intangible assets associated with the Xilinx acquisition."
+      },
+      {
+        "question": "Among operations, investing, and financing activities, which brought in the most (or lost the least) cash flow for AMD in FY22?",
+        "answer": "In 2022, AMD brought in the most cashflow from Operations",
+        "evidence_quote": "Advanced Micro Devices, Inc.\nConsolidated Statements of Cash Flows\nYear Ended\nDecember 31,\n2022\nDecember 25,\n2021\nDecember 26,\n2020\n(In millions)\nCash flows from operating activities:\nNet income\n$\n1,320 \n$\n3,162 \n$\n2,490 \nAdjustments to reconcile net income to net cash provided by operating activities:\nDepreciation and amortization\n4,174 \n407 \n312 \nStock-based compensation\n1,081 \n379 \n274 \nAmortization of debt discount and issuance costs\n \n5 \n14 \nAmortization of operating lease right-of-use assets\n88 \n56 \n42 \nAmortization of inventory fair value adjustment\n189 \n \n \nLoss on debt redemption, repurchase and conversion\n \n7 \n54 \nLoss on sale or disposal of property and equipment\n16 \n34 \n33 \nDeferred income taxes\n(1,505)\n308 \n(1,223)\n(Gains) losses on equity investments, net\n62 \n(56)\n(2)\nOther\n("
+      },
+      {
+        "question": "From FY21 to FY22, excluding Embedded, in which AMD reporting segment did sales proportionally increase the most?",
+        "answer": "Data Center",
+        "evidence_quote": "Year Ended\nDecember 31,\n2022\nDecember 25,\n2021\n(In millions)\nNet revenue:\nData Center\n$\n6,043 \n$\n3,694 \nClient\n6,201 \n6,887 \nGaming\n6,805 \n5,607 \nEmbedded\n4,552 \n246 \nTotal net revenue\n$\n23,601 \n$\n16,434 \nOperating income (loss):\nData Center\n$\n1,848 \n$\n991 \nClient\n1,190 \n2,088 \nGaming\n953 \n934 \nEmbedded\n2,252 \n44 \nAll Other\n(4,979)\n(409)\nTotal operating income (loss)\n$\n1,264 \n$\n3,648"
+      },
+      {
+        "question": "Did AMD report customer concentration in FY22?",
+        "answer": "Yes, one customer accounted for 16% of consolidated net revenue",
+        "evidence_quote": "One customer accounted for 16% of our consolidated net revenue for the year ended December 31, 2022. Sales to this customer consisted of sales of products\nfrom our Gaming segment. A loss of this customer would have a material adverse effect on our business."
+      }
+    ],
+    "diag_cov": {
+      "fixed_token_512": 0.996454,
+      "fixed_token_256": 0.87234,
+      "recursive_text": 0.996454,
+      "recursive_text_1100": 0.996454,
+      "sentence_window": 0.824411,
+      "heading_section": 0.996454
+    },
+    "hidden_cov_all": {
+      "fixed_token_512": 0.980769,
+      "fixed_token_256": 0.924731,
+      "recursive_text": 1.0,
+      "recursive_text_1100": 1.0,
+      "sentence_window": 1.0,
+      "heading_section": 0.980769
+    },
+    "means": {
+      "fixed_token_512": 80.9,
+      "fixed_token_256": 80.11,
+      "recursive_text": 82.37,
+      "recursive_text_1100": 79.99,
+      "sentence_window": 86.41,
+      "heading_section": 80.9
+    },
+    "shortlist": [
+      "sentence_window",
+      "recursive_text",
+      "fixed_token_512"
+    ],
+    "blends": {
+      "sentence_window": 0.84624,
+      "recursive_text": 0.901439,
+      "fixed_token_512": 0.893354
+    },
+    "locked": {
+      "strong_fixed": "fixed_token_512",
+      "intrinsic": "sentence_window",
+      "microloop": "recursive_text",
+      "human_review": "recursive_text"
+    },
+    "alert": false,
+    "overrode": false,
+    "review_minutes": 0.0,
+    "n_chunks": {
+      "fixed_token_512": 11,
+      "fixed_token_256": 22,
+      "recursive_text": 10,
+      "recursive_text_1100": 5,
+      "sentence_window": 89,
+      "heading_section": 11
+    }
+  }
+]
